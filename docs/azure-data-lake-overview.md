@@ -1,26 +1,65 @@
-# Azure Data Lake Overview
+<properties 
+   pageTitle="Overview of Azure Data Lake | Azure" 
+   description="Understand what is Azure Data Lake and the value it provides over other data stores" 
+   services="data-lake" 
+   documentationCenter="" 
+   authors="nitinme" 
+   manager="paulettm" 
+   editor="cgronlun"/>
+ 
+<tags
+   ms.service="data-lake"
+   ms.devlang="na"
+   ms.topic="article"
+   ms.tgt_pltfrm="na"
+   ms.workload="big-data" 
+   ms.date="06/30/2015"
+   ms.author="nitinme"/>
 
+# Overview of Azure Data Lake
 
-----------
+A Data Lake is an enterprise-wide repository of every type of data collected in a single place, prior to any formal definition schema has been established. A Data Lake allows any kind of data to be kept. This allows every type of data to be stored in one single repository regardless of its size, structure, or how fast it is ingested. Organizations can then use big data tools to analyze and find patterns in the data.
 
+## What is Azure Data Lake?
 
-## What is a Data Lake?
+Azure Data Lake is Microsoft’s Data Lake offering hosted in Azure, described as a hyper scale repository for big data analytic workloads. Organizations can use Azure Data Lake to store, secure, and scale their data for massive parallel big data analytics in the cloud. Some of the key capabilities of the Azure Data Lake include the following. 
 
-A Data Lake is an enterprise wide repository of every type of data collected in a single place prior to any formal definition of requirements or schema. 
-A Data Lake allows any kind of data to be kept. Organizations can use big data tools to analyze that data to find insights. Data lakes can also serve as a repository for lower cost data preparation prior to moving curated data into a data warehouse.
+<< TODO: include an illustration here >>
 
-##What is Azure Data Lake?
+### HDFS for the Cloud
 
-Azure Data Lake is Microsoft’s Data Lake offering hosted in Azure – what we describe as “A hyper scale repository for big data analytic workloads”. 
+Azure Data Lake is built from the ground-up as a native Hadoop file system compatible with HDFS, working out-of-the-box with the Hadoop ecosystem including Azure HDInsight, Revolution-R Enterprise, and industry Hadoop distributions like Hortonworks and Cloudera. 
 
-##HDFS for the Cloud
+### Unlimited storage, petabyte files, and massive throughput
 
-The Azure Data Lake is a Hadoop File System compatible with HDFS enabling Microsoft offerings such as Azure HDInsight, Revolution-R Enterprise, industry Hadoop distributions like Hortonworks and Cloudera all to connect to it.
+Azure Data Lake has unbounded scale with no limits to the amount of data that can be stored in a single account and can store very large files of petabyte range. Azure Data Lake is built for running large analytic systems that require massive throughput to query and analyze petabytes of data. It can handle high volumes of small writes at low latency making it optimized for near real-time scenarios like website analytics, Internet of Things (IoT), analytics from sensors, etc.
 
-## Petabyte files & massive throughput
+### Enterprise-ready
 
-The goal of the data lake is to run Hadoop and advanced analytics on all your data to discover conclusions from the data itself. To do this, the data lake must be built to support massively parallel queries so that discoveries can be returned in a timely fashion. Azure Data Lake meets this requirement with no fixed limits to how much data can be stored in a single account. It can also store very large files with no fixed limits to size . Finally, it is built to handle high volumes of small writes at low latency making it optimized for near real-time scenarios like website analytics, Internet of Things (IoT), analytics from sensors, and others.
+Azure Data Lake leverages Azure Active Directory to provide identity and access management for all your data. It also provides data reliability by replicating your data assets to guard against any unexpected failures. This enables enterprises to factor Azure Data Lake in their solutions as an important part of their existing data platform.
 
-## Enterprise ready
+### Data in any format
 
-Being “enterprise ready” means that you can run this solution as an important part of your existing data platform. Azure Data Lake does this by leveraging Azure Active Directory as well as providing data replication to ensure high durability and availability.
+Azure Data Lake is built as a distributed file store allowing you to store relational and non-relational data without transformation or schema definition. This allows you to store all of your data and analyze them in their native format.
+
+## How is Azure Data Lake different from Azure Storage?
+
+<< TODO: Add more info >>
+
+Azure Storage is a generic storage repository that allows you to store data for any use case. In contrast, Azure Data Lake is a storage repository optimized for big data solutions. This includes the capability to stores files that are petabytes in size, provides higher throughput, and has built-in integration with Hadoop.
+
+<< TODO: Include a table comparison >>
+
+| Feature                                | Azure Data Lake | Azure Storage |
+|----------------------------------------|-----------------|---------------|
+| Maximum file size                      | --              | --            |
+| Cost                                   | --              | --            |
+| Compatibility with big data offerings  | --              | --            |
+
+## How do I start using Azure Data Lake
+
+See << TODO: Link to Hero tutorial >>, on how to provision an Azure Data Lake account. Once you have provisioned Azure Data Lake, you can learn how to use big data offerings, such as << TODO: Official name of Kona >>, Azure HDInsight, and Hortonworks HDP with Azure Data Lake to run your big data workloads.
+
+- << TODO: Link to using ADL with Kona >>
+- << TODO: Link to using ADL with HDInsight >>
+- << TODO: Link to using ADL with HDP >>  
