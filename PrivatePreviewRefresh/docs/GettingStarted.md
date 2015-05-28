@@ -45,25 +45,6 @@ If you want to create a new Azure Kona account, you can do so through the Portal
     
 ### Learn more
 
-To learn more about how to interact with Kona, browse the following pages:
+To learn more, browse the following pages:
 
-
-#### Links
-* [Private Preview SharePoint](http://aka.ms/ProjectKona)
-
-#### Azure Portal
-* [Getting Started](GettingStarted.md)
-
-#### SQLIP Studio
-* [Getting Started](SQLIPStudio/GettingStarted.md)
-* [Job Authoring](SQLIPStudio/JobAuthoring.md)
-
-#### PowerShell
-* [Getting Started](PowerShell/GettingStarted.md)
-* [User Manual - Kona](PowerShell/UserManual.md#kona-powershell-cmdlets)
-* [User Manual - Data Lake](PowerShell/UserManual.md#data-lake-powershell-cmdlets)
-
-#### SDK
-* [Getting Started](SDK/GettingStarted.md)
-* [User Manual - Kona](SDK/UserManual.md#kona-sdk)
-* [User Manual - Data Lake](SDK/UserManual.md#data-lake-sdk)
+(place table of contents here)
