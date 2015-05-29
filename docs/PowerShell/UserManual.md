@@ -101,10 +101,6 @@ To get information about a specific cmdlet, such as the syntax or the return typ
 
 * **Get** access settings for a specific file or folder
 
-    * Get all access settings of a file or folder
-
-            Get-AzureDataLakeItemAccess -Path $path -All
-
     * Get the user owner of a file or folder
  
             Get-AzureDataLakeItemAccess -Path $path -UserOwner
