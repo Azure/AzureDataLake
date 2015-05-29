@@ -171,31 +171,6 @@ To get information about a specific cmdlet, such as the syntax or the return typ
 
         Set-AzureDataLakeItemAccess -Path $path -ACL $null
 
-* **Copy** the access control list of one file or folder to another
-
-        $accessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
-
-        Set-AzureDataLakeItemAccess -Path $secondPath -ACL $accessControlList
-
-* **Replace** an entry in an access control list with another entry
-
-        $oldUsername = "billg@contoso.com"
-        $newUsername = "alan@contoso.com" 
-       
-        $accessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
-        $accessControlList.Users[$newUsername] = $accessControlList.Users[$oldUsername]
-        $accessControlList.Users.Remove($newUsername)
-    
-        Set-AzureDataLakeItemAccess -Path $secondPath -ACL $accessControlList
-
-* **Get** permissions of an access control list entry
-
-        $username = "saveen@contoso.com"
-
-        $accessControlList = Get-AzureDataLakeItemAccess -Path $path -ACL
-
-        $accessControlList.Users[$username]
-
 * **Set** access settings for a specific file or folder
     * Set the user owner of a file or folder
 
@@ -220,6 +195,31 @@ To get information about a specific cmdlet, such as the syntax or the return typ
             $permissions = "750"
 
             Set-AzureDataLakeItemAccess -Path $path -Permissions $permissions
+
+* **Copy** the access control list of one file or folder to another
+
+        $accessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
+
+        Set-AzureDataLakeItemAccess -Path $secondPath -ACL $accessControlList
+
+* **Replace** an entry in an access control list with another entry
+
+        $oldUsername = "billg@contoso.com"
+        $newUsername = "alan@contoso.com" 
+       
+        $accessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
+        $accessControlList.Users[$newUsername] = $accessControlList.Users[$oldUsername]
+        $accessControlList.Users.Remove($newUsername)
+    
+        Set-AzureDataLakeItemAccess -Path $secondPath -ACL $accessControlList
+
+* **Get** permissions of an access control list entry
+
+        $username = "saveen@contoso.com"
+
+        $accessControlList = Get-AzureDataLakeItemAccess -Path $path -ACL
+
+        $accessControlList.Users[$username]
 
 
 ------------
