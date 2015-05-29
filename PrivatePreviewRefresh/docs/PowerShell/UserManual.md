@@ -47,6 +47,9 @@ To get information about a specific cmdlet, such as the syntax or the return typ
             -Name $dataLakeAccountName `
             -Location "East US 2"
 
+##### Account management permissions
+
+* Take a look at the [Azure documentation on Resource Group management](https://azure.microsoft.com/en-us/documentation/articles/resource-group-rbac/) to learn more.
 
 ##### Data operations
 
