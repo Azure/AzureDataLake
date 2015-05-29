@@ -1,8 +1,10 @@
-# Getting Started: Kona
+# Getting Started: Azure Data Lake
+
+------------
 
 ### Getting started
 
-To use these two new Azure services, follow these easy steps:
+To use this new Azure service, follow these easy steps:
 
 #### Your Azure subscription
 1. If you're already part of an Azure subscription, skip this step.<br />If you're not, [create a new Azure subscription here](https://account.windowsazure.com/Subscriptions).
@@ -12,7 +14,7 @@ To use these two new Azure services, follow these easy steps:
 1. Write down the given Subscription ID. You'll need this later.
    
 
-#### Install Azure PowerShell with Kona and Data Lake
+#### Install Azure PowerShell with Data Lake
 1. Download the [Azure PowerShell module here](https://microsoft.sharepoint.com/teams/ProjectKona/Documents/PrivatePreviewRefresh/AzurePowerShell.zip).
 1. Extract the contents of *AzurePowerShell.zip*.
 1. Right click on *install.ps1* and click *Run with PowerShell*.
@@ -23,28 +25,28 @@ To use these two new Azure services, follow these easy steps:
 Open a new PowerShell window and enter the following:
     
     Select-AzureSubscription -SubscriptionId <your_subscription_id>
-    Register-AzureProviderFeature -FeatureName "Kona" -ProviderNamespace "Microsoft.Kona"
     Register-AzureProviderFeature -FeatureName "Data Lake" -ProviderNamespace "Microsoft.DataLake"
 
     
 #### Check for existing accounts
-Run the following PowerShell cmdlets to see if you already have access to a Kona account.
+Run the following PowerShell cmdlets to see if you already have access to an Azure Data Lake account.
 
-    Get-AzureKonaAccount
+    Get-AzureDataLakeAccount
 
-Note: If you want to access an existing Azure Kona account, contact the account's owner.
+Note: If you want to access an existing Azure Data Lake account, contact the account's owner.
 
 
 #### Creating a new account
 
-If you want to create a new Azure Kona account, you can do so through the Portal or PowerShell:
+If you want to create a new Azure Data Lake account, you can do so through the Portal or PowerShell:
 
-* [Azure Portal](AzurePortal/GettingStarted.md)
-* [Azure PowerShell](PowerShell/GettingStarted.md)
-
+* [Azure Portal](AzurePortal/FirstSteps.md)
+* [Azure PowerShell](PowerShell/FirstSteps.md)
     
-### Learn more
+------------
 
-To learn more, browse the following pages:
+### Useful links
 
-(place table of contents here)
+Browse the following pages:
+
+* *(place table of contents here)*

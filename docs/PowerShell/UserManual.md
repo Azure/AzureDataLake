@@ -1,10 +1,10 @@
 # User Manual: Azure PowerShell with Data Lake
 
+This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md).
 
-### Prerequisite steps
+------------
 
-This guide assumes that you previously followed the steps in the main Data Lake [Getting Started](../GettingStarted.md) guide.
-
+### The Basics
 
 #### Initialization
 1. Open a new PowerShell window.
@@ -17,12 +17,15 @@ To get information about a specific cmdlet, such as the syntax or the return typ
     
     help Get-AzureDataLakeAccount
 
+#### Account management permissions
+
+* To learn how Azure Resource Groups and Role-Based Access Control work, take a look at the [Azure documentation on Resource Group management](https://azure.microsoft.com/en-us/documentation/articles/resource-group-rbac/).
 
 ------------
 
-#### Data Lake PowerShell cmdlets
+### Data Lake PowerShell cmdlets
 
-##### Account management
+#### Account management
 
 * **List** Data Lake accounts within the current subscription
     
@@ -47,11 +50,7 @@ To get information about a specific cmdlet, such as the syntax or the return typ
             -Name $dataLakeAccountName `
             -Location "East US 2"
 
-##### Account management permissions
-
-* Take a look at the [Azure documentation on Resource Group management](https://azure.microsoft.com/en-us/documentation/articles/resource-group-rbac/) to learn more.
-
-##### Data operations
+#### Data operations
 
 * **List** files within a specific folder
 
@@ -87,7 +86,7 @@ To get information about a specific cmdlet, such as the syntax or the return typ
 
 * **Concatenate** (destructively) two or more files
 
-		Join-AzureDataLakeItem -Path $filePaths
+		Join-AzureDataLakeItem -Paths $filePaths -Destination $filePath
 
 * **Append** content to a specific file
 
@@ -98,7 +97,7 @@ To get information about a specific cmdlet, such as the syntax or the return typ
         Get-AzureDataLakeItemContent -Path $filePath
 
 
-##### File/folder access info
+#### File/folder access info
 
 * **Get** access settings for a specific file or folder
 
@@ -182,28 +181,16 @@ To get information about a specific cmdlet, such as the syntax or the return typ
 
         Set-AzureDataLakeItemAccess -Path $secondPath -ACL $accessControlList
 
-* **Merge** the access control list of one file or folder into another
-
-    This will cause the second file or folder to contain all users and groups from both access control lists, with overlapping entries' permissions combined via bitwise OR.
-
-    E.g., if *bob@contoso.com* has ``rw-`` permissions for the first file and ``r-x`` permissions for the second file, the second file will end up having ``rwx`` permissions for *bob@contoso.com*.
-
-        $firstAccessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
-        $secondAccessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
-        $secondAccessControlList.MergeInEntries($firstAccessControlList)
-
-        Set-AzureDataLakeItemAccess -Path $secondPath -ACL $secondAccessControlList
-
 * **Replace** an entry in an access control list with another entry
 
-    $oldUsername = "billg@contoso.com"
-    $newUsername = "alan@contoso.com" 
-   
-    $accessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
-    $accessControlList.Users[$newUsername] = $accessControlList.Users[$oldUsername]
-    $accessControlList.Users.Remove($newUsername)
-
-    Set-AzureDataLakeItemAccess -Path $secondPath -ACL $accessControlList
+        $oldUsername = "billg@contoso.com"
+        $newUsername = "alan@contoso.com" 
+       
+        $accessControlList = Get-AzureDataLakeItemAccess -Path $firstPath -ACL
+        $accessControlList.Users[$newUsername] = $accessControlList.Users[$oldUsername]
+        $accessControlList.Users.Remove($newUsername)
+    
+        Set-AzureDataLakeItemAccess -Path $secondPath -ACL $accessControlList
 
 * **Get** permissions of an access control list entry
 
@@ -241,8 +228,8 @@ To get information about a specific cmdlet, such as the syntax or the return typ
 
 ------------
 
-### Learn more
+### Useful links
 
-To learn more, browse the following pages:
+Browse the following pages:
 
-(place table of contents here)
+* *(place table of contents here)*
