@@ -1,6 +1,7 @@
-# ProjectKona
+# Azure Data Lake
 
 Any information available here is *MICROSOFT CONFIDENTIAL.*
 
+Browse the following pages:
 
-* [Kona SharePoint](http://aka.ms/ProjectKona)
+* *(place table of contents here)*
