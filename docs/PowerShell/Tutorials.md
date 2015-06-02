@@ -1,4 +1,4 @@
-# Tutorials: Azure PowerShell with Data Lake
+# Tutorial: Using Azure PowerShell with Data Lake
 
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md) and the PowerShell [First Steps](FirstSteps.md) guide.
 
