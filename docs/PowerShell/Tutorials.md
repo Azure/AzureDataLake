@@ -2,7 +2,7 @@
 
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md) and the PowerShell [First Steps](FirstSteps.md) guide.
 
-Prerequisites
+## Prerequisites
 Before you begin this tutorial, you must download the data.
 
 The data file used in this tutorial is a tab separated file with the following fields:
@@ -21,20 +21,20 @@ Download them from the AzureDataLake Git Repository:
 https://github.com/MicrosoftBigData/AzureDataLake
 In the Repo in the path /Samples/SampleData you’ find the file called OlympicAthletes.tsv. This is the dataset that will be used for the examples in this document. 
 
-Exercise 1: Manage ADL users
-Setting up your ADL Session
-Initialization
+## Exercise 1: Manage ADL users
+### Setting up your ADL Session
 1.	Open a new PowerShell window.
 2.	Select your subscription by entering the following:
 Select-AzureSubscription -SubscriptionId $subscriptionId
 
-Managing Users 
-[jgao: we need a management article to talk about the roles, and user management]
+### Managing Users 
 See which users have access and what roles:
-Add users
+
+### Add users
 Add a user to your ADL Account
 New-ADLUser –UserEmail user1@aadtenant.onmicrosoft.com –UserRole User 
-List users
+
+### List users
 Use the following command to list the existing ADL users:
 Get-ADLUser 
 The output is similar to:
@@ -43,13 +43,15 @@ CreationTime                LastModifiedTime            Name                    
 Mon, 13 Oct 2014 18:42:3... Mon, 13 Oct 2014 18:42:3... PublicTest@abc.          .. {Admin}                    
 Tue, 14 Oct 2014 02:24:3... Tue, 14 Oct 2014 02:24:3... adluser2@test               {Admin}                    
 Tue, 14 Oct 2014 02:26:0... Tue, 14 Oct 2014 02:26:0... adluser1@onboardflow.on. .. {Admin}                    
-Remove users
+
+### Remove users
 Use the following cmdlet to remove a user from your ADL account
 Remove-ADLUser –UserEmail user1@aadtenant.onmicrosoft.com 
 
-Exercise 2: 
+## Exercise 2: 
 Learn how to upload data into the Azure Data Lake, and download the results.
-Define utility functions
+
+### Define utility functions
 To simplify your experience run the following script. It will create some utility functions that will simplify these exercises. In the future these helper functions will not be needed.
 function kdir( [string] $Path )
 {
@@ -73,7 +75,7 @@ function kupload ( [string] $Local, [string] $Remote )
     Copy-AzureDataLakeItem -Path $local -Destination $Remote
 }
 
-Explore the ADL file system
+### Explore the ADL file system
 Let’s first see what’s at the root of the file system.
 kdir /
 
@@ -127,7 +129,7 @@ Name                                                                          Le
 mafs://accounts/<Your ADL Account name>/fs/ADLDemo/__place...                                         0
 NOTE: Currently newly-created directories contain a __placeholder file which you can see above. This is mistake in our system, and in the future no _placeholder file will be seen .
 
-Upload the Sample Data File
+### Upload the Sample Data File
 To upload the Sample data file we’ll use the following command
 kupload D:\ADLDemo\OlympicAthletes.tsv /ADLDemo/OlympicAthletes.tsv
 
