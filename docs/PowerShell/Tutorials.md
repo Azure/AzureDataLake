@@ -17,15 +17,14 @@ SilverMedals         string,
 BronzeMedals         string,
 TotalMedals          string,
 
-Download them from the AzureDataLake Git Repository:
-https://github.com/MicrosoftBigData/AzureDataLake
+Download them from the [AzureDataLake Git Repository](https://github.com/MicrosoftBigData/AzureDataLake)
+
 In the Repo in the path /Samples/SampleData you’ find the file called OlympicAthletes.tsv. This is the dataset that will be used for the examples in this document. 
 
 ## Exercise 1: Manage ADL users
 ### Setting up your ADL Session
 1.	Open a new PowerShell window.
-2.	Select your subscription by entering the following:
-Select-AzureSubscription -SubscriptionId $subscriptionId
+2.	Select your subscription by entering the following: Select-AzureSubscription -SubscriptionId $subscriptionId
 
 ### Managing Users 
 See which users have access and what roles:
@@ -37,7 +36,9 @@ New-ADLUser –UserEmail user1@aadtenant.onmicrosoft.com –UserRole User
 ### List users
 Use the following command to list the existing ADL users:
 Get-ADLUser 
+
 The output is similar to:
+
 CreationTime                LastModifiedTime            Name                        Roles                      
 ------------                ----------------            ----                        -----                      
 Mon, 13 Oct 2014 18:42:3... Mon, 13 Oct 2014 18:42:3... PublicTest@abc.          .. {Admin}                    
@@ -77,6 +78,7 @@ function kupload ( [string] $Local, [string] $Remote )
 
 ### Explore the ADL file system
 Let’s first see what’s at the root of the file system.
+
 kdir /
 
 Name                                                                          Length
@@ -86,8 +88,11 @@ mafs://accounts/<Your ADL Account name>/fs/fs/
 mafs://accounts/<Your ADL Account name>/fs/system/                                                      
 mafs://accounts/<Your ADL Account name>/fs/test/                                                        
 mafs://accounts/<Your ADL Account name>/fs/users/                                                       
+
 Naturally, depending on how you have been using your ADL account you may see different things but at least you should notice that you see folders and perhaps some files.
+
 Create a folder for storing the Sample Data
+
 kmkdir /ADLDemo
 
 AccessedSizeInBiMonth     : 
@@ -111,6 +116,7 @@ PhysicalSizeOwned         : 0
 SubFolders                : {}
 
 We can further verify that the folder was created
+
 kdir ./
 
 Name                                                                          Length
@@ -131,6 +137,7 @@ NOTE: Currently newly-created directories contain a __placeholder file which you
 
 ### Upload the Sample Data File
 To upload the Sample data file we’ll use the following command
+
 kupload D:\ADLDemo\OlympicAthletes.tsv /ADLDemo/OlympicAthletes.tsv
 
 
