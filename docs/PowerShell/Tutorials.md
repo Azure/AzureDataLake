@@ -91,7 +91,7 @@ mafs://accounts/<Your ADL Account name>/fs/users/
 
 Naturally, depending on how you have been using your ADL account you may see different things but at least you should notice that you see folders and perhaps some files.
 
-Create a folder for storing the Sample Data
+### Create a folder for storing the Sample Data
 
 kmkdir /ADLDemo
 
@@ -156,14 +156,18 @@ NumberOfPendingExtents : 0
 Path                   : 
 StartExtentIndex       : 0
 StartExtentOffset      : 0
+
 Now, let’s verify that the file is there and that it has the size we expect.
+
 kdir ./ADLDemo
 
 Name                                                                          Length
 ----                                                                          ------
 mafs://accounts/<Your ADL Account name>/fs/ADLDemo/Olympic...                                    526136
 mafs://accounts/<Your ADL Account name>/fs/ADLDemo/__place...                                         0
-Look at Files in ADL
+
+### Look at Files in ADL
+
 kdir ./ADLDemo
 
 Name                                                                          Length
@@ -171,6 +175,7 @@ Name                                                                          Le
 mafs://accounts/<Your ADL Account name>/fs/ADLDemo/Olympic...               526136
 mafs://accounts/<Your ADL Account name>/fs/ADLDemo/Olympic...               526136
 mafs://accounts/<Your ADL Account name>/fs/ADLDemo/__place...                    0
+
 As you can see the output file exists.
 
 Now let’s download the output to examine it.
