@@ -4,7 +4,7 @@
 
 ### Getting started
 
-To use this new Azure service, follow these easy steps:
+To use this new Azure service, follow these simple steps:
 
 #### Your Azure subscription
 1. If you're already part of an Azure subscription, skip this step.<br />If you're not, [create a new Azure subscription here](https://account.windowsazure.com/Subscriptions).
