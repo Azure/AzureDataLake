@@ -15,7 +15,7 @@ To use this new Azure service, follow these simple steps:
    
 
 #### Install Azure PowerShell with Data Lake
-1. Download the [Azure PowerShell module here](https://microsoft.sharepoint.com/teams/ProjectKona/Documents/PrivatePreviewRefresh/AzurePowerShell.zip).
+1. Download the [Azure PowerShell module here](https://microsoft.sharepoint.com/teams/AzureDataLake/Documents/PrivatePreviewRefresh/AzurePowerShell.zip).
 1. Extract the contents of *AzurePowerShell.zip*.
 1. Right click on *install.ps1* and click *Run with PowerShell*.
 1. Follow the steps in the installation wizard.

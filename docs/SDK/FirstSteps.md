@@ -6,18 +6,13 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 ### First steps
 
-#### Download the Azure Data Lake .NET SDK NuGet packages
-To download the Azure Data Lake .NET SDK NuGet packages, click here.
-
-#### Extract and place in the desired directory
-Extract the contents of the .zip file.
-
-Place the contents in a directory, e.g. ``C:\NuGet\...``
+#### Download and extract the Azure Data Lake .NET SDK NuGet packages
+1. Download the [Azure Data Lake .NET SDK NuGet packages here](https://microsoft.sharepoint.com/teams/AzureDataLake/Documents/PrivatePreviewRefresh/AzureSDK_DataLake.zip).
+1. Extract the contents of *AzureSDK_DataLake.zip*.
+1. Place the contents in a directory, e.g. ``C:\NuGet\...``
 
 #### Add NuGet packages to your .NET project in Visual Studio
-Either open or create a .NET project in Visual Studio.
-
-Add the NuGet packages to your project:
+1. Either open or create a .NET project in Visual Studio.
 
 1. Right-click on your project in the Solution Explorer and select "Manage NuGet Packages...":
 
