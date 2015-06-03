@@ -38,10 +38,20 @@ Note: If you want to access an existing Azure Data Lake account, contact the acc
 
 #### Creating a new account
 
-If you want to create a new Azure Data Lake account, you can do so through the Portal or PowerShell:
+If you want to create a new Azure Data Lake account, you can do so using these tools:
 
 * [Azure Portal](AzurePortal/FirstSteps.md)
 * [Azure PowerShell](PowerShell/FirstSteps.md)
+
+
+#### Available tools
+
+We offer the following tools that can you can use to interact with your Data Lake account:
+
+* [Azure Portal](AzurePortal/FirstSteps.md)
+* [Azure PowerShell](PowerShell/FirstSteps.md)
+* [Azure .NET SDK](SDK/FirstSteps.md)
+* [WebHDFS support](WebHDFS/FirstSteps.md)
     
 ------------
 
