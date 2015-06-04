@@ -20,33 +20,22 @@ To use this new Azure service, follow these simple steps:
 1. Right click on *install.ps1* and click *Run with PowerShell*.
 1. Follow the steps in the installation wizard.
 
+#### See What Data Lake Accounts you have 
 
-#### Register for early access
-Open a new PowerShell window and enter the following:
-    
-    Select-AzureSubscription -SubscriptionId <your_subscription_id>
-    Register-AzureProviderFeature -FeatureName "Data Lake" -ProviderNamespace "Microsoft.DataLake"
-
-    
-#### Check for existing accounts
-Run the following PowerShell cmdlets to see if you already have access to an Azure Data Lake account.
+Run the following PowerShell cmdlets to see if you already have a Azure Data Lake account.
 
     Get-AzureDataLakeAccount
 
-Note: If you want to access an existing Azure Data Lake account, contact the account's owner.
 
+#### Creating a new Data Lake account
 
-#### Creating a new account
-
-If you want to create a new Azure Data Lake account, you can do so using these tools:
+To create an account, pick one of the two options below. 
 
 * [Azure Portal](AzurePortal/FirstSteps.md)
 * [Azure PowerShell](PowerShell/FirstSteps.md)
 
 
-#### Available tools
-
-We offer the following tools that can you can use to interact with your Data Lake account:
+#### Other Data Lake tools
 
 * [Azure Portal](AzurePortal/FirstSteps.md)
 * [Azure PowerShell](PowerShell/FirstSteps.md)
