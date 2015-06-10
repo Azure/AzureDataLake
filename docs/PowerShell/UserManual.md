@@ -98,6 +98,16 @@ This guide assumes you have previously followed the steps in the main [Getting S
     Sample response:
 
         True
+        
+* **Delete** a Data Lake account
+
+        Remove-AzureDataLakeAccount `
+            -Name $dataLakeAccountName
+
+    Sample response:
+
+        True
+        
 
 #### Data operations
 
