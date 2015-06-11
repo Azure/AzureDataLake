@@ -40,7 +40,6 @@ To create an account, pick one of the two options below.
 * [Azure Portal](AzurePortal/FirstSteps.md)
 * [Azure PowerShell](PowerShell/FirstSteps.md)
 * [Azure .NET SDK](SDK/FirstSteps.md)
-* [WebHDFS support](WebHDFS/FirstSteps.md)
     
 ------------
 
