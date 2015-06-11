@@ -186,7 +186,7 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 * **Delete** a specific file or folder
 
-        Delete-AzureDataLakeItem -Path $filePath
+        Remove-AzureDataLakeItem -Path $filePath
 
     Sample response:
 
