@@ -53,6 +53,7 @@ Azure Storage is a generic storage repository that allows you to store data for 
 | Feature                                | Azure Data Lake | Azure Storage |
 |----------------------------------------|-----------------|---------------|
 | Maximum file size                      | --              | --            |
+| Types of data that can be stored       | --              | --            |
 | Cost                                   | --              | --            |
 | Compatibility with big data offerings  | --              | --            |
 
