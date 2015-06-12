@@ -66,5 +66,5 @@ Browse the following pages:
 * [Getting Started](../GettingStarted.md)
 * Tools
     * [Azure Portal](../AzurePortal/FirstSteps.md)
-    * [Kona PowerShell](../PowerShell/FirstSteps.md)
+    * [PowerShell](../PowerShell/FirstSteps.md)
     * [SDK](../SDK/FirstSteps.md)
