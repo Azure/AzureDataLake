@@ -47,8 +47,8 @@ To create an account, pick one of the two options below.
 
 Browse the following pages:
 
-* [Getting Started](docs/GettingStarted.md)
+* [Getting Started](GettingStarted.md)
 * Tools
-    * [Azure Portal](docs/AzurePortal/FirstSteps.md)
-    * [Kona PowerShell](docs/PowerShell/FirstSteps.md)
-    * [SDK](docs/SDK/FirstSteps.md)
+    * [Azure Portal](AzurePortal/FirstSteps.md)
+    * [PowerShell](PowerShell/FirstSteps.md)
+    * [SDK](SDK/FirstSteps.md)
