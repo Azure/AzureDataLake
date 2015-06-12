@@ -191,3 +191,12 @@ Now let’s download the output to examine it.
 
 At this point you are done with your scenario and you have learned Uploading, Listing, and Downloading files in ADL.
 
+### Useful links
+
+Browse the following pages:
+
+* [Getting Started](../GettingStarted.md)
+* Tools
+    * [Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Kona PowerShell](../PowerShell/FirstSteps.md)
+    * [SDK](../SDK/FirstSteps.md)

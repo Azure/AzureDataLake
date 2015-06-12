@@ -1068,4 +1068,8 @@ Here is a list of the interfaces, their properties, and their function headers:
 
 Browse the following pages:
 
-* *(place table of contents here)*
+* [Getting Started](../GettingStarted.md)
+* Tools
+    * [Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Kona PowerShell](../PowerShell/FirstSteps.md)
+    * [SDK](../SDK/FirstSteps.md)

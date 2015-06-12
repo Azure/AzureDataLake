@@ -144,4 +144,8 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 Browse the following pages:
 
-* *(place table of contents here)*
+* [Getting Started](../GettingStarted.md)
+* Tools
+    * [Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Kona PowerShell](../PowerShell/FirstSteps.md)
+    * [SDK](../SDK/FirstSteps.md)

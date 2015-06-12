@@ -43,4 +43,8 @@ If you need to create a new Resource Group
 
 Browse the following pages:
 
-* *(place table of contents here)*
+* [Getting Started](../GettingStarted.md)
+* Tools
+    * [Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Kona PowerShell](../PowerShell/FirstSteps.md)
+    * [SDK](../SDK/FirstSteps.md)

@@ -7,9 +7,9 @@ This guide assumes you have previously followed the steps in the main [Getting S
 ### First steps
 
 #### Download and extract the Azure Data Lake .NET SDK NuGet packages
-1. Download the [Azure Data Lake .NET SDK NuGet packages here](https://microsoft.sharepoint.com/teams/AzureDataLake/Documents/PrivatePreviewRefresh/AzureSDK_DataLake.zip).
-1. Extract the contents of *AzureSDK_DataLake.zip*.
-1. Place the contents in a directory, e.g. ``C:\NuGet\...``
+1. Download the [Azure Data Lake .NET SDK NuGet packages here](https://github.com/MicrosoftBigData/AzureDataLake/releases/download/PowerShellSDK/AzureSDK_DataLake_Only.zip).
+1. Extract the contents of **AzureSDK_DataLake_Only.zip**.
+1. Place the contents in a directory, e.g. ``C:\KonaDataLake_NuGet\...``
 
 #### Add NuGet packages to your .NET project in Visual Studio
 1. Either open or create a .NET project in Visual Studio.
@@ -28,8 +28,8 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 1. Enter the information below for the new source:
 
-    * Name: Azure Data Lake
-    * Source: C:\AzureDataLake_NuGet\
+    * Name: Data Lake SDK
+    * Source: C:\KonaDataLake_NuGet\
 
         Note: Use the path where you placed the NuGet packages initially.
 
@@ -63,4 +63,8 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 Browse the following pages:
 
-* *(place table of contents here)*
+* [Getting Started](../GettingStarted.md)
+* Tools
+    * [Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Kona PowerShell](../PowerShell/FirstSteps.md)
+    * [SDK](../SDK/FirstSteps.md)
