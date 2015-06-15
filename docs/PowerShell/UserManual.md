@@ -6,6 +6,13 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 ### The Basics
 
+#### Data Lake Paths
+
+When interacting with the data in your Data Lake, many of the cmdlets use the ``-Path`` parameter. The format of the path that you provide should be as follows:
+
+        $path = "swebhdfs://myDataLakeAccount.azuredatalake.net/foo/bar.txt"
+        Get-AzureDataLakeItem -Path $path
+
 #### Initialization
 1. Open a new PowerShell window.
 1. Select your subscription by entering the following:
