@@ -6,7 +6,7 @@ To create a Kona or Azure Data Lake account:
 
 1. If you were part of the Private Preview, please **go through the [Migration Guide](../Migration.md) first**.
 
-1. Go to the new Azure Portal using [this link](https://portal.azure.com/signin/index/?hubsExtension_ItemHideKey=AzureDataLake_BigStorage,AzureKona_BigCompute). The link has special keys which will let you search for Kona and Data Lake.
+1. Go to the new Azure Portal using [this link](https://portal.azure.com/signin/index/?Microsoft_Azure_Kona=true&Microsoft_Azure_DataLake=true&hubsExtension_ItemHideKey=AzureDataLake_BigStorage%2cAzureKona_BigCompute). The link has special keys which will let you search for Kona and Data Lake.
 
 1. Click on Marketplace.
 

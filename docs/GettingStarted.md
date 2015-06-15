@@ -19,6 +19,7 @@ To use this new Azure service, follow these simple steps:
 1. Extract the contents of **AzurePowerShell.zip**.
 1. Right click on **INSTALL_RunAsAdministrator.ps1** and click **Run as administrator**.
 1. Follow the steps in the installation wizard.
+1. Register-AzureProvider -ProviderNamespace Microsoft.DataLake
 
 #### See What Data Lake Accounts you have 
 
