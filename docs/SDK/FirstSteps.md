@@ -54,7 +54,7 @@ This guide assumes you have previously followed the steps in the main [Getting S
     You're done!
 
 #### Learn more
-* [SDK Tutorials](Tutorials.md) - Learn how to write some basic code using the Azure Data Lake .NET SDK.
+* [SDK Tutorials](about:blank) - (COMING SOON) Learn how to write some basic code using the Azure Data Lake .NET SDK.
 * [SDK User Manual](UserManual.md) - View some basic documentation for the Azure Data Lake .NET SDK.
 
 ------------
