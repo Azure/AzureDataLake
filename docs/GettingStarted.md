@@ -12,6 +12,10 @@ To use this new Azure service, follow these simple steps:
 1. Click **Browse** and select **Subscriptions**.
 1. Select the desired subscription.
 1. Write down the given Subscription ID. You'll need this later.
+
+
+#### Email your TAP Buddy
+Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake.
    
 
 #### Install Azure PowerShell with Data Lake
