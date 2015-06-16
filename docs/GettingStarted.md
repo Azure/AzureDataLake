@@ -16,10 +16,18 @@ To use this new Azure service, follow these simple steps:
 
 #### Install Azure PowerShell with Data Lake
 1. Download the [Azure PowerShell module here](https://github.com/MicrosoftBigData/AzureDataLake/releases/download/PowerShellSDK/AzurePS_KonaDataLake.zip).
+
 1. Extract the contents of **AzurePowerShell.zip**.
+
 1. Right click on **INSTALL_RunAsAdministrator.ps1** and click **Run as administrator**.
+
 1. Follow the steps in the installation wizard.
-1. Register-AzureProvider -ProviderNamespace Microsoft.DataLake
+
+1. In a new PowerShell window, enter the following:
+
+        Select-AzureSubscription -SubscriptionId <the Subscription ID that your wrote down previously>
+        Register-AzureProvider -ProviderNamespace "Microsoft.DataLake"
+
 
 #### See What Data Lake Accounts you have 
 
