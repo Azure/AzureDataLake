@@ -33,14 +33,14 @@ Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake
         Register-AzureProvider -ProviderNamespace "Microsoft.DataLake"
 
 
-#### See What Data Lake Accounts you have 
+#### Check for existing accounts
 
 Run the following PowerShell cmdlets to see if you already have a Azure Data Lake account.
 
     Get-AzureDataLakeAccount
 
 
-#### Creating a new Data Lake account
+#### Create a new Data Lake account
 
 To create an account, pick one of the two options below. 
 
