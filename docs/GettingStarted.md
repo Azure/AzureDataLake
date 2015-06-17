@@ -12,18 +12,16 @@ To use this new Azure service, follow these simple steps:
 1. Click **Browse** and select **Subscriptions**.
 1. Select the desired subscription.
 1. Write down the given Subscription ID. You'll need this later.
-
-
+   
 #### Email your TAP Buddy
 Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake.
-   
 
-#### Install Azure PowerShell with Data Lake
+#### Install Azure Data Lake
 1. Download the [Azure PowerShell module here](https://github.com/MicrosoftBigData/AzureDataLake/releases/download/PowerShellSDK/AzurePS_KonaDataLake.zip).
 
-1. Extract the contents of **AzurePowerShell.zip**.
+1. Extract the contents of **AzurePS_KonaDataLake.zip**.
 
-1. Right click on **INSTALL_RunAsAdministrator.ps1** and click **Run as administrator**.
+1. Right click on **INSTALL_RunAsAdministrator** and click **Run as administrator**.
 
 1. Follow the steps in the installation wizard.
 
@@ -31,37 +29,28 @@ Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake
 
         Select-AzureSubscription -SubscriptionId <the Subscription ID that your wrote down previously>
         Register-AzureProvider -ProviderNamespace "Microsoft.DataLake"
-
-
+    
 #### Check for existing accounts
-
-Run the following PowerShell cmdlets to see if you already have a Azure Data Lake account.
+Open a new PowerShell window. Run the following PowerShell cmdlets to see if you already have access to a Data Lake account.
 
     Get-AzureDataLakeAccount
 
+Note: If you want to access an existing Azure Data Lake account, contact the account's owner.
 
-#### Create a new Data Lake account
 
-To create an account, pick one of the two options below. 
+#### Create a new account
 
-* [Azure Portal](AzurePortal/FirstSteps.md)
+If you want to create a new Azure Data Lake account, you can do so through the Portal or PowerShell:
+
 * [Azure PowerShell](PowerShell/FirstSteps.md)
+* [Azure Portal](AzurePortal/FirstSteps.md) *Note: Temporary limitation - only supports single subscriptions
 
-
-#### Other Data Lake tools
-
-* [Azure Portal](AzurePortal/FirstSteps.md)
-* [Azure PowerShell](PowerShell/FirstSteps.md)
-* [Azure .NET SDK](SDK/FirstSteps.md)
-    
 ------------
 
 ### Useful links
 
-Browse the following pages:
-
 * [Getting Started](GettingStarted.md)
 * Tools
     * [Azure Portal](AzurePortal/FirstSteps.md)
-    * [PowerShell](PowerShell/FirstSteps.md)
+    * [Data Lake PowerShell](PowerShell/FirstSteps.md)
     * [SDK](SDK/FirstSteps.md)
