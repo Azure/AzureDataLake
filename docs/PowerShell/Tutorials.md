@@ -5,7 +5,7 @@ This guide assumes you have previously followed the steps in the main [Getting S
 -------------
 
 ## Prerequisites
-Before you begin this tutorial, you must download the sample data from the [AzureDataLake Git Repository](https://github.com/MicrosoftBigData/AzureDataLake/raw/master/Samples/SampleData/OlympicAthletes.zip). Download the file. Store the OlympicAthletes.tsv in a local directory e.g. c:\adldemo\
+Before you begin this tutorial, you must download the sample data from the [AzureDataLake Git Repository](https://github.com/MicrosoftBigData/AzureDataLake/raw/master/Samples/SampleData/OlympicAthletes.tsv). Download the file. Store the OlympicAthletes.tsv in a local directory on your computer e.g. c:\adldemo\
 
 
 The data file used in this tutorial is a tab separated file with the following fields:
@@ -23,7 +23,7 @@ The data file used in this tutorial is a tab separated file with the following f
 
 This is the dataset that will be used for the examples in this document. 
 
-For all the examples, you will need the Azure Data Lake account that was created. To get it open a powershell window and type the command "Get-AzureDataLakeAccount". Note the "Name" property of the account.
+For all the examples, you will need the Azure Data Lake account that was created. To get it open a powershell window and type the command "Get-AzureDataLakeAccount". Note the "Name" property of the account, that is referred to as "<your ADL account name>" in rest of this document.
 
 ### Setup your root directory for each reference 
 
@@ -57,10 +57,10 @@ Now, let’s verify that the file is there and that it has the size we expect.
 
     Get-AzureDataLakeChildItem -Path $myrootdir/adldemo
 
-### Copy the Sample Data File
-To copy the sample file, use the following command:
+### Rename the Sample Data File
+To rename the sample file, use the following command:
 
-    Copy-AzureDataLakeItem `
+    Move-AzureDataLakeItem `
     -Path $myrootdir/adldemo/OlympicAthletes.tsv `
     -Destination $myrootdir/adldemo/OlympicAthletes_Copy.tsv
     
@@ -73,7 +73,7 @@ To download the sample file, use the following command:
     
 Compare the sizes of the original file OlympicAthletes.tsv and the downloaded file OlympicAthletes_Copy.tsv. They should be the same.
 
-At this point you are done with your scenario and you have learned how to Upload, List, Copy, and Download files in Azure Data Lake.
+At this point you are done with your scenario and you have learned how to Upload, List, Rename, and Download files in Azure Data Lake.
 
 ### Useful links
 
