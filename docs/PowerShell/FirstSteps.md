@@ -50,12 +50,12 @@ To create a new resource group:
 
 #### That's it!
 
-Now you can get started using our [Tutorials](Tutorials.md) (COMING SOON) and the [User Manual](UserManual.md), which shows how to use each cmdlet.
+Now you can get started using our [Tutorials](Tutorials.md) and the [User Manual](UserManual.md), which shows how to use each cmdlet.
 
 #### Learn more
 
 * Azure Data Lake
-    * [PowerShell Tutorials](about:blank) - (COMING SOON) Learn how to perform some basic activities with your Azure Data Lake account in PowerShell.
+    * [PowerShell Tutorials](https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/PowerShell/Tutorials.md) - Learn how to perform some basic activities with your Azure Data Lake account in PowerShell.
     * [PowerShell User Manual](https://github.com/MicrosoftBigData/AzureDataLake/tree/master/docs/PowerShell/UserManual.md) - See how to use the Azure Data Lake PowerShell cmdlets.
 
 ------------
