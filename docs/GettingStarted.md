@@ -35,9 +35,6 @@ Open a new PowerShell window. Run the following PowerShell cmdlets to see if you
 
     Get-AzureDataLakeAccount
 
-Note: If you want to access an existing Azure Data Lake account, contact the account's owner.
-
-
 #### Create a new account
 
 If you want to create a new Azure Data Lake account, you can do so through the Portal or PowerShell:
