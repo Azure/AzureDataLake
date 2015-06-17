@@ -50,7 +50,7 @@ To create a new resource group:
 
 #### That's it!
 
-Now you can get started using our [Tutorials](about:blank) (COMING SOON) and the [User Manual](UserManual.md), which shows how to use each cmdlet.
+Now you can get started using our [Tutorials](Tutorials.md) (COMING SOON) and the [User Manual](UserManual.md), which shows how to use each cmdlet.
 
 #### Learn more
 
