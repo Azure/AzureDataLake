@@ -1,42 +1,63 @@
 # First steps: Azure PowerShell with Data Lake
 
-This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md).
+**NOTE:** This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md).
 
 ------------
 
 ### First Steps
+#### Installation
+If you already followed the [Getting Started guide](../GettingStarted.md), you can go to the Initialization section.
 
-#### Pick which Subscription you want to use
+Install Azure PowerShell with Data Lake:
 
+1. Download the Azure PowerShell module [here](https://github.com/MicrosoftBigData/AzureDataLake/releases/download/PowerShellSDK/AzurePS_KonaDataLake.zip).
+1. Extract the contents of **AzurePS_KonaDataLake.zip**.
+1. Right click on **INSTALL_RunAsAdministrator** and click **Run as administrator**.
+1. Follow the steps in the installation wizard.
+
+
+#### Initialization
 1. Open a new PowerShell window.
 1. Select your subscription by entering the following:
-        Select-AzureSubscription -SubscriptionId $subscriptionID
+
+        $subId = "<your Subscription ID>"
+        Select-AzureSubscription -SubscriptionId $subId
 
 
-#### Getting a Resource Group
+#### Getting a resource group
+To create an resource in Azure, you must select a resource group.
 
-All Azure resources belong a Resource Group
-
-To see the resource groups in your subscription:
+To enumerate the resource groups in your subscription:
     
     Get-AzureResourceGroup
     
-If you need to create a new Resource Group
+To create a new resource group:
 
+    $resourceGroupName = "<your new resource group name>"
     New-AzureResourceGroup -Name $resourceGroupName -Location "East US 2"
     
-    NOTE: For now -Location MUST be set to "East US 2"
 
 #### Creating a new Azure Data Lake account
 
-    New-AzureDataLakeAccount -ResourceGroupName $resourceGroupName -Name $dataLakeAccountName -Location "East US 2"
+> NOTE: The account name must only contain lowercase letters and numbers.
 
+    $dataLakeAccountName = "<your new Data Lake account name>"
+    
+    New-AzureDataLakeAccount `
+        -ResourceGroupName $resourceGroupName `
+        -Name $dataLakeAccountName `
+        -Location "East US 2"
+
+#### That's it!
+
+Now you can get started using our [Tutorials](about:blank) (COMING SOON) and the [User Manual](UserManual.md), which shows how to use each cmdlet.
 
 #### Learn more
 
-* [PowerShell Tutorials](Tutorials.md) - Learn how to perform some basic activities with your Azure Data Lake in PowerShell.
-* [PowerShell User Manual](UserManual.md) - See how to use the Azure Data Lake PowerShell cmdlets.
-    
+* Azure Data Lake
+    * [PowerShell Tutorials](about:blank) - (COMING SOON) Learn how to perform some basic activities with your Azure Data Lake account in PowerShell.
+    * [PowerShell User Manual](https://github.com/MicrosoftBigData/AzureDataLake/tree/master/docs/PowerShell/UserManual.md) - See how to use the Azure Data Lake PowerShell cmdlets.
+
 ------------
 
 ### Useful links
@@ -46,5 +67,5 @@ Browse the following pages:
 * [Getting Started](../GettingStarted.md)
 * Tools
     * [Azure Portal](../AzurePortal/FirstSteps.md)
-    * [PowerShell](../PowerShell/FirstSteps.md)
+    * [Data Lake PowerShell](../PowerShell/FirstSteps.md)
     * [SDK](../SDK/FirstSteps.md)
