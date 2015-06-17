@@ -5,7 +5,7 @@ This guide assumes you have previously followed the steps in the main [Getting S
 -------------
 
 ## Prerequisites
-Before you begin this tutorial, you must download the sample data from the [AzureDataLake Git Repository](https://github.com/MicrosoftBigData/AzureDataLake/tree/master/Samples/SampleData/OlympicAthletes.zip). Download the file. Store the OlympicAthletes.tsv in a local directory e.g. c:\adldemo\
+Before you begin this tutorial, you must download the sample data from the [AzureDataLake Git Repository](https://github.com/MicrosoftBigData/AzureDataLake/raw/master/Samples/SampleData/OlympicAthletes.zip). Download the file. Store the OlympicAthletes.tsv in a local directory e.g. c:\adldemo\
 
 
 The data file used in this tutorial is a tab separated file with the following fields:
