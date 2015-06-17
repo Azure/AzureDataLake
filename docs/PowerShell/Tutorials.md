@@ -22,45 +22,53 @@ The data file used in this tutorial is a tab separated file with the following f
 
 This is the dataset that will be used for the examples in this document. 
 
-## Exercise 1: 
-Learn how to upload data into the Azure Data Lake, and download the results.
+For all the examples, you will need the Azure Data Lake account that was created. To get it open a powershell window and type the command "Get-AzureDataLakeAccount". Note the "Name" property of the account.
 
 ### Explore the ADL file system
-Let’s first see what’s at the root of the file system.
+Let’s first see what’s at the root of the file system for your account. In PowerShell, type the command below.  
 
-    Get-AzureDataLakeChildItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/
+    Get-AzureDataLakeChildItem `
+    -Path swebhdfs://<your ADL account name>.azuredatalake.net/
 
 ### Create a folder for storing the Sample Data
 
-    New-AzureDataLakeItem -Folder -Path swebhdfs://<your ADL account name>.azuredatalake.net/ADLDemo
+    New-AzureDataLakeItem -Folder -Path swebhdfs://<your ADL account name>.azuredatalake.net/adldemo
 
 We can further verify that the folder was created:
 
-    Get-AzureDataLakeChildItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/
+    Get-AzureDataLakeChildItem `
+    -Path swebhdfs://<your ADL account name>.azuredatalake.net/
 
 And of course, this directory should be empty which we can again confirm
 
-    Get-AzureDataLakeChildItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/ADLDemo
+    Get-AzureDataLakeChildItem `
+    -Path swebhdfs://<your ADL account name>.azuredatalake.net/adldemo
 
 ### Upload the Sample Data File
 To upload the Sample data file we’ll use the following command
 
     cd C:\ADLDemo\
-    Copy-AzureDataLakeItem -Path OlympicAthletes.tsv -Destination swebhdfs://<your ADL account name>.azuredatalake.net/ADLDemo/OlympicAthletes.tsv
+    Copy-AzureDataLakeItem `
+    -Path OlympicAthletes.tsv `
+    -Destination swebhdfs://<your ADL account name>.azuredatalake.net/adldemo/OlympicAthletes.tsv
 
 Now, let’s verify that the file is there and that it has the size we expect.
 
-    Get-AzureDataLakeChildItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/ADLDemo
+    Get-AzureDataLakeChildItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/adldemo
 
 ### Copy the Sample Data File
 To copy the sample file, use the following command:
 
-    Copy-AzureDataLakeItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/ADLDemo/OlympicAthletes.tsv -Destination swebhdfs://<your ADL account name>.azuredatalake.net/ADLDemo/OlympicAthletes_Copy.tsv
+    Copy-AzureDataLakeItem `
+    -Path swebhdfs://<your ADL account name>.azuredatalake.net/adldemp/OlympicAthletes.tsv `
+    -Destination swebhdfs://<your ADL account name>.azuredatalake.net/adldemo/OlympicAthletes_Copy.tsv
     
 ### Download the Sample Data File
 To download the sample file, use the following command:
 
-    Copy-AzureDataLakeItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/ADLDemo/OlympicAthletes.tsv -Destination ./OlympicAthletes_Copy.tsv
+    Copy-AzureDataLakeItem `
+    -Path swebhdfs://<your ADL account name>.azuredatalake.net/adldemo/OlympicAthletes.tsv `
+    -Destination ./OlympicAthletes_Copy.tsv
 
 At this point you are done with your scenario and you have learned how to Upload, List, Copy, and Download files in Azure Data Lake.
 
