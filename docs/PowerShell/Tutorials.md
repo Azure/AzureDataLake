@@ -26,6 +26,7 @@ This is the dataset that will be used for the examples in this document.
 For all the examples, you will need the Azure Data Lake account that was created. To get it open a powershell window and type the command "Get-AzureDataLakeAccount". Note the "Name" property of the account.
 
 ### Setup your root directory for each reference 
+
     $myrootdir = "swebhdfs://<your ADL account name>.azuredatalake.net"
     
 ### Explore the ADL file system
@@ -54,7 +55,7 @@ To upload the Sample data file we’ll use the following command
 
 Now, let’s verify that the file is there and that it has the size we expect.
 
-    Get-AzureDataLakeChildItem -Path swebhdfs://<your ADL account name>.azuredatalake.net/adldemo
+    Get-AzureDataLakeChildItem -Path $myrootdir/adldemo
 
 ### Copy the Sample Data File
 To copy the sample file, use the following command:
