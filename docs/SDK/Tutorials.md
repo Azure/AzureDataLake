@@ -77,6 +77,33 @@ To authenticate each call to Azure, you need to have an object of type ``Subscri
             }
 
             ...
+            
+#### Uploading or Appending to Files
+
+        ...
+        
+        public bool UploadFile(string dlAccountName, string srcPath, string destPath)
+        {
+            UploadParameters parameters = new UploadParameters(srcPath, destPath, dlAccountName);
+
+            DataLakeFrontEndAdapter frontend = new DataLakeFrontEndAdapter(dlAccountName, dlFileSystemClient);
+
+            DataLakeUploader uploader = new DataLakeUploader(parameters, frontend);
+
+            uploader.Execute();
+
+            return true;
+        }
+
+        public bool AppendBytes(string dlAccountName, string path, System.IO.Stream streamContents)
+        {
+            var response = dlFileSystemClient.FileSystem.BeginAppend(path, dlAccountName, null);
+            dlFileSystemClient.FileSystem.Append(response.Location, streamContents);
+
+            return true;
+        }
+        
+        ...
 
 #### Learn more
 * [SDK User Manual](UserManual.md) - View some basic documentation for the Azure Data Lake .NET SDK.
