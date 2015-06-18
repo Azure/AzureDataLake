@@ -68,8 +68,8 @@ To rename the sample file, use the following command:
 To download the sample file, use the following command:
 
     Copy-AzureDataLakeItem `
-    -Path $myrootdir/adldemo/OlympicAthletes_Copy.tsv `
-    -Destination ./OlympicAthletes_Copy.tsv
+    -Destination c:\adldemo\OlympicAthletes_Copy.tsv `
+    -Path $myrootdir/adldemo/OlympicAthletes_Copy.tsv
     
 Compare the sizes of the original file OlympicAthletes.tsv and the downloaded file OlympicAthletes_Copy.tsv. They should be the same.
 
