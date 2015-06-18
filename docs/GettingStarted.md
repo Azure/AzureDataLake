@@ -27,7 +27,7 @@ Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake
 
 1. In a new PowerShell window, enter the following:
 
-        Select-AzureSubscription -SubscriptionId <the Subscription ID that your wrote down previously>
+        Select-AzureSubscription -SubscriptionId <the Subscription ID that you wrote down previously>
         Register-AzureProvider -ProviderNamespace "Microsoft.DataLake"
     
 #### Check for existing accounts
