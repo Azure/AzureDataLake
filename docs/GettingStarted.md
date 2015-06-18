@@ -40,8 +40,7 @@ Open a new PowerShell window. Run the following PowerShell cmdlets to see if you
 If you want to create a new Azure Data Lake account, you can do so through the Portal or PowerShell:
 
 * [Azure PowerShell](PowerShell/FirstSteps.md)
-* [Azure Portal](AzurePortal/FirstSteps.md)
-    * Note: Temporary limitation - only supports single subscriptions
+
 
 ------------
 
