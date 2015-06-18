@@ -8,7 +8,7 @@ To use this new Azure service, follow these simple steps:
 
 #### Your Azure subscription
 1. If you're already part of an Azure subscription, skip this step.<br />If you're not, [create a new Azure subscription here](https://account.windowsazure.com/Subscriptions).
-1. Visit [the Azure Portal](https://portal.azure.com) and log in.
+1. Visit [the Azure Portal](https://portal.azure.com) and log in with the account that is a member of the subscription.
 1. Click **Browse** and select **Subscriptions**.
 1. Select the desired subscription.
 1. Write down the given Subscription ID. You'll need this later.
@@ -22,6 +22,8 @@ Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake
 1. Extract the contents of **AzurePS_KonaDataLake.zip**.
 
 1. Right click on **INSTALL_RunAsAdministrator** and click **Run as administrator**.
+
+    Important: Sign in with the **same account** as you did earlier to view your subscription ID.
 
 1. Follow the steps in the installation wizard.
 
