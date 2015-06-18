@@ -3,7 +3,9 @@
 ##Managing Users##
 With the new accounts, we will be leveraging a combination of the [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/) and Filesystem ACLs to manage access.
 
-Since we separated Kona and Data Lake, the access permissions for these services are managed separately. To simplify access management, we recommend using security groups.
+Since we separated Kona and Data Lake, the access permissions for these services are managed separately. To manage access to both services using one interface, we recommend using security groups.
+
+We will walk you through how to create a security group and using it to control access to both Kona and Azure Data Lake. Once we've added the security group, we can control access just by simply adding/removing users to the group.
 
 ###Setting Up Security Groups in AAD###
 We recommend these steps to simplify access management:
@@ -30,28 +32,10 @@ We recommend these steps to simplify access management:
 
 6) Add users to this group using the "Add User" command at the bottom of the screen
 
-At the moment we need to help you add the Group to the Data Lake access control list. We need the Object ID of the group to do this.
-
-To get the Object ID:
-
-1) Click on the Group to see the Details of the Group
-
-![](../img/Migration/AADGroupDetails.png)
-
-2) Click on Properties and copy the Object ID
-
-![](../img/Migration/AADGroupProperties.png)
-
-3) Send us the following information to konaonboard@microsoft.com:
-- Subscription ID
-- Data Lake Account Name
-- Object ID
-- [Any additional information for Data Migration (see above)]
-
 ###Managing Users for Kona###
 For Kona, we're leveraging [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/). You can refer to the guide for more information but the basic steps are:
 
-1) Open the service
+1) Open the Kona service
 
 2) Click on the User icon in the Essentials Bar
 
@@ -61,7 +45,7 @@ For Kona, we're leveraging [Azure RBAC](https://azure.microsoft.com/en-us/docume
 
 ![](../img/Migration/AzureRbacAdd.png)
 
-4) Click on the "Contributor" role, this role restricts users from adding/removing other users. Definition for each role can be found in the [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/) guide.
+4) Click on the "Contributor" role, basically this role restricts users from adding/removing other users. Definition for each role can be found in the [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/) guide.
 
 ![](../img/Migration/AzureRbacSelectRole.png)
 
@@ -73,5 +57,28 @@ For Kona, we're leveraging [Azure RBAC](https://azure.microsoft.com/en-us/docume
 
 7) Now this group has access to the Kona Service
 
-###Manging Users for Azure Data Lake###
+###Managing Users for Azure Data Lake###
+For Azure Data Lake, we're leveraging 2 components to secure access:
+1) Portal and Management operations are controlled by [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/).
+Follow the same steps above but in the context of an Azure Data Lake service to enable access.
 
+2) File System and Data operations are controlled by ACLs set on the Azure Data Lake. At the moment we need to help you add the Group to the Data Lake access control list (in the future this can be done in the API/PS/UI). We need the Object ID of the group to do this.
+
+    To get the Object ID:
+
+    1) Click on the Group to see the Details of the Group
+
+![](../img/Migration/AADGroupDetails.png)
+
+    2) Click on Properties and copy the Object ID
+
+![](../img/Migration/AADGroupProperties.png)
+
+    3) Send us the following information to konaonboard@microsoft.com:
+    + Subscription ID
+    + Data Lake Account Name
+    + Object ID
+    + [Any additional information for Data Migration (see above)]
+
+###Adding/Removing Users###
+Now that the same security group has been added to both Kona and Azure Data Lake, you can simply add/remove users to the security group to manage access.
