@@ -6,9 +6,21 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 ### Tutorials
 
-#### 01 - Creating the DataLakeConsoleApp class
+#### Tutorial 1 - DataLakeConsoleApp
 
-Now that you've set up your C# project and [added the necessary NuGet packages](FirstSteps.md) for Data Lake, let's create the DataLakeConsoleApp:
+This tutorial will focus on a class we're creating called ``DataLakeConsoleApp``.
+
+You can download the file with the completed tutorial [here](src/DataLakeConsoleApp.cs).
+
+##### 01 - Creating the DataLakeConsoleApp class
+
+Now that you've set up your C# project and [added the necessary NuGet packages](FirstSteps.md) for Data Lake, let's create ``DataLakeConsoleApp``:
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;    
 
     using Microsoft.Azure;
     using Microsoft.Azure.Common.Authentication;
@@ -38,9 +50,11 @@ Now that you've set up your C# project and [added the necessary NuGet packages](
         }
     }
 
-#### 02 - Signing Into Azure and Instantiating the Management Clients
+##### 02 - Signing Into Azure and Instantiating the Management Clients
 
-To authenticate each call to Azure, you need to have an object of type ``SubscriptionCloudCredentials``. Let's set this up now.
+To authenticate each call to Azure, you need to have an object of type ``SubscriptionCloudCredentials``.
+
+Let's add the ``GetCloudCredentials`` method and add to our ``DataLakeConsoleApp`` constructor.
 
 
             ...
@@ -78,7 +92,9 @@ To authenticate each call to Azure, you need to have an object of type ``Subscri
 
             ...
             
-#### Uploading or Appending to Files
+##### 03 - Uploading or Appending to Files
+
+Let's add the ``UploadFile`` and ``AppendBytes`` methods.
 
             ...
             
