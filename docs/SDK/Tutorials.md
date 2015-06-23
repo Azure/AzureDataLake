@@ -86,7 +86,7 @@ Modify the ``DataLakeConsoleApp`` constructor and add the ``InitializeClients`` 
             
 ##### 03 - Uploading or Appending to Files
 
-Let's add the ``UploadFile`` and ``AppendBytes`` methods and modify our Main method.
+Let's add the ``UploadFile`` and ``AppendBytes`` methods and modify our ``Main`` method.
 
             ...
             
