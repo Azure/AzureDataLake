@@ -20,6 +20,13 @@ To create a Kona or Azure Data Lake account:
 
    ![](../img/Portal/AzureMPCreate.png)
 
+### Known Errors ###
+####Error registering resource providers####
+#####Detailed error#####
+Registering the resource providers has failed. Additional details from the underlying API that might be helpful: The resource namespace ("Microsoft.Kona" OR "Mirosoft.DataLake") is invalid.
+#####What this means#####
+This usually means the subscription you tried to use wasn't whitelisted. Send "konaonboard@microsoft.com" an email with the subscription ID you want to use and we will whitelist it.
+
 ### Useful links
 
 Browse the following pages:
