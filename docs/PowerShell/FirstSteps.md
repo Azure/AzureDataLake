@@ -14,6 +14,7 @@ Install Azure PowerShell with Data Lake:
 1. Extract the contents of **AzurePS_KonaDataLake.zip**.
 1. Right click on **INSTALL_RunAsAdministrator** and click **Run as administrator**.
 1. Follow the steps in the installation wizard.
+1. Enter in PowerShell: ``Add-AzureAccount``
 
 
 #### Initialization
