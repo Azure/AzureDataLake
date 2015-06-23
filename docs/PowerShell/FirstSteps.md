@@ -10,7 +10,7 @@ If you already followed the [Getting Started guide](../GettingStarted.md), you c
 
 Install Azure PowerShell with Data Lake:
 
-1. Download the Azure PowerShell module [here](https://github.com/MicrosoftBigData/AzureDataLake/releases/download/PowerShellSDK/AzurePS_KonaDataLake.zip).
+1. Download the Azure PowerShell module [here](https://github.com/MicrosoftBigData/AzureDataLake/releases).
 1. Extract the contents of **AzurePS_KonaDataLake.zip**.
 1. Right click on **INSTALL_RunAsAdministrator** and click **Run as administrator**.
 1. Follow the steps in the installation wizard.
