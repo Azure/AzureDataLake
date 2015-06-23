@@ -7,7 +7,7 @@ This guide assumes you have previously followed the steps in the main [Getting S
 ### First steps
 
 #### Download and extract the Azure Data Lake .NET SDK NuGet packages
-1. Download the [Azure Data Lake .NET SDK NuGet packages here](https://github.com/MicrosoftBigData/AzureDataLake/releases/download/PowerShellSDK/AzureSDK_DataLake_Only.zip).
+1. Download the [Azure Data Lake .NET SDK NuGet packages here](https://github.com/MicrosoftBigData/AzureDataLake/releases).
 1. Extract the contents of **AzureSDK_DataLake_Only.zip**.
 1. Place the contents in a directory, e.g. ``C:\KonaDataLake_NuGet\...``
 
