@@ -37,6 +37,3 @@ Browse the following pages:
     * [Azure Portal](../AzurePortal/FirstSteps.md)
     * [Kona PowerShell](../PowerShell/FirstSteps.md)
     * [SDK](../SDK/FirstSteps.md)
-* Tutorials
-    * [SQLIP Developer Guide](../SQLIP/DeveloperGuide)
-    * [Terminology](../Terminology)
