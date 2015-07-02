@@ -1,10 +1,5 @@
 # Azure Data Lake
 
-Any information available here is *MICROSOFT CONFIDENTIAL.*
-
-
-* [Azure Data Lake SharePoint](http://aka.ms/AzureDataLake)
-
 
 ### Useful links
 
