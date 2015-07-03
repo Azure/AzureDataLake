@@ -29,23 +29,31 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
         CommandType     Name                                               Version    Source
         -----------     ----                                               -------    ------
-        Cmdlet          Add-AzureDataLakeContent                           0.9.1      Azure
-        Cmdlet          Copy-AzureDataLakeItem                             0.9.1      Azure
-        Cmdlet          Get-AzureDataLakeAccount                           0.9.1      Azure
-        Cmdlet          Get-AzureDataLakeChildItem                         0.9.1      Azure
-        Cmdlet          Get-AzureDataLakeItem                              0.9.1      Azure
-        Cmdlet          Get-AzureDataLakeItemAccess                        0.9.1      Azure
-        Cmdlet          Get-AzureDataLakeItemContent                       0.9.1      Azure
-        Cmdlet          Join-AzureDataLakeItem                             0.9.1      Azure
-        Cmdlet          Move-AzureDataLakeItem                             0.9.1      Azure
-        Cmdlet          New-AzureDataLakeAccount                           0.9.1      Azure
-        Cmdlet          New-AzureDataLakeItem                              0.9.1      Azure
-        Cmdlet          Remove-AzureDataLakeAccount                        0.9.1      Azure
-        Cmdlet          Remove-AzureDataLakeItem                           0.9.1      Azure
-        Cmdlet          Set-AzureDataLakeAccount                           0.9.1      Azure
-        Cmdlet          Set-AzureDataLakeItemAccess                        0.9.1      Azure
-        Cmdlet          Test-AzureDataLakeAccount                          0.9.1      Azure
-        Cmdlet          Test-AzureDataLakeItem                             0.9.1      Azure
+        Cmdlet          Add-AzureDataLakeContent                           0.9.4      Azure
+        Cmdlet          Export-AzureDataLakeItem                           0.9.4      Azure
+        Cmdlet          Get-AzureDataLakeAccount                           0.9.4      Azure
+        Cmdlet          Get-AzureDataLakeChildItem                         0.9.4      Azure
+        Cmdlet          Get-AzureDataLakeItem                              0.9.4      Azure
+        Cmdlet          Get-AzureDataLakeItemAcl                           0.9.4      Azure
+        Cmdlet          Get-AzureDataLakeItemContent                       0.9.4      Azure
+        Cmdlet          Get-AzureDataLakeItemOwner                         0.9.4      Azure
+        Cmdlet          Get-AzureDataLakeItemPermissions                   0.9.4      Azure
+        Cmdlet          Import-AzureDataLakeItem                           0.9.4      Azure
+        Cmdlet          Join-AzureDataLakeItem                             0.9.4      Azure
+        Cmdlet          Move-AzureDataLakeItem                             0.9.4      Azure
+        Cmdlet          New-AzureDataLakeAccount                           0.9.4      Azure
+        Cmdlet          New-AzureDataLakeItem                              0.9.4      Azure
+        Cmdlet          Remove-AzureDataLakeAccount                        0.9.4      Azure
+        Cmdlet          Remove-AzureDataLakeItem                           0.9.4      Azure
+        Cmdlet          Remove-AzureDataLakeItemAcl                        0.9.4      Azure
+        Cmdlet          Remove-AzureDataLakeItemAclEntry                   0.9.4      Azure
+        Cmdlet          Set-AzureDataLakeAccount                           0.9.4      Azure
+        Cmdlet          Set-AzureDataLakeItemAcl                           0.9.4      Azure
+        Cmdlet          Set-AzureDataLakeItemAclEntry                      0.9.4      Azure
+        Cmdlet          Set-AzureDataLakeItemOwner                         0.9.4      Azure
+        Cmdlet          Set-AzureDataLakeItemPermissions                   0.9.4      Azure
+        Cmdlet          Test-AzureDataLakeAccount                          0.9.4      Azure
+        Cmdlet          Test-AzureDataLakeItem                             0.9.4      Azure
 
 * To get information about a specific cmdlet, such as the syntax or the return type, enter the following:
     
@@ -98,52 +106,83 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
     * List all details
 
-            Get-AzureDataLakeItem -Path $path
+            Get-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $path
 
     * Get file size in bytes
             
-            $fileInfo = Get-AzureDataLakeItem -Path $path
+            $fileInfo = Get-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $path
             $fileInfo.Size
 
 * **List** files within a specific folder
 
-        Get-AzureDataLakeChildItem -Path $folderPath
+        Get-AzureDataLakeChildItem -AccountName $dataLakeAccountName -Path $folderPath
 
 * **Test existence** of a specific file or folder
 
-        Test-AzureDataLakeItem -Path $path
+        Test-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $path
 
 * **Create** a new file or folder
 
-        New-AzureDataLakeItem -Path $filePath
+        New-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $filePath
 
 * **Upload** a specific file or folder from local machine to Data Lake
 
-        Copy-AzureDataLakeItem -Path $localPath -Destination $remotePath
+        Import-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $localPath -Destination $remotePath
 
 * **Download** a specific file or folder from Data Lake to local machine
 
-        Copy-AzureDataLakeItem -Path $remotePath -Destination $localPath
+        Export-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $remotePath -Destination $localPath
 
 * **Delete** a specific file or folder
 
-        Remove-AzureDataLakeItem -Path $filePath
+        Remove-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $filePath
 
 * **Rename or move** a specific file or folder
 
-        Move-AzureDataLakeItem -Path $filePath -Destination $filePath
+        Move-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $filePath -Destination $filePath
 
 * **Concatenate** (destructively) two or more files
 
-        Join-AzureDataLakeItem -Paths $filePaths -Destination $filePath
+        Join-AzureDataLakeItem -AccountName $dataLakeAccountName -Paths $filePaths -Destination $filePath
 
 * **Append** content to a specific file
 
-        Add-AzureDataLakeItemContent -Path $filePath
+        Add-AzureDataLakeItemContent -AccountName $dataLakeAccountName -Path $filePath
 
 * **Read** content of a specific file
 
-        Get-AzureDataLakeItemContent -Path $filePath
+        Get-AzureDataLakeItemContent -AccountName $dataLakeAccountName -Path $filePath
+
+
+#### File system permissions
+
+* **Read** permissions of a specific file or folder
+
+        # NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
+        
+        $filePath = "/"
+        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path $filePath
+
+* **Set** permissions of a specific file or folder
+
+        # NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
+        
+        #There are three classes of permissions for a given item:
+        #   User owner, Group owner, Other
+        #   r = read
+        #   w = write
+        #   x = execute
+        #   rwxrwxr-- means:
+        #       the user owner can read, write, and execute the item
+        #       all others in the AAD tenant can read the item
+        #   7 => 111 in binary, mapping to rwx
+        #   4 => 100 in binary, mapping to r--
+        
+        $perm = "774"
+        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path $filePath -Permissions $perm
+        
+        $perm = "rwxrwxr--"
+        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path $filePath -Permissions $perm
 
 ------------
 
