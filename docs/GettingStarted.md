@@ -16,18 +16,12 @@ To use this new Azure service, follow these simple steps:
 #### Email your TAP Buddy
 Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake. This step will take up to 1 business day to be completed.
 
-#### Install Azure Data Lake
+#### Install Azure PowerShell with Kona and Data Lake
 1. Download the [Azure PowerShell module here](https://github.com/MicrosoftBigData/AzureDataLake/releases).
 
-1. Extract the contents of **AzurePS_KonaDataLake.zip**.
+1. Extract **Azure_PowerShell.msi** from the .zip and double-click to install.
 
-1. Right click on **INSTALL_RunAsAdministrator** and click **Run as administrator**.
-
-    Important: Sign in with the **same account** as you did earlier to view your subscription ID.
-
-1. Follow the steps in the installation wizard.
-
-1. In a new PowerShell window, enter the following:
+1. From your desktop, open a new Azure PowerShell window, and enter the following -- make sure you log in as one of the subscription admininistrators/owners this first time:
 
         Add-AzureAccount
         Select-AzureSubscription -SubscriptionId <the Subscription ID that you wrote down previously>
