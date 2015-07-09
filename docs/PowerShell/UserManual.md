@@ -156,16 +156,15 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
 #### File system permissions
 
-* **Read** permissions of a specific file or folder
+* **Read** permissions of the root directory
 
-        # NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
+    > NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
         
-        $filePath = "/"
-        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path $filePath
+        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path /
 
-* **Set** permissions of a specific file or folder
+* **Set** permissions of the root directory
 
-        # NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
+    > NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
         
         #There are three classes of permissions for a given item:
         #   User owner, Group owner, Other
@@ -179,10 +178,50 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
         #   4 => 100 in binary, mapping to r--
         
         $perm = "774"
-        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path $filePath -Permissions $perm
+        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path / -Permissions $perm
         
         $perm = "rwxrwxr--"
-        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path $filePath -Permissions $perm
+        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path / -Permissions $perm
+
+* **Get** the root directory's access control list
+        
+    > NOTE: During Data Lake preview, only the root directory has a functional access control list.
+        
+        Get-AzureDataLakeItemAcl -AccountName $dataLakeAccountName -Path /
+
+* **Add or change** a user entry of the root directory's access control list
+
+    > NOTE: During Data Lake preview, only the root directory has a functional access control list.
+        
+    * Give username@example.com Read, Write, and Execute permissions on the root directory.
+                
+                $user = Get-AzureADUser -Mail username@example.com
+                $objectId = $user.Id
+                Set-AzureDataLakeItemAclEntry `
+                        -AccountName $dataLakeAccountName `
+                        -Path / `
+                        -AceType User `
+                        -Id $objectId `
+                        -Permissions All `
+                        -Force
+
+    * Give otherperson@example.com Read permission on the root directory.
+        
+                $user = Get-AzureADUser -Mail otherperson@example.com
+                $objectId = $user.Id
+                Set-AzureDataLakeItemAclEntry `
+                        -AccountName $dataLakeAccountName `
+                        -Path / `
+                        -AceType User `
+                        -Id $objectId `
+                        -Permissions Read `
+                        -Force
+
+* **Clear** the root directory's access control list
+
+    > NOTE: During Data Lake preview, only the root directory has a functional access control list.
+        
+        Remove-AzureDataLakeItemAcl -AccountName $dataLakeAccountName -Path /
 
 ------------
 
