@@ -147,7 +147,7 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
 * **Append** content to a specific file
 
-        Add-AzureDataLakeItemContent -AccountName $dataLakeAccountName -Path $filePath
+        Add-AzureDataLakeContent -AccountName $dataLakeAccountName -Path $filePath
 
 * **Read** content of a specific file
 
