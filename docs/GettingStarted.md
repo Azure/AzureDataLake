@@ -1,0 +1,51 @@
+# Getting Started: Azure Data Lake
+
+------------
+
+### Getting started
+
+To use this new Azure service, follow these simple steps:
+
+#### Your Azure subscription
+1. If you're already part of an Azure subscription, skip this step.<br />If you're not, [create a new Azure subscription here](https://account.windowsazure.com/Subscriptions).
+1. Visit [the Azure Portal](https://portal.azure.com) and log in with the account that is a member of the subscription.
+1. Click **Browse** and select **Subscriptions**.
+1. Select the desired subscription.
+1. Write down the given Subscription ID. You'll need this later.
+   
+#### Email your TAP Buddy
+Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake. This step will take up to 1 business day to be completed.
+
+#### Install Azure PowerShell with Kona and Data Lake
+1. Download the [Azure PowerShell module here](https://github.com/MicrosoftBigData/AzureDataLake/releases).
+
+1. Extract **Azure_PowerShell.msi** from the .zip and double-click to install.
+
+1. From your desktop, open a new Azure PowerShell window, and enter the following -- make sure you log in as one of the subscription admininistrators/owners this first time:
+
+        Add-AzureAccount
+        Select-AzureSubscription -SubscriptionId <the Subscription ID that you wrote down previously>
+        Switch-AzureMode AzureResourceManager
+        Register-AzureProvider -ProviderNamespace "Microsoft.DataLake"
+    
+#### Check for existing accounts
+Open a new PowerShell window. Run the following PowerShell cmdlets to see if you already have access to a Data Lake account.
+
+    Get-AzureDataLakeAccount
+
+#### Create a new account
+
+If you want to create a new Azure Data Lake account, you can do so through the Portal or PowerShell:
+
+* [Azure PowerShell](PowerShell/FirstSteps.md)
+* [Azure Portal](./AzurePortal/FirstSteps.md)
+
+------------
+
+### Useful links
+
+* [Getting Started](GettingStarted.md)
+* Tools
+    * [Azure Portal](AzurePortal/FirstSteps.md)
+    * [Data Lake PowerShell](PowerShell/FirstSteps.md)
+    * [SDK](SDK/FirstSteps.md)

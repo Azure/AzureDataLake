@@ -1,6 +1,12 @@
-# ProjectKona
-
-Any information available here is *MICROSOFT CONFIDENTIAL.*
+# Azure Data Lake
 
 
-* [Kona SharePoint](http://aka.ms/ProjectKona)
+### Useful links
+
+Browse the following pages:
+
+* [Getting Started](docs/GettingStarted.md)
+* Tools
+    * [Azure Portal](docs/AzurePortal/FirstSteps.md)
+    * [PowerShell](docs/PowerShell/FirstSteps.md)
+    * [SDK](docs/SDK/FirstSteps.md)
