@@ -23,6 +23,7 @@ Install Azure PowerShell with Data Lake:
 
         $subId = "<your Subscription ID>"
         Select-AzureSubscription -SubscriptionId $subId
+        Switch-AzureMode AzureResourceManager
 
 
 #### Getting a resource group
