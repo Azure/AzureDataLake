@@ -25,6 +25,7 @@ Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake
 
         Add-AzureAccount
         Select-AzureSubscription -SubscriptionId <the Subscription ID that you wrote down previously>
+        Switch-AzureMode AzureResourceManager
         Register-AzureProvider -ProviderNamespace "Microsoft.DataLake"
     
 #### Check for existing accounts
