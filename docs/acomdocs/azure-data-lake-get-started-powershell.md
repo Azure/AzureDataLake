@@ -16,7 +16,11 @@
    ms.date="08/31/2015"
    ms.author="nitinme"/>
 
-# Overview of Azure Data Lake
+# Get started with Azure Data Lake
+
+> [AZURE.SELECTOR]
+- [Portal](azure-data-lake-get-started-portal.md)
+- [PowerShell](azure-data-lake-get-started-powershell.md)
 
 A Data Lake is an enterprise-wide repository of every type of data collected in a single place, prior to any formal definition schema has been established. A Data Lake allows any kind of data to be kept. This allows every type of data to be stored in one single repository regardless of its size, structure, or how fast it is ingested. Organizations can then use big data tools to analyze and find patterns in the data.
 
