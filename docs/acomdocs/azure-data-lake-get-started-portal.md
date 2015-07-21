@@ -1,6 +1,6 @@
 <properties 
-   pageTitle="Overview of Azure Data Lake | Azure" 
-   description="Understand what is Azure Data Lake and the value it provides over other data stores" 
+   pageTitle="Get started with Data Lake | Azure" 
+   description="Use the portal to create a Data Lake account and perform basic operations in the Data Lake" 
    services="data-lake" 
    documentationCenter="" 
    authors="nitinme" 
@@ -16,15 +16,33 @@
    ms.date="08/31/2015"
    ms.author="nitinme"/>
 
-# Overview of Azure Data Lake
+# Get started with Azure Data Lake using the portal
 
-A Data Lake is an enterprise-wide repository of every type of data collected in a single place, prior to any formal definition schema has been established. A Data Lake allows any kind of data to be kept. This allows every type of data to be stored in one single repository regardless of its size, structure, or how fast it is ingested. Organizations can then use big data tools to analyze and find patterns in the data.
+> [AZURE.SELECTOR]
+- [Portal](azure-data-lake-get-started-portal.md)
+- [PowerShell](azure-data-lake-get-started-powershell.md)
 
-## What is Azure Data Lake?
+Learn how to create an Azure Data Lake account and perform basic operations such as create folders, upload and download data files, delete your account, etc. For more information about Data Lake, see [Azure Data Lake](azure-data-lake-overview.md).
 
-Azure Data Lake is Microsoft’s Data Lake offering hosted in Azure, described as a hyper scale repository for big data analytic workloads. Organizations can use Azure Data Lake to store, secure, and scale their data for massive parallel big data analytics in the cloud. Some of the key capabilities of the Azure Data Lake include the following. 
+## Prerequisites
 
-<< TODO: include an illustration here >>
+Before you begin this tutorial, you must have the following:
+
+- **An Azure subscription**. See [Get Azure free trial](http://azure.microsoft.com/documentation/videos/get-azure-free-trial-for-testing-hadoop-in-hdinsight/).
+
+## Create an Azure Data Lake account
+
+1. Sign on to the new [Azure portal](https://portal.azure.com).
+2. Click **NEW**, click **Data + Storage**, and then click **Azure Data Lake**. Read the information in the **Azure Data Lake** blade, and then click **Create** in the bottom left corner of the blade.
+3. In the **New Data Lake** blade, provide the following values:
+	- **Name**: Enter a name for the Data Lake account.
+	- **Pricing**: [ TBD: Complete pricing info ]	
+	- **Subscription**: Click the Subscription blade and select the subscription you want to associate with the Data Lake account.
+	- **Resource Group**. Select an existing resource group, or click **Create a resource group** to create one. A resource group is a container that holds related resources for an application. For more information, see [Resource Groups in Azure](resource-group-overview.md#resource-groups).
+	- **Location**: Select a location. [ TBD: What's the importance of this location. Is the new resource group in the same location ]
+
+4. Select **Pin to Startboard** if you want the Data Lake account to be accessible from the Startboard. This is required for following this tutorial.
+5. Click **Create**. 
 
 ### HDFS for the Cloud
 
