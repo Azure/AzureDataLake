@@ -24,7 +24,7 @@ A Data Lake is an enterprise-wide repository of every type of data collected in 
 
 Azure Data Lake is Microsoft’s Data Lake offering hosted in Azure, described as a hyper scale repository for big data analytic workloads. Organizations can use Azure Data Lake to store, secure, and scale their data for massive parallel big data analytics in the cloud. Some of the key capabilities of the Azure Data Lake include the following. 
 
-<< TODO: include an illustration here >>
+[ TBD: include an illustration here ]
 
 ### HDFS for the Cloud
 
@@ -44,11 +44,11 @@ Azure Data Lake is built as a distributed file store allowing you to store relat
 
 ## How is Azure Data Lake different from Azure Storage?
 
-<< TODO: Add more info >>
+[ TBD: Add more info ]
 
 Azure Storage is a generic storage repository that allows you to store data for any use case. In contrast, Azure Data Lake is a storage repository optimized for big data solutions. This includes the capability to stores files that are petabytes in size, provides higher throughput, and has built-in integration with Hadoop.
 
-<< TODO: Include a table comparison >>
+[ TBD: Include a table comparison ]
 
 | Feature                                | Azure Data Lake | Azure Storage |
 |----------------------------------------|-----------------|---------------|
@@ -56,11 +56,17 @@ Azure Storage is a generic storage repository that allows you to store data for 
 | Types of data that can be stored       | --              | --            |
 | Cost                                   | --              | --            |
 | Compatibility with big data offerings  | --              | --            |
+| Data access protocol				     | --              | --            |
 
-## How do I start using Azure Data Lake
 
-See << TODO: Link to Hero tutorial >>, on how to provision an Azure Data Lake account. Once you have provisioned Azure Data Lake, you can learn how to use big data offerings, such as << TODO: Official name of Kona >>, Azure HDInsight, and Hortonworks HDP with Azure Data Lake to run your big data workloads.
+## What is swebhdfs://?
 
-- << TODO: Link to using ADL with Kona >>
-- << TODO: Link to using ADL with HDInsight >>
-- << TODO: Link to using ADL with HDP >>  
+## Best practices for using Azure Data Lake
+
+## How do I start using Azure Data Lake?
+
+See [ TBD: Link to Hero tutorial ], on how to provision an Azure Data Lake account. Once you have provisioned Azure Data Lake, you can learn how to use big data offerings, such as [ TBD: Official name of Kona ], Azure HDInsight, and Hortonworks HDP with Azure Data Lake to run your big data workloads.
+
+- [ TBD: Link to using ADL with Kona ]
+- [ TBD: Link to using ADL with HDInsight ]
+- [ TBD: Link to using ADL with HDP ]  
