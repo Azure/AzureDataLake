@@ -33,52 +33,80 @@ Before you begin this tutorial, you must have the following:
 ## Create an Azure Data Lake account
 
 1. Sign on to the new [Azure portal](https://portal.azure.com).
+
 2. Click **NEW**, click **Data + Storage**, and then click **Azure Data Lake**. Read the information in the **Azure Data Lake** blade, and then click **Create** in the bottom left corner of the blade.
-3. In the **New Data Lake** blade, provide the following values:
-	- **Name**: Enter a name for the Data Lake account.
+
+3. In the **New Data Lake** blade, provide the values as shown in the screen capture below:
+
+	![Create a new Azure Data Lake account](./media/azure-data-lake-get-started-portal/ADL.Create.New.Account.png "Create a new Azure Data Lake account")
+
 	- **Pricing**: [ TBD: Complete pricing info ]	
-	- **Subscription**: Click the Subscription blade and select the subscription you want to associate with the Data Lake account.
 	- **Resource Group**. Select an existing resource group, or click **Create a resource group** to create one. A resource group is a container that holds related resources for an application. For more information, see [Resource Groups in Azure](resource-group-overview.md#resource-groups).
 	- **Location**: Select a location. [ TBD: What's the importance of this location. Is the new resource group in the same location ]
 
-4. Select **Pin to Startboard** if you want the Data Lake account to be accessible from the Startboard. This is required for following this tutorial.
-5. Click **Create**. 
+4. Select **Pin to Startboard** if you want the Data Lake account to be accessible from the Startboard.
 
-### HDFS for the Cloud
+5. Click **Create**. If you chose to pin the account to the startboard, you are taken back to the startboard and you can see the progress of your data lake account provisioning. Once the Azure Data Lake account is provisioned, the account blade shows up.
 
-Azure Data Lake is built from the ground-up as a native Hadoop file system compatible with HDFS, working out-of-the-box with the Hadoop ecosystem including Azure HDInsight, Revolution-R Enterprise, and industry Hadoop distributions like Hortonworks and Cloudera. 
+6. Expand the **Essentials** drop-down to see the information about your data lake account such as the resource group it is a part of, the location, etc. Click the **Quick Start** icon to see links to other resources related to Azure Data Lake.
 
-### Unlimited storage, petabyte files, and massive throughput
+	![Your Azure Data Lake account](./media/azure-data-lake-get-started-portal/ADL.Account.QuickStart.png "Your Azure Data Lake account")
 
-Azure Data Lake has unbounded scale with no limits to the amount of data that can be stored in a single account and can store very large files of petabyte range. Azure Data Lake is built for running large analytic systems that require massive throughput to query and analyze petabytes of data. It can handle high volumes of small writes at low latency making it optimized for near real-time scenarios like website analytics, Internet of Things (IoT), analytics from sensors, etc.
+## Create directory structures in your Azure Data Lake account
 
-### Enterprise-ready
+You can create directories under your Azure Data Lake account to manage and store data.
 
-Azure Data Lake leverages Azure Active Directory to provide identity and access management for all your data. It also provides data reliability by replicating your data assets to guard against any unexpected failures. This enables enterprises to factor Azure Data Lake in their solutions as an important part of their existing data platform.
+1. Open the Data Lake account that you just created. From the left pane, click **Browse All**, click **Data Lake**, and then from the Data Lake blade, click the account name under which you want to create directories. If you pinned the Data Lake account to the startboard, click that tile.
 
-### Data in any format
+2. In your Data Lake account blade, click **Browse Data**.
 
-Azure Data Lake is built as a distributed file store allowing you to store relational and non-relational data without transformation or schema definition. This allows you to store all of your data and analyze them in their native format.
+	![Create directories in Data Lake account](./media/azure-data-lake-get-started-portal/ADL.Create.Folder.png "Create directories in Data Lake account")
 
-## How is Azure Data Lake different from Azure Storage?
+3. In the **Browse Data** blade, click **New Directory**, enter a name for the new directory, and then click **OK**.
+	
+	![Create directories in Data Lake account](./media/azure-data-lake-get-started-portal/ADL.Folder.Name.png "Create directories in Data Lake account")
+	
+	The newly created directory will be listed in the Browse Data blade. You can create nested directories upto any level.
 
-<< TODO: Add more info >>
+	![Create directories in Data Lake account](./media/azure-data-lake-get-started-portal/ADL.New.Directory.png "Create directories in Data Lake account")
 
-Azure Storage is a generic storage repository that allows you to store data for any use case. In contrast, Azure Data Lake is a storage repository optimized for big data solutions. This includes the capability to stores files that are petabytes in size, provides higher throughput, and has built-in integration with Hadoop.
 
-<< TODO: Include a table comparison >>
 
-| Feature                                | Azure Data Lake | Azure Storage |
-|----------------------------------------|-----------------|---------------|
-| Maximum file size                      | --              | --            |
-| Types of data that can be stored       | --              | --            |
-| Cost                                   | --              | --            |
-| Compatibility with big data offerings  | --              | --            |
+## Upload data to your Azure Data Lake account
 
-## How do I start using Azure Data Lake
+You can upload your data to an Azure Data Lake account directly at the root level or to a directory that you created within the account. In the screen capture below, follow the steps to upload a file to a sub-directory from the **Browse Data** blade. In this screen capture, the file is uploaded to a sub-directory shown in the breadcrumbs (marked in a red box).
 
-See << TODO: Link to Hero tutorial >>, on how to provision an Azure Data Lake account. Once you have provisioned Azure Data Lake, you can learn how to use big data offerings, such as << TODO: Official name of Kona >>, Azure HDInsight, and Hortonworks HDP with Azure Data Lake to run your big data workloads.
+![Upload data](./media/azure-data-lake-get-started-portal/ADL.New.Upload.File.png "Upload data")
 
-- << TODO: Link to using ADL with Kona >>
-- << TODO: Link to using ADL with HDInsight >>
-- << TODO: Link to using ADL with HDP >>  
+
+## Properties and actions available on the stored data
+
+Click the newly added file to open the **Properties** blade. The properties associated with the file and the actions you can perform on the file are available in this blade. You can also copy the full path to file in your Azure Data Lake account, highlighted in the red box in the screen capture below. [ TBD: Talk about swebhdfs ]
+
+![Properties on the data](./media/azure-data-lake-get-started-portal/ADL.File.Properties.png "Properties on the data")
+
+* Click **Preview** to see a preview of the file, directly from the browser. You can specify the format of the preview as well. Click Preview, click Format in the File Preview blade, and in the File Preview Format blade specify the options such as number of rows to display, encoding to use, delimiter to use, etc.
+
+  ![File preview format](./media/azure-data-lake-get-started-portal/ADL.File.Preview.png "File preview format")
+
+* Click **Download** to download the file to your computer.
+
+* Click **Rename** to rename the file.
+
+* Click **Delete** to delete the file.
+
+
+## Secure your data
+
+You can secure the data stored in your Azure Data Lake account by using access control and providing expiry settings on the data. For instructions on how to do that, see [ TBD: Link to topic ].
+
+
+## Delete your Azure Data Lake account
+
+To delete an Azure Data Lake account, from your Data Lake blade, click Delete. As a confirmation, you'll be prompted to enter the name of the account you wish to delete. Enter the name of the account, and then click **Delete**.
+
+![Delete Data Lake account](./media/azure-data-lake-get-started-portal/ADL.Delete.Account.png "Delete Data Lake account")
+
+## See Also
+
+[ TBD: Add links ]
