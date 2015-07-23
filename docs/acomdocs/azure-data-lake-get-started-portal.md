@@ -22,7 +22,7 @@
 - [Portal](azure-data-lake-get-started-portal.md)
 - [PowerShell](azure-data-lake-get-started-powershell.md)
 
-Learn how to create an Azure Data Lake account and perform basic operations such as create folders, upload and download data files, delete your account, etc. For more information about Data Lake, see [Azure Data Lake](azure-data-lake-overview.md).
+Learn how to use the Azure Preview Portal to create an Azure Data Lake account and perform basic operations such as create folders, upload and download data files, delete your account, etc. For more information about Data Lake, see [Azure Data Lake](azure-data-lake-overview.md).
 
 ## Prerequisites
 
