@@ -22,49 +22,126 @@
 - [Portal](azure-data-lake-get-started-portal.md)
 - [PowerShell](azure-data-lake-get-started-powershell.md)
 
-A Data Lake is an enterprise-wide repository of every type of data collected in a single place, prior to any formal definition schema has been established. A Data Lake allows any kind of data to be kept. This allows every type of data to be stored in one single repository regardless of its size, structure, or how fast it is ingested. Organizations can then use big data tools to analyze and find patterns in the data.
+Learn how to use Azure PowerShell to create an Azure Data Lake account and perform basic operations such as create folders, upload and download data files, delete your account, etc. For more information about Data Lake, see [Azure Data Lake](azure-data-lake-overview.md).
 
-## What is Azure Data Lake?
+## Prerequisites
 
-Azure Data Lake is Microsoft’s Data Lake offering hosted in Azure, described as a hyper scale repository for big data analytic workloads. Organizations can use Azure Data Lake to store, secure, and scale their data for massive parallel big data analytics in the cloud. Some of the key capabilities of the Azure Data Lake include the following. 
+Before you begin this tutorial, you must have the following:
 
-<< TODO: include an illustration here >>
+- **An Azure subscription**. See [Get Azure free trial](http://azure.microsoft.com/documentation/videos/get-azure-free-trial-for-testing-hadoop-in-hdinsight/).
 
-### HDFS for the Cloud
+## Install Azure PowerShell
 
-Azure Data Lake is built from the ground-up as a native Hadoop file system compatible with HDFS, working out-of-the-box with the Hadoop ecosystem including Azure HDInsight, Revolution-R Enterprise, and industry Hadoop distributions like Hortonworks and Cloudera. 
+1. Download the [Azure PowerShell module for Data Lake](https://github.com/MicrosoftBigData/AzureDataLake/releases).
 
-### Unlimited storage, petabyte files, and massive throughput
+2. Extract **Azure_PowerShell.msi** from the .zip and double-click to install.
 
-Azure Data Lake has unbounded scale with no limits to the amount of data that can be stored in a single account and can store very large files of petabyte range. Azure Data Lake is built for running large analytic systems that require massive throughput to query and analyze petabytes of data. It can handle high volumes of small writes at low latency making it optimized for near real-time scenarios like website analytics, Internet of Things (IoT), analytics from sensors, etc.
+3. From your desktop, open a new Azure PowerShell window, and enter the following snippet. When prompted to log in, make sure you log in as one of the subscription admininistrators/owner:
 
-### Enterprise-ready
+        # Log in to your Azure account
+		Add-AzureAccount
+        
+		# List all the subscriptions associated to your account
+		Get-AzureSubscription
+		
+		# Select a subscription 
+		Select-AzureSubscription -SubscriptionName <subscription name>
+        
+		# Switch to Azure Resource Manager mode and register for Data Lake
+		Switch-AzureMode AzureResourceManager
+        Register-AzureProvider -ProviderNamespace "Microsoft.DataLake" 
 
-Azure Data Lake leverages Azure Active Directory to provide identity and access management for all your data. It also provides data reliability by replicating your data assets to guard against any unexpected failures. This enables enterprises to factor Azure Data Lake in their solutions as an important part of their existing data platform.
 
-### Data in any format
+## Create an Azure Data Lake account
 
-Azure Data Lake is built as a distributed file store allowing you to store relational and non-relational data without transformation or schema definition. This allows you to store all of your data and analyze them in their native format.
+Follow these steps to create an Azure Data Lake account.
 
-## How is Azure Data Lake different from Azure Storage?
+1. An Azure Data Lake account is associated with an Azure Resource Group. Start by creating an Azure Resource Group.
 
-<< TODO: Add more info >>
+		$resourceGroupName = "<your new resource group name>"
+    	New-AzureResourceGroup -Name $resourceGroupName -Location "East US 2"
 
-Azure Storage is a generic storage repository that allows you to store data for any use case. In contrast, Azure Data Lake is a storage repository optimized for big data solutions. This includes the capability to stores files that are petabytes in size, provides higher throughput, and has built-in integration with Hadoop.
+	![Create an Azure Resource Group](./media/azure-data-lake-get-started-powershell/ADL.PS.CreateResourceGroup.png "Create an Azure Resource Group")
 
-<< TODO: Include a table comparison >>
+2. Create an Azure Data Lake account. The account name you specify must only contain lowercase letters and numbers.
 
-| Feature                                | Azure Data Lake | Azure Storage |
-|----------------------------------------|-----------------|---------------|
-| Maximum file size                      | --              | --            |
-| Types of data that can be stored       | --              | --            |
-| Cost                                   | --              | --            |
-| Compatibility with big data offerings  | --              | --            |
+		Switch-AzureMode AzureServiceManagement
+		$dataLakeAccountName = "<your new Data Lake account name>"
+    	New-AzureDataLakeAccount -ResourceGroupName $resourceGroupName -Name$dataLakeAccountName -Location "East US 2"
 
-## How do I start using Azure Data Lake
+	![Create an Azure Data Lake account](./media/azure-data-lake-get-started-powershell/ADL.PS.CreateADLAcc.png "Create an Azure Data Lake account")
 
-See << TODO: Link to Hero tutorial >>, on how to provision an Azure Data Lake account. Once you have provisioned Azure Data Lake, you can learn how to use big data offerings, such as << TODO: Official name of Kona >>, Azure HDInsight, and Hortonworks HDP with Azure Data Lake to run your big data workloads.
+3. Verify that the account is successfully created.
 
-- << TODO: Link to using ADL with Kona >>
-- << TODO: Link to using ADL with HDInsight >>
-- << TODO: Link to using ADL with HDP >>  
+		Test-AzureDataLakeAccount -Name <Data Lake account name>
+
+	The output for this should be **True**.
+
+## Create directory structures in your Azure Data Lake account
+
+You can create directories under your Azure Data Lake account to manage and store data. 
+
+1. Specify a root directory.
+
+		$myrootdir = "swebhdfs://<Data Lake account name>.azuredatalake.net"
+
+2. Create a new directory called **mynewdirectory** under the specified root.
+
+		New-AzureDataLakeItem -Folder AccountName <Data Lake account> -Path $myrootdir/mynewdirectory
+
+3. Verify that the new directory is successfully created.
+
+		Get-AzureDataLakeChildItem -AccountName <Data Lake account> -Path $myrootdir
+
+	It should show an output like the following:
+
+	![Verify Directory](./media/azure-data-lake-get-started-powershell/ADL.PS.Verify.Dir.Creation.png "Verify Directory")
+
+
+## Upload data to your Azure Data Lake account
+
+You can upload your data to an Azure Data Lake account directly at the root level or to a directory that you created within the account. The snippets below demonstrate how to upload some sample data to the directory (**mynewdirectory**) you created in the previous section.
+
+If you are looking for some sample data to upload, you can get the **OlympicAthletes.tsv** file from the [AzureDataLake Git Repository](https://github.com/MicrosoftBigData/AzureDataLake/raw/master/Samples/SampleData/OlympicAthletes.tsv). Download the file and store it in a local directory on your computer, such as  C:\sampledata\.
+
+	Import-AzureDataLakeItem -AccountName <Data Lake account> -Path "C:\sampledata\OlympicAthletes.tsv" -Destination $myrootdir\mynewdirectory\OlympicAthletes.tsv
+
+You can upload more than one file from the source folder to the destination folder by giving the path to the folder name and omitting the file name. For example, the following command will upload all files in C:\sampledata\ to **mynewdirectory** in your Azure Data Lake account.
+
+	Import-AzureDataLakeItem -AccountName <Data Lake account> -Path "C:\sampledata\" -Destination $myrootdir\mynewdirectory\
+
+## Rename, download, and delete data from your Azure Data Lake account
+
+To rename a file, use the following command:
+
+    Move-AzureDataLakeItem -AccountName <Data Lake account> -Path $myrootdir\mynewdirectory\OlympicAthletes.tsv -Destination $myrootdir\mynewdirectory\OlympicAthletes_Copy.tsv
+
+To download a file, use the following command:
+
+	Export-AzureDataLakeItem -AccountName <Data Lake account> -Path $myrootdir\mynewdirectory\OlympicAthletes_Copy.tsv -Path "C:\sampledata\OlympicAthletes_Copy.tsv"
+
+To delete a file, use the following command:
+
+	Remove-AzureDataLakeItem -AccountName <Data Lake account> -Paths $myrootdir\mynewdirectory\OlympicAthletes_Copy.tsv 
+	
+When prompted, enter **Y** to delete the item. If you have more than one file to delete, you can provide all the paths separated by comma.
+
+	Remove-AzureDataLakeItem -AccountName <Data Lake account> -Paths $myrootdir\mynewdirectory\OlympicAthletes.tsv, $myrootdir\mynewdirectory\OlympicAthletes_Copy.tsv
+
+## Secure your data
+
+You can secure the data stored in your Azure Data Lake account by using access control and providing expiry settings on the data. For instructions on how to do that, see [ TBD: Link to topic ].
+
+
+## Delete your Azure Data Lake account
+
+Use the following command to delete your Data Lake account.
+
+	Remove-AzureDataLakeAccount <Data Lake account>
+
+When prompted, enter **Y** to delete the account.
+
+	
+## See Also
+
+[ TBD: Add links ]
