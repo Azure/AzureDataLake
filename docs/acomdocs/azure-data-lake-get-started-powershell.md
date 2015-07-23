@@ -1,6 +1,6 @@
 <properties 
-   pageTitle="Overview of Azure Data Lake | Azure" 
-   description="Understand what is Azure Data Lake and the value it provides over other data stores" 
+   pageTitle="Get started with Data Lake | Azure" 
+   description="Use Azure PowerShell to create a Data Lake account and perform basic operations in the Data Lake" 
    services="data-lake" 
    documentationCenter="" 
    authors="nitinme" 
@@ -16,7 +16,7 @@
    ms.date="08/31/2015"
    ms.author="nitinme"/>
 
-# Get started with Azure Data Lake
+# Get started with Azure Data Lake using Azure PowerShell
 
 > [AZURE.SELECTOR]
 - [Portal](azure-data-lake-get-started-portal.md)
