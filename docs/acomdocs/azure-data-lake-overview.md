@@ -57,6 +57,7 @@ Azure Storage is a generic storage repository that allows you to store data for 
 | Cost                                   | --              | --            |
 | Compatibility with big data offerings  | --              | --            |
 | Data access protocol				     | --              | --            |
+| Authentication						 | --			   | --			   | 
 
 
 ## What is swebhdfs://?
