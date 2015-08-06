@@ -4,17 +4,13 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 ------------
 
-### Tutorials
+### Tutorial - How to use Data Lake from .NET
 
-#### Tutorial 1 - DataLakeConsoleApp
+A completed tutorial can be downloaded [here](src/ADL_dotNET_demo.zip) that will demonstrate how to perform common scenarios using the Azure Data Lake service .NET SDK.  The scenarios covered include uploading, downloading, and browsing your files.
+The guide below will highlight snippets of the code that enables these scenarios.   
 
-This tutorial will focus on a class we're creating called ``DataLakeConsoleApp``.
-
-You can download the file with the completed tutorial [here](src/DataLakeConsoleApp.cs).
-
-##### 01 - Creating the DataLakeConsoleApp class
-
-Now that you've set up your C# project and [added the necessary NuGet packages](FirstSteps.md) for Data Lake, let's create ``DataLakeConsoleApp``:
+##### 02 - Namespace declarations
+Add the following namespace declarations to the top of any C# file in which you wish to programmatically access Azure Data Lake:
 
     using System;
     using System.Collections.Generic;
@@ -31,7 +27,10 @@ Now that you've set up your C# project and [added the necessary NuGet packages](
     using Microsoft.Azure.Management.DataLakeFileSystem.Models;
     using Microsoft.Azure.Management.DataLakeFileSystem.Uploading;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
-    
+ 
+
+##### 03 - Create a DataLakeConsoleApp 
+
     namespace DataLakeConsoleApp
     {
         class DataLakeConsoleApp
@@ -39,84 +38,82 @@ Now that you've set up your C# project and [added the necessary NuGet packages](
             private DataLakeManagementClient dlClient;
             private DataLakeFileSystemManagementClient dlFileSystemClient;
     
-            public DataLakeConsoleApp(Guid subID)
-            {
-            }
-    
             static void Main(string[] args)
             {
-                DataLakeConsoleApp app = new DataLakeConsoleApp(new Guid("12345678-1234-1234-1234-123456789012"));
-    
-                System.Console.ReadKey();
+
+
             }
         }
     }
 
-##### 02 - Signing Into Azure and Instantiating the Management Clients
+##### 04 - Sign Into Azure
 
-Modify the ``DataLakeConsoleApp`` constructor and add the ``InitializeClients`` method.
+	_profileClient = AzureHelper.GetProfile(username, password);
 
-            ...
+        public static ProfileClient GetProfile(string username = null, SecureString password = null)
+        {
+            var pClient = new ProfileClient(new AzureProfile());
+            var env = pClient.GetEnvironmentOrDefault(EnvironmentName.AzureCloud);
+            var acct = new AzureAccount { Type = AzureAccount.AccountType.User };
 
-            public DataLakeConsoleApp(Guid subID)
-            {
-                InitializeClients(subID);
-            }
-    
-            public void InitializeClients(Guid subID)
-            {
-                ProfileClient profileClient = new ProfileClient(new AzureProfile());
-                AzureEnvironment env = profileClient.GetEnvironmentOrDefault(EnvironmentName.AzureCloud);
-                AzureAccount acct = new AzureAccount { Type = AzureAccount.AccountType.User };
-    
-                profileClient.InitializeProfile(env, subID, acct, null, "");
-    
-                AzureSubscription subscription = profileClient.Profile.Subscriptions.Values.FirstOrDefault(s => s.Id.Equals(subID));
-    
-                profileClient.SetSubscriptionAsDefault(subscription.Id, subscription.Account);
-    
-                SubscriptionCloudCredentials credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profileClient.Profile.Context);
-    
-                // Instantiate clients
-                this.dlClient = new DataLakeManagementClient(credentials, profileClient.Profile.Context.Environment.GetEndpointAsUri(AzureEnvironment.Endpoint.ResourceManager));
-                this.dlFileSystemClient = new DataLakeFileSystemManagementClient(credentials, profileClient.Profile.Context.Environment.GetEndpoint(AzureEnvironment.Endpoint.AzureDataLakeFileSystemEndpointSuffix));
-            }
+            if (username != null && password != null)
+                acct.Id = username;
 
-            ...
-            
-##### 03 - Uploading or Appending to Files
+            pClient.AddAccountAndLoadSubscriptions(acct, env, password);
 
-Let's add the ``UploadFile`` and ``AppendBytes`` methods and modify our ``Main`` method.
-
-            ...
-            
-            public bool UploadFile(string dlAccountName, string srcPath, string destPath)
-            {
-                UploadParameters parameters = new UploadParameters(srcPath, destPath, dlAccountName);
-                DataLakeFrontEndAdapter frontend = new DataLakeFrontEndAdapter(dlAccountName, dlFileSystemClient);
-                DataLakeUploader uploader = new DataLakeUploader(parameters, frontend);
-                uploader.Execute();
-    
-                return true;
-            }
-    
-            public bool AppendBytes(string dlAccountName, string path, System.IO.Stream streamContents)
-            {
-                var response = dlFileSystemClient.FileSystem.BeginAppend(path, dlAccountName, null);
-                dlFileSystemClient.FileSystem.Append(response.Location, streamContents);
-                return true;
-            }
-    
-            static void Main(string[] args)
-            {
-                DataLakeConsoleApp app = new DataLakeConsoleApp(new Guid("12345678-1234-1234-1234-123456789012"));
-    
-                app.UploadFile("mydatalakeaccount", @"C:\foo.txt", @"foo_uploaded.txt");
-    
-                System.Console.ReadKey();
-            }
+            return pClient;
         }
-    }
+
+##### 05 - Instantiate management clients
+
+            subId = "12345678-1234-1234-1234-123456789012";
+            _credentials = AzureHelper.GetCloudCredentials(_profileClient, new Guid(subId));
+            _dataLakeClient = new DataLakeManagementClient(_credentials);
+            _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
+            _dataLakeResourceGroupName = DataLakeHelper.GetResourceGroupName(_dataLakeClient, _dataLakeAccountName);
+            
+##### 06 - Uploading or Appending to Files
+
+        public static bool UploadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dlAccountName, string srcPath, string destPath, bool force = false)
+        {
+            var parameters = new UploadParameters(srcPath, destPath, dlAccountName, isOverwrite: true);
+            var frontend = new DataLakeFrontEndAdapter(dlAccountName, dataLakeFileSystemClient);
+            var uploader = new DataLakeUploader(parameters, frontend);
+
+            uploader.Execute();
+
+            return true;
+        }
+
+
+        public static bool AppendBytes(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dlAccountName, string path, Stream streamContents)
+        {
+            var response = dataLakeFileSystemClient.FileSystem.BeginAppend(path, dlAccountName, null);
+            dataLakeFileSystemClient.FileSystem.Append(response.Location, streamContents);
+
+            return true;
+        }
+    
+##### 07 - Download File
+
+       public static void DownloadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient,
+            string dataLakeAccountName, string srcPath, string destPath, bool force)
+        {
+            var beginOpenResponse = dataLakeFileSystemClient.FileSystem.BeginOpen(srcPath, dataLakeAccountName,
+                new FileOpenParameters());
+            var openResponse = dataLakeFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
+
+            if (force || !File.Exists(destPath))
+                File.WriteAllBytes(destPath, openResponse.FileContents);
+        }
+
+##### 08 - List Files
+
+        public static List<FileStatusProperties> ListItems(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dataLakeAccountName, string path)
+        {
+            var response = dataLakeFileSystemClient.FileSystem.ListFileStatus(path, dataLakeAccountName, new DataLakeFileSystemListParameters());
+            return response.FileStatuses.FileStatus.ToList();
+        }
 
 #### Learn more
 * [SDK User Manual](UserManual.md) - View some basic documentation for the Azure Data Lake .NET SDK.
