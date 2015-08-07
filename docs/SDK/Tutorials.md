@@ -1,15 +1,33 @@
-# Tutorials: Azure .NET SDK with Data Lake
+# Get started with Azure Data Lake using the .NET SDK 
+
+Learn how to use the Azure Data Lake .NET SDK and perform common operations.  
+
+## Prerequisites
 
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md) and the [SDK First Steps guide](FirstSteps.md).
 
-------------
+## Create an Azure Data Lake account
 
-### Tutorial - How to use Data Lake from .NET
+The following parameters are needed to create an Azure Data Lake account.
 
-A completed tutorial can be downloaded [here](src/ADL_dotNET_demo.zip) that will demonstrate how to perform common scenarios using the Azure Data Lake service .NET SDK.  The scenarios covered include uploading, downloading, and browsing your files.
+resourceGroupName:
+    The name of the resource group the account will be associated with.
+parameters:
+     Parameters supplied to the create DataLake account operation.
+cancellationToken:
+     Cancellation token.
+
+Task<AzureAsyncOperationResponse> BeginCreateAsync(string resourceGroupName, DataLakeAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+
+[Section incomplete]
+
+## Tutorial
+
+A completed tutorial can be downloaded [here](src/) that will demonstrate how to perform common scenarios such as uploading, downloading, and browsing your files.
+
 The guide below will highlight snippets of the code that enables these scenarios.   
 
-##### 02 - Namespace declarations
+##### 01 - Namespace declarations
 Add the following namespace declarations to the top of any C# file in which you wish to programmatically access Azure Data Lake:
 
     using System;
@@ -29,24 +47,29 @@ Add the following namespace declarations to the top of any C# file in which you 
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
  
 
-##### 03 - Create a DataLakeConsoleApp 
+##### 02 - Creating a DataLakeConsoleApp class 
+The framework to create the class and initialize static variables and constructors.
 
     namespace DataLakeConsoleApp
     {
-        class DataLakeConsoleApp
+        static class DataLakeConsoleApp
         {
-            private DataLakeManagementClient dlClient;
-            private DataLakeFileSystemManagementClient dlFileSystemClient;
+		private static ProfileClient _profileClient;
+	        private static SubscriptionCloudCredentials _credentials;
+
+	        private static DataLakeManagementClient _dataLakeClient;
+        	private static DataLakeFileSystemManagementClient _dataLakeFileSystemClient;
     
-            static void Main(string[] args)
-            {
+    	        private static void Main(string[] args)
+       	        {
+			
 
-
-            }
+                }
         }
     }
 
-##### 04 - Sign Into Azure
+##### 03 - Signing Into Azure
+Demonstrates how to log in with either a username and password or, if blank, an OAuth popup. 
 
 	_profileClient = AzureHelper.GetProfile(username, password);
 
@@ -64,7 +87,7 @@ Add the following namespace declarations to the top of any C# file in which you 
             return pClient;
         }
 
-##### 05 - Instantiate management clients
+##### 04 - Instantiating management clients
 
             subId = "12345678-1234-1234-1234-123456789012";
             _credentials = AzureHelper.GetCloudCredentials(_profileClient, new Guid(subId));
@@ -72,7 +95,7 @@ Add the following namespace declarations to the top of any C# file in which you 
             _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
             _dataLakeResourceGroupName = DataLakeHelper.GetResourceGroupName(_dataLakeClient, _dataLakeAccountName);
             
-##### 06 - Uploading or Appending to Files
+##### 05 - Uploading or Appending to Files
 
         public static bool UploadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dlAccountName, string srcPath, string destPath, bool force = false)
         {
@@ -85,7 +108,6 @@ Add the following namespace declarations to the top of any C# file in which you 
             return true;
         }
 
-
         public static bool AppendBytes(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dlAccountName, string path, Stream streamContents)
         {
             var response = dataLakeFileSystemClient.FileSystem.BeginAppend(path, dlAccountName, null);
@@ -94,7 +116,7 @@ Add the following namespace declarations to the top of any C# file in which you 
             return true;
         }
     
-##### 07 - Download File
+##### 06 - Downloading a File
 
        public static void DownloadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient,
             string dataLakeAccountName, string srcPath, string destPath, bool force)
@@ -107,7 +129,7 @@ Add the following namespace declarations to the top of any C# file in which you 
                 File.WriteAllBytes(destPath, openResponse.FileContents);
         }
 
-##### 08 - List Files
+##### 07 - Listing Files
 
         public static List<FileStatusProperties> ListItems(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dataLakeAccountName, string path)
         {
