@@ -43,8 +43,6 @@ To create a new resource group:
 
 > NOTE: The account name must only contain lowercase letters and numbers.
 
-	Switch-AzureMode AzureServiceManagement    
-
 	$dataLakeAccountName = "<your new Data Lake account name>"
     
     New-AzureDataLakeAccount `
