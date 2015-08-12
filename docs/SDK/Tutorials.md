@@ -6,29 +6,8 @@ Learn how to use the Azure Data Lake .NET SDK and perform common operations.
 
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md) and the [SDK First Steps guide](FirstSteps.md).
 
-## Create an Azure Data Lake account
-
-The following parameters are needed to create an Azure Data Lake account.
-
-resourceGroupName:
-    The name of the resource group the account will be associated with.
-parameters:
-     Parameters supplied to the create DataLake account operation.
-cancellationToken:
-     Cancellation token.
-
-Task<AzureAsyncOperationResponse> BeginCreateAsync(string resourceGroupName, DataLakeAccountCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
-
-[Section incomplete]
-
-## Tutorial
-
-A completed tutorial can be downloaded [here](src/) that will demonstrate how to perform common scenarios such as uploading, downloading, and browsing your files.
-
-The guide below will highlight snippets of the code that enables these scenarios.   
-
-##### 01 - Namespace declarations
-Add the following namespace declarations to the top of any C# file in which you wish to programmatically access Azure Data Lake:
+## 01 - Namespace declations
+Add the following namespace declarations to the top of any .NET app in which you wish to programmatically access Azure Data Lake:
 
     using System;
     using System.Collections.Generic;
@@ -45,33 +24,31 @@ Add the following namespace declarations to the top of any C# file in which you 
     using Microsoft.Azure.Management.DataLakeFileSystem.Models;
     using Microsoft.Azure.Management.DataLakeFileSystem.Uploading;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
- 
 
-##### 02 - Creating a DataLakeConsoleApp class 
-The framework to create the class and initialize static variables and constructors.
+## 02 - Create a Data Lake client
 
+There are two main clients:
+* DataLakeManagementClient: allows you to manage account operations such as creating, deleting, or updating properties
+* DataLakeFileSystemClient: allows you to browse, create, and delete files
+
+To create any Data Lake client you need to provide your Azure credentials via a CloudCredentials object.  The CloudCredentials object requires a profile client obtained with your username, password and subscription ID.
+Here is an example application that creates two Data Lake clients.
     namespace DataLakeConsoleApp
     {
-        static class DataLakeConsoleApp
+        class DataLakeConsoleApp
         {
-		private static ProfileClient _profileClient;
-	        private static SubscriptionCloudCredentials _credentials;
+          private static DataLakeManagementClient _dataLakeClient;
+          private static DataLakeFileSystemManagementClient _dataLakeFileSystemClient;
 
-	        private static DataLakeManagementClient _dataLakeClient;
-        	private static DataLakeFileSystemManagementClient _dataLakeFileSystemClient;
-    
-    	        private static void Main(string[] args)
+	        static void Main(string[] args)
        	        {
-			
-
+	            var profileClient = GetProfile();
+         	    var cc = GetCloudCredentials(profileClient, subscriptionId);
+		    
+		    _dataLakeClient = new DataLakeManagementClient(_credentials);
+		    _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
                 }
-        }
-    }
-
-##### 03 - Signing Into Azure
-Demonstrates how to log in with either a username and password or, if blank, an OAuth popup. 
-
-	_profileClient = AzureHelper.GetProfile(username, password);
+   
 
         public static ProfileClient GetProfile(string username = null, SecureString password = null)
         {
@@ -87,15 +64,39 @@ Demonstrates how to log in with either a username and password or, if blank, an 
             return pClient;
         }
 
-##### 04 - Instantiating management clients
+        private static SubscriptionCloudCredentials GetCloudCredentials(ProfileClient profileClient, Guid subscriptionId)
+        {
+            var sub = profileClient.Profile.Subscriptions.Values.FirstOrDefault(s => s.Id.Equals(subscriptionId));
 
-            subId = "12345678-1234-1234-1234-123456789012";
-            _credentials = AzureHelper.GetCloudCredentials(_profileClient, new Guid(subId));
-            _dataLakeClient = new DataLakeManagementClient(_credentials);
-            _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
-            _dataLakeResourceGroupName = DataLakeHelper.GetResourceGroupName(_dataLakeClient, _dataLakeAccountName);
+            Debug.Assert(sub != null, "subscription != null");
+            profileClient.SetSubscriptionAsDefault(sub.Id, sub.Account);
+
+            return AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profileClient.Profile.Context);
+        }
+    }
+
+## 03 - Example Operations Using the Data Lake Clients 
+
+### Create and/or Delete an Azure Data Lake account
+
+In the Main() function above add the following lines:
+
+	var parameters = new DataLakeAccountCreateOrUpdateParameters();
+        parameters.DataLakeAccount = new DataLakeAccount
+        {
+            Name = "<accountName>",
+            Location = "<Azure Region>"
+        };
+
+        _dataLakeClient.DataLakeAccount.Create("<resourceGroupName>", parameters);
+
+	_dataLakeClient.DataLakeAccount.Delete("<resourceGroupName>", parameters);
+
+### FileSystem Operations
+
+A completed tutorial can be downloaded [here](src/) that will demonstrate how to perform common scenarios such as uploading, downloading, and browsing your files.
             
-##### 05 - Uploading or Appending to Files
+##### Uploading or Appending to Files
 
         public static bool UploadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dlAccountName, string srcPath, string destPath, bool force = false)
         {
@@ -116,7 +117,7 @@ Demonstrates how to log in with either a username and password or, if blank, an 
             return true;
         }
     
-##### 06 - Downloading a File
+##### Downloading a File
 
        public static void DownloadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient,
             string dataLakeAccountName, string srcPath, string destPath, bool force)
@@ -129,7 +130,7 @@ Demonstrates how to log in with either a username and password or, if blank, an 
                 File.WriteAllBytes(destPath, openResponse.FileContents);
         }
 
-##### 07 - Listing Files
+##### Listing Files
 
         public static List<FileStatusProperties> ListItems(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dataLakeAccountName, string path)
         {
