@@ -7,7 +7,7 @@ Learn how to use the Azure Data Lake .NET SDK and perform common operations.
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md) and the [SDK First Steps guide](FirstSteps.md).
 
 ## 01 - Namespace declations
-Add the following namespace declarations to the top of any .NET app in which you wish to programmatically access Azure Data Lake:
+In order to programatically access Azure Data Lake, add the following namespace declarations:
 
     using System;
     using System.Collections.Generic;
@@ -33,6 +33,7 @@ There are two main clients:
 
 To create any Data Lake client you need to provide your Azure credentials via a CloudCredentials object.  The CloudCredentials object requires a profile client obtained with your username, password and subscription ID.
 Here is an example application that creates two Data Lake clients.
+
     namespace DataLakeConsoleApp
     {
         class DataLakeConsoleApp
