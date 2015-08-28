@@ -17,7 +17,7 @@ Install Azure PowerShell with Data Lake:
 
 #### Initialization
 1. Open a new PowerShell window.
-2. Log in to your Azure aacount
+2. Log in to your Azure account
 
 	Add-AzureAccount
 	
