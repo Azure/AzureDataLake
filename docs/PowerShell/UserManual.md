@@ -15,12 +15,15 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
 #### Initialization
 1. Open a new PowerShell window.
-1. Select your subscription by entering the following:
+
+2. Log in to your Azure account
+        
+        Add-AzureAccount
+
+3. Switch to Azure Resource Manager mode and select your subscription
 
         Switch-AzureMode AzureResourceManager
         Select-AzureSubscription -SubscriptionId $subscriptionId
-
-> Make sure that you run ``Switch-AzureMode AzureResourceManager`` before using Kona PowerShell cmdlets.
 
 #### Help
 
