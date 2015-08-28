@@ -50,7 +50,7 @@ And of course, this directory should be empty which we can again confirm
 To upload the Sample data file we’ll use the following command
 
     cd C:\adldemo\
-    Copy-AzureDataLakeItem -Path OlympicAthletes.tsv `
+    Import-AzureDataLakeItem -AccountName $dataLakeAccountName -Path OlympicAthletes.tsv `
     -Destination $myrootdir/adldemo/OlympicAthletes.tsv
 
 Now, let’s verify that the file is there and that it has the size we expect.
@@ -67,7 +67,7 @@ To rename the sample file, use the following command:
 ### Download the Sample Data File
 To download the sample file, use the following command:
 
-    Copy-AzureDataLakeItem `
+    Export-AzureDataLakeItem -AccountName $dataLakeAccountName`
     -Destination c:\adldemo\OlympicAthletes_Copy.tsv `
     -Path $myrootdir/adldemo/OlympicAthletes_Copy.tsv
     
