@@ -13,12 +13,15 @@ Install Azure PowerShell with Data Lake:
 1. Download the [Azure PowerShell module here](https://github.com/MicrosoftBigData/AzureDataLake/releases).
 1. Run AzurePowerShell.msi
 1. Follow the steps in the installation wizard.
-1. Enter in PowerShell: ``Add-AzureAccount``
 
 
 #### Initialization
 1. Open a new PowerShell window.
-1. Select your subscription by entering the following:
+2. Log in to your Azure aacount
+
+	Add-AzureAccount
+	
+3. Select your subscription and switch to Azure Resource Manager mode
 
         $subId = "<your Subscription ID>"
         Select-AzureSubscription -SubscriptionId $subId
@@ -39,6 +42,10 @@ To create a new resource group:
     
 
 #### Creating a new Azure Data Lake account
+
+If you are creating a Data Lake account for the first time:
+
+	Register-AzureProvider -ProviderNamespace "Microsoft.DataLake" 
 
 > NOTE: The account name must only contain lowercase letters and numbers.
 
