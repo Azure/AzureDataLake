@@ -40,15 +40,15 @@ Here is an example application that creates two Data Lake clients.
         {
           private static DataLakeManagementClient _dataLakeClient;
           private static DataLakeFileSystemManagementClient _dataLakeFileSystemClient;
-
+          
 	        static void Main(string[] args)
-       	        {
+	        {
 	            var profileClient = GetProfile();
-         	    var cc = GetCloudCredentials(profileClient, subscriptionId);
+         	    var _credentials = GetCloudCredentials(profileClient, subscriptionId);
 		    
-		    _dataLakeClient = new DataLakeManagementClient(_credentials);
-		    _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
-                }
+				_dataLakeClient = new DataLakeManagementClient(_credentials);
+				_dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
+			}
    
 
         public static ProfileClient GetProfile(string username = null, SecureString password = null)
@@ -83,14 +83,13 @@ Here is an example application that creates two Data Lake clients.
 In the Main() function above add the following lines:
 
 	var parameters = new DataLakeAccountCreateOrUpdateParameters();
-        parameters.DataLakeAccount = new DataLakeAccount
-        {
-            Name = "<accountName>",
-            Location = "<Azure Region>"
-        };
-
-        _dataLakeClient.DataLakeAccount.Create("<resourceGroupName>", parameters);
-
+	parameters.DataLakeAccount = new DataLakeAccount
+	{
+		Name = "<accountName>",
+		Location = "<Azure Region>"
+	};
+	
+	_dataLakeClient.DataLakeAccount.Create("<resourceGroupName>", parameters);
 	_dataLakeClient.DataLakeAccount.Delete("<resourceGroupName>", parameters);
 
 ### FileSystem Operations
