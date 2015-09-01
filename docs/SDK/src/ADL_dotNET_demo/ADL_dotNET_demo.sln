@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADL_dotNET_demo", "ADL_dotNET_demo\ADL_dotNET_demo.csproj", "{3ED8E719-AF08-4E5E-B990-145B64D89CBC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDKSampleHelpers", "SDKSampleHelpers\SDKSampleHelpers.csproj", "{774F77FB-D359-4F49-86B8-DADA73A40193}"

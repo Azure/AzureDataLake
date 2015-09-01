@@ -45,10 +45,10 @@
       <HintPath>..\packages\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.NetFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.DataLake">
-      <HintPath>..\packages\Microsoft.Azure.Management.DataLake.0.9.10-preview\lib\net40\Microsoft.Azure.Management.DataLake.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Azure.Management.DataLake.0.9.11-preview\lib\net40\Microsoft.Azure.Management.DataLake.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.DataLakeFileSystem">
-      <HintPath>..\packages\Microsoft.Azure.Management.DataLakeFileSystem.0.9.7-preview\lib\net40\Microsoft.Azure.Management.DataLakeFileSystem.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Azure.Management.DataLakeFileSystem.0.9.8-preview\lib\net40\Microsoft.Azure.Management.DataLakeFileSystem.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.Management.DataLakeUploader">
       <HintPath>..\packages\Microsoft.Azure.Management.DataLakeUploader.0.9.11-preview\lib\net40\Microsoft.Azure.Management.DataLakeUploader.dll</HintPath>
@@ -91,7 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
