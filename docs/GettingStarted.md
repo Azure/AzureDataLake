@@ -1,44 +1,39 @@
-# Getting Started: Azure Data Lake
+# Getting Started with Azure Data Lake
 
 ------------
 
-### Getting started
+### To create a new account
 
-To use this new Azure service, follow these simple steps:
+To create a new Azure Data Lake account, follow these simple steps:
 
-#### Your Azure subscription
-1. If you're already part of an Azure subscription, skip this step.<br />If you're not, [create a new Azure subscription here](https://account.windowsazure.com/Subscriptions).
-1. Visit [the Azure Portal](https://portal.azure.com) and log in with the account that is a member of the subscription.
-1. Click **Browse** and select **Subscriptions**.
-1. Select the desired subscription.
-1. Write down the given Subscription ID. You'll need this later.
-   
-#### Email your TAP Buddy
+#### Email your TAP Buddy your Azure subscription ID
 Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake. This step will take up to 1 business day to be completed.
 
-#### Install Azure PowerShell with Kona and Data Lake
-1. Download the [Azure PowerShell module here](https://github.com/MicrosoftBigData/AzureDataLake/releases).
-
-1. Extract **Azure_PowerShell.msi** from the .zip and double-click to install.
-
-1. From your desktop, open a new Azure PowerShell window, and enter the following -- make sure you log in as one of the subscription admininistrators/owners this first time:
-
-        Add-AzureAccount
-        Select-AzureSubscription -SubscriptionId <the Subscription ID that you wrote down previously>
-        Switch-AzureMode AzureResourceManager
-        Register-AzureProvider -ProviderNamespace "Microsoft.DataLake"
-    
-#### Check for existing accounts
-Open a new PowerShell window. Run the following PowerShell cmdlets to see if you already have access to a Data Lake account.
-
-    Get-AzureDataLakeAccount
-
-#### Create a new account
+#### Create a new account with PowerShell or the Portal
 
 If you want to create a new Azure Data Lake account, you can do so through the Portal or PowerShell:
 
 * [Azure PowerShell](PowerShell/FirstSteps.md)
 * [Azure Portal](./AzurePortal/FirstSteps.md)
+
+#### Manage ADL Users
+With the new accounts, we will be leveraging a combination of the [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/) and Filesystem ACLs to manage access.
+
+To simplify access management, we recommend using security groups.
+
+See this doc: [Securing ADL Best Practices](https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/General/Security%20Best%20Practices.md)
+
+### Get access to an existing account
+
+Contact your Data Lake Account Owner (the person who created the account).  They can give new users permission to access the ADL account.
+
+#### Check for existing accounts
+
+1. Follow the Installation and Initialization procedure in the [First Steps Guide](https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/PowerShell/FirstSteps.md)
+2.  Open a new PowerShell window. Run the following PowerShell cmdlets to see if you already have access to a Data Lake account.
+
+    Get-AzureDataLakeAccount
+
 
 ------------
 
