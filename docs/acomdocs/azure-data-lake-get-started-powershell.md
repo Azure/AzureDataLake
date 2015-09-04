@@ -13,7 +13,7 @@
    ms.topic="article"
    ms.tgt_pltfrm="na"
    ms.workload="big-data" 
-   ms.date="08/31/2015"
+   ms.date="09/29/2015"
    ms.author="nitinme"/>
 
 # Get started with Azure Data Lake using Azure PowerShell
@@ -21,6 +21,7 @@
 > [AZURE.SELECTOR]
 - [Portal](azure-data-lake-get-started-portal.md)
 - [PowerShell](azure-data-lake-get-started-powershell.md)
+- [.NET SDK](azure-data-lake-get-started-net-sdk.md)
 
 Learn how to use Azure PowerShell to create an Azure Data Lake account and perform basic operations such as create folders, upload and download data files, delete your account, etc. For more information about Data Lake, see [Azure Data Lake](azure-data-lake-overview.md).
 
@@ -65,9 +66,8 @@ Follow these steps to create an Azure Data Lake account.
 
 2. Create an Azure Data Lake account. The account name you specify must only contain lowercase letters and numbers.
 
-		Switch-AzureMode AzureServiceManagement
 		$dataLakeAccountName = "<your new Data Lake account name>"
-    	New-AzureDataLakeAccount -ResourceGroupName $resourceGroupName -Name$dataLakeAccountName -Location "East US 2"
+    	New-AzureDataLakeAccount -ResourceGroupName $resourceGroupName -Name $dataLakeAccountName -Location "East US 2"
 
 	![Create an Azure Data Lake account](./media/azure-data-lake-get-started-powershell/ADL.PS.CreateADLAcc.png "Create an Azure Data Lake account")
 
