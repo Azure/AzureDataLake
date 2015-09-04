@@ -14,10 +14,12 @@ In order to programatically access Azure Data Lake, add the following namespace 
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Security;
     
     using Microsoft.Azure;
     using Microsoft.Azure.Common.Authentication;
     using Microsoft.Azure.Common.Authentication.Models;
+    using Microsoft.Azure.Common.Authentication.Factories;
     using Microsoft.Azure.Management.DataLake;
     using Microsoft.Azure.Management.DataLake.Models;
     using Microsoft.Azure.Management.DataLakeFileSystem;
@@ -43,38 +45,35 @@ Here is an example application that creates two Data Lake clients.
           
 	        static void Main(string[] args)
 	        {
-	            var profileClient = GetProfile();
-         	    var _credentials = GetCloudCredentials(profileClient, subscriptionId);
-		    
-				_dataLakeClient = new DataLakeManagementClient(_credentials);
-				_dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
-			}
+		    var subscriptionId = new Guid("<subID>");
+		    var _credentials = GetAccessToken();
+
+		    _credentials = GetCloudCredentials(_credentials, subscriptionId);
+		    _dataLakeClient = new DataLakeManagementClient(_credentials);
+		    _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
+		}
    
 
-        public static ProfileClient GetProfile(string username = null, SecureString password = null)
+        public static SubscriptionCloudCredentials GetAccessToken(string username = null, SecureString password = null)
         {
-            var pClient = new ProfileClient(new AzureProfile());
-            var env = pClient.GetEnvironmentOrDefault(EnvironmentName.AzureCloud);
-            var acct = new AzureAccount { Type = AzureAccount.AccountType.User };
+            var authFactory = new AuthenticationFactory();
+
+            var account = new AzureAccount { Type = AzureAccount.AccountType.User };
 
             if (username != null && password != null)
-                acct.Id = username;
+                account.Id = username;
 
-            pClient.AddAccountAndLoadSubscriptions(acct, env, password);
-
-            return pClient;
+            var env = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+            return new TokenCloudCredentials(authFactory.Authenticate(account, env, AuthenticationFactory.CommonAdTenant, password, ShowDialog.Auto).AccessToken);
         }
 
-        private static SubscriptionCloudCredentials GetCloudCredentials(ProfileClient profileClient, Guid subscriptionId)
+        public static SubscriptionCloudCredentials GetCloudCredentials(SubscriptionCloudCredentials creds, Guid subId)
         {
-            var sub = profileClient.Profile.Subscriptions.Values.FirstOrDefault(s => s.Id.Equals(subscriptionId));
-
-            Debug.Assert(sub != null, "subscription != null");
-            profileClient.SetSubscriptionAsDefault(sub.Id, sub.Account);
-
-            return AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(profileClient.Profile.Context);
+            return new TokenCloudCredentials(subId.ToString(), ((TokenCloudCredentials)creds).Token);
         }
-    }
+
+      }
+   }
 
 ## 03 - Example Operations Using the Data Lake Clients 
 

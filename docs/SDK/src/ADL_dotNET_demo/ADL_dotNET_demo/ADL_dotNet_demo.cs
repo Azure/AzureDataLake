@@ -6,20 +6,15 @@ using System.Threading.Tasks;
 
 using Microsoft.Azure;
 using Microsoft.Azure.Common.Authentication;
-using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Management.DataLake;
-using Microsoft.Azure.Management.DataLake.Models;
 using Microsoft.Azure.Management.DataLakeFileSystem;
 using Microsoft.Azure.Management.DataLakeFileSystem.Models;
-using Microsoft.Azure.Management.DataLakeFileSystem.Uploading;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using SDKSampleHelpers;
 
 namespace DataLakeConsoleApp
 {
     class DataLakeConsoleApp
     {
-        private static ProfileClient _profileClient;
         private static SubscriptionCloudCredentials _credentials;
 
         private static DataLakeManagementClient _dataLakeClient;
@@ -51,7 +46,7 @@ namespace DataLakeConsoleApp
             Console.WriteLine("Showing an OAuth popup.\r\n");
 
             Console.WriteLine("Logging you in... please wait.");
-            _profileClient = AzureHelper.GetProfile(username, password);
+            _credentials = AzureHelper.GetAccessToken(username, password);
         }
 
         private static void GetAccounts()
@@ -60,15 +55,15 @@ namespace DataLakeConsoleApp
                 ConsolePrompts.MenuPrompt("Select a subscription.\r\nTo create a new subscription, visit:"
                                           + "\r\n   https://account.windowsazure.com/Subscriptions"
                                           + "\r\nIf you're not sure which subscription to pick, leave this blank.",
-                    AzureHelper.GetSubscriptions(_profileClient));
+                    AzureHelper.GetSubscriptions(_credentials));
 
            if (string.IsNullOrWhiteSpace(subId))
            {
                _dataLakeAccountName = ConsolePrompts.Prompt("Select a subscription by providing a Data Lake account name.", true);
-               subId = AzureHelper.GetSubscriptions(_profileClient, _dataLakeAccountName).Keys.FirstOrDefault();
+               subId = AzureHelper.GetSubscriptions(_credentials, _dataLakeAccountName).Keys.FirstOrDefault();
            }
 
-            _credentials = AzureHelper.GetCloudCredentials(_profileClient, new Guid(subId));
+            _credentials = AzureHelper.GetCloudCredentials(_credentials, new Guid(subId));
             _dataLakeClient = new DataLakeManagementClient(_credentials);
             _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
 

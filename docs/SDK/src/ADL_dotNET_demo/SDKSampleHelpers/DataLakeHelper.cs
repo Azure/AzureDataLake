@@ -97,5 +97,20 @@ namespace SDKSampleHelpers
             if (force || !File.Exists(destPath))
                 File.WriteAllBytes(destPath, openResponse.FileContents);
         }
+
+        public static void NewFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient,
+            string dataLakeAccountName, string path)
+        {
+            var beginCreateResponse = dataLakeFileSystemClient.FileSystem.BeginCreate(path, dataLakeAccountName,
+                new FileCreateParameters());
+            var createResponse = dataLakeFileSystemClient.FileSystem.Create(beginCreateResponse.Location, new MemoryStream());
+        }
+
+        public static void Concat(DataLakeFileSystemManagementClient dataLakeFileSystemClient,
+            string dataLakeAccountName, string[] srcPaths, string destPath, bool force)
+        {
+            var concatResponse = dataLakeFileSystemClient.FileSystem.MsConcat(destPath, dataLakeAccountName,
+                new MemoryStream());
+        }
     }
 }
