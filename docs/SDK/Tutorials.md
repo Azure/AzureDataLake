@@ -33,8 +33,7 @@ There are two main clients:
 * DataLakeManagementClient: allows you to manage account operations such as creating, deleting, or updating properties
 * DataLakeFileSystemClient: allows you to browse, create, and delete files
 
-To create any Data Lake client you need to provide your Azure credentials via a CloudCredentials object.  The CloudCredentials object requires a profile client obtained with your username, password and subscription ID.
-Here is an example application that creates two Data Lake clients.
+To create any Data Lake client you need to provide your Azure credentials via a CloudCredentials object.  Here is an example application that creates two Data Lake clients.
 
     namespace DataLakeConsoleApp
     {
