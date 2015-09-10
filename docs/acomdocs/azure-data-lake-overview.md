@@ -60,6 +60,11 @@ Azure Storage is a generic storage repository that allows you to store data for 
 | Authentication						 | --			   | --			   | 
 
 
+## Applications compatible with Azure Data Lake
+
+See [Applications and services compatible with Azure Data Lake](azure-data-lake-compatible-oss-other-applications.md) for a list of open source applications, Microsoft applications/services, and other third-party applications that can be used with Azure Data Lake. 
+
+
 ## What is swebhdfs://?
 
 ## Best practices for using Azure Data Lake
