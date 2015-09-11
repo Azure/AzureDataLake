@@ -93,6 +93,8 @@ In the Main() function above add the following lines:
 ### FileSystem Operations
 
 A completed tutorial can be downloaded [here](src/) that will demonstrate how to perform common scenarios such as uploading, downloading, and browsing your files.
+
+The file system client expects local paths to be given like the following, C:\\\folder\\\test.tsv and ADL paths to be given relative to the root directory (e.g. /thisFolder/foo.txt).
             
 ##### Uploading or Appending to Files
 
