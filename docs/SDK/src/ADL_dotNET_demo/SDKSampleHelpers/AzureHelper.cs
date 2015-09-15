@@ -10,7 +10,6 @@ using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
 using Microsoft.Azure.Management.DataLake;
 using Microsoft.Azure.Subscriptions;
-using Microsoft.Azure.Subscriptions.Csm;
 
 namespace SDKSampleHelpers
 {
