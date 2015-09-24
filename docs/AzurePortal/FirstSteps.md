@@ -4,7 +4,7 @@
 
 To create an Azure Data Lake account:
 
-1. Go to the new Azure Portal using [this link](https://portal.azure.com/signin/index/?Microsoft_Azure_Kona=true&Microsoft_Azure_DataLake=true&hubsExtension_ItemHideKey=AzureDataLake_BigStorage%2cAzureKona_BigCompute). The link has special keys which will let you search for Kona and Data Lake.
+1. Go to the new Azure Portal using [this link](https://portal.azure.com/?microsoft_azure_biganalytics=trueµsoft_azure_datalake=trueµsoft_azure_kona=true&hubsExtension_ItemHideKey=AzureDataLake_BigStorage,AzureBigAnalytics_BigCompute,AzureKona_BigCompute). The link has special keys which will let you search for Kona and Data Lake.
 
 1. Click on Marketplace.
 
