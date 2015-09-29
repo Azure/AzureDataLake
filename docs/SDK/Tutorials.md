@@ -70,9 +70,8 @@ To create any Data Lake client you need to provide your Azure credentials via a 
         {
             return new TokenCloudCredentials(subId.ToString(), ((TokenCloudCredentials)creds).Token);
         }
-
       }
-   }
+    }
 
 ## 03 - Example Operations Using the Data Lake Clients 
 
