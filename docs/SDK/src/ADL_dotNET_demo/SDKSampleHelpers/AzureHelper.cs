@@ -6,60 +6,78 @@ using System.Security;
 
 using Microsoft.Azure;
 using Microsoft.Azure.Common.Authentication;
+using Microsoft.Azure.Common.Authentication.Factories;
 using Microsoft.Azure.Common.Authentication.Models;
-using Microsoft.Azure.Management.DataLake;
+using Microsoft.Azure.Management.DataLake.Store;
+using Microsoft.Azure.Subscriptions;
 
 namespace SDKSampleHelpers
 {
     public static class AzureHelper
     {
-        public static ProfileClient GetProfile(string username = null, SecureString password = null)
+        public static IAccessToken GetAccessToken(string username = null, SecureString password = null)
         {
-            var pClient = new ProfileClient(new AzureProfile());
-            var env = pClient.GetEnvironmentOrDefault(EnvironmentName.AzureCloud);
-            var acct = new AzureAccount { Type = AzureAccount.AccountType.User };
+            var authFactory = new AuthenticationFactory();
+
+            var account = new AzureAccount { Type = AzureAccount.AccountType.User };
 
             if (username != null && password != null)
-                acct.Id = username;
+                account.Id = username;
 
-            pClient.AddAccountAndLoadSubscriptions(acct, env, password);
+            var env = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
 
-            return pClient;
+            return authFactory.Authenticate(account, env, AuthenticationFactory.CommonAdTenant, password, ShowDialog.Auto);
         }
 
-        public static Dictionary<string, string> GetSubscriptions(ProfileClient pClient)
+        public static IAccessToken GetAccessToken(Guid applicationId, Guid tenantId, SecureString password)
         {
+            var authFactory = new AuthenticationFactory();
+
+            var account = new AzureAccount { Type = AzureAccount.AccountType.ServicePrincipal, Id = applicationId.ToString() };
+
+            var env = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+
+            return authFactory.Authenticate(account, env, tenantId.ToString(), password, ShowDialog.Never);
+        }
+
+        public static SubscriptionCloudCredentials GetCloudCredentials(IAccessToken accessToken)
+        {
+            return new TokenCloudCredentials(accessToken.AccessToken);
+        }
+
+        public static SubscriptionCloudCredentials GetCloudCredentials(SubscriptionCloudCredentials creds, Guid subId)
+        {
+            return new TokenCloudCredentials(subId.ToString(), ((TokenCloudCredentials)creds).Token);
+        }
+
+        public static Dictionary<string, string> GetSubscriptions(SubscriptionCloudCredentials creds)
+        {
+            var subClient = new SubscriptionClient(creds);
+
+            var response = subClient.Subscriptions.List();
+
             Dictionary<string, string> dict = new Dictionary<string, string>();
-            foreach (var sub in pClient.Profile.Subscriptions.Values)
-                dict[sub.Id.ToString()] = sub.Name;
+            foreach (var sub in response.Subscriptions)
+                dict[sub.SubscriptionId] = sub.DisplayName;
+
             return dict;
         }
 
-        public static Dictionary<string, string> GetSubscriptions(ProfileClient pClient, string accountName)
+        public static Dictionary<string, string> GetSubscriptions(SubscriptionCloudCredentials creds, string accountName)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
-            foreach (var sub in GetSubscriptions(pClient))
+            foreach (var sub in GetSubscriptions(creds))
             {
                 List<string> accts;
-                     DataLakeManagementClient dlClient = new DataLakeManagementClient(GetCloudCredentials(pClient, new Guid(sub.Key)));
-                    accts = DataLakeHelper.ListAccounts(dlClient).Keys.ToList();
-
+                DataLakeStoreManagementClient dlClient = new DataLakeStoreManagementClient(GetCloudCredentials(creds, new Guid(sub.Key)));
+                accts = DataLakeStoreHelper.ListAccounts(dlClient).Keys.ToList();
+                
                 if (accts.Contains(accountName, StringComparer.InvariantCultureIgnoreCase))
                     dict[sub.Key] = sub.Value;
             }
             return dict;
         }
-        public static SubscriptionCloudCredentials GetCloudCredentials(ProfileClient pClient, Guid subId)
-        {
-            var sub = pClient.Profile.Subscriptions.Values.FirstOrDefault(s => s.Id.Equals(subId));
 
-            Debug.Assert(sub != null, "subscription != null");
-            pClient.SetSubscriptionAsDefault(sub.Id, sub.Account);
-
-            var credentials = AzureSession.AuthenticationFactory.GetSubscriptionCloudCredentials(pClient.Profile.Context);
-
-            return credentials;
-        }
     }
 }

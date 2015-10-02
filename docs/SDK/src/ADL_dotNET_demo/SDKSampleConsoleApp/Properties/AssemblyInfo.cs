@@ -1,15 +1,14 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ADL_dotNET_demo")]
+[assembly: AssemblyTitle("SDKSampleConsoleApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ADL_dotNET_demo")]
+[assembly: AssemblyProduct("SDKSampleConsoleApp")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e1c55cfe-dec5-4aac-b8cd-9e6526fa5873")]
+[assembly: Guid("5a73e1f9-1f80-4c71-b019-7823ad3eb605")]
 
 // Version information for an assembly consists of the following four values:
 //

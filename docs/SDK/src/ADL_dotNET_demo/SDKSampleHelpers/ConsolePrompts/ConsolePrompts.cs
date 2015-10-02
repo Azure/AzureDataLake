@@ -5,7 +5,7 @@ using System.Security;
 
 namespace SDKSampleHelpers
 {
-    class ConsolePrompts
+    public class ConsolePrompts
     {
         public static string MenuPrompt(string promptText, IDictionary<string, string> dict, bool responseRequired = false, bool mustBeInt = false)
         {
@@ -32,11 +32,11 @@ namespace SDKSampleHelpers
             var itemsCount = items.Count();
             for (var i = 0; i < itemsCount; i++)
                 menuPromptText += String.Format("\r\n{0,4} : {1}", i, items[i]);
-            var input = Prompt(menuPromptText, responseRequired, mustBeInt, (items.Count() - 1).ToString().Length);
+            var input = Prompt(menuPromptText, responseRequired, mustBeInt, (items.Count()-1).ToString().Length);
             return input;
         }
 
-        public static string Prompt(string promptText, bool responseRequired = false, bool mustBeInt = false, int expectedLength = 0)
+        public static string Prompt(string promptText, bool responseRequired = false, bool mustBeInt = false, int expectedLength=0)
         {
             Console.WriteLine("\r\n" + promptText);
             var input = "";
@@ -77,7 +77,7 @@ namespace SDKSampleHelpers
 
             do
             {
-                Console.WriteLine("\r\n" + promptText);
+                Console.WriteLine("\r\n"+promptText);
                 Console.Write("> ");
 
                 secureInput = new SecureString();

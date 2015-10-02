@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security;
 
 using Microsoft.Azure;
 using Microsoft.Azure.Common.Authentication;
-using Microsoft.Azure.Common.Authentication.Models;
-using Microsoft.Azure.Management.DataLake;
-using Microsoft.Azure.Management.DataLake.Models;
-using Microsoft.Azure.Management.DataLakeFileSystem;
-using Microsoft.Azure.Management.DataLakeFileSystem.Models;
-using Microsoft.Azure.Management.DataLakeFileSystem.Uploading;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Azure.Management.DataLake.Store;
+using Microsoft.Azure.Management.DataLake.StoreFileSystem;
+using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
 using SDKSampleHelpers;
 
-namespace DataLakeConsoleApp
+namespace SDKSampleConsoleApp
 {
-    class DataLakeConsoleApp
+    static class SDKSampleConsoleApp
     {
-        private static ProfileClient _profileClient;
         private static SubscriptionCloudCredentials _credentials;
 
-        private static DataLakeManagementClient _dataLakeClient;
-        private static DataLakeFileSystemManagementClient _dataLakeFileSystemClient;
+        private static DataLakeStoreManagementClient _dataLakeStoreClient;
+        private static DataLakeStoreFileSystemManagementClient _dataLakeStoreFileSystemClient;
 
-        private static string _dataLakeAccountName;
-        private static string _dataLakeResourceGroupName;
+        private static string _dataLakeStoreAccountName;
+        private static string _dataLakeStoreResourceGroupName;
+        private static IAccessToken _accessToken;
 
         private static void Main(string[] args)
         {
@@ -41,51 +37,42 @@ namespace DataLakeConsoleApp
 
         private static void Login()
         {
-          
             var username =
                 ConsolePrompts.Prompt("Enter your username. To show the OAuth popup instead, leave this blank.");
-            System.Security.SecureString password = null; 
+            SecureString password = null;
             if (username != null)
                 password = ConsolePrompts.SecurePrompt("Enter your password.", true);
             else
-            Console.WriteLine("Showing an OAuth popup.\r\n");
+                Console.WriteLine("Showing an OAuth popup.\r\n");
 
             Console.WriteLine("Logging you in... please wait.");
-            _profileClient = AzureHelper.GetProfile(username, password);
+            _accessToken = AzureHelper.GetAccessToken(username, password);
+            _credentials = AzureHelper.GetCloudCredentials(_accessToken);
         }
 
         private static void GetAccounts()
         {
-           var subId =
+            var subId =
                 ConsolePrompts.MenuPrompt("Select a subscription.\r\nTo create a new subscription, visit:"
                                           + "\r\n   https://account.windowsazure.com/Subscriptions"
                                           + "\r\nIf you're not sure which subscription to pick, leave this blank.",
-                    AzureHelper.GetSubscriptions(_profileClient));
+                    AzureHelper.GetSubscriptions(_credentials));
 
-           if (string.IsNullOrWhiteSpace(subId))
-           {
-               _dataLakeAccountName = ConsolePrompts.Prompt("Select a subscription by providing a Data Lake account name.", true);
-               subId = AzureHelper.GetSubscriptions(_profileClient, _dataLakeAccountName).Keys.FirstOrDefault();
-           }
-
-            _credentials = AzureHelper.GetCloudCredentials(_profileClient, new Guid(subId));
-            _dataLakeClient = new DataLakeManagementClient(_credentials);
-            _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
-
-            if (string.IsNullOrWhiteSpace(_dataLakeAccountName))
+            if (string.IsNullOrWhiteSpace(subId))
             {
-               _dataLakeAccountName =
-                   ConsolePrompts.MenuPrompt("Select your Data Lake account.",
-                       DataLakeHelper.ListAccounts(_dataLakeClient),
-                       true);
+                _dataLakeStoreAccountName = ConsolePrompts.Prompt("Enter your Data Lake Store account name.", true);
+                subId = AzureHelper.GetSubscriptions(_credentials, _dataLakeStoreAccountName).Keys.FirstOrDefault();
             }
 
-            _dataLakeResourceGroupName = DataLakeHelper.GetResourceGroupName(_dataLakeClient, _dataLakeAccountName);
+            _credentials = AzureHelper.GetCloudCredentials(_credentials, new Guid(subId));
+            _dataLakeStoreClient = new DataLakeStoreManagementClient(_credentials);
+            _dataLakeStoreFileSystemClient = new DataLakeStoreFileSystemManagementClient(_credentials);
+            _dataLakeStoreResourceGroupName = DataLakeStoreHelper.GetResourceGroupName(_dataLakeStoreClient, _dataLakeStoreAccountName);
         }
 
         private enum TopMenuOptionsEnum
         {
-            BrowseData,
+            BrowseData=0,
             UploadFile,
             DownloadFile,
             Done
@@ -95,9 +82,9 @@ namespace DataLakeConsoleApp
         {
             var topMenuOptions = new[]
             {
-                "Data Lake - Browse my data",
-                "Data Lake - Upload a file",
-                "Data Lake - Download a file",
+                "Data Lake Store - Browse my data",
+                "Data Lake Store - Upload a file",
+                "Data Lake Store - Download a file",
                 "I'm done!"
             }.ToList();
             ushort topMenuChoice;
@@ -131,29 +118,25 @@ namespace DataLakeConsoleApp
             var breadcrumbs = new Stack<string>();
             breadcrumbs.Push("/");
             var done = false;
-            do
-            {
+            do {
                 var currentPath = String.Join("", Enumerable.Reverse(breadcrumbs.ToList()));
-                var fileList = DataLakeHelper.ListItems(_dataLakeFileSystemClient, _dataLakeAccountName, currentPath);
+                var fileList = DataLakeStoreHelper.ListItems(_dataLakeStoreFileSystemClient, _dataLakeStoreAccountName, currentPath);
                 var fileMenuItems = fileList.Select(a => String.Format("{0,15} {1}", a.Type, a.PathSuffix))
-                    .Concat(new[] { "Navigate up", "Refresh list", "Return to main menu" })
+                    .Concat(new[]{"Navigate up", "Refresh list", "Return to main menu"})
                     .ToList();
                 var input = ConsolePrompts.MenuPrompt(String.Format("Current path: {0}"
                     + "\r\nChoose an action or directory.", currentPath), fileMenuItems, true, true);
                 var inputInt = Convert.ToInt32(input);
 
-                if (inputInt >= 0 && inputInt < (fileMenuItems.Count() - 3))
-                {
+                if (inputInt >= 0 && inputInt < (fileMenuItems.Count() - 3)){
                     if (fileList[inputInt].Type == FileType.Directory)
                         breadcrumbs.Push(fileList[inputInt].PathSuffix + "/");
                 }
-                else if (inputInt == (fileMenuItems.Count() - 3))
-                {
+                else if (inputInt == (fileMenuItems.Count() - 3)){
                     breadcrumbs.Pop();
-                    Console.WriteLine("Moving up.");
+                        Console.WriteLine("Moving up.");
                 }
-                else if (inputInt == (fileMenuItems.Count() - 1))
-                {
+                else if (inputInt == (fileMenuItems.Count() - 1)){
                     done = true;
                 }
             } while (!done);
@@ -162,19 +145,19 @@ namespace DataLakeConsoleApp
         private static void UploadFileMenu()
         {
             var localPath = ConsolePrompts.Prompt("Enter the local path of a file you wish to upload. e.g. C:\\folder\\test.tsv");
-            var remotePath = ConsolePrompts.Prompt(String.Format("Enter the path where you'd like to place the file in Data Lake '{0}'."
-                + "\r\ne.g. /thisFolder/foo.txt", _dataLakeAccountName));
+            var remotePath = ConsolePrompts.Prompt(String.Format("Enter the path where you'd like to place the file in Data Lake Store '{0}'."
+                + "\r\ne.g. /thisFolder/foo.txt",_dataLakeStoreAccountName));
             bool force = ConsolePrompts.MenuPrompt("Force overwrite?", new[] { "No", "Yes" }).Equals("1", StringComparison.InvariantCultureIgnoreCase);
-            DataLakeHelper.UploadFile(_dataLakeFileSystemClient, _dataLakeAccountName, localPath, remotePath, force);
+            DataLakeStoreHelper.UploadFile(_dataLakeStoreFileSystemClient, _dataLakeStoreAccountName, localPath, remotePath, force);
         }
 
         private static void DownloadFileMenu()
         {
-            var remotePath = ConsolePrompts.Prompt(String.Format("Enter the path of the file you want to download from Data Lake '{0}'."
-                + "\r\ne.g. /thisFolder/foo.txt", _dataLakeAccountName));
+            var remotePath = ConsolePrompts.Prompt(String.Format("Enter the path of the file you want to download from Data Lake Store '{0}'."
+                + "\r\ne.g. /thisFolder/foo.txt", _dataLakeStoreAccountName));
             var localPath = ConsolePrompts.Prompt("Enter the local path where you want the file saved. e.g. C:\\folder\\test.tsv");
             bool force = ConsolePrompts.MenuPrompt("Force overwrite?", new[] { "No", "Yes" }).Equals("1", StringComparison.InvariantCultureIgnoreCase);
-            DataLakeHelper.DownloadFile(_dataLakeFileSystemClient, _dataLakeAccountName, remotePath, localPath, force);
+            DataLakeStoreHelper.DownloadFile(_dataLakeStoreFileSystemClient, _dataLakeStoreAccountName, remotePath, localPath, force);
         }
 
         private static void Done()
