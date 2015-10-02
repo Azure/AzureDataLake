@@ -1,13 +1,13 @@
 # Get started with Azure Data Lake using the .NET SDK 
 
-Learn how to use the Azure Data Lake .NET SDK and perform common operations.  
+Learn how to use the Azure Data Lake Store .NET SDK and perform common operations.  
 
 ## Prerequisites
 
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md) and the [SDK First Steps guide](FirstSteps.md).
 
 ## 01 - Namespace declations
-In order to programatically access Azure Data Lake, add the following namespace declarations:
+In order to programatically access Azure Data Lake Store, add the following namespace declarations:
 
     using System;
     using System.Collections.Generic;
@@ -18,21 +18,22 @@ In order to programatically access Azure Data Lake, add the following namespace 
     using Microsoft.Azure;
     using Microsoft.Azure.Common.Authentication;
     using Microsoft.Azure.Common.Authentication.Models;
-    using Microsoft.Azure.Management.DataLake;
-    using Microsoft.Azure.Management.DataLake.Models;
-    using Microsoft.Azure.Management.DataLakeFileSystem;
-    using Microsoft.Azure.Management.DataLakeFileSystem.Models;
-    using Microsoft.Azure.Management.DataLakeFileSystem.Uploading;
+    using Microsoft.Azure.Management.DataLake.Store;
+    using Microsoft.Azure.Management.DataLake.Store.Models;
+    using Microsoft.Azure.Management.DataLake.StoreFileSystem;
+    using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
+    using Microsoft.Azure.Management.DataLake.StoreUploader;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
-## 02 - Create a Data Lake client
+## 02 - Create a Data Lake Store client
 
 There are two main clients:
-* DataLakeManagementClient: allows you to manage account operations such as creating, deleting, or updating properties
-* DataLakeFileSystemClient: allows you to browse, create, and delete files
+* DataLakeStoreManagementClient: allows you to manage account operations such as creating, deleting, or updating properties
+* DataLakeStoreFileSystemClient: allows you to browse, create, and delete files
 
-To create any Data Lake client you need to provide your Azure credentials via a CloudCredentials object.  The CloudCredentials object requires a profile client obtained with your username, password and subscription ID.
-Here is an example application that creates two Data Lake clients.
+To create the Data Lake Store clients you need to provide your Azure credentials via a SubscriptionCloudCredentials object.  The SubscriptionCloudCredentials object requires a profile client obtained with your username, password and subscription ID.
+
+Here is an example application that creates the two Data Lake clients.
 
     namespace DataLakeConsoleApp
     {
@@ -76,9 +77,9 @@ Here is an example application that creates two Data Lake clients.
         }
     }
 
-## 03 - Example Operations Using the Data Lake Clients 
+## 03 - Example Operations Using the Data Lake Store Clients 
 
-### Create and/or Delete an Azure Data Lake account
+### Create and/or Delete an Azure Data Lake Store account
 
 In the Main() function above add the following lines:
 
@@ -137,9 +138,6 @@ A completed tutorial can be downloaded [here](src/) that will demonstrate how to
             var response = dataLakeFileSystemClient.FileSystem.ListFileStatus(path, dataLakeAccountName, new DataLakeFileSystemListParameters());
             return response.FileStatuses.FileStatus.ToList();
         }
-
-#### Learn more
-* [SDK User Manual](UserManual.md) - View some basic documentation for the Azure Data Lake .NET SDK.
 
 ------------
 

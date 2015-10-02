@@ -1,4 +1,4 @@
-# First steps: Azure Data Lake .NET SDK
+# First steps: Azure Data Lake Store .NET SDK
 
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md).
 
@@ -6,10 +6,10 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 ### First steps
 
-#### Download and extract the Azure Data Lake .NET SDK NuGet packages
+#### Download and extract the Azure Data Lake Store .NET SDK NuGet packages
 1. Download the [Azure Data Lake .NET SDK NuGet packages here](https://github.com/MicrosoftBigData/AzureDataLake/releases).
-1. Extract the contents of **AzureSDK_DataLake_Only.zip**.
-1. Place the contents in a directory, e.g. ``C:\KonaDataLake_NuGet\...``
+1. Extract the contents of **AzureSDK_DataLake_StoreAnalytics.zip**.
+1. Place the contents in a directory, e.g. ``C:\DataLake_NuGet\...``
 
 #### Add NuGet packages to your .NET project in Visual Studio
 1. Either open or create a .NET project in Visual Studio.
@@ -43,19 +43,18 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 1. Click OK.
     
-       You should now be able to select Azure Data Lake from your list of NuGet sources.
+       You should now be able to select Data Lake SDK from your list of NuGet sources.
     
     ![](img/firststeps_manage_list.png)
 
 1. Select "Include Prerelease" from the dropdown.
 
-1. Click "Install" on any/all Azure Data Lake packages that you would like to use with your project.
+1. Click "Install" on any/all Azure Data Lake Store packages that you would like to use with your project.
 
     You're done!
 
 #### Learn more
-* [SDK Tutorials](Tutorials.md) - Learn how to write some basic code using the Azure Data Lake .NET SDK.
-* [SDK User Manual](UserManual.md) - View some basic documentation for the Azure Data Lake .NET SDK.
+* [SDK Tutorials](Tutorials.md) - Learn how to write some basic code using the Azure Data Lake Store .NET SDK.
 
 ------------
 
