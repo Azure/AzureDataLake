@@ -13,7 +13,7 @@
    ms.topic="article"
    ms.tgt_pltfrm="na"
    ms.workload="big-data" 
-   ms.date="08/31/2015"
+   ms.date="09/29/2015"
    ms.author="nitinme"/>
 
 # Overview of Azure Data Lake
@@ -58,6 +58,11 @@ Azure Storage is a generic storage repository that allows you to store data for 
 | Compatibility with big data offerings  | --              | --            |
 | Data access protocol				     | --              | --            |
 | Authentication						 | --			   | --			   | 
+
+
+## Applications compatible with Azure Data Lake
+
+See [Applications and services compatible with Azure Data Lake](azure-data-lake-compatible-oss-other-applications.md) for a list of open source applications, Microsoft applications/services, and other third-party applications that can be used with Azure Data Lake. 
 
 
 ## What is swebhdfs://?

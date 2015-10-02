@@ -56,23 +56,19 @@ If you don't already have a Security Group that you can use, you can setup a new
 7) Now this group has access to use the Portal and do management operations
 
 ###Managing Users for the File System###
-At the moment we need to help you add the Group to the Data Lake access control list (in the future this can be done in the API/PS/UI). We need the Object ID of the group to do this.
+To fully provide someone access to the Azure Data Lake you must also set ACLs on the File System and Data operations.  
 
-To get the Object ID:
+ 1) Click on the "Data Explorer"/"Browse Data"
 
-1) Click on the Group to see the Details of the Group
+![](../img/Migration/DataExplorer.png)
 
-![](../img/Migration/AADGroupDetails.png)
+    2) Click on "Access"
 
-2) Click on Properties and copy the Object ID
+![](../img/Migration/DataExplorerAccess.png)
 
-![](../img/Migration/AADGroupProperties.png)
-
-3) Send us the following information to konaonboard@microsoft.com:
-- Subscription ID
-- Data Lake Account Name
-- Object ID
-- [Any additional information for Data Migration (see above)]
+    3) Use the selector to search for the group and add it with the permissions you want
+    
+![](../img/Migration/DataExplorerAccessAdd.png)
 
 ###Adding/Removing Users###
 Now that the same security group has been added to both the Portal and the file system, you can simply add/remove users to the security group to manage access.

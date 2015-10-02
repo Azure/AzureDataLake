@@ -13,14 +13,15 @@
    ms.topic="article"
    ms.tgt_pltfrm="na"
    ms.workload="big-data" 
-   ms.date="08/31/2015"
+   ms.date="09/29/2015"
    ms.author="nitinme"/>
 
-# Get started with Azure Data Lake using the portal
+# Get started with Azure Data Lake using the Azure preview portal
 
 > [AZURE.SELECTOR]
 - [Portal](azure-data-lake-get-started-portal.md)
 - [PowerShell](azure-data-lake-get-started-powershell.md)
+- [.NET SDK](azure-data-lake-get-started-net-sdk.md)
 
 Learn how to use the Azure Preview Portal to create an Azure Data Lake account and perform basic operations such as create folders, upload and download data files, delete your account, etc. For more information about Data Lake, see [Azure Data Lake](azure-data-lake-overview.md).
 
@@ -32,7 +33,7 @@ Before you begin this tutorial, you must have the following:
 
 ## Create an Azure Data Lake account
 
-1. Sign on to the new [Azure portal](https://portal.azure.com).
+1. Sign on to the new [Azure preview portal](https://portal.azure.com).
 
 2. Click **NEW**, click **Data + Storage**, and then click **Azure Data Lake**. Read the information in the **Azure Data Lake** blade, and then click **Create** in the bottom left corner of the blade.
 
@@ -56,25 +57,24 @@ Before you begin this tutorial, you must have the following:
 
 You can create directories under your Azure Data Lake account to manage and store data.
 
-1. Open the Data Lake account that you just created. From the left pane, click **Browse All**, click **Data Lake**, and then from the Data Lake blade, click the account name under which you want to create directories. If you pinned the Data Lake account to the startboard, click that tile.
+1. Open the Data Lake account that you just created. From the left pane, click **Browse**, click **Data Lake**, and then from the Data Lake blade, click the account name under which you want to create directories. If you pinned the Data Lake account to the startboard, click that tile.
 
-2. In your Data Lake account blade, click **Browse Data**.
+2. In your Data Lake account blade, click **Data Explorer**.
 
 	![Create directories in Data Lake account](./media/azure-data-lake-get-started-portal/ADL.Create.Folder.png "Create directories in Data Lake account")
 
-3. In the **Browse Data** blade, click **New Directory**, enter a name for the new directory, and then click **OK**.
+3. In your Data Lake account blade, click **New Directory**, enter a name for the new directory, and then click **OK**.
 	
 	![Create directories in Data Lake account](./media/azure-data-lake-get-started-portal/ADL.Folder.Name.png "Create directories in Data Lake account")
 	
-	The newly created directory will be listed in the Browse Data blade. You can create nested directories upto any level.
+	The newly created directory will be listed in the **Data Explorer** blade. You can create nested directories upto any level.
 
 	![Create directories in Data Lake account](./media/azure-data-lake-get-started-portal/ADL.New.Directory.png "Create directories in Data Lake account")
 
 
-
 ## Upload data to your Azure Data Lake account
 
-You can upload your data to an Azure Data Lake account directly at the root level or to a directory that you created within the account. In the screen capture below, follow the steps to upload a file to a sub-directory from the **Browse Data** blade. In this screen capture, the file is uploaded to a sub-directory shown in the breadcrumbs (marked in a red box).
+You can upload your data to an Azure Data Lake account directly at the root level or to a directory that you created within the account. In the screen capture below, follow the steps to upload a file to a sub-directory from the **Data Explorer** blade. In this screen capture, the file is uploaded to a sub-directory shown in the breadcrumbs (marked in a red box).
 
 ![Upload data](./media/azure-data-lake-get-started-portal/ADL.New.Upload.File.png "Upload data")
 
