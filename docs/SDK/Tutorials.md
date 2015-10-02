@@ -11,26 +11,21 @@ In order to programatically access Azure Data Lake Store, add the following name
 
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Security;
-    
+
     using Microsoft.Azure;
     using Microsoft.Azure.Common.Authentication;
-    using Microsoft.Azure.Common.Authentication.Models;
     using Microsoft.Azure.Management.DataLake.Store;
-    using Microsoft.Azure.Management.DataLake.Store.Models;
     using Microsoft.Azure.Management.DataLake.StoreFileSystem;
     using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
-    using Microsoft.Azure.Management.DataLake.StoreUploader;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 ## 02 - Create a Data Lake Store client
 
 There are two main clients:
 * DataLakeStoreManagementClient: allows you to manage account operations such as creating, deleting, or updating properties
-* DataLakeStoreFileSystemClient: allows you to browse, create, and delete files
+* DataLakeStoreFileSystemManagementClient: allows you to browse, create, and delete files
 
 To create the Data Lake Store clients you need to provide your Azure credentials via a SubscriptionCloudCredentials object.  The SubscriptionCloudCredentials object requires a profile client obtained with your username, password and subscription ID.
 
@@ -40,39 +35,60 @@ Here is an example application that creates the two Data Lake clients.
     {
         class DataLakeConsoleApp
         {
-          private static DataLakeManagementClient _dataLakeClient;
-          private static DataLakeFileSystemManagementClient _dataLakeFileSystemClient;
-          
-	        static void Main(string[] args)
-	        {
-		    var subscriptionId = new Guid("<subID>");
-		    var _credentials = GetAccessToken();
+            private static SubscriptionCloudCredentials _credentials;
+            private static DataLakeStoreManagementClient _dataLakeStoreClient;
+            private static DataLakeStoreFileSystemManagementClient _dataLakeStoreFileSystemClient;
+            private static IAccessToken _accessToken;
 
-		    _credentials = GetCloudCredentials(_credentials, subscriptionId);
-		    _dataLakeClient = new DataLakeManagementClient(_credentials);
-		    _dataLakeFileSystemClient = new DataLakeFileSystemManagementClient(_credentials);
-		}
-   
+            public static void Main(string[] args)
+            {
+                var subscriptionId = new Guid("<subID>");
+                var accessToken = GetAccessToken();
 
-        public static SubscriptionCloudCredentials GetAccessToken(string username = null, SecureString password = null)
-        {
-            var authFactory = new AuthenticationFactory();
+                _credentials = GetCloudCredentials(accessToken);
+                _credentials = GetCloudCredentials(_credentials, subscriptionId);
 
-            var account = new AzureAccount { Type = AzureAccount.AccountType.User };
+                _dataLakeStoreClient = new DataLakeStoreManagementClient(_credentials);
+                _dataLakeStoreFileSystemClient = new DataLakeStoreFileSystemManagementClient(_credentials);
+            }
 
-            if (username != null && password != null)
-                account.Id = username;
+            public static IAccessToken GetAccessToken(string username = null, SecureString password = null)
+            {
+                var authFactory = new AuthenticationFactory();
 
-            var env = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
-            return new TokenCloudCredentials(authFactory.Authenticate(account, env, AuthenticationFactory.CommonAdTenant, password, ShowDialog.Auto).AccessToken);
+                var account = new AzureAccount { Type = AzureAccount.AccountType.User };
+
+                if (username != null && password != null)
+                    account.Id = username;
+
+                var env = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+
+                return authFactory.Authenticate(account, env, AuthenticationFactory.CommonAdTenant, password, ShowDialog.Auto);
+            }
+
+            public static IAccessToken GetAccessToken(Guid applicationId, Guid tenantId, SecureString password)
+            {
+                var authFactory = new AuthenticationFactory();
+
+                var account = new AzureAccount { Type = AzureAccount.AccountType.ServicePrincipal, Id = applicationId.ToString() };
+
+                var env = AzureEnvironment.PublicEnvironments[EnvironmentName.AzureCloud];
+
+                return authFactory.Authenticate(account, env, tenantId.ToString(), password, ShowDialog.Never);
+            }
+
+            public static SubscriptionCloudCredentials GetCloudCredentials(IAccessToken accessToken)
+            {
+                return new TokenCloudCredentials(accessToken.AccessToken);
+            }
+
+            public static SubscriptionCloudCredentials GetCloudCredentials(SubscriptionCloudCredentials creds, Guid subId)
+            {
+                return new TokenCloudCredentials(subId.ToString(), ((TokenCloudCredentials)creds).Token);
+            }
         }
-
-        public static SubscriptionCloudCredentials GetCloudCredentials(SubscriptionCloudCredentials creds, Guid subId)
-        {
-            return new TokenCloudCredentials(subId.ToString(), ((TokenCloudCredentials)creds).Token);
-        }
-      }
     }
+
 
 ## 03 - Example Operations Using the Data Lake Store Clients 
 
@@ -80,15 +96,15 @@ Here is an example application that creates the two Data Lake clients.
 
 In the Main() function above add the following lines:
 
-	var parameters = new DataLakeAccountCreateOrUpdateParameters();
-	parameters.DataLakeAccount = new DataLakeAccount
-	{
-		Name = "<accountName>",
-		Location = "<Azure Region>"
-	};
-	
-	_dataLakeClient.DataLakeAccount.Create("<resourceGroupName>", parameters);
-	_dataLakeClient.DataLakeAccount.Delete("<resourceGroupName>", parameters);
+    var parameters = new DataLakeStoreAccountCreateOrUpdateParameters();
+    parameters.DataLakeStoreAccount = new DataLakeStoreAccount
+    {
+        Name = "<Account Name>",
+        Location = "<Azure Location>"
+    };
+
+    _dataLakeStoreClient.DataLakeStoreAccount.Create("<resourceGroupName>", parameters);
+    _dataLakeStoreClient.DataLakeStoreAccount.Delete("<resourceGroupName>", "<accountName>");
 
 ### FileSystem Operations
 
@@ -98,45 +114,45 @@ The file system client expects local paths to be given like the following, C:\\\
             
 ##### Uploading or Appending to Files
 
-        public static bool UploadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dlAccountName, string srcPath, string destPath, bool force = false)
-        {
-            var parameters = new UploadParameters(srcPath, destPath, dlAccountName, isOverwrite: true);
-            var frontend = new DataLakeFrontEndAdapter(dlAccountName, dataLakeFileSystemClient);
-            var uploader = new DataLakeUploader(parameters, frontend);
+    public static bool UploadFile(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string dlStoreAccountName, string srcPath, string destPath, bool force = false)
+    {
+        var parameters = new UploadParameters(srcPath, destPath, dlStoreAccountName, isOverwrite: true);
+        var frontend = new DataLakeStoreFrontEndAdapter(dlStoreAccountName, dataLakeStoreFileSystemClient);
+        var uploader = new DataLakeStoreUploader(parameters, frontend);
 
-            uploader.Execute();
+        uploader.Execute();
 
-            return true;
-        }
+        return true;
+    }
 
-        public static bool AppendBytes(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dlAccountName, string path, Stream streamContents)
-        {
-            var response = dataLakeFileSystemClient.FileSystem.BeginAppend(path, dlAccountName, null);
-            dataLakeFileSystemClient.FileSystem.Append(response.Location, streamContents);
+    public static bool AppendBytes(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string dlStoreAccountName, string path, Stream streamContents)
+    {
+        var response = dataLakeStoreFileSystemClient.FileSystem.BeginAppend(path, dlStoreAccountName, null);
+        dataLakeStoreFileSystemClient.FileSystem.Append(response.Location, streamContents);
 
-            return true;
-        }
+        return true;
+    }
     
 ##### Downloading a File
 
-       public static void DownloadFile(DataLakeFileSystemManagementClient dataLakeFileSystemClient,
-            string dataLakeAccountName, string srcPath, string destPath, bool force)
-        {
-            var beginOpenResponse = dataLakeFileSystemClient.FileSystem.BeginOpen(srcPath, dataLakeAccountName,
-                new FileOpenParameters());
-            var openResponse = dataLakeFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
+    public static void DownloadFile(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient,
+        string dataLakeStoreAccountName, string srcPath, string destPath, bool force)
+    {
+        var beginOpenResponse = dataLakeStoreFileSystemClient.FileSystem.BeginOpen(srcPath, dataLakeStoreAccountName,
+            new FileOpenParameters());
+        var openResponse = dataLakeStoreFileSystemClient.FileSystem.Open(beginOpenResponse.Location);
 
-            if (force || !File.Exists(destPath))
-                File.WriteAllBytes(destPath, openResponse.FileContents);
-        }
+        if (force || !File.Exists(destPath))
+            File.WriteAllBytes(destPath, openResponse.FileContents);
+    }
 
 ##### Listing Files
 
-        public static List<FileStatusProperties> ListItems(DataLakeFileSystemManagementClient dataLakeFileSystemClient, string dataLakeAccountName, string path)
-        {
-            var response = dataLakeFileSystemClient.FileSystem.ListFileStatus(path, dataLakeAccountName, new DataLakeFileSystemListParameters());
-            return response.FileStatuses.FileStatus.ToList();
-        }
+    public static List<FileStatusProperties> ListItems(DataLakeStoreFileSystemManagementClient dataLakeStoreFileSystemClient, string dataLakeStoreAccountName, string path)
+    {
+        var response = dataLakeStoreFileSystemClient.FileSystem.ListFileStatus(path, dataLakeStoreAccountName, new DataLakeStoreFileSystemListParameters());
+        return response.FileStatuses.FileStatus.ToList();
+    }
 
 ------------
 
