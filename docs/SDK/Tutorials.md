@@ -17,6 +17,8 @@ In order to programatically access Azure Data Lake Store, add the following name
 
     using Microsoft.Azure;
     using Microsoft.Azure.Common.Authentication;
+    using Microsoft.Azure.Common.Authentication.Models;
+    using Microsoft.Azure.Common.Authentication.Factories;
     using Microsoft.Azure.Management.DataLake.Store;
     using Microsoft.Azure.Management.DataLake.StoreFileSystem;
     using Microsoft.Azure.Management.DataLake.StoreFileSystem.Models;
@@ -38,7 +40,6 @@ Here is an example application that creates the two Data Lake clients.
             private static SubscriptionCloudCredentials _credentials;
             private static DataLakeStoreManagementClient _dataLakeStoreClient;
             private static DataLakeStoreFileSystemManagementClient _dataLakeStoreFileSystemClient;
-            private static IAccessToken _accessToken;
 
             public static void Main(string[] args)
             {
@@ -108,9 +109,9 @@ In the Main() function above add the following lines:
 
 ### FileSystem Operations
 
-A completed tutorial can be downloaded [here](src/) that will demonstrate how to perform common scenarios such as uploading, downloading, and browsing your files.
+A completed tutorial can be downloaded [here](src/) that will demonstrate how to perform common scenarios such as uploading, downloading, and browsing your files.  
 
-The file system client expects local paths to be given like the following, C:\\\folder\\\test.tsv and ADL paths to be given relative to the root directory (e.g. /thisFolder/foo.txt).
+The file system client expects local paths to be given like the following, C:\\\folder\\\test.tsv and ADL paths to be given relative to the root directory (e.g. /thisFolder/foo.txt).  Also include this namespace declaration at the beginning of your application: using Microsoft.Azure.Management.DataLake.StoreUploader;
             
 ##### Uploading or Appending to Files
 
