@@ -19,6 +19,8 @@ Install Azure PowerShell with Data Lake:
 1. Open a new PowerShell window.
 2. Log in to your Azure account. If you are attempting to connect to a dogfood environment, run the following script first: https://github.com/MicrosoftBigData/ProjectKona/blob/master/PowerShellSamples/Initialize-AzureEnvironment.ps1
 
+        Install-Module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ResourceManager\AzureResourceManager\AzureResourceManager.psd1"
+
         Login-AzureRmAccount
         - OR (for dogfood after running the above script)-
         Login-AzureRmAccount -Environment dogfood
