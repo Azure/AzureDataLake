@@ -58,15 +58,23 @@ namespace SDKSampleConsoleApp
                                           + "\r\nIf you're not sure which subscription to pick, leave this blank.",
                     AzureHelper.GetSubscriptions(_credentials));
 
-            if (string.IsNullOrWhiteSpace(subId))
+            _credentials = AzureHelper.GetCloudCredentials(_credentials, new Guid(subId));
+            _dataLakeStoreClient = new DataLakeStoreManagementClient(_credentials);
+            _dataLakeStoreFileSystemClient = new DataLakeStoreFileSystemManagementClient(_credentials);
+
+            if (!string.IsNullOrWhiteSpace(subId))
+            {
+                _dataLakeStoreAccountName =
+                    ConsolePrompts.MenuPrompt("Select your Data Lake Store account.",
+                        DataLakeStoreHelper.ListAccounts(_dataLakeStoreClient),
+                        true);
+            }
+            else
             {
                 _dataLakeStoreAccountName = ConsolePrompts.Prompt("Enter your Data Lake Store account name.", true);
                 subId = AzureHelper.GetSubscriptions(_credentials, _dataLakeStoreAccountName).Keys.FirstOrDefault();
             }
-
-            _credentials = AzureHelper.GetCloudCredentials(_credentials, new Guid(subId));
-            _dataLakeStoreClient = new DataLakeStoreManagementClient(_credentials);
-            _dataLakeStoreFileSystemClient = new DataLakeStoreFileSystemManagementClient(_credentials);
+            
             _dataLakeStoreResourceGroupName = DataLakeStoreHelper.GetResourceGroupName(_dataLakeStoreClient, _dataLakeStoreAccountName);
         }
 

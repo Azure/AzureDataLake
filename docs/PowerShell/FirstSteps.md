@@ -17,15 +17,16 @@ Install Azure PowerShell with Data Lake:
 
 #### Initialization
 1. Open a new PowerShell window.
-2. Log in to your Azure account
+2. Log in to your Azure account. If you are attempting to connect to a dogfood environment, run the following script first: https://github.com/MicrosoftBigData/ProjectKona/blob/master/PowerShellSamples/Initialize-AzureEnvironment.ps1
 
-	Add-AzureAccount
-	
-3. Select your subscription and switch to Azure Resource Manager mode
+        Login-AzureRmAccount
+        - OR (for dogfood after running the above script)-
+        Login-AzureRmAccount -Environment dogfood
+
+3. Select your subscription by entering the following:
 
         $subId = "<your Subscription ID>"
-        Select-AzureSubscription -SubscriptionId $subId
-        Switch-AzureMode AzureResourceManager
+        Set-AzureRmContext -SubscriptionId $subId
 
 
 #### Getting a resource group
@@ -33,27 +34,27 @@ To create an resource in Azure, you must select a resource group.
 
 To enumerate the resource groups in your subscription:
     
-    Get-AzureResourceGroup
+    Get-AzureRmResourceGroup
     
 To create a new resource group:
 
     $resourceGroupName = "<your new resource group name>"
-    New-AzureResourceGroup -Name $resourceGroupName -Location "East US 2"
+    New-AzureRmResourceGroup -Name $resourceGroupName -Location "East US 2"
     
 
-#### Creating a new Azure Data Lake account
+#### Creating a new Azure Data Lake Store account
 
-If you are creating a Data Lake account for the first time:
+If you are creating a Data Lake Store account for the first time:
 
 	Register-AzureProvider -ProviderNamespace "Microsoft.DataLake" 
 
 > NOTE: The account name must only contain lowercase letters and numbers.
 
-	$dataLakeAccountName = "<your new Data Lake account name>"
+    $dataLakeAccountName = "<your new Data Lake account name>"
     
-    New-AzureDataLakeAccount `
+    New-AzureRmDataLakeStoreAccount `
         -ResourceGroupName $resourceGroupName `
-        -Name $dataLakeAccountName `
+        -Name $adlStoreAccountName `
         -Location "East US 2"
 
 #### That's it!
@@ -62,9 +63,9 @@ Now you can get started using our [Tutorials](Tutorials.md) and the [User Manual
 
 #### Learn more
 
-* Azure Data Lake
-    * [PowerShell Tutorials](https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/PowerShell/Tutorials.md) - Learn how to perform some basic activities with your Azure Data Lake account in PowerShell.
-    * [PowerShell User Manual](https://github.com/MicrosoftBigData/AzureDataLake/tree/master/docs/PowerShell/UserManual.md) - See how to use the Azure Data Lake PowerShell cmdlets.
+* Azure Data Lake Store
+    * [PowerShell Tutorials](https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/PowerShell/Tutorials.md) - Learn how to perform some basic activities with your Azure Data Lake Store account in PowerShell.
+    * [PowerShell User Manual](https://github.com/MicrosoftBigData/AzureDataLake/tree/master/docs/PowerShell/UserManual.md) - See how to use the Azure Data Lake Store PowerShell cmdlets.
 
 ------------
 
@@ -74,6 +75,6 @@ Browse the following pages:
 
 * [Getting Started](../GettingStarted.md)
 * Tools
-    * [Azure Portal](../AzurePortal/FirstSteps.md)
-    * [Data Lake PowerShell](../PowerShell/FirstSteps.md)
-    * [SDK](../SDK/FirstSteps.md)
+    * [Data Lake Store in the Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Data Lake Store PowerShell](../PowerShell/FirstSteps.md)
+    * [Data Lake Store .NET SDK](../SDK/FirstSteps.md)

@@ -1,4 +1,4 @@
-# User Manual: Azure PowerShell with Data Lake
+# User Manual: Azure PowerShell with Data Lake Store
 
 This guide assumes you have previously followed the steps in the main [Getting Started guide](../GettingStarted.md).
 
@@ -6,64 +6,60 @@ This guide assumes you have previously followed the steps in the main [Getting S
 
 ### The Basics
 
-#### Data Lake Paths
+#### Data Lake Store Paths
 
-When interacting with the data in your Data Lake, many of the cmdlets use the ``-Path`` parameter. The format of the path that you provide should be as follows:
+When interacting with the data in your Data Lake Store, many of the cmdlets use the ``-Path`` parameter. The format of the path that you provide should be as follows:
 
-        $path = "swebhdfs://myDataLakeAccount.azuredatalake.net/foo/bar.txt"
-        Get-AzureDataLakeItem -Path $path
+        $path = "/foo/bar.txt"
+        Get-AzureRmDataLakeStoreItem -Path $path
 
 #### Initialization
 1. Open a new PowerShell window.
+1. If you haven't logged in yet, enter the following:
 
-2. Log in to your Azure account
-        
-        Add-AzureAccount
+        Login-AzureRmAccount
 
-3. Switch to Azure Resource Manager mode and select your subscription
+1. Select your subscription by entering the following:
 
-        Switch-AzureMode AzureResourceManager
-        Select-AzureSubscription -SubscriptionId $subscriptionId
+        Set-AzureRmContext -SubscriptionId $subscriptionId
 
 #### Help
 
-* To get a list of Azure Data Lake cmdlets, enter the following:
+* To get a list of Azure Data Lake Store cmdlets, enter the following:
 
-        Get-Command *AzureDataLake*
+        Get-Command *Azure*DataLakeStore*
 
     Expected response:
 
         CommandType     Name                                               Version    Source
         -----------     ----                                               -------    ------
-        Cmdlet          Add-AzureDataLakeContent                           0.9.4      Azure
-        Cmdlet          Export-AzureDataLakeItem                           0.9.4      Azure
-        Cmdlet          Get-AzureDataLakeAccount                           0.9.4      Azure
-        Cmdlet          Get-AzureDataLakeChildItem                         0.9.4      Azure
-        Cmdlet          Get-AzureDataLakeItem                              0.9.4      Azure
-        Cmdlet          Get-AzureDataLakeItemAcl                           0.9.4      Azure
-        Cmdlet          Get-AzureDataLakeItemContent                       0.9.4      Azure
-        Cmdlet          Get-AzureDataLakeItemOwner                         0.9.4      Azure
-        Cmdlet          Get-AzureDataLakeItemPermissions                   0.9.4      Azure
-        Cmdlet          Import-AzureDataLakeItem                           0.9.4      Azure
-        Cmdlet          Join-AzureDataLakeItem                             0.9.4      Azure
-        Cmdlet          Move-AzureDataLakeItem                             0.9.4      Azure
-        Cmdlet          New-AzureDataLakeAccount                           0.9.4      Azure
-        Cmdlet          New-AzureDataLakeItem                              0.9.4      Azure
-        Cmdlet          Remove-AzureDataLakeAccount                        0.9.4      Azure
-        Cmdlet          Remove-AzureDataLakeItem                           0.9.4      Azure
-        Cmdlet          Remove-AzureDataLakeItemAcl                        0.9.4      Azure
-        Cmdlet          Remove-AzureDataLakeItemAclEntry                   0.9.4      Azure
-        Cmdlet          Set-AzureDataLakeAccount                           0.9.4      Azure
-        Cmdlet          Set-AzureDataLakeItemAcl                           0.9.4      Azure
-        Cmdlet          Set-AzureDataLakeItemAclEntry                      0.9.4      Azure
-        Cmdlet          Set-AzureDataLakeItemOwner                         0.9.4      Azure
-        Cmdlet          Set-AzureDataLakeItemPermissions                   0.9.4      Azure
-        Cmdlet          Test-AzureDataLakeAccount                          0.9.4      Azure
-        Cmdlet          Test-AzureDataLakeItem                             0.9.4      Azure
+        Cmdlet          Add-AzureRmDataLakeStoreContent                    0.9.10     AzureResourceManager
+        Cmdlet          Export-AzureRmDataLakeStoreItem                    0.9.10     AzureResourceManager
+        Cmdlet          Get-AzureRmDataLakeStoreAccount                    0.9.10     AzureResourceManager
+        Cmdlet          Get-AzureRmDataLakeStoreChildItem                  0.9.10     AzureResourceManager
+        Cmdlet          Get-AzureRmDataLakeStoreItem                       0.9.10     AzureResourceManager
+        Cmdlet          Get-AzureRmDataLakeStoreItemAcl                    0.9.10     AzureResourceManager
+        Cmdlet          Get-AzureRmDataLakeStoreItemContent                0.9.10     AzureResourceManager
+        Cmdlet          Get-AzureRmDataLakeStoreItemOwner                  0.9.10     AzureResourceManager
+        Cmdlet          Import-AzureRmDataLakeStoreItem                    0.9.10     AzureResourceManager
+        Cmdlet          Join-AzureRmDataLakeStoreItem                      0.9.10     AzureResourceManager
+        Cmdlet          Move-AzureRmDataLakeStoreItem                      0.9.10     AzureResourceManager
+        Cmdlet          New-AzureRmDataLakeStoreAccount                    0.9.10     AzureResourceManager
+        Cmdlet          New-AzureRmDataLakeStoreItem                       0.9.10     AzureResourceManager
+        Cmdlet          Remove-AzureRmDataLakeStoreAccount                 0.9.10     AzureResourceManager
+        Cmdlet          Remove-AzureRmDataLakeStoreItem                    0.9.10     AzureResourceManager
+        Cmdlet          Remove-AzureRmDataLakeStoreItemAcl                 0.9.10     AzureResourceManager
+        Cmdlet          Remove-AzureRmDataLakeStoreItemAclEntry            0.9.10     AzureResourceManager
+        Cmdlet          Set-AzureRmDataLakeStoreAccount                    0.9.10     AzureResourceManager
+        Cmdlet          Set-AzureRmDataLakeStoreItemAcl                    0.9.10     AzureResourceManager
+        Cmdlet          Set-AzureRmDataLakeStoreItemAclEntry               0.9.10     AzureResourceManager
+        Cmdlet          Set-AzureRmDataLakeStoreItemOwner                  0.9.10     AzureResourceManager
+        Cmdlet          Test-AzureRmDataLakeStoreAccount                   0.9.10     AzureResourceManager
+        Cmdlet          Test-AzureRmDataLakeStoreItem                      0.9.10     AzureResourceManager
 
 * To get information about a specific cmdlet, such as the syntax or the return type, enter the following:
     
-        Get-Help Get-AzureDataLakeAccount
+        Get-Help Get-AzureRmDataLakeStoreAccount
 
 #### Account management permissions
 
@@ -75,35 +71,35 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
 #### Account management
 
-* **List** Data Lake accounts within the current subscription
+* **List** Data Lake Store accounts within the current subscription
 
     Sample usage:
     
-        Get-AzureDataLakeAccount
+        Get-AzureRmDataLakeStoreAccount
     
-* **List** Data Lake accounts within a specific resource group
+* **List** Data Lake Store accounts within a specific resource group
     
-        Get-AzureDataLakeAccount -ResourceGroupName $resourceGroupName
+        Get-AzureRmDataLakeStoreAccount -ResourceGroupName $resourceGroupName
     
-* **Get details** of a specific Data Lake account
+* **Get details** of a specific Data Lake Store account
     
-        Get-AzureDataLakeAccount -Name $dataLakeAccountName
+        Get-AzureRmDataLakeStoreAccount -Name $adlStoreAccountName
 
-* **Test existence** of a specific Data Lake account
+* **Test existence** of a specific Data Lake Store account
 
-        Test-AzureDataLakeAccount -Name $dataLakeAccountName
+        Test-AzureRmDataLakeStoreAccount -Name $adlStoreAccountName
 
-* **Create** a new Data Lake account
+* **Create** a new Data Lake Store account
 
-        New-AzureDataLakeAccount `
+        New-AzureRmDataLakeStoreAccount `
             -ResourceGroupName $resourceGroupName `
-            -Name $dataLakeAccountName `
+            -Name $adlStoreAccountName `
             -Location "East US 2"
         
-* **Delete** a Data Lake account
+* **Delete** a Data Lake Store account
 
-        Remove-AzureDataLakeAccount `
-            -Name $dataLakeAccountName
+        Remove-AzureRmDataLakeStoreAccount `
+            -Name $adlStoreAccountName
         
 
 #### Data operations
@@ -112,65 +108,65 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
     * List all details
 
-            Get-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $path
+            Get-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $path
 
     * Get file size in bytes
             
-            $fileInfo = Get-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $path
+            $fileInfo = Get-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $path
             $fileInfo.Size
 
 * **List** files within a specific folder
 
-        Get-AzureDataLakeChildItem -AccountName $dataLakeAccountName -Path $folderPath
+        Get-AzureRmDataLakeStoreChildItem -AccountName $adlStoreAccountName -Path $folderPath
 
 * **Test existence** of a specific file or folder
 
-        Test-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $path
+        Test-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $path
 
 * **Create** a new file or folder
 
-        New-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $filePath
+        New-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath
 
-* **Upload** a specific file or folder from local machine to Data Lake
+* **Upload** a specific file or folder from local machine to Data Lake Store
 
-        Import-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $localPath -Destination $remotePath
+        Import-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $localPath -Destination $remotePath
 
-* **Download** a specific file or folder from Data Lake to local machine
+* **Download** a specific file or folder from Data Lake Store to local machine
 
-        Export-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $remotePath -Destination $localPath
+        Export-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $remotePath -Destination $localPath
 
 * **Delete** a specific file or folder
 
-        Remove-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $filePath
+        Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath
 
 * **Rename or move** a specific file or folder
 
-        Move-AzureDataLakeItem -AccountName $dataLakeAccountName -Path $filePath -Destination $filePath
+        Move-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath -Destination $filePath
 
 * **Concatenate** (destructively) two or more files
 
-        Join-AzureDataLakeItem -AccountName $dataLakeAccountName -Paths $filePaths -Destination $filePath
+        Join-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Paths $filePaths -Destination $filePath
 
 * **Append** content to a specific file
 
-        Add-AzureDataLakeContent -AccountName $dataLakeAccountName -Path $filePath
+        Add-AzureRmDataLakeStoreContent -AccountName $adlStoreAccountName -Path $filePath
 
 * **Read** content of a specific file
 
-        Get-AzureDataLakeItemContent -AccountName $dataLakeAccountName -Path $filePath
+        Get-AzureRmDataLakeStoreItemContent -AccountName $adlStoreAccountName -Path $filePath
 
 
 #### File system permissions
 
 * **Read** permissions of the root directory
 
-    > NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
+    > NOTE: During Data Lake Store preview, file and folder permissions are permanently set to 777.
         
-        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path /
+        Get-AzureRmDataLakeStoreItemPermissions -AccountName $adlStoreAccountName -Path /
 
 * **Set** permissions of the root directory
 
-    > NOTE: During Data Lake preview, file and folder permissions are permanently set to 777.
+    > NOTE: During Data Lake Store preview, file and folder permissions are permanently set to 777.
         
         #There are three classes of permissions for a given item:
         #   User owner, Group owner, Other
@@ -184,27 +180,27 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
         #   4 => 100 in binary, mapping to r--
         
         $perm = "774"
-        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path / -Permissions $perm
+        Get-AzureRmDataLakeStoreItemPermissions -AccountName $adlStoreAccountName -Path / -Permissions $perm
         
         $perm = "rwxrwxr--"
-        Get-AzureDataLakeItemPermissions -AccountName $dataLakeAccountName -Path / -Permissions $perm
+        Get-AzureRmDataLakeStoreItemPermissions -AccountName $adlStoreAccountName -Path / -Permissions $perm
 
 * **Get** the root directory's access control list
         
-    > NOTE: During Data Lake preview, only the root directory has a functional access control list.
+    > NOTE: During Data Lake Store preview, only the root directory has a functional access control list.
         
-        Get-AzureDataLakeItemAcl -AccountName $dataLakeAccountName -Path /
+        Get-AzureRmDataLakeStoreItemAcl -AccountName $adlStoreAccountName -Path /
 
 * **Add or change** a user entry of the root directory's access control list
 
-    > NOTE: During Data Lake preview, only the root directory has a functional access control list.
+    > NOTE: During Data Lake Store preview, only the root directory has a functional access control list.
         
     * Give username@example.com Read, Write, and Execute permissions on the root directory.
                 
                 $user = Get-AzureADUser -Mail username@example.com
                 $objectId = $user.Id
-                Set-AzureDataLakeItemAclEntry `
-                        -AccountName $dataLakeAccountName `
+                Set-AzureRmDataLakeStoreItemAclEntry `
+                        -AccountName $adlStoreAccountName `
                         -Path / `
                         -AceType User `
                         -Id $objectId `
@@ -215,8 +211,8 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
         
                 $user = Get-AzureADUser -Mail otherperson@example.com
                 $objectId = $user.Id
-                Set-AzureDataLakeItemAclEntry `
-                        -AccountName $dataLakeAccountName `
+                Set-AzureRmDataLakeStoreItemAclEntry `
+                        -AccountName $adlStoreAccountName `
                         -Path / `
                         -AceType User `
                         -Id $objectId `
@@ -225,9 +221,9 @@ When interacting with the data in your Data Lake, many of the cmdlets use the ``
 
 * **Clear** the root directory's access control list
 
-    > NOTE: During Data Lake preview, only the root directory has a functional access control list.
+    > NOTE: During Data Lake Store preview, only the root directory has a functional access control list.
         
-        Remove-AzureDataLakeItemAcl -AccountName $dataLakeAccountName -Path /
+        Remove-AzureRmDataLakeStoreItemAcl -AccountName $adlStoreAccountName -Path /
 
 ------------
 
@@ -237,6 +233,6 @@ Browse the following pages:
 
 * [Getting Started](../GettingStarted.md)
 * Tools
-    * [Azure Portal](../AzurePortal/FirstSteps.md)
-    * [PowerShell](../PowerShell/FirstSteps.md)
-    * [SDK](../SDK/FirstSteps.md)
+    * [Data Lake Store in the Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Data Lake Store PowerShell](../PowerShell/FirstSteps.md)
+    * [Data Lake Store .NET SDK](../SDK/FirstSteps.md)
