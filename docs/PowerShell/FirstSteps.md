@@ -48,7 +48,7 @@ To create a new resource group:
 
 If you are creating a Data Lake Store account for the first time:
 
-	Register-AzureRmProvider -ProviderNamespace "Microsoft.DataLake" 
+	Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.DataLake" 
 
 > NOTE: The account name must only contain lowercase letters and numbers.
 
