@@ -109,7 +109,7 @@ namespace SDKSampleHelpers
             string dataLakeStoreAccountName, string[] srcPaths, string destPath, bool force)
         {
             var concatResponse = dataLakeStoreFileSystemClient.FileSystem.MsConcat(destPath, dataLakeStoreAccountName,
-                new MemoryStream());
+                new MemoryStream(), false);
         }
     }
 }
