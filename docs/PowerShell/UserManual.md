@@ -131,7 +131,7 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
 
         Import-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $localPath -Destination $remotePath
 
-* **Download** a specific file or folder from Data Lake Store to local machine
+* **Download** a specific file from Data Lake Store to local machine
 
         Export-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $remotePath -Destination $localPath
 
