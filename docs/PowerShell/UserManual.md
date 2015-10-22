@@ -129,19 +129,35 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
 
 * **Upload** a specific file or folder from local machine to Data Lake Store
 
-        Import-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $localPath -Destination $remotePath
+    * Upload a single file
+    
+            Import-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $localFilePath -Destination $remoteFilePath
+            
+    * Upload a folder
+    
+            Import-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $localFolderPath -Destination $remoteFolderPath -Recurse
 
 * **Download** a specific file from Data Lake Store to local machine
 
-        Export-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $remotePath -Destination $localPath
+        Export-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $remoteFilePath -Destination $localFilePath
 
 * **Delete** a specific file or folder
 
-        Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath
+    * Delete a single file
+    
+            Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath
+
+    * Delete a folder
+    
+            Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $folderPath -Recurse
+
+    * Clean a folder
+    
+            Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $folderPath -Recurse -Clean
 
 * **Rename or move** a specific file or folder
 
-        Move-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath -Destination $filePath
+    Move-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath -Destination $filePath
 
 * **Concatenate** (destructively) two or more files
 
