@@ -108,68 +108,68 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
 
     * List all details
 
-            Get-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $path
+            Get-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $path
 
     * Get file size in bytes
             
-            $fileInfo = Get-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $path
+            $fileInfo = Get-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $path
             $fileInfo.Size
 
 * **List** files within a specific folder
 
-        Get-AzureRmDataLakeStoreChildItem -AccountName $adlStoreAccountName -Path $folderPath
+        Get-AzureRmDataLakeStoreChildItem -Account $adlStoreAccountName -Path $folderPath
 
 * **Test existence** of a specific file or folder
 
-        Test-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $path
+        Test-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $path
 
 * **Create** a new file or folder
 
-        New-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath
+        New-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $filePath
 
 * **Upload** a specific file or folder from local machine to Data Lake Store
 
     * Upload a single file
     
-            Import-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $localFilePath -Destination $remoteFilePath
+            Import-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $localFilePath -Destination $remoteFilePath
             
     * Upload a folder
     
-            Import-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $localFolderPath -Destination $remoteFolderPath -Recurse
+            Import-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $localFolderPath -Destination $remoteFolderPath -Recurse
 
 * **Download** a specific file from Data Lake Store to local machine
 
-        Export-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $remoteFilePath -Destination $localFilePath
+        Export-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $remoteFilePath -Destination $localFilePath
 
 * **Delete** a specific file or folder
 
     * Delete a single file
     
-            Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath
+            Remove-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $filePath
 
     * Delete a folder
     
-            Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $folderPath -Recurse
+            Remove-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $folderPath -Recurse
 
     * Clean a folder
     
-            Remove-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $folderPath -Recurse -Clean
+            Remove-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $folderPath -Recurse -Clean
 
 * **Rename or move** a specific file or folder
 
-    Move-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Path $filePath -Destination $filePath
+    Move-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Path $filePath -Destination $filePath
 
 * **Concatenate** (destructively) two or more files
 
-        Join-AzureRmDataLakeStoreItem -AccountName $adlStoreAccountName -Paths $filePaths -Destination $filePath
+        Join-AzureRmDataLakeStoreItem -Account $adlStoreAccountName -Paths $filePaths -Destination $filePath
 
 * **Append** content to a specific file
 
-        Add-AzureRmDataLakeStoreContent -AccountName $adlStoreAccountName -Path $filePath
+        Add-AzureRmDataLakeStoreContent -Account $adlStoreAccountName -Path $filePath
 
 * **Read** content of a specific file
 
-        Get-AzureRmDataLakeStoreItemContent -AccountName $adlStoreAccountName -Path $filePath
+        Get-AzureRmDataLakeStoreItemContent -Account $adlStoreAccountName -Path $filePath
 
 
 #### File system permissions
@@ -178,7 +178,7 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
 
     > NOTE: During Data Lake Store preview, file and folder permissions are permanently set to 777.
         
-        Get-AzureRmDataLakeStoreItemPermissions -AccountName $adlStoreAccountName -Path /
+        Get-AzureRmDataLakeStoreItemPermissions -Account $adlStoreAccountName -Path /
 
 * **Set** permissions of the root directory
 
@@ -196,16 +196,16 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
         #   4 => 100 in binary, mapping to r--
         
         $perm = "774"
-        Get-AzureRmDataLakeStoreItemPermissions -AccountName $adlStoreAccountName -Path / -Permissions $perm
+        Get-AzureRmDataLakeStoreItemPermissions -Account $adlStoreAccountName -Path / -Permissions $perm
         
         $perm = "rwxrwxr--"
-        Get-AzureRmDataLakeStoreItemPermissions -AccountName $adlStoreAccountName -Path / -Permissions $perm
+        Get-AzureRmDataLakeStoreItemPermissions -Account $adlStoreAccountName -Path / -Permissions $perm
 
 * **Get** the root directory's access control list
         
     > NOTE: During Data Lake Store preview, only the root directory has a functional access control list.
         
-        Get-AzureRmDataLakeStoreItemAcl -AccountName $adlStoreAccountName -Path /
+        Get-AzureRmDataLakeStoreItemAcl -Account $adlStoreAccountName -Path /
 
 * **Add or change** a user entry of the root directory's access control list
 
@@ -216,7 +216,7 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
                 $user = Get-AzureADUser -Mail username@example.com
                 $objectId = $user.Id
                 Set-AzureRmDataLakeStoreItemAclEntry `
-                        -AccountName $adlStoreAccountName `
+                        -Account $adlStoreAccountName `
                         -Path / `
                         -AceType User `
                         -Id $objectId `
@@ -228,7 +228,7 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
                 $user = Get-AzureADUser -Mail otherperson@example.com
                 $objectId = $user.Id
                 Set-AzureRmDataLakeStoreItemAclEntry `
-                        -AccountName $adlStoreAccountName `
+                        -Account $adlStoreAccountName `
                         -Path / `
                         -AceType User `
                         -Id $objectId `
@@ -239,7 +239,7 @@ When interacting with the data in your Data Lake Store, many of the cmdlets use 
 
     > NOTE: During Data Lake Store preview, only the root directory has a functional access control list.
         
-        Remove-AzureRmDataLakeStoreItemAcl -AccountName $adlStoreAccountName -Path /
+        Remove-AzureRmDataLakeStoreItemAcl -Account $adlStoreAccountName -Path /
 
 ------------
 
