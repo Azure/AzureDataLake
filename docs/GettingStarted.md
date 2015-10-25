@@ -6,10 +6,6 @@
 
 To create a new Azure Data Lake Store account, follow these simple steps:
 
-#### Email your TAP Buddy your Azure subscription ID
-
-Send your Subscription ID to your TAP Buddy to receive access to Azure Data Lake Store. This step will take up to 1 business day to be completed.
-
 #### Create a new account with PowerShell or the Portal
 
 If you want to create a new Azure Data Lake Store account, you can do so through the Portal or PowerShell:
