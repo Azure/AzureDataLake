@@ -4,26 +4,24 @@
 
 ### To create a new account
 
-To create a new Azure Data Lake Store account, follow these simple steps:
-
-#### Create a new account with PowerShell or the Portal
-
-If you want to create a new Azure Data Lake Store account, you can do so through the Portal or PowerShell:
+You can create a new Azure Data Lake Store account through the Portal or PowerShell
 
 * [Azure PowerShell](PowerShell/FirstSteps.md)
 * [Azure Portal](./AzurePortal/FirstSteps.md)
 
-#### Manage ADLS Users
+#### Manage ADLS Users with Role-based Access Control
 
-With the new accounts, we will be leveraging a combination of the [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/) and Filesystem ACLs to manage access.
+We will leverage two features to control access:
+* [Azure RBAC](https://azure.microsoft.com/en-us/documentation/articles/role-based-access-control-configure/) 
+* ADLS Filesystem ACLs
 
-To simplify access management, we recommend using security groups.
+To simplify access management, we recommend using Azure Active Directory security groups.
 
-See this doc: [Securing ADLS Best Practices](https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/General/Security%20Best%20Practices.md)
+Please read [Securing ADLS Best Practices](https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/General/Security%20Best%20Practices.md)
 
 ### Get access to an existing ADLS account
 
-Contact your Azure Data Lake Store account owner (the person who created the account).  They can give new users permission to access the ADLS account.
+If you want access to an ADLS account, contact the the person who created the account (The "Owner"). Only they can permissions to new users.
 
 #### Check for existing ADLS accounts
 
