@@ -65,5 +65,6 @@ Browse the following pages:
 * [Getting Started](../GettingStarted.md)
 * Tools
     * [Azure Portal](../AzurePortal/FirstSteps.md)
+    * [Visual Studio Tools](../VisualStudioTools/FirstSteps.md)
     * [PowerShell](../PowerShell/FirstSteps.md)
     * [SDK](../SDK/FirstSteps.md)
