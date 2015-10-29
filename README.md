@@ -12,8 +12,7 @@
 * [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/)    
 * [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/)    
 
-### Using the Tools    
-* [Azure Portal](docs/AzurePortal/FirstSteps.md)    
-* [Visual Studio Tools](docs/VisualStudioTools/FirstSteps.md)    
-* [PowerShell](docs/PowerShell/FirstSteps.md)    
-* [SDK](docs/SDK/FirstSteps.md)  
+### GitHub
+
+https://github.com/MicrosoftBigData/AzureDataLake
+
