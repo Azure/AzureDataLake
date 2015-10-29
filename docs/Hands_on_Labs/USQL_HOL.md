@@ -1,8 +1,3 @@
-
-GO TO PORTAL: 
-
-https://portal.azure.com/?microsoft_azure_biganalytics=true&microsoft_azure_datalake=true&hubsExtension_ItemHideKey=AzureDataLake_BigStorage%2cAzureBigAnalytics_BigCompute
-
 # Instructor-led Lab: U-SQL Introduction 
 
 # Introduction
