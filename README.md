@@ -12,6 +12,11 @@
 * [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/)    
 * [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/)    
 
+### Give feedback
+
+* [Via MSDN Forums](https://aka.ms/adlfeedback)
+* [Send email feedback tothe USQL team](mailto:usql@microsoft.com)
+
 ### GitHub
 
 https://github.com/MicrosoftBigData/AzureDataLake
