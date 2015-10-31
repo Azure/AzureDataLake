@@ -29,6 +29,9 @@
 * [Data Lake Tools for Visual Studio](http://aka.ms/ADLToolsVS)
 
 ### GitHub
-
 https://github.com/MicrosoftBigData/AzureDataLake
+
+### Videos
+* [On Channel 9](https://channel9.msdn.com/Series/Azure-Data-Lake)
+
 
