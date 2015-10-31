@@ -18,7 +18,7 @@
 * [Send email feedback tothe USQL team](mailto:usql@microsoft.com)
 
 ### Tools
-* [Data Lake Tools for Visual Studio](Aka.ms/ADLToolsVS)
+* [Data Lake Tools for Visual Studio](http://aka.ms/ADLToolsVS)
 
 ### GitHub
 
