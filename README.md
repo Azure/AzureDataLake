@@ -17,6 +17,9 @@
 * [Via MSDN Forums](https://aka.ms/adlfeedback)
 * [Send email feedback tothe USQL team](mailto:usql@microsoft.com)
 
+### Tools
+* [Data Lake Tools for Visual Studio](Aka.ms/ADLToolsVS)
+
 ### GitHub
 
 https://github.com/MicrosoftBigData/AzureDataLake
