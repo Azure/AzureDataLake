@@ -20,7 +20,7 @@
 
 ### Give feedback
 
-* [Via MSDN Forums](https://aka.ms/adlfeedback)
+* [Give Suggestions and Feeedback](https://aka.ms/adlfeedback)
 * [File issues on U-SQL](http://github.com/microsoftbigdata/usql/issues)
 * [Send email feedback on the U-SQL language](mailto:usql@microsoft.com)
 
