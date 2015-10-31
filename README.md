@@ -11,11 +11,17 @@
 ### Documentation    
 * [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/)    
 * [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/)    
+* [U-SQL Reference](http://aka.ms/usql_reference)
+* [Documentation Backlog](http://aka.ms/adla_doc_backlog)
+
+### Key Articles
+* [Creating ADF pipelines using ADL](https://azure.microsoft.com/en-us/blog/creating-big-data-pipelines-using-azure-data-lake-and-azure-data-factory/)
 
 ### Give feedback
 
 * [Via MSDN Forums](https://aka.ms/adlfeedback)
-* [Send email feedback tothe USQL team](mailto:usql@microsoft.com)
+* [File issues on U-SQL](http://github.com/microsoftbigdata/usql/issues)
+* [Send email feedback on the U-SQL language](mailto:usql@microsoft.com)
 
 ### Tools
 * [Data Lake Tools for Visual Studio](http://aka.ms/ADLToolsVS)
