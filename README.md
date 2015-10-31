@@ -21,6 +21,7 @@
 ### Give feedback
 
 * [Give Suggestions and Feeedback](https://aka.ms/adlfeedback)
+* [MSDN Forums](http://social.msdn.microsoft.com/Forums/office/en-US/home?forum=AzureDataLake)
 * [File issues on U-SQL](http://github.com/microsoftbigdata/usql/issues)
 * [Send email feedback on the U-SQL language](mailto:usql@microsoft.com)
 
