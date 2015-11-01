@@ -3,9 +3,7 @@
 ### Overview
 
 * [Azure Data Lake](https://azure.microsoft.com/en-us/solutions/data-lake/)
-* [Azure Data Lake Analytics](https://azure.microsoft.com/en-us/services/data-lake-analytics/)
-* [Azure Data Lake Store ](https://azure.microsoft.com/en-us/services/data-lake-store/)
-* [Azure Data Lake HDInsight](https://azure.microsoft.com/en-us/services/hdinsight/)
+* Services: [Analytics](https://azure.microsoft.com/en-us/services/data-lake-analytics/) | [Store ](https://azure.microsoft.com/en-us/services/data-lake-store/) | [HDInsight](https://azure.microsoft.com/en-us/services/hdinsight/)
 
 
 ### Documentation    
