@@ -34,3 +34,5 @@ https://github.com/MicrosoftBigData/AzureDataLake
 * [On Channel 9](https://channel9.msdn.com/Series/Azure-Data-Lake)
 
 
+### Blog Posts
+* 2015/10/28 [Azure Data Lake Reaches Public Preview](https://azure.microsoft.com/en-us/blog/azure-data-lake-reaches-public-preview/)
