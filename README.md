@@ -38,3 +38,4 @@ https://github.com/MicrosoftBigData/AzureDataLake
 * 2015/10/28 [Azure Data Lake Reaches Public Preview](https://azure.microsoft.com/en-us/blog/azure-data-lake-reaches-public-preview/)
 * 2015/10/28 [Writing and Using Custom Code in U-SQL – User-Defined Functions](http://blogs.msdn.com/b/visualstudio/archive/2015/10/28/writing-and-using-custom-code-in-u-sql-user-defined-functions.aspx)
 * 2015/09/28 [Introducing U-SQL – A Language that makes Big Data Processing Easy](http://blogs.msdn.com/b/visualstudio/archive/2015/09/28/introducing-u-sql.aspx)
+* 2015/09/28 [Microsoft expands Azure Data Lake to unleash big data productivity](http://blogs.technet.com/b/dataplatforminsider/archive/2015/09/28/microsoft-expands-azure-data-lake-to-unleash-big-data-productivity.aspx)
