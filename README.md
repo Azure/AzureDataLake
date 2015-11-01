@@ -9,6 +9,7 @@
 ### Documentation    
 * [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/)    
 * [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/)    
+* [HDInsight](https://azure.microsoft.com/en-us/documentation/services/hdinsight/)
 * [U-SQL Team Site](usql.io)
 * [U-SQL Reference](http://aka.ms/usql_reference)
 * [Documentation Backlog](http://aka.ms/adla_doc_backlog)
