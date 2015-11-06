@@ -3,13 +3,11 @@
 ### Overview
 
 * [Azure Data Lake](https://azure.microsoft.com/en-us/solutions/data-lake/)
-* Services: [Analytics](https://azure.microsoft.com/en-us/services/data-lake-analytics/) | [Store ](https://azure.microsoft.com/en-us/services/data-lake-store/) | [HDInsight](https://azure.microsoft.com/en-us/services/hdinsight/)
+* Services: [Store ](https://azure.microsoft.com/en-us/services/data-lake-store/) | [Analytics](https://azure.microsoft.com/en-us/services/data-lake-analytics/) | [HDInsight](https://azure.microsoft.com/en-us/services/hdinsight/)
 
 
 ### Documentation    
-* [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/)    
-* [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/)    
-* [HDInsight](https://azure.microsoft.com/en-us/documentation/services/hdinsight/)
+* [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/) | [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/) | [HDInsight](https://azure.microsoft.com/en-us/documentation/services/hdinsight/)
 * U-SQL: [Team Site](usql.io) | [Language Reference](http://aka.ms/usql_reference)
 * [Documentation Backlog](http://aka.ms/adla_doc_backlog)
 
