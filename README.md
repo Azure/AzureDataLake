@@ -30,6 +30,7 @@ https://github.com/MicrosoftBigData/AzureDataLake
 
 ### Videos
 * [Data Exposed Show on Channel 9](https://channel9.msdn.com/Shows/Data-Exposed)
+* [Azure Data Lake tutorials on Channel 9](https://channel9.msdn.com/Series/AzureDataLake)
 * [HDInsight On Channel 9](https://channel9.msdn.com/Series/Azure-Data-Lake)
 
 
