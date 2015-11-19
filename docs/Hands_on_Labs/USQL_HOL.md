@@ -47,7 +47,7 @@ Please copy the following U-SQL script into the ADL Tool or query window on your
 
 This U-SQL script has no transformation step. It reads from an input file called SearchLog.tsv, schematizing it while reading and the outputs the intermediate rowset back into the file whose name you specified. The Duration field could be null or of type int, while the UserId cannot be null. Note that the C# string type is always nullable.
 
-Some concepts that this script introduce are:
+Some concepts that this script introduces are:
 
 1. **Rowset variables**: Each query expression that produces a rowset can be assigned to a variable. Variables in U-SQL follow the T-SQL variable naming pattern of @ followed by a name (@searchlog in this case). Note that assignment is not forcing the execution. It is merely naming the expression and gives you the ability to build-up more complex expressions.
 
