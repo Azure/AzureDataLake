@@ -26,7 +26,7 @@ By General Availability, all the users listed as Owners for the ADLS account wil
 
 
 
-# Does ADL Analytics include a Machine Learning component?
+### Does ADL Analytics include a Machine Learning component?
 
 Currently, no.
 
