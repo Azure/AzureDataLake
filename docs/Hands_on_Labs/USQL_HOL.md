@@ -203,59 +203,18 @@ You can also use the HAVING clause to restrict the output to groups that satisfy
 	    ORDER BY TotalDuration DESC
 	    USING Outputters.Csv();
 
-# Creating a database, a table-valued function, a view, and a table
+# Creating a database, a view, a table-valued function, and a table
 
 If you don't want to always read from files or write to files, you can use the U-SQL metadata objects to add additional abstractions. You create them in the context of a database and schema. Every U-SQL script will always run with a default database (master) and default schema (dbo) as its default context. You can create your own database and/or schema and can change the context using the USE statement.
 
-# Creating a table-valued function
-
-You can for example encapsulate parts of a U-SQL script in a table-valued function for future reuse.
-Since we always used the same extract in the examples above, it makes sense to create a table-valued function to encapsulate it and store it for reuse. The following script creates a function Searchlog() in the default database and schema:
-
-	DROP FUNCTION IF EXISTS Searchlog;
-	CREATE FUNCTION Searchlog() 
-	RETURNS @searchlog TABLE
-	  (
-	            UserId          int,
-	            Start           DateTime,
-	            Region          string,
-	            Query           string,
-	            Duration        int?,
-	            Urls            string,
-	            ClickedUrls     string
-	  )
-	AS BEGIN 
-	 @searchlog =
-	    EXTRACT UserId          int,
-	            Start           DateTime,
-	            Region          string,
-	            Query           string,
-	            Duration        int?,
-	            Urls            string,
-	            ClickedUrls     string
-	    FROM "/Samples/Data/SearchLog.tsv"
-	USING Extractors.Tsv();
-	RETURN;
-	END;
-
-Note that the first statement drops an already existing definition of the function and then creates the version that we want to use. Now you can use the function instead of the EXTRACT expression in the earlier scripts. E.g.,
-
-	@res =
-	    SELECT
-	        Region,
-	        SUM(Duration) AS TotalDuration
-	    FROM Searchlog() AS S
-	GROUP BY Region
-	HAVING SUM(Duration) > 200;
-	
-	OUTPUT @res
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-	    ORDER BY TotalDuration DESC
-	    USING Outputters.Csv();
+But let's start with encapsulating parts of the queries above for future sharing with views and table-valued functions.
 
 # Creating a view
 
-If you only have one query expression that you want to abstract and do not want to parameterize it, you can also create a view instead of a table-valued function. The following script creates a view SearchlogView in the default database and schema:
+You can encapsulate a U-SQL expression in a view for future reuse.
+Since we always used the same extract in the examples above, it makes sense to create a view to encapsulate it and store it for reuse in the U-SQL meta data catalog.
+
+The following script creates a view SearchlogView in the default database and schema:
 
 	DROP VIEW IF EXISTS SearchlogView;
 	CREATE VIEW SearchlogView AS  
@@ -269,7 +228,9 @@ If you only have one query expression that you want to abstract and do not want 
 	    FROM "/Samples/Data/SearchLog.tsv"
 	USING Extractors.Tsv();
 
-Now you can use the view instead of the EXTRACT expression in the earlier scripts. E.g.,
+Note that the first statement drops an already existing definition of the view and then creates the version that we want to use. 
+
+This now gives us the ability to use the view without having to worry on how to schematize the data everytime and use it, instead of the EXTRACT expression, in the earlier scripts. E.g.,
 
 	@res =
 	    SELECT
@@ -284,9 +245,45 @@ Now you can use the view instead of the EXTRACT expression in the earlier script
 	    ORDER BY TotalDuration DESC
 	    USING Outputters.Csv();
 
+# Creating a table-valued function
+
+If you want to encapsulate several statements or want to add parameterization, you can create a table-valued function. 
+
+The following script creates a function RegionalSearchlog() in the default database and schema that adds a @region parameter for filtering the previously specified view on the Region. The parameter is defaulted to "en-gb".
+
+	DROP FUNCTION IF EXISTS RegionalSearchlog;
+	CREATE FUNCTION RegionalSearchlog(@region string = "en-gb") 
+	RETURNS @searchlog TABLE
+	  (
+	            UserId          int,
+	            Start           DateTime,
+	            Region          string,
+	            Query           string,
+	            Duration        int?,
+	            Urls            string,
+	            ClickedUrls     string
+	  )
+	AS BEGIN 
+	 @searchlog =
+	    SELECT * FROM SearchLogView
+	    WHERE Region == @region;
+	END;
+
+The first statement drops an already existing definition of the function and then creates the version that we want to use. Now you can use the function as in the following case where we get the Start, Region and Duration for the default region:
+
+	@rs1 =
+	    SELECT Start, Region, Duration
+	    FROM RegionSearchlog(DEFAULT) AS S;
+
+	OUTPUT @rs1   
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	USING Outputters.Csv();
+	      
 # Creating a table
 
 Creating a table is similar to creating a table in a relational database such as SQL Server. You either create a table with a predefined schema or create a table and infer the schema from the query that populates the table (also known as CREATE TABLE AS SELECT or CTAS).
+
+The benefit of a table over just a view or table-valued function is that the data is stored in a more optimized format for the query processor to operate on: The data is indexed and partitioned and stores the data in its native data type representation.
 
 Now let's decide to persist the searchlog data in a schematized format in a table called Searchlog in your own database. The script 
 
@@ -294,7 +291,7 @@ Now let's decide to persist the searchlog data in a schematized format in a tabl
 2.	Sets the context to the created database
 3.	Creates the table. To show two ways of creating a table, we actually create two tables:
 	a.	SearchLog1 is created apriori
-	b.	SearchLog2 is created based on the TVF that encapsulates the extraction expression (basically a CTAS)
+	b.	SearchLog2 is created based on the View that encapsulates the extraction expression (basically a CTAS)
 Note that for scalability, **U-SQL requires you to define the index** for the table before you can insert. 
 4.	Insert the data into SearchLog1.
 
@@ -318,12 +315,12 @@ Note that for scalability, **U-SQL requires you to define the index** for the ta
 		                  PARTITIONED BY HASH (UserId)
 		  );
 		
-		INSERT INTO SearchLog1 SELECT * FROM master.dbo.Searchlog() AS s;
+		INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
 		
 		CREATE TABLE SearchLog2(
 		       INDEX sl_idx CLUSTERED (UserId ASC) 
 		             PARTITIONED BY HASH (UserId)
-		) AS SELECT * FROM master.dbo.Searchlog() AS S; // You can use EXTRACT or SELECT here
+		) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
 # Querying from a Table
 
