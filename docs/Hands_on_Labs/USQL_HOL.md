@@ -38,12 +38,12 @@ Please copy the following U-SQL script into the ADL Tool or query window on your
 	            Duration        int?,
 	            Urls            string,
 	            ClickedUrls     string
-         FROM "/Samples/Data/SearchLog.tsv"
-         USING Extractors.Tsv();
+	    FROM "/Samples/Data/SearchLog.tsv"
+	    USING Extractors.Tsv();
 	
 	OUTPUT @searchlog   
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-      USING Outputters.Csv();
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	USING Outputters.Csv();
 
 This U-SQL script has no transformation step. It reads from an input file called SearchLog.tsv, schematizing it while reading and the outputs the intermediate rowset back into the file whose name you specified. The Duration field could be null or of type int, while the UserId cannot be null. Note that the C# string type is always nullable.
 
@@ -74,8 +74,8 @@ You can use scalar variables as well to make your script maintenance easier. In 
 	    USING Extractors.Tsv();
 	
 	OUTPUT @searchlog   
-	    TO @out
-	      USING Outputters.Csv();
+	TO @out
+	USING Outputters.Csv();
 
 #Transforming your Rowset
 
@@ -95,11 +95,11 @@ A rowset can be transformed by applying U-SQL SELECT expressions. First let's do
 	@rs1 =
 	    SELECT Start, Region, Duration
 	    FROM @searchlog
-	WHERE Region == "en-gb";
+	    WHERE Region == "en-gb";
 	
 	OUTPUT @rs1   
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-	      USING Outputters.Csv();
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	USING Outputters.Csv();
 
 Note that the WHERE clause is using a boolean C# expression and thus the comparison operation is == (and not the = sign you may be familiar with from traditional SQL).
 
@@ -121,7 +121,7 @@ The following query makes use of the DateTime.Parse() method because there is no
 	@rs1 =
 	    SELECT Start, Region, Duration
 	    FROM @searchlog
-	WHERE Region == "en-gb";
+	    WHERE Region == "en-gb";
 	
 	@rs1 =
 	    SELECT Start, Region, Duration
@@ -129,8 +129,8 @@ The following query makes use of the DateTime.Parse() method because there is no
 	    WHERE Start >= DateTime.Parse("2012/02/16") AND Start <= DateTime.Parse("2012/02/17");
 	
 	OUTPUT @rs1   
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-	      USING Outputters.Csv();
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	USING Outputters.Csv();
 
 Note that the query is operating on the result of the first rowset and thus the result is a composition of the two filters. You can also reuse a variable name and the names are scoped lexically.
 
@@ -158,22 +158,23 @@ Often you may want to perform some analytics as part of your queries. U-SQL prov
 	        Region,
 	        SUM(Duration) AS TotalDuration
 	    FROM @searchlog
-	GROUP BY Region;
+	    GROUP BY Region;
 	
 	@res =
-	SELECT *
-	FROM @rs1
-	ORDER BY TotalDuration DESC
-	FETCH 5 ROWS;
+	    SELECT *
+	    FROM @rs1
+	    ORDER BY TotalDuration DESC
+	    FETCH 5 ROWS;
 	
 	OUTPUT @rs1
-	    TO @out1
-	    ORDER BY TotalDuration DESC
-	    USING Outputters.Csv();
+	TO @out1
+	ORDER BY TotalDuration DESC
+	USING Outputters.Csv();
+	
 	OUTPUT @res
-	    TO @out2 
-	    ORDER BY TotalDuration DESC
-	    USING Outputters.Csv();
+	TO @out2 
+	ORDER BY TotalDuration DESC
+	USING Outputters.Csv();
 
 The above query finds the total duration per region and then outputs the top 5 durations in order.
 U-SQL's rowsets do not preserve their order for the next query. Thus, if you want an ordered output, please add the order by to the OUTPUT statement as shown above. To avoid giving the impression that U-SQL's ORDER BY provides ordering beyond the ability to order a result to take the first or last N rows in a SELECT, U-SQL's ORDER BY has to be combined with the FETCH clause in a SELECT expression.
@@ -195,13 +196,13 @@ You can also use the HAVING clause to restrict the output to groups that satisfy
 	        Region,
 	        SUM(Duration) AS TotalDuration
 	    FROM @searchlog
-	GROUP BY Region
-	HAVING SUM(Duration) > 200;
+	    GROUP BY Region
+	    HAVING SUM(Duration) > 200;
 	
 	OUTPUT @res
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-	    ORDER BY TotalDuration DESC
-	    USING Outputters.Csv();
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	ORDER BY TotalDuration DESC
+	USING Outputters.Csv();
 
 # Creating a database, a view, a table-valued function, and a table
 
@@ -226,7 +227,7 @@ The following script creates a view SearchlogView in the default database and sc
 	            Urls            string,
 	            ClickedUrls     string
 	    FROM "/Samples/Data/SearchLog.tsv"
-	USING Extractors.Tsv();
+	    USING Extractors.Tsv();
 
 Note that the first statement drops an already existing definition of the view and then creates the version that we want to use. 
 
@@ -237,13 +238,13 @@ This now gives us the ability to use the view without having to worry on how to 
 	        Region,
 	        SUM(Duration) AS TotalDuration
 	    FROM SearchlogView
-	GROUP BY Region
-	HAVING SUM(Duration) > 200;
+	    GROUP BY Region
+	    HAVING SUM(Duration) > 200;
 	
 	OUTPUT @res
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-	    ORDER BY TotalDuration DESC
-	    USING Outputters.Csv();
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	ORDER BY TotalDuration DESC
+	USING Outputters.Csv();
 
 # Creating a table-valued function
 
@@ -264,7 +265,7 @@ The following script creates a function RegionalSearchlog() in the default datab
 	            ClickedUrls     string
 	  )
 	AS BEGIN 
-	 @searchlog =
+	  @searchlog =
 	    SELECT * FROM SearchLogView
 	    WHERE Region == @region;
 	END;
@@ -331,18 +332,18 @@ You can now query the tables in the same way you queried over the unstructured d
 	        Region,
 	        SUM(Duration) AS TotalDuration
 	    FROM <insert your DB name>.dbo.SearchLog2
-	GROUP BY Region;
+	    GROUP BY Region;
 	
 	@res =
-	SELECT *
-	FROM @rs1
-	ORDER BY TotalDuration DESC
-	FETCH 5 ROWS;
+	    SELECT *
+	    FROM @rs1
+	    ORDER BY TotalDuration DESC
+	    FETCH 5 ROWS;
 	
 	OUTPUT @res
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-	    ORDER BY TotalDuration DESC
-	    USING Outputters.Csv();
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	ORDER BY TotalDuration DESC
+	USING Outputters.Csv();
 
 Note that you currently cannot run a SELECT on a table in the same script as the script where you create that table.
 
@@ -364,8 +365,8 @@ U-SQL provides you most of the common join operators such as INNER JOIN, LEFT/RI
 	    WHERE a.Clicked == 1;
 	
 	OUTPUT @join   
-	    TO "/output/<replace_this_with_your_output_name>.csv"
-	      USING Outputters.Csv();
+	TO "/output/<replace_this_with_your_output_name>.csv"
+	USING Outputters.Csv();
 
 The above script joins the searchlog with an ad impression log and gives us the ads for the query string for a given date.
 
