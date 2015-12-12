@@ -39,3 +39,8 @@ Currently, no.
 
 This is something we are working on for the future.
 
+### Can I read/write files using code that is running within a U-SQL User-defined Operator (UDO)?
+
+No. This is disallowed.
+
+
