@@ -6,6 +6,9 @@
 
 In CY2016.
 
+### Q: What network ports do ADL Store adn and  Analytics use
+
+Both ADL Store and ADL Analytics use HTTPS for all communication. The only port they use is port 443.
 
 # ADL Store
 
