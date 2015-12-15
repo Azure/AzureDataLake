@@ -24,7 +24,8 @@
 * [Send email feedback on the U-SQL language](mailto:usql@microsoft.com)
 
 ### Tools
-* [Data Lake Tools for Visual Studio](http://aka.ms/ADLToolsVS)
+* Data Lake Tools for Visual Studio: [Download](http://aka.ms/ADLToolsVS)
+* ADLS Copy Service: [Documentation](https://azure.microsoft.com/en-us/documentation/articles/data-lake-store-copy-data-azure-storage-blob/) | [Download](http://aka.ms/downloadadlcopy)
 
 ### GitHub
 https://github.com/MicrosoftBigData/AzureDataLake
