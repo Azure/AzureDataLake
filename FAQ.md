@@ -46,4 +46,23 @@ This is something we are working on for the future.
 
 No. This is disallowed.
 
+# U-SQL
+
+###
+
+### Q: Can I get a single value back from a rowset?
+
+You may be trying to do something like ehat is shown below - and expect MaxDate to be a single scalar value
+
+    @MaxSize = SELECT MAX(Size) AS MaxSize FROM input;
+
+U-SQL does not support retrieving a single scalar value from a rowset. You can only retrieve another rowset.
+
+Thus, @MaxSize is not a value of type long, but instead is a rowset with a single row and a single column of type long called MaxSize.
+
+
+
+
+
+
 
