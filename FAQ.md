@@ -6,7 +6,12 @@
 
 In CY2016.
 
-### Q: What network ports do ADL Store adn and  Analytics use
+### Q: Is Azure Data Lake (Store, Analytics, or HDInsight) going to offered as an "on-premises" product?
+
+We currently have no plans to offer on-premises versions of these services. 
+
+
+### Q: What network ports do ADL Store and ADL Analytics use?
 
 Both ADL Store and ADL Analytics use HTTPS for all communication. The only port they use is port 443.
 
