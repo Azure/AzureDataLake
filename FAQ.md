@@ -10,10 +10,14 @@ In CY2016.
 
 We currently have no plans to offer on-premises versions of these services. 
 
+### Q: Does Azure Data Lake use TLS(SSL)?
+
+Yes. Azure Data Lake Store & Analytics both use HTTPS with TLS (SSL) for all network communication.
+
 
 ### Q: What network ports do ADL Store and ADL Analytics use?
 
-Both ADL Store and ADL Analytics use HTTPS for all communication. The only port they use is port 443.
+Because both ADL Store and ADL Analytics use HTTPS for all communication. The only port they use is port 443.
 
 # ADL Store
 
