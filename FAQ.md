@@ -14,7 +14,6 @@ We currently have no plans to offer on-premises versions of these services.
 
 Yes. Azure Data Lake Store & Analytics both use HTTPS with TLS (SSL) for all network communication.
 
-
 ### Q: What network ports do ADL Store and ADL Analytics use?
 
 Because both ADL Store and ADL Analytics use HTTPS for all communication. The only port they use is port 443.
@@ -41,6 +40,9 @@ For ADLS Public Preview, there is a single ACL on the root folder of an ADLS acc
 
 By  ADLS General Availability , ACLs will be available on any folder and on any file.
 
+### Q: Do I have to pay for Visual Studio to use Azure Data Lake?
+
+No. Azure Data Lake Tools for Visual Studio works with Visual Studio Community Editions which are free.
 
 
 # ADL Analytics
