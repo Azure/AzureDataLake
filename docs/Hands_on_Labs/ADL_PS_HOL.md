@@ -8,8 +8,8 @@ In this lab you'll learn how to use the Azure PowerShell cmdlets.
 
 To perform this lab you'll need:
 
-- Access to a ADL Analytics account (this is provided for you in the lab)
-- Access to a ADL Store account (this is provided for you in the lab)
+- Access to an ADL Analytics account (this is provided for you in the lab)
+- Access to an ADL Store account (this is provided for you in the lab)
 - A Windows machine with the latest version of Windows PowerShell installed
 
 # Part 0 - Installing and setting up Azure PowerShell
