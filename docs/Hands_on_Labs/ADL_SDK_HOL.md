@@ -29,6 +29,7 @@ To perform this lab you'll need:
 
 3.   Use this base class that handles some initialization steps, including user authentication:
 
+    ```
     using System;
     using System.Security;
     using System.IO;
@@ -106,6 +107,7 @@ To perform this lab you'll need:
             }
         }
     }
+    ```
 
 # Part 1 - Learning about the .NET SDK
 
