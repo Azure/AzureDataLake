@@ -24,19 +24,15 @@ This lab requires remembering quite a few pieces of information in a number of p
 - The name of an ADL Analytics account: msanalytics0
 - The name of an ADL Store account: msstore0
 - The name of an Azure Blob Store account: adltrainingblobs
-- the accesss kwey for the blob store account (will be provided by the lab instructor)
+- the accesss key for the blob store account (will be provided by the lab instructor)
 
 
 Copy Sample Data
-go to ADLA account
-click on essentials
-CLick on Exppor sample jobs
-wait a few seconds
-If it says samples not set up click "copy sample jobs"
-CLick Copy Sample Jobs
 
-
-
+*  Go to your ADLA account.
+*  Click on "essentials".
+*  Click on "export sample jobs".
+*  Wait a few seconds, then if it says "samples not set up", then retry.
 
 # Part 1 - Create an ADF Account
 
