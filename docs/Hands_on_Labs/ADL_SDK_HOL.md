@@ -27,7 +27,7 @@ To perform this lab you'll need:
 
 > NOTE: Be sure to check the "Include prerelease" checkbox when searching. If the above does not work for you, you can [follow the instructions on NuGet.org](http://www.nuget.org/packages?q=Microsoft.Azure.Management.DataLake) for each of the needed packages.
 
-Here's a base class that handles the initialization steps, including user authentication:
+3.   Use this base class that handles some initialization steps, including user authentication:
 
     using System;
     using System.Security;
@@ -107,9 +107,9 @@ Here's a base class that handles the initialization steps, including user authen
         }
     }
 
-# Part 1 - Learning about the .NET SDK and an example
+# Part 1 - Learning about the .NET SDK
 
-For an example, here is how you could list all jobs in your Data Lake Analytics account:
+As an example, here is how you could list all jobs in your Data Lake Analytics account:
 
      var parameters = new JobListParameters{};
      var response = _dataLakeAnalyticsJobClient.Jobs.List(ResourceGroupName, DataLakeAnalyticsAccountName, parameters);
@@ -131,7 +131,7 @@ For an example, here is how you could list all jobs in your Data Lake Analytics 
         }
      }
 
-To get detailed help, with examples:
+You can visit these links for detailed help and sample code:
 
 * Documentation articles: [ADLA](https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-get-started-net-sdk/) [ADLS](https://azure.microsoft.com/en-us/documentation/articles/data-lake-store-get-started-net-sdk/)
 * MSDN reference material: [ADLA](https://msdn.microsoft.com/en-US/library/azure/mt572197(Azure.100).aspx) [ADLS](https://msdn.microsoft.com/library/azure/mt581387.aspx)
