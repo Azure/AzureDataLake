@@ -4,41 +4,51 @@
 
 In this lab you'll create a simple ADF pipeline that runs an ADL Analytics Job every fifteen minutes.
 
-# Prerequisites
-
-To perform this lab you'll need to create:
-
-- An Azure DataFactory Account
-- Have access to a ADL Analytics account (this is provided for you in the lab)
-- Have access to a ADL Store account (this is provided for you in the lab)
-- Have access to a Azure Blob Store account (this is provided for you in the lab)
-
-NOTE: There is a single blob store account used for all this HOL.
-
 # Part 0 - Preparation
+
+To perform this lab you'll be given access to
+- An ADL Analytics account (this is provided for you in the lab)
+- An ADL Store account (this is provided for you in the lab)
+
+If you don't know how to access these accounts from the portal, notify the instructor.
+
+# Part 0 - A Common Blob Store Account
+
+Your ADL Analytics account has already been given access to an Azure Storage account called adltrainingblobs
+
+The only purpose for this Azure Storage account is to store a U-SQL script that is used by ADF.
+
+From your ADL Analytics account, browse to the storage account, and look inside the "scripts" container. You'll see at least on U-SQL query there.
+
+# Part 0 - Important pieces of information
 
 This lab requires remembering quite a few pieces of information in a number of places. So, keep track of the following items
 
-- The Subscription ID: ADLTrainingMS
+- The Subscription Name: ADLTrainingMS
 - The Resource Group name: PostTechReady
-- The name of an ADL Analytics account: msanalytics0
-- The name of an ADL Store account: msstore0
+- The name of an ADL Analytics account: (will be provided by the lab instructor)
+- The name of an ADL Store account: (will be provided by the lab instructor)
 - The name of an Azure Blob Store account: adltrainingblobs
-- the accesss key for the blob store account (will be provided by the lab instructor)
+- the access key for the blob store account (will be provided by the lab instructor)
 
+# Part 0 - Preparing Sample Data
 
-Copy Sample Data
+The script we will automate will use Sample data that comes with the ADL Analytics account.
+
+When you create an ADL Analytics account, the sample data is not yet copied into the default ADL Store. To force the data to be copied.
 
 *  Go to your ADLA account.
 *  Click on "essentials".
 *  Click on "export sample jobs".
-*  Wait a few seconds, then if it says "samples not set up", then retry.
+*  Wait a few seconds,  if the portal says "samples not set up", click "Copy Samples". If it doesn't mention anything about the samples, you don't have to do anything.
 
-# Part 1 - Create an ADF Account
+To confirm that the sample data is in the ADL Store Account, open the Data Explorer and look under /Data/Samples you should see a file called SearchLog.tsv. If you do not see this file contact the instructor.
+
+# Part 0 - Create an ADF Account
 
 Go to http://portal.azure.com and create a Data Factory Account
 
-# Part 2 - Create Linked Services
+# Part 0 - Create Linked Services
 
 You'll need to create a linked service for these accounts
 - ADLA
@@ -168,10 +178,11 @@ In the ADF Portal click "New dataset" and select ADLS. Replace the JSON with thi
         }
     }
 
-# Part 4 Create a Script
+# Part 4 Look at the Script we will run
 
 In you blob store there is a container called "scripts" inside there is a script called SearchLog_15min.usql
 
+Notice that the input and output files are variables called @in and @out.
 
     @searchlog = 
         EXTRACT UserId          int, 
@@ -190,6 +201,8 @@ In you blob store there is a container called "scripts" inside there is a script
     
     
     # Part 5 Create a Pipeline
+
+# Part 5 Create a PipeLine
 
 CLick **new pipeline**
 
@@ -241,4 +254,14 @@ CLick **new pipeline**
             "pipelineMode": "Scheduled"
         }
     }
+
+CLick **Deploy**
+
+
+
+# Monitor the Pipeline
+
+In the ADF portal, look at the output dataset. You should now see the outputs being constructed.
+
+Then look in you ADL Analytics account, you should see that jobs are being executed as part of "MyPipeline"
 
