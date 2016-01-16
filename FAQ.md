@@ -18,7 +18,14 @@ Yes. Azure Data Lake Store & Analytics both use HTTPS with TLS (SSL) for all net
 
 Because both ADL Store and ADL Analytics use HTTPS for all communication. The only port they use is port 443.
 
-# ADL Store
+### Q: What are the  restrictions on the name of an ADL Store & ADL Analytics account?
+
+* Only lowercase alphabetical and numbers are allowed
+* Whitespace is not allowed
+* Punctuation such as . , ; : are not allowed
+* No special characters such as - + _
+* Size: The names must be between 3 to 24 characters in length.
+
 
 ### Q: I am an Owner/Contributor on an ADLS Account, Why don'I t have access to data in the ADLS Account.
 
