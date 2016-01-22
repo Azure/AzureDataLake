@@ -6,11 +6,11 @@ In this lab you'll learn how to use the Azure PowerShell cmdlets to interact wit
 
 # Prerequisites
 
-To perform this lab you'll need:
+To complete this lab you'll need:
 
-- Access to an ADL Analytics (ADLA) account (this is provided for you in the classroom)
-- Access to an ADL Store (ADLS) account (this is provided for you in the classroom)
-- A Windows machine with the latest version of Windows PowerShell installed
+- Access to an ADL Analytics (ADLA) account (this is provided for you in the classroom).
+- Access to an ADL Store (ADLS) account (this is provided for you in the classroom).
+- A Windows device with the latest version of Windows PowerShell installed.
 
 # Exercise 0: Installing and configuring Azure PowerShell
 In this exercise you will install the Azure Resource Manager cmdlets in Windows PowerShell. These cmdlets will enable you to interact with Azure Data Lake and complete the tasks in this lab.

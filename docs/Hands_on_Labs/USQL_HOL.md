@@ -26,11 +26,11 @@ In the current ADLA batch service, U-SQL is written and executed as a batch scri
 U-SQL also enables you to use data definition statements such as CREATE TABLE to create metadata artifacts.
 
 # Prerequisites
-To perform this lab you'll need:
+To complete this lab you'll need:
 
 - A copy of Visual Studio with the Azure Data Lake Tools for Visual Studio installed, or access to the ADLA Portal.
-- Access to an ADLA account (this is provided for you in the classroom)
-- Access to an Azure Data Lake Store (ADLS) account (this is provided for you in the classroom)
+- Access to an ADLA account (this is provided for you in the classroom).
+- Access to an Azure Data Lake Store (ADLS) account (this is provided for you in the classroom).
 
 The lab exercises that follow provide only the language and scripts, and will not show you how to use the Azure Data Lake Tools for Visual Studio or the Azure Data Lake Analytics Portal. Your instructor will show you how to run the scripts through Azure Data Lake Tools for Visual Studio and/or the Azure Data Lake Analytics Portal.
 
