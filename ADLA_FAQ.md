@@ -1,5 +1,4 @@
-s
-# ADL Analytics
+# Azure Data Lake Analytics FAQ
 
 ### Does ADL Analytics include a Machine Learning component?
 
