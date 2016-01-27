@@ -23,24 +23,27 @@ Your ADL Analytics account has already been given access to an Azure Storage acc
 
 From your ADL Analytics account, browse to the storage account, and look inside the **scripts** container. You'll see at least one U-SQL query there.
 
+NOTE: in this lab you will have *write* access to the blob store. Please be aware of that and do not modify or delete the data there. 
+
 ## Important information
 
 This lab requires you to remember several pieces of information in various places. Keep track of the following items:
 
-- The subscription name: **ADLTrainingMS**
-- The resource group name: **PostTechReady**
-- The name of an ADL Analytics account: *(this will be provided by the lab instructor)*
-- The name of an ADL Store account: *(this will be provided by the lab instructor)*
-- The name of an Azure Blob Store account: **adltrainingblobs**
-- the access key for the blob store account *(this will be provided by the lab instructor)*
+    $subname = The subscription name       =  **ADLTrainingMS**
+    $subid   = The subscription ID         =  **ace74b35-b0de-428b-a1d9-55459d7a6e30**
+    $rg      = The resource group name     =  **PostTechReady**
+    $adla    = The ADLA account            =  *(this will be provided by the lab instructor)*
+    $adls    = The ADLS account            =  *(this will be provided by the lab instructor)*
+    $blobs   = Azure Storage accoun t      =  **adltrainingblobs** 
+    $blobs_access_key   = blob access key  =  *(this will be provided by the lab instructor)*
 
 ## Prepare the sample data
 
 The script you will automate in this lab will use sample data that comes with the ADL Analytics account. When you create an ADL Analytics account, the sample data is not yet copied into the default ADL Store. Complete the following steps to copy the sample data into the default ADL Store:
 
 1.  Browse to your ADLA account.
-2.  Click **essentials**.
-3.  Click **export sample jobs**.
+2.  Click **Essentials**.
+3.  Click **Export sample jobs**.
 4.  Wait a few seconds. If you see the message **samples not set up**, click **Copy Samples**. If you don't see any messages about the samples, you don't have to do anything.
 
 To confirm that the sample data is in the ADL Store Account, open the Data Explorer and look under /Data/Samples. You should see a file named **SearchLog.tsv**. If you do not see this file contact the instructor.
@@ -115,7 +118,7 @@ To get started, browse to http://portal.azure.com open your ADF account and clic
                 "description": "",
                 "type": "AzureStorage",
                 "typeProperties": {
-                    "connectionString": "DefaultEndpointsProtocol=https;AccountName=$blobs;AccountKey=$blobs_access_key "
+                    "connectionString": "DefaultEndpointsProtocol=https;AccountName=$blobs;AccountKey=$blobs_access_key"
                 }
             }
         }
