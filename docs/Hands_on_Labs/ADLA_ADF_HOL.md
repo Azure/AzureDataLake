@@ -32,11 +32,12 @@ This lab requires you to remember several pieces of information in various place
     $subname = The subscription name       =  **ADLTrainingMS**
     $subid   = The subscription ID         =  **ace74b35-b0de-428b-a1d9-55459d7a6e30**
     $rg      = The resource group name     =  **PostTechReady**
+    $blobs   = Azure Storage accoun t      =  **adltrainingblobs** 
     $adla    = The ADLA account            =  *(this will be provided by the lab instructor)*
     $adls    = The ADLS account            =  *(this will be provided by the lab instructor)*
-    $blobs   = Azure Storage accoun t      =  **adltrainingblobs** 
     $blobs_access_key   = blob access key  =  *(this will be provided by the lab instructor)*
-
+    $adf     = Your ADF account            =  *(this will be provided by the lab instructor)*
+    
 ## Prepare the sample data
 
 The script you will automate in this lab will use sample data that comes with the ADL Analytics account. When you create an ADL Analytics account, the sample data is not yet copied into the default ADL Store. Complete the following steps to copy the sample data into the default ADL Store:
@@ -48,23 +49,18 @@ The script you will automate in this lab will use sample data that comes with th
 
 To confirm that the sample data is in the ADL Store Account, open the Data Explorer and look under /Data/Samples. You should see a file named **SearchLog.tsv**. If you do not see this file contact the instructor.
 
-## Create an ADF Account
+## Link Services to your ADF Account
 
-Browse to http://portal.azure.com and create a Data Factory Account.
-
-## Create linked services
-
-In this section, you will create a linked service for each of these accounts:
-
-- ADLA
-- ADLS
+In this section, you will linked your ADF account to three services:
+- Azure Data Lake Analytics
+- Azure Data Lake Store
 - Azure Blob Store
 
 To get started, browse to http://portal.azure.com open your ADF account and click **Author and Deploy**.
 
-### Create a linked ADLA account
+### Link your ADL Analytics account
 
-1.  Under **Author and Deploy**, click **New Compute** and then select **ADLA**. 
+1.  Under **Author and Deploy**, click **New Compute** and then select **Axure Data Lake Analytics**. 
 2.  Replace the existing JSON text with the following text:
 
         {
@@ -85,9 +81,9 @@ To get started, browse to http://portal.azure.com open your ADF account and clic
 3.  Click **Authorize**. When prompted, enter your credentials.
 4.  Click **Deploy**.
 
-### Create a linked ADLS account
+### Link your ADL Store Account
 
-1.  Under **Author and Deploy**, click **New data store**, and then select **ADLS**. 
+1.  Under **Author and Deploy**, click **New data store**, and then select **Azure Data Lake Store**. 
 2.  Replace the existing JSON text with the following text:
 
         {
@@ -108,7 +104,7 @@ To get started, browse to http://portal.azure.com open your ADF account and clic
 3.  Click **Authorize**. If prompted, enter your credentials.
 4.  Click **Deploy**.
 
-### Create a linked Azure Storage account
+### Linked the shared Azure Storage account for this lab
 
 1.  Under **Author and Deploy**, click **New data store**, and then select **Azure Storage**. Replace the existing JSON text with the following text:
 
@@ -132,7 +128,7 @@ In this exercise, you'll create two datasets: one to represent the input file, a
 ## Create the input dataset
 
 1. Browse to the ADF Portal.
-2. Click **New dataset**, and then select **ADLS**.
+2. Click **New dataset**, and then select **Azure Data Lake Store**.
 3. Replace the existing JSON text with the following text:
 
         {
@@ -160,7 +156,7 @@ In this exercise, you'll create two datasets: one to represent the input file, a
     	
 ## Create the output dataset
 
-1. In the ADF Portal, click **New dataset**, and then select **ADLS**.
+1. In the ADF Portal, click **New dataset**, and then select **Azure Data Lake Store**.
 2. Replace the existing JSON text with the following text:
 
         {
@@ -170,8 +166,8 @@ In this exercise, you'll create two datasets: one to represent the input file, a
                 "type": "AzureDataLakeStore",
                 "linkedServiceName": "MyADLS",
                 "typeProperties": {
-                    "fileName": "SearchLog_Output.tsv",
-                    "folderPath": "/Samples/Output",
+                    "fileName": "SearchLog.tsv",
+                    "folderPath": "/Samples/Output/MyPipeline",
                     "format": {
                         "type": "TextFormat",
                         "columnDelimiter": "\t"
@@ -185,6 +181,7 @@ In this exercise, you'll create two datasets: one to represent the input file, a
         }
     
 # Exercise 2: Examine the script you will automate
+
 In this exercise, you will review the script that you will automate in the next exercise.
 
 1. Browse to your Azure Blob Store account.
@@ -208,6 +205,7 @@ In this exercise, you will review the script that you will automate in the next 
 3. Notice that the input and output files are represented by variables named @in and @out.
 
 # Exercise 3: Create a pipeline
+
 In this exercise, you will create a new pipeline that runs a script every 15 minutes.
 
 1. Browse to the ADF portal, and then click **new pipeline**.
@@ -227,7 +225,7 @@ In this exercise, you will create a new pipeline that runs a script every 15 min
                             "priority": 100,
                             "parameters": {
                                 "in": "/Samples/Data/SearchLog.tsv",
-                                "out": "/Samples/Output/SearchLog_Output.tsv"
+                                "out": "/Samples/Output/MyPipeline/SearchLog.tsv"
                             }
                         },
                         "inputs": [
@@ -269,3 +267,30 @@ In this exercise, you will monitor the activity of the ADF pipeline you just cre
 
 1. In the ADF portal, review the output dataset. You should now see the outputs being constructed.
 2. Browse to your ADL Analytics account. You should see that jobs are being executed under the name **MyPipeline**.
+
+# Excercise 4: Modify the Pipeline to produce one output per timeslice
+
+As it currently exists, the pipeline keeps overrwiting the same output file. Many pipelines however, need to create a
+new output file for every time slice.
+
+Below is an EXAMPLE of how a ADF pipeline can create a new OUTPUT file for each slice.
+
+**THIS IS AN EXAMPLE. DO NOT COPY PASTE IT INTO YOUR PIPELINE DEFINITION.**
+
+    "typeProperties": {
+          "scriptPath": "usql-scripts\\GetMcgSfAccountStandardFields.usql",
+          "scriptLinkedService": "LinkedService_AS_EPTStorage",
+          "degreeOfParallelism": 3,
+          "priority": 100,
+          "parameters": {
+            "in": "/Someinputfile.txt",
+            "out": "$$Text.Format('/Standard/Salesforce/Account/{0:yyyy}/{0:MM}/{0:dd}/MCG/Account.csv',SliceStart)"
+          }
+        },  
+
+As you can see from the example, the C# string.Format() method is used to generate the output filename.
+
+Using this information modify your pipeline so that the output files are placed in:
+
+    /Samples/Output/MyPipeline/YEAR/MONTH/DAY/HOUR/MINUTE/SearchLog.tsv
+    
