@@ -23,3 +23,16 @@ To achieve the same effect:
 
 (Link to the U-SQL FAQ)[https://github.com/MicrosoftBigData/usql/blob/master/FAQ.md]
 
+### How do a provision a new user into my ADL Analytics account?
+
+Here all the tasks to provision a user:
+- ADLA: Add them to the “Data Lake Analytics Developer” role
+- ADLS: Add them to the “Reader” role
+- ADLS: Give them RWX access on the root path “/”
+
+This ensures that a user:
+- Can submit jobs into the ADLA account
+- Can view the ADLA Azure Portal
+- Can view the ADLS Azure Portal
+- Can read and write data in the ADLA account
+
