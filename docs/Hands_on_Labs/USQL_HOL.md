@@ -370,7 +370,7 @@ Copy the following U-SQL script into the editor of your choice, and then submit 
 
 You can now query the tables in the same way that you queried the unstructured data. Instead of creating a rowset using EXTRACT, you now can simply refer to the table name.
 
-# Exercise 8: Creating tables
+# Exercise 8: Querying tables
 In this exercise, you will query data from the table you created in Exercise 7.
 
 1. Copy the following U-SQL script into the editor of your choice (update the database name to the name you used in the preceding exercise):
