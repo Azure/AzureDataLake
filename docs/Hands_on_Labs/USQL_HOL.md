@@ -396,7 +396,7 @@ In this exercise, you will query data from the table you created in Exercise 7.
     > NOTE: Currently you cannot run a SELECT on a table in the same script as the script where you create that table.
 
 2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique. 
-3. Submit your script.
+3. Submit your script. 
 
 # Exercise 9: Joining data
 In this exercise, you will use the U-SQL JOIN operator to join data from two different sources and in two different formats. 
