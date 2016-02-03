@@ -1,8 +1,9 @@
-# Azure Data Lake Store & Analytics FAQ
+# Azure Data Lake - General FAQ
 
 ### Other FAQs
-* [ADLA](ADLA_FAQ.md)
-* [ADLS](ADLS_FAQ.md)
+* [ADL Analytics](http://aka.ms/adlafaq)
+* [ADL Store](http://aka.ms/adlsfaq)
+* [U-SQL ](http://aka.ms/usqlfaq)
 
 ### Q: When will ADL Store and ADL Analytics be "Generally Available"?
 
