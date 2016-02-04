@@ -34,3 +34,9 @@ Because both ADL Store and ADL Analytics use HTTPS for all communication. The on
 
 No. Azure Data Lake Tools for Visual Studio works with Visual Studio Community Editions which are free.
 
+### Q: Does ADL Support Parquet Files?
+
+* **ADL Store**: You can move Parquet files into ADL Store from a source HDFS system. (You don't need to worry about any block size fdifferences)
+* **HDInsifght**: An HDInsight cluster can read Parquet files stored in ADL Store.
+* **ADL Analytics**: ADL Analytics support for Parquet files is currently under investigation and is something on our roadmap
+
