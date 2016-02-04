@@ -1,5 +1,7 @@
 # Azure Data Lake - General FAQ
 
+[http://aka.ms/adlfaq](http://aka.ms/adlfaq)
+ 
 ### List of FAQs
 * [Azure Data Lake](http://aka.ms/adlfaq)
 * [ADL Analytics](http://aka.ms/adlafaq)
