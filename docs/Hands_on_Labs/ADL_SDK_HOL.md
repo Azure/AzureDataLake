@@ -147,7 +147,6 @@ Tutorials:
 Reference material (MSDN):
 
 * [Azure Data Lake Analytics .NET SDK Reference](https://msdn.microsoft.com/library/azure/mt572197.aspx) 
-* [Azure Data Lake Store Cmdlets](https://msdn.microsoft.com/library/azure/mt581387.aspx)
 
 # Exercise 1: List jobs and submit a job
 In this exercise you will retrieve a list of all the jobs that have run on your ADLA account. You will then submit a new job and check the job status programmatically.
