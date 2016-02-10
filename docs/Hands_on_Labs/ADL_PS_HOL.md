@@ -70,7 +70,7 @@ In this exercise you will list the jobs that have run on your ADLA account. You 
 
             @searchlog = EXTRACT UserId int, Start DateTime, Region string,
 			Query string, Duration int, Urls string, ClickedUrls string FROM
-			@"/Samples/Data/SearchLog.tsv" USING Extractors.Ts(); OUTPUT
+			@"/Samples/Data/SearchLog.tsv" USING Extractors.Tsv(); OUTPUT
 			@searchlog TO @"/Samples/Output/SearchLog_TestOutput.tsv" USING
 			Outputters.Tsv();
 			
