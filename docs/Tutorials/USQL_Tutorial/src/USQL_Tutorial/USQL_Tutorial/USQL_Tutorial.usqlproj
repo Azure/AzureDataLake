@@ -22,14 +22,14 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Script Include="Script.usql">
+    <Script Include="Query_SearchLog.usql">
       <UseLocalComputeAccount>true</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
     </Script>
-    <ScriptCode Include="Script.usql.cs">
-      <DependentUpon>Script.usql</DependentUpon>
+    <ScriptCode Include="Query_SearchLog.usql.cs">
+      <DependentUpon>Query_SearchLog.usql</DependentUpon>
     </ScriptCode>
   </ItemGroup>
   <ItemGroup>
