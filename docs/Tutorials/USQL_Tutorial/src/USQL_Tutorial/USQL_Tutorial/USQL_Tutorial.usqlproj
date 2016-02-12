@@ -32,6 +32,16 @@
       <DependentUpon>Script.usql</DependentUpon>
     </ScriptCode>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Samples" />
+    <Folder Include="Samples\Data" />
+    <Folder Include="Samples\Output" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Samples\Data\SearchLog.tsv">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
   <Import Project="$(AppData)\Microsoft\DataLake\MsBuild\1.0\Usql.targets" />
   <PropertyGroup>
   </PropertyGroup>
