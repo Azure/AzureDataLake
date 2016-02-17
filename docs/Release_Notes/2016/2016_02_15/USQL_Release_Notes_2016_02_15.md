@@ -18,13 +18,16 @@ Previously, User-defined types (UDTs) in the EXTRACT/PRODUCE clauses are bound a
 
 2. For example, if you used a UDT in a VIEW, FUNCTION or PROCEDURE body, they were visible inside. Now they will not visible. To make them visible, please move the REFERENCE assembly statement into the body of a FUNCTION or PROCEDURE. In case of a VIEW, please rewrite the view as a table-valued function.
  
- 
 3. As a consequence of changes 1 and 2, VIEW definitions cannot contain any user-defined functions (UDF), types (UDT), aggregators (UDAGG), nor operators (UDO). This is because the body of a VIEW can only contain a single query statement and no REFERENCE ASSEMBLY statements. Thus a VIEW's body is always resolved against system assemblies only. Please rewrite any view that needs to refer to a user-defined object (UDx) into a table-valued function.
- 
-4. Before this release, FUNCTION and PROCEDURE bodies were not syntax checked during creation, but when being called. 
+
+## Syntax Checking for FUNCTION and PROCEDURE bodies
+
+Before this release, FUNCTION and PROCEDURE bodies were not syntax checked during creation, but when being called. 
 Starting with this release, syntax checks are being performed during the creation of the FUNCTION or PROCEDURE.
  
-5. SET statements on system-variables, e.g., SET @@baseURI, cannot contain variable references anymore (see also new capabilities below).
+## SET statements on system-variables
+
+SET statements on system-variables, e.g., SET @@baseURI, cannot contain variable references anymore (see also new capabilities below).
 
 
 # NEW FEATURES
