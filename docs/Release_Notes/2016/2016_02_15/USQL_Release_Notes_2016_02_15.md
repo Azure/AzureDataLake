@@ -34,9 +34,13 @@ SET statements on system-variables, e.g., SET @@baseURI, cannot contain variable
  
 ## DIRECT HASH PARTITIONING
 
-You can now use DIRECT HASH partitioning with U-SQL Tables. This allows you to use a column that will directly indicate which partition number in which to partition to the data.
- 
-    <Example Script>
+You can now use DIRECT HASH partitioning with U-SQL Tables. 
+
+A DIRECT HASH partitioning scheme distributes rows according to a scheme provided in the data.  Instead of a HASH of the CLUSTERED BY columns,  will use the values provided in a single, dense, integer column, as partition ids.
+
+    // Uses partitionId % 10 as partition key
+    CREATE TABLE t (eventId int, eventType int, payload string, partitionId int);
+    CREATE INDEX i_t on t(partitionId, eventType, eventId) PARTITIONED BY DIRECT HASH(partitionId) INTO 10;  
  
 ## U-SQL TABLE INSERTs
 
