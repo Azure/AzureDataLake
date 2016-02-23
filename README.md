@@ -10,7 +10,7 @@
 ### Documentation    
 * [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/) | [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/) | [HDInsight](https://azure.microsoft.com/en-us/documentation/services/hdinsight/)
 * U-SQL: [Team Site](http://usql.io) | [GitHub](https://github.com/MicrosoftBigData/USQL) | [Language Reference](http://aka.ms/usql_reference) | [FAQ](http://aka.ms/usqlfaq)
-* [Documentation Backlog](http://aka.ms/adla_doc_backlog)
+* [ADL Analytics Doc Backlog](http://aka.ms/adla_doc_backlog)
 
 ### Key Articles
 * [Creating ADF pipelines using ADL](https://azure.microsoft.com/en-us/blog/creating-big-data-pipelines-using-azure-data-lake-and-azure-data-factory/)
@@ -24,9 +24,6 @@
 ### Tools
 * Data Lake Tools for Visual Studio: [Download](http://aka.ms/ADLToolsVS)
 * ADLS Copy Service: [Documentation](https://azure.microsoft.com/en-us/documentation/articles/data-lake-store-copy-data-azure-storage-blob/) | [Download](http://aka.ms/downloadadlcopy)
-
-### GitHub
-https://github.com/MicrosoftBigData/AzureDataLake
 
 ### Videos
 * [Data Exposed Show on Channel 9](https://channel9.msdn.com/Shows/Data-Exposed)
