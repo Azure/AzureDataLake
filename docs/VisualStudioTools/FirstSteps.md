@@ -8,7 +8,7 @@ To get started with using Visual Studio to browse you ADL account and submit que
 
 1. Get the latest [Azure SDK](https://azure.microsoft.com/downloads)
 
-1. Get The [ADL Tools for Visual Studio plug-in](https://aka.ms/ADLTools)
+1. Get The [ADL Tools for Visual Studio plug-in](https://aka.ms/ADLToolsVS)
 
 ### Useful links
 
