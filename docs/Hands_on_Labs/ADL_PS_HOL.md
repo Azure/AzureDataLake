@@ -4,18 +4,27 @@
 
 In this lab you'll learn how to use the Azure PowerShell cmdlets to interact with Azure Data Lake Analytics and Azure Data Lake Store.
 
-# Prerequisites
+# Getting started
 
-To complete this lab you'll need:
 
-- Access to an ADL Analytics (ADLA) account (this is provided for you in the classroom).
-- Access to an ADL Store (ADLS) account (this is provided for you in the classroom).
-- A Windows device with the latest version of Windows PowerShell installed.
+## Prerequisites
+
+To get set up for lab you'll need you'll need various Azure services set up for you. Follow the instructions here: [Start](Start/md). 
+
+It only takes a few minutes. Once your services are setup you can proceed with the lab.
+
+
+## Setting up you Machine
+
+To complete this lab you'll need A Windows PC  with the latest version of Windows PowerShell (v5) installed. Windows 10 already comes with PowerShell v5.
+
 
 # Exercise 0: Installing and configuring Azure PowerShell
 In this exercise you will install the Azure Resource Manager cmdlets in Windows PowerShell. These cmdlets will enable you to interact with Azure Data Lake and complete the tasks in this lab.
 
 1. Open a new PowerShell window in administrator mode.
+   - From the Startsearch for "PowerShell" and start it
+   
 2. Run the following commands:
      
    	 Install-Module AzureRm
@@ -41,7 +50,7 @@ In this exercise, you will explore the ADL cmdlets that are available for you to
  
 2. Run the following command to list all the Data Lake cmdlets that you can use:
  
-        Get-Command *DataLake*
+        Get-Command \*DataLake\*
  
 3. Run the following command to get help on a specific cmdlet (in this case the ``Get-AzureRmDataLakeAnalyticsAccount`` cmdlet):
  

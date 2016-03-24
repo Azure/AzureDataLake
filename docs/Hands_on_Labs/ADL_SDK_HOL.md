@@ -4,28 +4,40 @@
 
 In this lab you'll learn how to use the Data Lake .NET SDK to interact with Azure Data Lake in C#.
 
-# Prerequisites
 
-To complete this lab you'll need:
+# Getting started
 
-- Access to an ADL Analytics account name and resource group name (this is provided for you in the classroom)
-- Access to an ADL Store account name and resource group name (this is provided for you in the classroom)
-- A Windows machine with the Visual Studio 2013 or 2015 installed.
+
+## Prerequisites
+
+To get set up for lab you'll need you'll need various Azure services set up for you. Follow the instructions here: [Start](Start/md). 
+
+It only takes a few minutes. Once your services are setup you can proceed with the lab.
+
 
 # Exercise 0: Creating the base project
 
-1.  Open Visual Studio and create a new C# Console project.
-2.  In Visual Studio, use the NuGet Package Manager to install the following packages:
+1.  Open Visual Studio and create a new C# Console project
+    - File > New > Project > Templates > C# > Console Application
+    - Enter any **Name** you want 
+    - Click **OK**
+2.  In Visual Studio, use the NuGet Package Manager to install some NuGet Packages
+   
+   - Open **Solution Explorer** (if you don't already see this, open it from the **View** menu)
+   - Right click on the project you created and select **Manage NuGet Packages**
+   - Because ADL Analytics and ADL Store are still in public preview, click **Include prerelease**
+   - Click on **Browse**
+   - Select the following packages and click **Install** for each one
+    -  Microsoft.Azure.Common.Authentication
+    -  Microsoft.Azure.Management.DataLake.Store
+    -  Microsoft.Azure.Management.DataLake.StoreFilesystem
+    -  Microsoft.Azure.Management.DataLake.StoreUploader
+    -  Microsoft.Azure.Management.DataLake.Analytics
+    -  Microsoft.Azure.Management.DataLake.AnalyticsJob
+    -  Microsoft.Azure.Management.DataLake.AnalyticsCatalog
+   
 
-   -  Microsoft.Azure.Common.Authentication
-   -  Microsoft.Azure.Management.DataLake.Store
-   -  Microsoft.Azure.Management.DataLake.StoreFilesystem
-   -  Microsoft.Azure.Management.DataLake.StoreUploader
-   -  Microsoft.Azure.Management.DataLake.Analytics
-   -  Microsoft.Azure.Management.DataLake.AnalyticsJob
-   -  Microsoft.Azure.Management.DataLake.AnalyticsCatalog
-
-> NOTE: Be sure to check the "Include prerelease" checkbox when searching. If you encounter errors when installing packages, you can [follow the instructions on NuGet.org](http://www.nuget.org/packages?q=Microsoft.Azure.Management.DataLake) for each of the required packages.
+If you encounter errors when installing packages, you can [follow the instructions on NuGet.org](http://www.nuget.org/packages?q=Microsoft.Azure.Management.DataLake) for each of the required packages.
 
 3.   Delete any existing code in the Program.cs file and copy in the following code. The code defines a base class that handles some initialization steps, including user authentication:
 
@@ -149,6 +161,7 @@ Reference material (MSDN):
 * [Azure Data Lake Analytics .NET SDK Reference](https://msdn.microsoft.com/library/azure/mt572197.aspx) 
 
 # Exercise 1: List jobs and submit a job
+
 In this exercise you will retrieve a list of all the jobs that have run on your ADLA account. You will then submit a new job and check the job status programmatically.
 
 1.  List all jobs that have run on your ADLA account. Use the method **_dataLakeAnalyticsJobClient.Jobs.List**.
