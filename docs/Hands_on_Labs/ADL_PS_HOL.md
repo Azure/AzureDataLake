@@ -9,7 +9,7 @@ In this lab you'll learn how to use the Azure PowerShell cmdlets to interact wit
 
 ## Prerequisites
 
-To get set up for lab you'll need you'll need various Azure services set up for you. Follow the instructions here: [Start](Start/md). 
+To get set up for lab you'll need you'll need various Azure services set up for you. Follow the instructions here: [Start](Start.md). 
 
 It only takes a few minutes. Once your services are setup you can proceed with the lab.
 
