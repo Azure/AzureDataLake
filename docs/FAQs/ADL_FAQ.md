@@ -36,6 +36,22 @@ Because both ADL Store and ADL Analytics use HTTPS for all communication. The on
 
 No. Azure Data Lake Tools for Visual Studio works with Visual Studio Community Editions which are free.
 
+### W: Which versions of Visual Studio work with Azure Data Lake Tools for Visual Studio?
+
+These versions are supported:
+- VS 2012
+- VS 2013
+- VS 2015
+
+These Editions are supported 
+- Ultimate
+- Premium
+- Pro
+- Community
+
+These Editions are NOT supported
+- Express
+
 ### Q: Does ADL Support Parquet Files?
 
 * **ADL Store**: You can move Parquet files into ADL Store from a source HDFS system. (You don't need to worry about any block size fdifferences)
