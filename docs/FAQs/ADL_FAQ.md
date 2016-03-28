@@ -44,13 +44,18 @@ These versions are supported:
 - VS 2015
 
 These Editions are supported 
-- Ultimate
+- Ultimate (Enterprise for VS2015)
 - Premium
 - Pro
 - Community
 
 These Editions are NOT supported
-- Express
+- Visual Studio Express
+- Visual Studio Test Edition
+
+### W: Why the "Data Lake" menu does not show in Visual Studio even whenIi installed the ADL tool for VS?
+
+We have changed the Data Lake Tools for Visual Studio plugin release cycle and now it is released with Azure SDK (from 2.9 on). Since Azure SDK has a large installation base, in order not to disturb users who don't use Data Lake service, we now hide the Data Lake menu. You can "activite" the menu by creating a Data Lake project, or open Server Explorer, etc.
 
 ### Q: Does ADL Support Parquet Files?
 
