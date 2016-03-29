@@ -1,37 +1,35 @@
-# Getting Started with the Azure Data Lake Hands-on-Labs
+# Getting Started with the Azure Data Lake Hands-on Labs
 
 ## Documents
 
-All the Hands-on-Lab documents, including this one, are located at http://aka.ms/AzureDataLakeHandsOnLabs
+All the hands-on-lab documents, including this one, are located at http://aka.ms/AzureDataLakeHandsOnLabs.
 
-## How the Labs Work
+## How the labs work
 
-All the Hands-on-Labs require you to have Azure services. Some labs require a single services and some labs require three or four. 
+The Azure Data Lake hands-on labs require you to have various Azure services provisioned. Some labs require a single service, while others require three or four. 
 
-To simplify this process for you and ensured that it won't cost you any money.
+To simplify this process, and to ensure that it will not cost you any money, we have created a website that grants you guest access to the required services for a 48-hour period.
 
-# Getting your Azure services for the hands on lab 
+# Getting your Azure services for the hands-on lab 
 
-Go to this web site: URL WILL BE MADE AVAILABLE NEXT WEEK
+Go to this website: URL WILL BE MADE AVAILABLE NEXT WEEK
 
-You will be given a set of azure services that you can use for 48 hours.
+You will be given access to a set of Azure services that you can use for 48 hours.
 
-Once your 48 hours are done, you will not be able to use those services.
+Once your 48 hours have elapsed, you will not be able to use those services. However, you can return to the website and request access to the services for another 48-hour period.
 
-You can always go back to that website, and ask for the services again for another 48 hour period
+# Which services will be provisioned for me?
 
-# What Services will be reserved for me?
-
-- An Azure Data Lake Store
-- An Azure Data Lake Analytics Service
-- An Azure Data Lake Storage account (shared among all the users)
-- An Azure Data Factory Account
+The website will provision:
+- An Azure Data Lake Store.
+- An Azure Data Lake Analytics Service.
+- An Azure Data Lake Storage account (shared among all the users).
+- An Azure Data Factory account.
 
 # What username and password do I use?
 
-The web site will tell you how to authenticate.
+The website will tell you how to authenticate.
 
 If you are a Microsoft employee, you will use your Microsoft credentials.
 
 If you are not a Microsoft employee, a temporary username and password will be assigned to you. That username and password will only work for 48 hours.
-
