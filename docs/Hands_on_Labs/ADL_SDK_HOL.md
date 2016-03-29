@@ -2,7 +2,7 @@
 
 # Introduction
 
-In this lab you'll learn how to use the Data Lake .NET SDK to interact with Azure Data Lake in C#.
+In this lab you will learn how to use the Data Lake .NET SDK to interact with Azure Data Lake in C#.
 
 
 # Getting started
@@ -10,34 +10,34 @@ In this lab you'll learn how to use the Data Lake .NET SDK to interact with Azur
 
 ## Prerequisites
 
-To get set up for lab you'll need you'll need various Azure services set up for you. Follow the instructions here: [Start](Start.md). 
+Before you can start the lab exercises, you will need various Azure services provisioned for you. Follow the instructions here: [Start](Start.md). 
 
-It only takes a few minutes. Once your services are setup you can proceed with the lab.
+This process only takes a few minutes. Once your services are configured you can proceed with the lab.
 
 
 # Exercise 0: Creating the base project
 
-1.  Open Visual Studio and create a new C# Console project
-    - File > New > Project > Templates > C# > Console Application
-    - Enter any **Name** you want 
-    - Click **OK**
-2.  In Visual Studio, use the NuGet Package Manager to install some NuGet Packages
-   
-   - Open **Solution Explorer** (if you don't already see this, open it from the **View** menu)
-   - Right click on the project you created and select **Manage NuGet Packages**
-   - Because ADL Analytics and ADL Store are still in public preview, click **Include prerelease**
-   - Click on **Browse**
-   - Select the following packages and click **Install** for each one
-    -  Microsoft.Azure.Common.Authentication
-    -  Microsoft.Azure.Management.DataLake.Store
-    -  Microsoft.Azure.Management.DataLake.StoreFilesystem
-    -  Microsoft.Azure.Management.DataLake.StoreUploader
-    -  Microsoft.Azure.Management.DataLake.Analytics
-    -  Microsoft.Azure.Management.DataLake.AnalyticsJob
-    -  Microsoft.Azure.Management.DataLake.AnalyticsCatalog
+1.  Open Visual Studio and create a new C# Console Application.
+    - On the **File** menu, point to **New**, and then click **Project**.
+    - In the New Project dialog box, in the navigation pane, expand **Templates**, and then click **Visual C#**.
+    - In the center pane, click **Console Application**.
+    - Enter any **Name** you want, and then click **OK**.
+    
+2.  In Visual Studio, use the NuGet Package Manager to install some NuGet packages.
+   - If the Solution Explorer pane is not already visible, on the **View** menu, click **Solution Explorer**.
+   - In Solution Explorer, right-click the project you just created, and then click **Manage NuGet Packages**.
+   - In the Nuget Package Manager pane, because ADL Analytics and ADL Store are still in public preview, ensure **Include prerelease** is selected, and then click **Browse**.
+   - Locate the following packages and click **Install** for each one:
+       -  Microsoft.Azure.Common.Authentication
+       -  Microsoft.Azure.Management.DataLake.Store
+       -  Microsoft.Azure.Management.DataLake.StoreFilesystem
+       -  Microsoft.Azure.Management.DataLake.StoreUploader
+       -  Microsoft.Azure.Management.DataLake.Analytics
+       -  Microsoft.Azure.Management.DataLake.AnalyticsJob
+       -  Microsoft.Azure.Management.DataLake.AnalyticsCatalog
    
 
-If you encounter errors when installing packages, you can [follow the instructions on NuGet.org](http://www.nuget.org/packages?q=Microsoft.Azure.Management.DataLake) for each of the required packages.
+      > Note: If you encounter errors when installing packages, you can [follow the instructions on NuGet.org](http://www.nuget.org/packages?q=Microsoft.Azure.Management.DataLake) for each of the required packages.
 
 3.   Delete any existing code in the Program.cs file and copy in the following code. The code defines a base class that handles some initialization steps, including user authentication:
 
@@ -121,7 +121,7 @@ If you encounter errors when installing packages, you can [follow the instructio
     }
     ```
 4.   Review the code you just added. In particular, note:
-     - The constants declared at the start of the class. You will need to update these with values provided by your instructor.
+     - The constants declared at the start of the class. You will need to update these with values provided by the registration website.
 	 - The **Write your code here** comment. This is where you should add code in the exercises that follow.
 
 # Guidance

@@ -1,15 +1,15 @@
-# Hands-on  Lab: Using PowerShell to interact with Azure Data Lake
+# Hands-on Lab: Using PowerShell to interact with Azure Data Lake
 
 # Introduction
 
-In this lab you'll learn how to use Azure PowerShell cmdlets to interact with Azure Data Lake Analytics (ADLA) and Azure Data Lake Store (ADLS).
+In this lab you will learn how to use Azure PowerShell cmdlets to interact with Azure Data Lake Analytics (ADLA) and Azure Data Lake Store (ADLS).
 
 # Getting started
 
 
 ## Prerequisites
 
-Before you can start the lab exercises, you'll need various Azure services provisioned for you. Follow the instructions here: [Start](Start.md). 
+Before you can start the lab exercises, you will need various Azure services provisioned for you. Follow the instructions here: [Start](Start.md). 
 
 This process only takes a few minutes. Once your services are configured you can proceed with the lab.
 
