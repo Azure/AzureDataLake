@@ -1,4 +1,4 @@
-# Hands-on  Lab: Using PowerShell to interact with Azure Data Lake
+# Hands-on  Lab: Automating Microsoft Azure Data Lake tasks with Windows PowerShell
 
 # Introduction
 
