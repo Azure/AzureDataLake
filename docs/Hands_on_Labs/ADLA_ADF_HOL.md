@@ -2,7 +2,7 @@
 
 # Introduction
 
-In this lab you'll create a simple Azure Data Factory (ADF) pipeline that runs an Azure Data Lake (ADL) Analytics job every fifteen minutes.
+In this lab you will create a simple Azure Data Factory (ADF) pipeline that runs an Azure Data Lake Analytics (ADLA) job every fifteen minutes.
 
 
 # Getting started
@@ -10,37 +10,37 @@ In this lab you'll create a simple Azure Data Factory (ADF) pipeline that runs a
 
 ## Prerequisites
 
-To get set up for lab you'll need you'll need various Azure services set up for you. Follow the instructions here: [Start](Start.md). 
+Before you can start the lab exercises, you will need various Azure services provisioned for you. Follow the instructions here: [Start](Start.md). 
 
-It only takes a few minutes. Once your services are setup you can proceed with the lab.
+This process only takes a few minutes. Once your services are configured you can proceed with the lab.
 
 
 ## Important information
 
 This lab requires you to remember several pieces of information in various places. Keep track of the following items:
 
-    $subname = The subscription name
-    $subid   = The subscription ID         
-    $rg      = The resource group name. 
-    $blobs   = An Azure Storage account          
-    $adla    = The ADLA account            
-    $adls    = The ADLS account            
-    $blobs_access_key   = blob access key  
-    $adf     = The ADF account            
+  - **$subname** - the subscription name.
+  - **$subid** - the subscription ID.
+  - **$rg** - the resource group name.
+  - **$blobs** - an Azure Storage account.
+  - **$adla** - the ADLA account.
+  - **$adls** - the Azure Data Lake Store (ADLS) account.
+  - **$blobs_access_key** - the Azure Blob access key.
+  - **$adf** - the ADF account.
 
-Later in this labe you fill be asked to copy/paste some text that contains these variables ($adla for example) and you will need to replace $adla with the value you have retrieved.
+Later in this lab, you will be asked to copy and paste some text that contains these variables ($adla for example) and you will need to replace $adla with the value you have retrieved.
 
 ## Verify the the contents of the Azure Storage Account
 
-The Azur storage account provided for you contains a script, verify that the script exists
+The Azure storage account provided for you contains a script. Before you continue, verify that the script exists:
 
-- In the Azure Portal, locate your ADLA account
-- Click "Data Explorer"
-- Under **Storage accounts** Select the Azure Storage account 
-- Navigate to the "scripts" folder
-- Search for a file **SearchLog_15min.usql** 
+- In the Azure Portal, locate your ADLA account.
+- Click **Data Explorer**.
+- Under **Storage accounts**, select your Azure Storage account. 
+- Navigate to the **scripts** folder.
+- Search for a file named **SearchLog_15min.usql**.
 
-NOTE: The script will look something like this:
+The script will resemble the following:
 
         @searchlog = 
             EXTRACT UserId          int, 
@@ -60,29 +60,29 @@ NOTE: The script will look something like this:
   
 ## Prepare the sample data
 
-The script you will automate in this lab will use sample data that comes with the ADL Analytics account. 
+The script you will automate in this lab uses sample data that comes with the ADL Analytics account. 
 
 Complete the following steps to copy the sample data into the default ADL Store:
 
 1.  Browse to your ADLA account.
 2.  Click **Essentials**.
-3.  Click **Explore ample jobs**.
+3.  Click **Explore example jobs**.
 4.  Wait a few seconds. If you see the message **samples not set up**, click **Copy Samples**. If you don't see any messages about the samples, you don't have to do anything.
 
-To confirm that the sample data is in the ADL Store Account, open the Data Explorer and look under /Data/Samples. You should see a file named **SearchLog.tsv**. If you do not see this file contact the instructor.
+To confirm that the sample data is in the ADL Store Account, open the Data Explorer and look under **/Data/Samples**. You should see a file named **SearchLog.tsv**.
 
-## Link Services to your ADF Account
+## Link services to your ADF account
 
-In this section, you will linked your ADF account to three services:
+In this section, you will link your ADF account to three services:
 - Azure Data Lake Analytics
 - Azure Data Lake Store
 - Azure Blob Store
 
-To get started, browse to http://portal.azure.com open your ADF account and click **Author and Deploy**.
+To get started, browse to http://portal.azure.com, open your ADF account, and click **Author and Deploy**.
 
 ### Link your ADL Analytics account
 
-1.  Under **Author and Deploy**, click **New Compute** and then select **Axure Data Lake Analytics**. 
+1.  Under **Author and Deploy**, click **New Compute** and then select **Azure Data Lake Analytics**. 
 2.  Replace the existing JSON text with the following text:
 
         {
