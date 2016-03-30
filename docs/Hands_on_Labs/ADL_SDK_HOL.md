@@ -1,4 +1,4 @@
-# Hands-on  Lab: Using the C# .NET SDK to interact with Azure Data Lake
+# Hands-on Lab: Building a Microsoft Azure Data Lake application with Visual C#
 
 # Introduction
 
