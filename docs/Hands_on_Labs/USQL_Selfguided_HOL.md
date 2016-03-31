@@ -44,21 +44,21 @@ Please follow the following steps to start your Visual Studio with Azure Data La
 
 1. Start your Visual Studio program from the start menu.
 2. Once you opened it, log into your account with your credentials.  
-   a. Selecting the log in option.
-   *INSERT SCREEN SHOT and more details*
+    1. Selecting the log in option.
+	**INSERT SCREEN SHOT and more details**
 
 3. Now create a new U-SQL Visual Studio project:
-   a. Create a new project:
-   *INSERT SCREEN SHOT*
-   b. Select *Installed → Templates → U-SQL → U-SQL Project* for your project template:  
-   *INSERT SCREEN SHOT*
-   Give the project a name and create it.
+    1. Create a new project:
+	   **INSERT SCREEN SHOT**
+    2. Select *Installed → Templates → U-SQL → U-SQL Project* for your project template:  
+	   **INSERT SCREEN SHOT**
+    3. Give the project a name and create it.
 
-Now you should have an empty `Script.usql` window open that you will use to paste your job scripts into, edit them and
+	Now you should have an empty `Script.usql` window open that you will use to paste your job scripts into, edit them and
 submit them.
 
 4. Set the target account to your Azure Data Lake Analytics account (in the example I am using an account called adlhol):
-*INSERT SCREEN SHOT*
+**INSERT SCREEN SHOT**
 
 # Exercise 1: Submitting your first U-SQL script
 In this exercise you will submit a U-SQL script that reads data from an input file, extracts and schematizes data, and writes the results into an output file.
@@ -84,25 +84,25 @@ In this exercise you will submit a U-SQL script that reads data from an input fi
 
 2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
 
-It should look like this:
+	It should look like this:
 **INSERT SCREENSHOT**
 
 3. Submit your script by selecting the Submit button at the left top of the Script.usql window.
 **INSERT SCREENSHOT**
 
-After a short while, the Job View of the submitted job should appear. 
+	After a short while, the Job View of the submitted job should appear. 
 **INSERT SCREENSHOT**
 
 4. Wait until the job has completed. The Job View should look like this:
 **INSERT SCREENSHOT**
 
-If the job fails, please look at the error tab and correct the mistake. 
+	If the job fails, please look at the error tab and correct the mistake. 
 For example, the following error is shown if you did not complete step 2 correctly:
 **INSERT SCREENSHOT**
 
 5. Finally check the result by opening the resulting file in the job view:
 **INSERT SCREENSHOT**
-The result should be like:
+	The result should be like:
 **INSERT SCREENSHOT**
 
 	
@@ -334,7 +334,7 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 	        FROM "/Samples/Data/SearchLog.tsv"
 	        USING Extractors.Tsv();
 
-The script you just created defines a view named **SearchlogView** in the default database and schema. Note that the first statement drops any existing definitions of the view and then creates the version that we want to use. 
+	The script you just created defines a view named **SearchlogView** in the default database and schema. Note that the first statement drops any existing definitions of the view and then creates the version that we want to use. 
 
 2. The Job View will show an empty job graph, but the Metadata Operations tab will show the operations:
 **INSERT SCREENSHOT**
@@ -342,7 +342,7 @@ The script you just created defines a view named **SearchlogView** in the defaul
 3. Review the registration of the view in Visual Studio's Server Explorer as shown here:
 **INSERT SCREENSHOT**
 
-We can now use the view without having to worry about how to schematize the data in every query. Instead, we can use our new view in place of the EXTRACT expression in the scripts we created earlier.
+	We can now use the view without having to worry about how to schematize the data in every query. Instead, we can use our new view in place of the EXTRACT expression in the scripts we created earlier.
 
 4. Replace the contents of the Script.usql window with the following text:
 	
@@ -389,7 +389,7 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	        WHERE Region == @region;
 	    END;
     
-The code you just added defines a function named **RegionalSearchlog()** in the default database and schema. The function includes a **@region** parameter that enables you to filter the view you created in the previous step by region. The parameter has a default value of "en-gb". The first statement drops any existing definitions of the function and then creates the version that we want to use. You can now use the function in your queries.
+	The code you just added defines a function named **RegionalSearchlog()** in the default database and schema. The function includes a **@region** parameter that enables you to filter the view you created in the previous step by region. The parameter has a default value of "en-gb". The first statement drops any existing definitions of the function and then creates the version that we want to use. You can now use the function in your queries.
 
 2. Review the registration in the Visual Studio Server Explorer:
 **INSERT SCREENSHOT**
@@ -430,32 +430,32 @@ You will now persist the searchlog data in a schematized format in a table calle
 
 1. Replace the content of the Script.usql window with the following U-SQL script, and then submit your query:
 
-    DROP DATABASE IF EXISTS <insert your name>;
-	CREATE DATABASE <insert your name>;
-	USE DATABASE <insert your name>;
+	    DROP DATABASE IF EXISTS <insert your name>;
+	    CREATE DATABASE <insert your name>;
+	    USE DATABASE <insert your name>;
 	
-	DROP TABLE IF EXISTS SearchLog1;
-	DROP TABLE IF EXISTS SearchLog2;
+	    DROP TABLE IF EXISTS SearchLog1;
+	    DROP TABLE IF EXISTS SearchLog2;
 		
-	CREATE TABLE SearchLog1 (
-	            UserId          int,
-	            Start           DateTime,
-	            Region          string,
-	            Query           string,
-	            Duration        int?,
-	            Urls            string,
-	            ClickedUrls     string,
+	    CREATE TABLE SearchLog1 (
+	                UserId          int,
+	                Start           DateTime,
+	                Region          string,
+	                Query           string,
+	                Duration        int?,
+	                Urls            string,
+	                ClickedUrls     string,
 	
-	            INDEX sl_idx CLUSTERED (UserId ASC) 
-	                  PARTITIONED BY HASH (UserId)
-	  );
+	                INDEX sl_idx CLUSTERED (UserId ASC) 
+	                      PARTITIONED BY HASH (UserId)
+	      );
 	
-	INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
+	    INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
 		
-	CREATE TABLE SearchLog2(
-         INDEX sl_idx CLUSTERED (UserId ASC) 
-         PARTITIONED BY HASH (UserId)
-	) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
+	    CREATE TABLE SearchLog2(
+                   INDEX sl_idx CLUSTERED (UserId ASC) 
+                   PARTITIONED BY HASH (UserId)
+	    ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
 2. Replace the string `<insert your name>` with a unique database name of your choosing.
 
