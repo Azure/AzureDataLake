@@ -28,8 +28,8 @@ In this exercise you will install the Azure Resource Manager cmdlets in Windows 
       
 2. At the PowerShell command prompt, run the following commands:
      
-   	 Install-Module AzureRm
-   	 Install-AzureRm
+        Install-Module AzureRm
+		Install-AzureRm
 	 
 3. Close the PowerShell window.
 
