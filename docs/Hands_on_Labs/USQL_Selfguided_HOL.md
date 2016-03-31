@@ -2,8 +2,8 @@
 
 # Introduction
 
-The purpose of this lab is to give you a taste of the new Big Data query language U-SQL by taking
-you through the journey of using the Azure Data Lake Tool in Visual Studio to run your first U-SQL scripts.
+The purpose of this lab is to give you a taste of the new Big Data query language, U-SQL, by taking
+you through the journey of using Azure Data Lake Tools for Visual Studio to run your first U-SQL scripts.
 
 # What is U-SQL?
 U-SQL is the Big Data query language of the Azure Data Lake Analytics (ADLA) service. 
@@ -14,7 +14,7 @@ and the C# expression language, together with support for Big Data processing co
 custom processors and reducers.
 
 U-SQL is however not ANSI SQL nor is it Transact-SQL. For starters, its keywords such as SELECT have to be in UPPERCASE. 
-U-SQL uses the C# type system and within SELECT clauses, WHERE predicates, and so on, U-SQL uses C# expressions. 
+U-SQL uses the C# type system. Within SELECT clauses, WHERE predicates, and so on, U-SQL uses C# expressions. 
 This means the data types are C# types and use C# NULL semantics, and the comparison operators within a predicate 
 follow C# syntax (e.g., `a == "foo"`).
 
@@ -35,29 +35,26 @@ U-SQL also enables you to use data definition statements such as CREATE TABLE to
 # Prerequisites
 To complete this lab you'll need:
 
-- A copy of Visual Studio with the Azure Data Lake Tools for Visual Studio installed.
+- A copy of Visual Studio 2012 or later with the Azure Data Lake Tools for Visual Studio installed.
 - Access to an ADLA account (this is provided for you here **TODO: ADD LINK TO ACCT CREDENTIAL DESCRIPTION**).
 
 # Getting started
 
-Please follow the following steps to start your Visual Studio with Azure Data Lake Tools:
+In this section you will open Visual Studio and use Azure Data Lake Tools for Visual Studio to create a new -SQL project.
 
-1. Start your Visual Studio program from the start menu.
-2. Once you opened it, log into your account with your credentials.  
-    1. Selecting the log in option.
-	**INSERT SCREEN SHOT and more details**
+1. Open Visual Studio and log into your account.	
+2. Create a new U-SQL project.
 
-3. Now create a new U-SQL Visual Studio project:
-    1. Create a new project:
+    - On the **File** menu, point to **New**, and then click **Project**.
 	   **INSERT SCREEN SHOT**
-    2. Select *Installed → Templates → U-SQL → U-SQL Project* for your project template:  
+    - In the New Project dialog box, in the navigation pane, expand **Installed**, expand **Templates**, and then expand **U-SQL**.
+	- In the center pane, click **U-SQL Project**.	 
 	   **INSERT SCREEN SHOT**
-    3. Give the project a name and create it.
+    - In the **Name** box, give your project a name and then click **OK**.
 
-	Now you should have an empty `Script.usql` window open that you will use to paste your job scripts into, edit them and
-submit them.
+	You should now have an empty **Script.usql** window open that you will use to create, edit, and submit your U-SQL scripts.
 
-4. Set the target account to your Azure Data Lake Analytics account (in the example I am using an account called adlhol):
+4. Set the target account to your Azure Data Lake Analytics account (in the example I am using an account named **adlhol**):
 **INSERT SCREEN SHOT**
 
 # Exercise 1: Submitting your first U-SQL script
@@ -65,7 +62,7 @@ In this exercise you will submit a U-SQL script that reads data from an input fi
 
 ## Running the script
 
-1. Copy the following U-SQL script into the Script.usql window in VisualStudio:
+1. Copy the following U-SQL script into the Script.usql window in Visual Studio:
 
         @searchlog =
            EXTRACT UserId          int,
@@ -82,31 +79,31 @@ In this exercise you will submit a U-SQL script that reads data from an input fi
         TO "/output/<replace_this_with_your_output_name>.csv"
         USING Outputters.Csv();
 
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 
-	It should look like this:
+	The Script.usql window should resemble the following:
 **INSERT SCREENSHOT**
 
-3. Submit your script by selecting the Submit button at the left top of the Script.usql window.
+3. To submit your script, click the **Submit** button at the top-left of the Script.usql window.
 **INSERT SCREENSHOT**
 
 	After a short while, the Job View of the submitted job should appear. 
 **INSERT SCREENSHOT**
 
-4. Wait until the job has completed. The Job View should look like this:
+4. Wait until the job has completed. The Job View should resemble the following:
 **INSERT SCREENSHOT**
 
-	If the job fails, please look at the error tab and correct the mistake. 
+	If the job fails, please look at the **Error** tab and correct the mistake. 
 For example, the following error is shown if you did not complete step 2 correctly:
 **INSERT SCREENSHOT**
 
 5. Finally check the result by opening the resulting file in the job view:
 **INSERT SCREENSHOT**
-	The result should be like:
+	The resulting file should resemble the following:
 **INSERT SCREENSHOT**
 
 	
-> NOTE: This U-SQL script has no transformation step. It reads from an input file called SearchLog.tsv, schematizes the data during the read process, and then outputs the intermediate rowset back into the file whose name you specified. The **Duration** field could be null or of type int, while the **UserId** cannot be null. Note that the C# **string** type is always nullable.
+> NOTE: This U-SQL script has no transformation step. It reads from an input file called SearchLog.tsv, schematizes the data during the read process, and then outputs the intermediate rowset back into the file whose name you specified. The **Duration** field could be null or of type **int**, while the **UserId** cannot be null. Note that the C# **string** type is always nullable.
 
 This script illustrates the following concepts:
 
@@ -123,7 +120,7 @@ In this exercise, you will introduce scalar variables to make your scripts easie
 
 ## Running the script
 
-1. Edit your U-SQL script in your Script.usql window to resemble the following:
+1. Edit the U-SQL script in your Script.usql window to resemble the following:
 
 	    DECLARE @in  string = "/Samples/Data/SearchLog.tsv";
 	    DECLARE @out string = "/output/<replace_this_with_your_output_name>.csv";
@@ -143,7 +140,7 @@ In this exercise, you will introduce scalar variables to make your scripts easie
 	    TO @out
 	    USING Outputters.Csv();
     
-2. As before, change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
+2. As before, change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script as in Exercise 1, and verify that the result is the same as that of Exercise 1.
 
 # Exercise 3: Transforming your rowset
@@ -175,11 +172,11 @@ First let's do a simple filter. Since the data is in a file and you have to prod
     	TO "/output/<replace_this_with_your_output_name>.csv"
     	USING Outputters.Csv();
     
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
-3. Submit your script  and review the result as explained in Exercise 1. The result should look like: 
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
+3. Submit your script  and review the result as explained in Exercise 1. The resulting file should resemble the following: 
 **INSERT SCREENSHOT**
 
-    > Note that the WHERE clause is using a boolean C# expression and thus the comparison operation is `==` 
+    > Note that the WHERE clause is using a Boolean C# expression and thus the comparison operation is `==` 
 	(and not the `=` sign you may be familiar with from traditional SQL).
 
     You can apply more complex filters by combining them with logical conjunctions (ANDs) and disjunctions (ORs), 
@@ -267,7 +264,7 @@ In many cases, you will want to perform some analytics as part of your queries. 
     	ORDER BY TotalDuration DESC
     	USING Outputters.Csv();
     
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script and review the resulting files as explained in Exercise 1. The two results are:
 
 `_agg.csv`:
@@ -307,7 +304,7 @@ To avoid giving the impression that the ORDER BY clause in U-SQL provides orderi
     	ORDER BY TotalDuration DESC
     	USING Outputters.Csv();
     
-The result will look like:
+The result should resemble the following:
 **INSERT SCREENSHOT**
 
 # Exercise 5: Creating and using views
@@ -359,8 +356,8 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 	    ORDER BY TotalDuration DESC
 	    USING Outputters.Csv();
     
-5. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique, and then submit the script.
-	The result should look the same as in step 4 in Exercise 4.
+5. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique, and then submit the script.
+	The result should be identical to that of the final step in Exercise 4.
 	
 # Exercise 6: Creating and using table-valued functions
 In this exercise, you will create a table-valued function.
@@ -406,8 +403,8 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	          
     The code you just added retrieves the **Start**, **Region**, and **Duration** fields for the default region.
 	
-4. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique. 
-5. Submit your script and review the result as explained in Exercise 1. The result looks like: 
+4. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
+5. Submit your script and review the result as explained in Exercise 1. The result should resemble the following: 
 	**INSERT SCREENSHOT**
 	
 # Exercise 7: Creating tables
@@ -457,7 +454,7 @@ You will now persist the searchlog data in a schematized format in a table calle
                    PARTITIONED BY HASH (UserId)
 	    ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
-2. Replace the string `<insert your name>` with a unique database name of your choosing.
+2. Replace the string *&lt;insert your name&gt;* with a unique database name of your choosing.
 
 3. Review the registration after completion of the job in the Visual Studio Server Explorer:
 	**INSERT SCREENSHOT**
@@ -492,7 +489,7 @@ In this exercise, you will query data from the table you created in Exercise 7.
     
     > NOTE: Currently you cannot run a SELECT on a table in the same script as the script where you create that table.
 
-2. Change the name of the output file from `<replace_this_with_your_output_name>` to something unique. 
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 3. Submit your script and review the result as explained in Exercise 1. The resulting file should contain: 
 	**INSERT SCREENSHOT**
 	
@@ -522,8 +519,8 @@ U-SQL includes many familiar join operators, such as INNER JOIN, LEFT/RIGHT/FULL
     	TO "/output/<replace_this_with_your_output_name>.csv"
     	USING Outputters.Csv();
 
-2. Change `<insert your DB name>` to the name of the database you chose in Exercise 7 and replace 
-the name of the output file from `<replace_this_with_your_output_name>` to something unique. 
+2. Change *&lt;insert your DB name&gt;* to the name of the database you chose in Exercise 7 and change 
+the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 3. Submit your script and review the result as explained in Exercise 1. The resulting file should contain:
 	**INSERT SCREENSHOT**
 

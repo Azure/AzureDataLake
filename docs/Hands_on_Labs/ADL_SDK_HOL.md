@@ -35,7 +35,8 @@ This process only takes a few minutes. Once your services are configured you can
        -  Microsoft.Azure.Management.DataLake.Analytics
        -  Microsoft.Azure.Management.DataLake.AnalyticsJob
        -  Microsoft.Azure.Management.DataLake.AnalyticsCatalog
-   
+       
+	   
 
       > Note: If you encounter errors when installing packages, you can [follow the instructions on NuGet.org](http://www.nuget.org/packages?q=Microsoft.Azure.Management.DataLake) for each of the required packages.
 

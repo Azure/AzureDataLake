@@ -17,7 +17,7 @@ This process only takes a few minutes. Once your services are configured you can
 
 ## Important information
 
-This lab requires you to remember several pieces of information in various places. Keep track of the following items:
+This lab requires you to remember and reuse several pieces of information in various places. These pieces of information are provided to you when you visit the registration website. Keep track of the following items:
 
   - **$subname** - the subscription name.
   - **$subid** - the subscription ID.
@@ -28,7 +28,10 @@ This lab requires you to remember several pieces of information in various place
   - **$blobs_access_key** - the Azure Blob access key.
   - **$adf** - the ADF account.
 
-Later in this lab, you will be asked to copy and paste some text that contains these variables ($adla for example) and you will need to replace $adla with the value you have retrieved.
+Later in this lab, you will be asked to copy and paste some text that contains these variables ($adla for example). You can either:
+
+- Declare these variables in PowerShell and set them to the literal values provided by the registration website (the website provides variable values in a PowerShell-friendly format).
+- Replace these variables in the text you copy and paste with the literal values provided by the registration website.
 
 ## Verify the the contents of the Azure Storage Account
 
