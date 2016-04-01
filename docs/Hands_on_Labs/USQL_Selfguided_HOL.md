@@ -46,7 +46,7 @@ In this section you will open Visual Studio and use Azure Data Lake Tools for Vi
 2. Create a new U-SQL project.
 
     - On the **File** menu, point to **New**, and then click **Project**.
-	  ![New Project](/Images/NewProject.jpg)
+	  ![New Project](/docs/Hands_on_Labs/Images/NewProject.jpg)
     - In the New Project dialog box, in the navigation pane, expand **Installed**, expand **Templates**, and then expand **U-SQL**.
 	- In the center pane, click **U-SQL Project**.	 
 	   **INSERT SCREEN SHOT**
