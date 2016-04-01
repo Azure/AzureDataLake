@@ -42,20 +42,24 @@ To complete this lab you'll need:
 
 In this section you will open Visual Studio and use Azure Data Lake Tools for Visual Studio to create a new U-SQL project.
 
-1. Open Visual Studio and log into your account.	
+1. Open Visual Studio and log into your account.
+    - On the **File** menu, open **Account Settings**
+	  ![Account Settings](/docs/Hands_on_Labs/Images/AccountSettings.jpg)
+	- Under **All Accounts** select **Add an account...** and enter the account information needed to access your ADLA account.
+	  ![Account Sign In](/docs/Hands_on_Labs/Images/SignInAccount.jpg)
 2. Create a new U-SQL project.
 
     - On the **File** menu, point to **New**, and then click **Project**.
 	  ![New Project](/docs/Hands_on_Labs/Images/NewProject.jpg)
     - In the New Project dialog box, in the navigation pane, expand **Installed**, expand **Templates**, and then expand **U-SQL**.
 	- In the center pane, click **U-SQL Project**.	 
-	   **INSERT SCREEN SHOT**
+	  ![Create Project](/docs/Hands_on_Labs/Images/CreateProject.jpg)
     - In the **Name** box, give your project a name and then click **OK**.
 
 	You should now have an empty **Script.usql** window open that you will use to create, edit, and submit your U-SQL scripts.
 
 4. Set the target account to your Azure Data Lake Analytics account (in the example I am using an account named **adlhol**):
-**INSERT SCREEN SHOT**
+![Setting the Account](/docs/Hands_on_Labs/Images/SetAccount.jpg)
 
 # Exercise 1: Submitting your first U-SQL script
 In this exercise you will submit a U-SQL script that reads data from an input file, extracts and schematizes data, and writes the results into an output file.
@@ -82,25 +86,26 @@ In this exercise you will submit a U-SQL script that reads data from an input fi
 2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 
 	The Script.usql window should resemble the following:
-**INSERT SCREENSHOT**
+	![Query 1](/docs/Hands_on_Labs/Images/q1_query.jpg)
 
 3. To submit your script, click the **Submit** button at the top-left of the Script.usql window.
-**INSERT SCREENSHOT**
+	![Submit Query](/docs/Hands_on_Labs/Images/q1_query_submit.jpg)
 
 	After a short while, the Job View of the submitted job should appear. 
-**INSERT SCREENSHOT**
+	![Query Job View](/docs/Hands_on_Labs/Images/q1_jobview.jpg)
 
 4. Wait until the job has completed. The Job View should resemble the following:
-**INSERT SCREENSHOT**
+	![Completed Query Job View](/docs/Hands_on_Labs/Images/q1_jobview_completed.jpg)
 
 	If the job fails, please look at the **Error** tab and correct the mistake. 
 For example, the following error is shown if you did not complete step 2 correctly:
-**INSERT SCREENSHOT**
+	![Failed Query Job View](/docs/Hands_on_Labs/Images/q1_jobview_error.jpg)
 
 5. Finally check the result by opening the resulting file in the job view:
-**INSERT SCREENSHOT**
-	The resulting file should resemble the following:
-**INSERT SCREENSHOT**
+	![Query Job View Resulting File](/docs/Hands_on_Labs/Images/q1_jobview_output.jpg)
+
+	The resulting file should resemble the following after setting the **Delimiter** to `,` and the **Quoting** to `"`:
+	![Query 1 Result](/docs/Hands_on_Labs/Images/q1_result.jpg)
 
 	
 > NOTE: This U-SQL script has no transformation step. It reads from an input file called SearchLog.tsv, schematizes the data during the read process, and then outputs the intermediate rowset back into the file whose name you specified. The **Duration** field could be null or of type **int**, while the **UserId** cannot be null. Note that the C# **string** type is always nullable.
