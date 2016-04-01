@@ -36,7 +36,7 @@ U-SQL also enables you to use data definition statements such as CREATE TABLE to
 To complete this lab you'll need:
 
 - A copy of Visual Studio 2012 or later with the Azure Data Lake Tools for Visual Studio installed.
-- Access to an ADLA account (this is provided for you here **TODO: ADD LINK TO ACCT CREDENTIAL DESCRIPTION**).
+- Access to an ADLA account (information on how to get access to an ADLA Account is provided for you [here](https://github.com/Azure/AzureDataLake/blob/master/docs/Hands_on_Labs/Start.md).
 
 # Getting started
 
@@ -179,7 +179,7 @@ First let's do a simple filter. Since the data is in a file and you have to prod
     
 2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script  and review the result as explained in Exercise 1. The resulting file should resemble the following: 
-**INSERT SCREENSHOT**
+	![Query 3 Result](/docs/Hands_on_Labs/Images/q3_result.jpg)
 
     > Note that the WHERE clause is using a Boolean C# expression and thus the comparison operation is `==` 
 	(and not the `=` sign you may be familiar with from traditional SQL).
@@ -220,7 +220,7 @@ First let's do a simple filter. Since the data is in a file and you have to prod
 Note that the query is operating on the result of the first rowset and thus the result is a composition of the two filters. You can also reuse a variable name and the names are scoped lexically.
 
 The resulting file will look like:
-**INSERT SCREENSHOT**
+	![Query 3 Second Result](/docs/Hands_on_Labs/Images/q3_result2.jpg)
 
 # Exercise 4: Ordering, grouping and aggregating data
 In this exercise, you will apply ordering, grouping, and aggregation to control how your output data is presented.
@@ -273,10 +273,10 @@ In many cases, you will want to perform some analytics as part of your queries. 
 3. Submit your script and review the resulting files as explained in Exercise 1. The two results are:
 
 `_agg.csv`:
-**INSERT SCREENSHOT**
+	![Query 4 Agg Result](/docs/Hands_on_Labs/Images/q4_agg_result.jpg)
 
 `_top5agg.csv`:
-**INSERT SCREENSHOT**
+	![Query 4 Top 5 Result](/docs/Hands_on_Labs/Images/q4_top5_result.jpg)
  
 	
 The query you just submitted finds the total duration per region and then outputs the top five durations in order. Rowsets in U-SQL do not preserve their order for the next query. Thus, if you want an ordered output, you must add the ORDER BY clause to the OUTPUT statement.
@@ -310,7 +310,7 @@ To avoid giving the impression that the ORDER BY clause in U-SQL provides orderi
     	USING Outputters.Csv();
     
 The result should resemble the following:
-**INSERT SCREENSHOT**
+	![Query 4 Having Result](/docs/Hands_on_Labs/Images/q4_having_result.jpg)
 
 # Exercise 5: Creating and using views
 In this exercise, you will create a view to provide abstraction and promote code reuse.
@@ -339,10 +339,10 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 	The script you just created defines a view named **SearchlogView** in the default database and schema. Note that the first statement drops any existing definitions of the view and then creates the version that we want to use. 
 
 2. The Job View will show an empty job graph, but the Metadata Operations tab will show the operations:
-**INSERT SCREENSHOT**
+	![Query 5 Meta Data Ops](/docs/Hands_on_Labs/Images/q5_view_jobview.jpg)
 
 3. Review the registration of the view in Visual Studio's Server Explorer as shown here:
-**INSERT SCREENSHOT**
+	![Query 5 Server Explorer](/docs/Hands_on_Labs/Images/q5_view_explorer.jpg)
 
 	We can now use the view without having to worry about how to schematize the data in every query. Instead, we can use our new view in place of the EXTRACT expression in the scripts we created earlier.
 
@@ -394,7 +394,7 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	The code you just added defines a function named **RegionalSearchlog()** in the default database and schema. The function includes a **@region** parameter that enables you to filter the view you created in the previous step by region. The parameter has a default value of "en-gb". The first statement drops any existing definitions of the function and then creates the version that we want to use. You can now use the function in your queries.
 
 2. Review the registration in the Visual Studio Server Explorer:
-**INSERT SCREENSHOT**
+	![Query 6 Server Explorer](/docs/Hands_on_Labs/Images/q6_tvf_explorer.jpg)
 
 3. Replace the contents of your query editor with the following text:
 	
@@ -410,7 +410,7 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	
 4. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 5. Submit your script and review the result as explained in Exercise 1. The result should resemble the following: 
-	**INSERT SCREENSHOT**
+	![Query 6 Result](/docs/Hands_on_Labs/Images/q6_result.jpg)
 	
 # Exercise 7: Creating tables
 In this exercise, you will create a table with a predefined schema.
@@ -449,20 +449,20 @@ You will now persist the searchlog data in a schematized format in a table calle
 	                ClickedUrls     string,
 	
 	                INDEX sl_idx CLUSTERED (UserId ASC) 
-	                      PARTITIONED BY HASH (UserId)
+	                      PARTITIONED BY HASH (UserId) INTO 4
 	      );
 	
 	    INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
 		
 	    CREATE TABLE SearchLog2(
                    INDEX sl_idx CLUSTERED (UserId ASC) 
-                   PARTITIONED BY HASH (UserId)
+                   PARTITIONED BY HASH (UserId) INTO 4
 	    ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
 2. Replace the string *&lt;insert your name&gt;* with a unique database name of your choosing.
 
-3. Review the registration after completion of the job in the Visual Studio Server Explorer:
-	**INSERT SCREENSHOT**
+3. Review the registration after completion of the job in the Visual Studio Server Explorer (you may need to refresh the Database list):
+	![Query 7 Server Explorer](/docs/Hands_on_Labs/Images/q7_explorer.jpg)
 	
 You can now query the tables in the same way that you queried the unstructured data. Instead of creating a rowset using EXTRACT, you now can simply refer to the table name.
 
@@ -496,7 +496,7 @@ In this exercise, you will query data from the table you created in Exercise 7.
 
 2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 3. Submit your script and review the result as explained in Exercise 1. The resulting file should contain: 
-	**INSERT SCREENSHOT**
+	![Query 8 Result](/docs/Hands_on_Labs/Images/q8_result.jpg)
 	
 # Exercise 9: Joining data
 In this exercise, you will use the U-SQL JOIN operator to join data from two different sources and in two different formats. 
@@ -527,7 +527,7 @@ U-SQL includes many familiar join operators, such as INNER JOIN, LEFT/RIGHT/FULL
 2. Change *&lt;insert your DB name&gt;* to the name of the database you chose in Exercise 7 and change 
 the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 3. Submit your script and review the result as explained in Exercise 1. The resulting file should contain:
-	**INSERT SCREENSHOT**
+	![Query 9 Result](/docs/Hands_on_Labs/Images/q9_result.jpg)
 
 When you work with joins in U-SQL, note that:
 - U-SQL only supports the ANSI-compliant JOIN syntax (*Rowset1* JOIN *Rowset2* ON *predicate*). The older syntax (FROM *Rowset1*, *Rowset2* WHERE *predicate*) is not supported.
