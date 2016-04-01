@@ -40,13 +40,13 @@ To complete this lab you'll need:
 
 # Getting started
 
-In this section you will open Visual Studio and use Azure Data Lake Tools for Visual Studio to create a new -SQL project.
+In this section you will open Visual Studio and use Azure Data Lake Tools for Visual Studio to create a new U-SQL project.
 
 1. Open Visual Studio and log into your account.	
 2. Create a new U-SQL project.
 
     - On the **File** menu, point to **New**, and then click **Project**.
-	   **INSERT SCREEN SHOT**
+	  ![New Project](/Images/NewProject.jpg)
     - In the New Project dialog box, in the navigation pane, expand **Installed**, expand **Templates**, and then expand **U-SQL**.
 	- In the center pane, click **U-SQL Project**.	 
 	   **INSERT SCREEN SHOT**
