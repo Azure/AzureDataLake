@@ -121,3 +121,6 @@ In this exercise you will explore the files in your ADLS account. You will also 
       * Use the cmdlet ``Export-AzureRmDataLakestoreItem``.
       * Use the ADLS file path **"/Samples/Output/UserName/SearchLog_TestOutput.tsv"**.
 
+# PowerShell Quick Start
+
+Once you've gone through this HOL you can try exploring the [ADL PS QuickStart])(/docs/PowerShell/ADL_PS_QuickStart.md)
