@@ -123,4 +123,4 @@ In this exercise you will explore the files in your ADLS account. You will also 
 
 # PowerShell Quick Start
 
-Once you've gone through this HOL you can try exploring the [ADL PS QuickStart])(/docs/PowerShell/ADL_PS_QuickStart.md)
+Once you've gone through this HOL you can try exploring the [ADL PS QuickStart](/docs/PowerShell/ADL_PS_QuickStart.md)
