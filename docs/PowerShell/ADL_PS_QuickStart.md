@@ -93,7 +93,10 @@ This prints:
     $failed_jobs = $jobs | Where-Object { $_.Result -eq "Failed" }
     $failed_jobs | Group-Object Submitter | Select -Property Count,Name
 
-## Find all the failed jbos that actually started 
+## Find all the failed jobs that actually started 
+
+A job might fail at compile time - and so it never starts. Let's look at the failed
+jobs that actually started running and then failed.
 
     $failed_jobs | Where-Object { $_.StartTime -ne $null }
  
