@@ -36,3 +36,13 @@ This ensures that a user:
 - Can view the ADLS Azure Portal
 - Can read and write data in the ADLA account
 
+### Can I submit a U-SQL Job from the Command Line?
+
+Yes! We have a couple of options
+
+**Azure PowerShell** https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-get-started-powershell/
+
+**Azure CLI**  https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-get-started-cli/
+
+**Data Lake Analytics .NET SDK** https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-get-started-net-sdk/
+
