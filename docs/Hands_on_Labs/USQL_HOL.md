@@ -293,16 +293,7 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	
     	DROP FUNCTION IF EXISTS RegionalSearchlog;
     	CREATE FUNCTION RegionalSearchlog(@region string = "en-gb") 
-    	RETURNS @searchlog TABLE
-	      (
-	                UserId          int,
-	                Start           DateTime,
-	                Region          string,
-	                Query           string,
-	                Duration        int?,
-	                Urls            string,
-	                ClickedUrls     string
-	      )
+    	RETURNS @searchlog 
 	    AS BEGIN 
 	      @searchlog =
 	        SELECT * FROM SearchlogView
@@ -344,32 +335,32 @@ You will now persist the searchlog data in a schematized format in a table calle
 
 1. Copy the following U-SQL script into the editor of your choice, and then submit your query:
 
-    DROP DATABASE IF EXISTS <insert your name>;
-	CREATE DATABASE <insert your name>;
-	USE DATABASE <insert your name>;
+        DROP DATABASE IF EXISTS <insert your name>;
+        CREATE DATABASE <insert your name>;
+        USE DATABASE <insert your name>;
+        
+        DROP TABLE IF EXISTS SearchLog1;
+        DROP TABLE IF EXISTS SearchLog2;
+        	
+        CREATE TABLE SearchLog1 (
+                    UserId          int,
+                    Start           DateTime,
+                    Region          string,
+                    Query           string,
+                    Duration        int?,
+                    Urls            string,
+                    ClickedUrls     string,
+        
+                    INDEX sl_idx CLUSTERED (UserId ASC) 
+                          PARTITIONED BY HASH (UserId) INTO 2
+        );
 	
-	DROP TABLE IF EXISTS SearchLog1;
-	DROP TABLE IF EXISTS SearchLog2;
+        INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
 		
-	CREATE TABLE SearchLog1 (
-	            UserId          int,
-	            Start           DateTime,
-	            Region          string,
-	            Query           string,
-	            Duration        int?,
-	            Urls            string,
-	            ClickedUrls     string,
-	
-	            INDEX sl_idx CLUSTERED (UserId ASC) 
-	                  PARTITIONED BY HASH (UserId)
-	  );
-	
-	INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
-		
-	CREATE TABLE SearchLog2(
-         INDEX sl_idx CLUSTERED (UserId ASC) 
-         PARTITIONED BY HASH (UserId)
-	) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
+        CREATE TABLE SearchLog2(
+               INDEX sl_idx CLUSTERED (UserId ASC) 
+               PARTITIONED BY HASH (UserId) INTO 2
+        ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
 You can now query the tables in the same way that you queried the unstructured data. Instead of creating a rowset using EXTRACT, you now can simply refer to the table name.
 
