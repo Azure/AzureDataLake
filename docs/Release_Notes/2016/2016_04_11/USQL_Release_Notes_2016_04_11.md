@@ -1,43 +1,51 @@
 # Azure Data Lake > U-SQL Release Notes 2016-04-11
 --------------------------
 
-## BREAKING CHANGES
+# Breaking Changes
  
-No known breaking changes.
+None.
 
-## AZURE DATA LAKE TOOLS FOR VISUAL STUDIO UPDATE
- 1. **Hiding "Data Lake" top menu by default**
+# Azure Data Lake Tools for Visual Studio
 
-    As Azure Data Lake Tools for Visual Studio is now shipping together with [Azure SDK](https://azure.microsoft.com/en-us/documentation/articles/azure-sdk-dotnet-release-notes-2-9/), which is the central place for .NET developers for Azure development, we decided to hide the "Data Lake" menu by default to not disturb users.
+## ADL Tools for Visual Studio is now Available in the Azure SDK
 
-    The menu will still appear when you click any U-SQL or Data Lake Analytics features, such as viewing the jobs, creating a U-SQL project, etc. 
+ADL Tools for Visual Studio is now available with the [Azure SDK](https://azure.microsoft.com/en-us/documentation/articles/azure-sdk-dotnet-release-notes-2-9/). 
+
+## The "Data Lake" main menu item is no longer visible by default
+
+To avoid cluttering up the main menu of Visual Studio, the "Data Lake" menu item is no longer visible by default. TO make it appear, simply click on any 
+U-SQL or ADL Analytics features, such as viewing an ADL Account, U-SQL jobs, creating a U-SQL project, etc. 
  
- 2. **Improvements for U-SQL local run**
+## U-SQL Local Execution now supports parallelism
 
-    We have made several improvements for U-SQL local run, including:
-    - Now U-SQL scripts can run in parallel locally - you can specify the degree of parallelism in Data Lake > Options and Settings
-    - U-SQL local run output view: you can now view the U-SQL results in the output window by double clicking it.
+Now U-SQL scripts can run in parallel locally. You can specify the degree of parallelism in Data Lake > Options and Settings
 
- 3. **Cloud Explorer Integration for Data Lake Analytics and Data Lake Store**
-   
-    We have integrated Data Lake Analytics and Data Lake Store in Cloud Explorer and you can easily navigate all your Azure resources there.
+## Viewing the outputs of U-SQL Local Execution
 
-    Note: Local run account (local) is still in Server Explorer and we will migrate that part soon.
+When you run a U-SQL script lovall, you can now view the results in the output window by double clicking it.
 
-## MAJOR BUG FIXES
+## Cloud Explorar new shows ADL Store & Analytics accounts.
 
- 1. **MD5 Hash for WASB files is fixed**
+ADL Analytics & Store accounts are now visible in Cloud Explorer along with your other Azure resources.
 
-   Previously, when writing a file to WASB locations, the MD5 hash has was not set correctly and tools that checked the MD5 hash, such as Azure Data Explorer or Polybase, failed. This issue now has been fixed. 
 
- 2. **CREATE TYPE is fixed**
+NOTE: The Local execition account "(local)" is still only available in in Server Explorer. Soon, it will also be available in Cloud Explorer.
 
-   U-SQL allows the creation of table types to be used in U-SQL function and procedure signatures. In this release, some meta data catalog issues have been fixed so the type should be usable. Example: 
+# U-SQL BUG FIXES
+
+## **MD5 Hash for WASB files is fixed**
+
+Previously, when writing a file to WASB locations, the MD5 hash has was not set correctly and tools that checked the MD5 hash, such as Azure Data Explorer or Polybase, failed. This issue now has been fixed. 
+
+## **CREATE TYPE is fixed**
+
+U-SQL allows the creation of table types to be used in U-SQL function and procedure signatures. In this release, some meta data catalog issues have been fixed so the type should be usable. Example: 
  
-        CREATE TYPE IF NOT EXISTS MyTableType AS TABLE (id int, data string); 
-        CREATE FUNCTION IF NOT EXISTS MyTVF(@t MyTableType) RETURNS @r 
-        AS
-        BEGIN
-          @r = SELECT * FROM @t;
-        END;
+    CREATE TYPE IF NOT EXISTS MyTableType AS TABLE (id int, data string); 
+
+    CREATE FUNCTION IF NOT EXISTS MyTVF(@t MyTableType) RETURNS @r 
+    AS
+    BEGIN
+        @r = SELECT * FROM @t;
+    END;
         
