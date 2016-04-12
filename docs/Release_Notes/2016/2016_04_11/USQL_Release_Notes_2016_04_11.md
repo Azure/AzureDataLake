@@ -28,7 +28,7 @@ When you run a U-SQL script locally, you can now view the results in the output 
 
 ADL Analytics & Store accounts are now visible in Cloud Explorer along with your other Azure resources.
 
-NOTE: The Local execition account "(local)" is still only available in in Server Explorer. Soon, it will also be available in Cloud Explorer.
+NOTE: The Local execution account "(local)" is still only available in in Server Explorer. Soon, it will also be available in Cloud Explorer.
 
 ## U-SQL Big Fixes
 
