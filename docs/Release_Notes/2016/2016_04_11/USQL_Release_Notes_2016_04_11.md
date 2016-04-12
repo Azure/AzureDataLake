@@ -24,14 +24,13 @@ Now U-SQL scripts can run in parallel locally. You can specify the degree of par
 
 When you run a U-SQL script lovall, you can now view the results in the output window by double clicking it.
 
-### Cloud Explorar new shows ADL Store & Analytics accounts.
+### Cloud Explorer new shows ADL Store & Analytics accounts.
 
 ADL Analytics & Store accounts are now visible in Cloud Explorer along with your other Azure resources.
 
-
 NOTE: The Local execition account "(local)" is still only available in in Server Explorer. Soon, it will also be available in Cloud Explorer.
 
-## U-SQL BUG FIXES
+## U-SQL Big Fixes
 
 ### **MD5 Hash for WASB files is fixed**
 
