@@ -22,7 +22,7 @@ Now U-SQL scripts can run in parallel locally. You can specify the degree of par
 
 ### Viewing the outputs of U-SQL Local Execution
 
-When you run a U-SQL script lovall, you can now view the results in the output window by double clicking it.
+When you run a U-SQL script locally, you can now view the results in the output window by double clicking it.
 
 ### Cloud Explorer new shows ADL Store & Analytics accounts.
 
