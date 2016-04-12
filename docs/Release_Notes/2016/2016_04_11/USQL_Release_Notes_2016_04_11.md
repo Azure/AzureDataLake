@@ -1,4 +1,3 @@
-
 # Azure Data Lake > U-SQL Release Notes 2016-04-11
 --------------------------
 
@@ -6,9 +5,24 @@
  
 No known breaking changes.
 
-## NEW FEATURES
+## AZURE DATA LAKE TOOLS FOR VISUAL STUDIO UPDATE
+ 1. **Hiding "Data Lake" top menu by default**
+
+    As Azure Data Lake Tools for Visual Studio is now shipping together with [Azure SDK](https://azure.microsoft.com/en-us/documentation/articles/azure-sdk-dotnet-release-notes-2-9/), which is the central place for .NET developers for Azure development, we decided to hide the "Data Lake" menu by default to not disturb users.
+
+    The menu will still appear when you click any U-SQL or Data Lake Analytics features, such as viewing the jobs, creating a U-SQL project, etc. 
  
-No new features. Several new language features are in the pipeline though.
+ 2. **Improvements for U-SQL local run**
+
+    We have made several improvements for U-SQL local run, including:
+    - Now U-SQL scripts can run in parallel locally - you can specify the degree of parallelism in Data Lake > Options and Settings
+    - U-SQL local run output view: you can now view the U-SQL results in the output window by double clicking it.
+
+ 3. **Cloud Explorer Integration for Data Lake Analytics and Data Lake Store**
+   
+    We have integrated Data Lake Analytics and Data Lake Store in Cloud Explorer and you can easily navigate all your Azure resources there.
+
+    Note: Local run account (local) is still in Server Explorer and we will migrate that part soon.
 
 ## MAJOR BUG FIXES
 
@@ -27,10 +41,3 @@ No new features. Several new language features are in the pipeline though.
           @r = SELECT * FROM @t;
         END;
         
-
-
-
- 
-
-
-
