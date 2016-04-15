@@ -45,7 +45,7 @@ In this section you will open Visual Studio and use Azure Data Lake Tools for Vi
 1. Open Visual Studio and log into your account.
     - On the **File** menu, open **Account Settings**
 	  ![Account Settings](/docs/Hands_on_Labs/Images/AccountSettings.jpg)
-	- Under **All Accounts** select **Add an account...** and enter the account information needed to access your ADLA account.
+	- Under **All Accounts** select **Sign in** and enter the account information needed to access your ADLA account.
 	  ![Account Sign In](/docs/Hands_on_Labs/Images/SignInAccount.jpg)
 2. Create a new U-SQL project.
 
@@ -56,7 +56,7 @@ In this section you will open Visual Studio and use Azure Data Lake Tools for Vi
 	  ![Create Project](/docs/Hands_on_Labs/Images/CreateProject.jpg)
     - In the **Name** box, give your project a name and then click **OK**.
 
-	You should now have an empty **Script.usql** window open that you will use to create, edit, and submit your U-SQL scripts.
+	This may take a bit of time. Once the project is completed, you should now have an empty **Script.usql** window open that you will use to create, edit, and submit your U-SQL scripts.
 
 4. Set the target account to your Azure Data Lake Analytics account (in the example I am using an account named **adlhol**):
 ![Setting the Account](/docs/Hands_on_Labs/Images/SetAccount.jpg)
