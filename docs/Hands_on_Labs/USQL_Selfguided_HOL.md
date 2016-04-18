@@ -533,7 +533,7 @@ When you work with joins in U-SQL, note that:
 - U-SQL only supports the ANSI-compliant JOIN syntax (*Rowset1* JOIN *Rowset2* ON *predicate*). The older syntax (FROM *Rowset1*, *Rowset2* WHERE *predicate*) is not supported.
 - The predicate in a JOIN has to be an equality join and no expression. If you want to use an expression, add it to the SELECT clause of a previous rowset. If you want to do a different comparison, you can move it into the WHERE clause.
 
-# Conclusion
+# Conclusion and more Information
 
 This lab has hopefully given you a small taste of U-SQL. As you would expect, there are many more advanced features that an introductory lab cannot cover, such as:
 -	How to use CROSS APPLY to unpack parts of strings, arrays and maps into rows.
@@ -543,5 +543,12 @@ This lab has hopefully given you a small taste of U-SQL. As you would expect, th
 -	How to further manage your U-SQL code with views, table-valued functions and stored procedures.
 -	How to run arbitrary custom code on your processing nodes.
 -	How to connect to SQL Azure databases and federate queries across SQL Azure, U-SQL, and Azure Data Lake data.
+
+You can find further references and documentation at the following locations:
+
+- [Data Lake homepage (with links to documentation)](http://www.azure.com/datalake)
+- [U-SQL Reference documentation](http://aka.ms/usql_reference)
+- [ADL Tools for VS download page](http://aka.ms/adltoolsVS)
+- [Data Lake feedback page](http://aka.ms/adlfeedback)
 
 We hope you come back and use Azure Data Lake Analytics and U-SQL for your Big Data processing needs!
