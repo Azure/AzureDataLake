@@ -5,11 +5,11 @@
  
 None.
 
-## U-SQL Bug Fixes
+## Major U-SQL Bug Fixes
 
 #### MD5 Hash for WASB files is now correctly written
 
-Previously, when writing a file to WASB locations, the MD5 hash has was not set correctly. Tools that checked the MD5 hash, such as Azure Data Explorer or Polybase, failed. The MD5 hash is now correctly set.
+Previously, when writing a file to WASB locations, the MD5 hash was not set correctly. Tools that checked the MD5 hash, such as Azure Data Explorer or Polybase, failed. The MD5 hash is now correctly set.
 
 #### CREATE TYPE is fixed
 
