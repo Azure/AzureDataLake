@@ -29,3 +29,9 @@ entire account - those numbers are calculated in a background processes that run
 can be out-of-date for almost 24 hours. In the future we intend to increase the frequency of this calculation so that
 it is no more than 6 hours out of date.
 
+### Q: What level of Geo-Replication (aka Geo-redundancy) is available in Data Lake Store?
+
+With geo-replication  data will be stored in two regions hundreds of miles apart.  This will increase data durability in case of a major data center disaster.  
+
+Geo-Replication is on the roadmap for Data Lake Store but will come sometime after the General Availability of Data Lake Store.
+
