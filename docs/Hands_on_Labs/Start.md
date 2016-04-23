@@ -4,32 +4,55 @@
 
 All the hands-on-lab documents, including this one, are located at http://aka.ms/AzureDataLakeHandsOnLabs.
 
-## How the labs work
 
-The Azure Data Lake hands-on labs require you to have various Azure services provisioned. Some labs require a single service, while others require three or four. 
+## Preparing for the Labs
 
-To simplify this process, and to ensure that it will not cost you any money, we have created a website that grants you guest access to the required services for a 48-hour period.
+The Azure Data Lake hands-on labs require you to have various Azure services provisioned. Some labs require a single service, while others require three or four.
 
-# Getting your Azure services for the hands-on lab 
+## Full List of Azure Services need to Complete all the Hands-On-Labs
 
-Go to this website: URL WILL BE MADE AVAILABLE NEXT WEEK
+* Azure Data Lake Store.
+* Azure Data Lake Analytics.
+* Azure Data Lake Storage Account
+* Azure Data Factory
 
-You will be given access to a set of Azure services that you can use for 48 hours.
+## Manual Steps for Creating the Required Services in the Azure Portal
+Below are the manual steps required to create the services from within the portal
 
-Once your 48 hours have elapsed, you will not be able to use those services. However, you can return to the website and request access to the services for another 48-hour period.
+Before you begin:
 
-# Which services will be provisioned for me?
+* Pick an Azure subscription you want to use. All the services you create should be in the same subscription
+* Pick a region to use. All the Azure Data Lake services should be in the same service. The Azure Data Factory account can be in the same region – but it is not necessary at all
+* You can choose any Azure Resource Group that you want. It won’t affect the how the labs are done.
 
-The website will provision:
-- An Azure Data Lake Store.
-- An Azure Data Lake Analytics Service.
-- An Azure Data Lake Storage account (shared among all the users).
-- An Azure Data Factory account.
+### Step 1: Login to the Azure portal 
 
-# What username and password do I use?
+Go to http://azure.portal.com 
 
-The website will tell you how to authenticate.
+### Step 2: Create Azure Data Lake Analytics & Store accounts
+* Click New > Data + Analytics > Data Lake Analytics
+* Select a Name for the account such as “contosoadla”
+* Select the Subscription, Resource Group, and Location you want to use
+* Click Data Lake Store
+* Click Create a New Data Lake Store 
+* The Name of the Store will already be filled in, but you can change it so if you want to something like “contosoadls”
+* Click OK
+* Enable Pin to Dashboard
+* Click Create
 
-If you are a Microsoft employee, you will use your Microsoft credentials.
+### Step 3: Create a Windows Storage Account
+* Click New > Data + Storage > Storage Account
+* Select a Name for the account such as “contosowasb”
+* Select the Subscription, Resource Group, and Location you want to use
+* Enable Pin to Dashboard
+* Click Create
 
-If you are not a Microsoft employee, a temporary username and password will be assigned to you. That username and password will only work for 48 hours.
+### Step 3: Create a Azure Data Factory Account
+
+* Click New > Data + Analytics > Data Factory
+* Select a Name for the account such as “contosoadf”
+* Select the Subscription, Resource Group, and Location you want to use
+* Enable Pin to Dashboard
+* Click Create
+
+
