@@ -25,6 +25,13 @@ List of Azure Services need to Complete all the Hands-On-Labs
 
 -   Azure Data Factory
 
+IMPORTANT: If you are a Microsoft Employee you MUST read this Section
+-------------------------------------------------------------
+If you are trying to learn about data lake as part of a Microsof training course, then have a dedicated training environment setup for you. 
+
+Please go to: https://microsoft.sharepoint.com/teams/AzureDataLake/SitePages/TrainingAccounts.aspx
+
+
 Manual Steps for Creating the Required Services in the Azure Portal
 -------------------------------------------------------------------
 
