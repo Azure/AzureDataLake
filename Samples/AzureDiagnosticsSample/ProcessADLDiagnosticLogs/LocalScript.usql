@@ -1,17 +1,6 @@
-﻿USE Diagnostics;
-
-REFERENCE ASSEMBLY [AzureDiagnostics];
-REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
+﻿REFERENCE ASSEMBLY AzureDiagnostics;
+REFERENCE ASSEMBLY AzureDiagnosticsExtractors;
 REFERENCE ASSEMBLY [Newtonsoft.Json];
-
-DECLARE @subscription string = "d66b1168-d835-4066-8c45-7d2ed713c082".ToUpper();
-DECLARE @resource_group string = "bigdatasandbox".ToUpper();
-DECLARE @adla_account_name string = "sandbox".ToUpper();
-DECLARE @adls_account_name string = "sandboxadl".ToUpper();
-DECLARE @wasb_account = "wasb://insights-logs-audit@sandboxazurestorage";
-
-DECLARE @adla_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group  + "/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/" + @adla_account_name + "/y=2016/m=04/d=22/h=08/m=00/PT1H.json";
-DECLARE @adls_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group  + "/PROVIDERS/MICROSOFT.DATALAKESTORE/ACCOUNTS/" + @adls_account_name + "/y=2016/m=04/d=22/h=08/m=00/PT1H.json";
 
 @adls_rows =
     EXTRACT Time DateTime,
@@ -23,7 +12,7 @@ DECLARE @adls_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @sub
             CorrelationId string,
             Identity string,
             ADLS_StreamName string
-    FROM @adls_path
+    FROM @"/Input/ADLS_PT1H.json"
     USING new AzureDiagnosticsExtractors.DataLakeStoreExtractor();
 
 @adla_rows =
@@ -42,7 +31,7 @@ DECLARE @adls_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @sub
             ADLA_SubmitTime DateTime?,
             ADLA_EndTime DateTime?
             
-    FROM @adla_path 
+    FROM @"/Input/ADLA_PT1H.json"
     USING new AzureDiagnosticsExtractors.DataLakeAnalyticsExtractor();
 
 OUTPUT @adls_rows

@@ -22,12 +22,29 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Script Include="Script.usql">
-      <UseLocalComputeAccount>true</UseLocalComputeAccount>
+    <Script Include="LocalScript.usql" />
+    <Script Include="CreateDiagnosticsDB.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
       <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>sandbox</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
     </Script>
+    <Script Include="Script.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>sandbox</ClusterComputeAccount>
+    </Script>
+    <ScriptCode Include="LocalScript.usql.cs">
+      <DependentUpon>LocalScript.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="CreateDiagnosticsDB.usql.cs">
+      <DependentUpon>CreateDiagnosticsDB.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="Script.usql.cs">
       <DependentUpon>Script.usql</DependentUpon>
     </ScriptCode>
