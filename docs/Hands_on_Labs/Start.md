@@ -40,6 +40,11 @@ portal
 
 ### Before you begin:
 
+-   Keep in mind that Azure Data Lake Store & Azure Data Lake Analytics are 
+    currently in PUBLIC PREVIEW. This means that when you first try to create
+    an ADLS or ADLA account, that you subscription needs to be approved by 
+    Microsoft. This process is automatic and usually occurs within 24 hours
+
 -   Pick an Azure subscription you want to use. All the services you create
     should be in the same subscription
 
