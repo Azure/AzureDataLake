@@ -13,11 +13,10 @@ Getting started
 Prerequisites
 -------------
 
-Before you can start the lab exercises, you will need various Azure services
-provisioned for you. Follow the instructions here: [Start](Start.md).
+Before you can start the lab exercises, you will need several Azure services
+created. Follow the instructions here: [Start](Start.md)
 
-This process only takes a few minutes. Once your services are configured you can
-proceed with the lab.
+ 
 
 Important information
 ---------------------
@@ -139,8 +138,15 @@ Explorer and look under **/Data/Samples**. You should see a file named
 Link services to your ADF account
 ---------------------------------
 
-In this section, you will link your ADF account to three services: - Azure Data
-Lake Analytics - Azure Data Lake Store - Azure Blob Store
+In this section, you will link your ADF account to three services:
+
+-   Azure Data Lake Analytics
+
+-   Azure Data Lake Store
+
+-   Azure Storage Account
+
+ 
 
 To get started, browse to http://portal.azure.com, open your ADF account, and
 click **Author and Deploy**.
@@ -355,14 +361,14 @@ minutes.
 
 3.  Review the JSON you just added, and then click **Deploy**.
 
-Excercise 3: Monitor the Pipeline
-=================================
+Exercise 3: Monitor the Pipeline
+================================
 
 In this exercise, you will monitor the activity of the ADF pipeline you just
 created.
 
-1.  In the ADF portal, review the output dataset. You should now see the outputs
-    being constructed.
+1.  In the Azure Data Factory portal, review the output dataset. You should now
+    see the outputs being constructed.
 
 2.  Browse to your ADL Analytics account. You should see that jobs are being
     executed under the name **MyPipeline**.
