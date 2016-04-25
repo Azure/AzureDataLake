@@ -1,0 +1,45 @@
+﻿REFERENCE ASSEMBLY AzureDiagnostics;
+REFERENCE ASSEMBLY AzureDiagnosticsExtractors;
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+
+@adls_rows =
+    EXTRACT Time DateTime,
+            ResourceId string,
+            Category string,
+            OperationName string,
+            ResultType string,
+            ResultSignature string,
+            CorrelationId string,
+            Identity string,
+            ADLS_StreamName string
+    FROM @"/Input/ADLS_PT1H.json"
+    USING new AzureDiagnosticsExtractors.DataLakeStoreExtractor();
+
+@adla_rows =
+    EXTRACT Time DateTime,
+            ResourceId string,
+            Category string,
+            OperationName string,
+            ResultType string,
+            ResultSignature string,
+            CorrelationId string,
+            Identity string,
+            ADLA_JobId string,
+            ADLA_JobName string,
+            ADLA_JobRuntimeName string,
+            ADLA_StartTime DateTime?,
+            ADLA_SubmitTime DateTime?,
+            ADLA_EndTime DateTime?
+            
+    FROM @"/Input/ADLA_PT1H.json"
+    USING new AzureDiagnosticsExtractors.DataLakeAnalyticsExtractor();
+
+OUTPUT @adls_rows
+TO
+@"/Output/adls_out.csv"
+USING Outputters.Csv();
+
+OUTPUT @adla_rows
+TO
+@"/Output/adla_out.csv"
+USING Outputters.Csv();

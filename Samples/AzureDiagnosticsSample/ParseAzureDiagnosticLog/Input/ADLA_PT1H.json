@@ -1,0 +1,64 @@
+{
+	"records": 
+	[
+		
+		{
+			 "time": "2016-04-19T22:22:10.518Z",
+			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+			 "category": "Audit",
+			 "operationName": "JobStarted",
+			 "identity": "zhictan@microsoft.com",
+			 "properties": {"JobId":"FE5B7925-1722-4297-A4D8-565C355F834A","JobName":"Query a TSV file ","JobRuntimeName":"","StartTime":"4/19/2016 10:22:10 PM"}
+		}
+		,
+		{
+			 "time": "2016-04-19T22:22:55.128Z",
+			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+			 "category": "Audit",
+			 "operationName": "JobStarted",
+			 "identity": "zhictan@microsoft.com",
+			 "properties": {"JobId":"5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F","JobName":"Query a TSV file","JobRuntimeName":"","StartTime":"4/19/2016 10:22:55 PM"}
+		}
+		,
+		{
+			 "time": "2016-04-19T22:21:11.705Z",
+			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+			 "category": "Audit",
+			 "operationName": "JobSubmitted",
+			 "identity": "zhictan@microsoft.com",
+			 "properties": {"JobId":"FE5B7925-1722-4297-A4D8-565C355F834A","JobName":"Query a TSV file ","JobRuntimeName":"default","SubmitTime":"4/19/2016 10:21:10 PM"}
+		}
+		,
+		{
+			 "time": "2016-04-19T22:22:15.924Z",
+			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+			 "category": "Audit",
+			 "operationName": "JobSubmitted",
+			 "identity": "zhictan@microsoft.com",
+			 "properties": {"JobId":"5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F","JobName":"Query a TSV file","JobRuntimeName":"default","SubmitTime":"4/19/2016 10:22:15 PM"}
+		}
+		,
+		{
+			 "time": "2016-04-19T22:23:14.332Z",
+			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+			 "category": "Audit",
+			 "operationName": "JobEnded",
+			 "resultType": "CompletedSuccess",
+			 "resultSignature": "Succeeded",
+			 "identity": "zhictan@microsoft.com",
+			 "properties": {"JobId":"FE5B7925-1722-4297-A4D8-565C355F834A","JobName":"Query a TSV file ","JobRuntimeName":"kobo_vnext_4836194","SubmitTime":"4/19/2016 10:21:10 PM","StartTime":"4/19/2016 10:22:10 PM","EndTime":"4/19/2016 10:23:14 PM","Parallelism":"1"}
+		}
+		,
+		{
+			 "time": "2016-04-19T22:24:18.176Z",
+			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+			 "category": "Audit",
+			 "operationName": "JobEnded",
+			 "resultType": "CompletedSuccess",
+			 "resultSignature": "Succeeded",
+			 "identity": "zhictan@microsoft.com",
+			 "properties": {"JobId":"5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F","JobName":"Query a TSV file","JobRuntimeName":"kobo_vnext_4836194","SubmitTime":"4/19/2016 10:22:15 PM","StartTime":"4/19/2016 10:22:55 PM","EndTime":"4/19/2016 10:24:18 PM","Parallelism":"1"}
+		}
+
+	]
+}
