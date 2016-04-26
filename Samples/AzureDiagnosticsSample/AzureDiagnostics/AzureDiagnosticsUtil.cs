@@ -72,8 +72,14 @@ namespace AzureDiagnostics
         public static System.DateTimeOffset? GetDateTimeOffsetNullable(this Newtonsoft.Json.Linq.JObject jo, string name)
         {
             string s = jo.GetString(name, null);
+           
             if (s!=null)
             {
+                if (string.IsNullOrWhiteSpace(s))
+                {
+                    return null;
+                }
+
                 return System.DateTimeOffset.Parse(s);
             }
             return null;

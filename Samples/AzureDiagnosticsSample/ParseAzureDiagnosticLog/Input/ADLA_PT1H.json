@@ -1,64 +1,346 @@
 {
-	"records": 
-	[
-		
-		{
-			 "time": "2016-04-19T22:22:10.518Z",
-			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
-			 "category": "Audit",
-			 "operationName": "JobStarted",
-			 "identity": "zhictan@microsoft.com",
-			 "properties": {"JobId":"FE5B7925-1722-4297-A4D8-565C355F834A","JobName":"Query a TSV file ","JobRuntimeName":"","StartTime":"4/19/2016 10:22:10 PM"}
-		}
-		,
-		{
-			 "time": "2016-04-19T22:22:55.128Z",
-			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
-			 "category": "Audit",
-			 "operationName": "JobStarted",
-			 "identity": "zhictan@microsoft.com",
-			 "properties": {"JobId":"5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F","JobName":"Query a TSV file","JobRuntimeName":"","StartTime":"4/19/2016 10:22:55 PM"}
-		}
-		,
-		{
-			 "time": "2016-04-19T22:21:11.705Z",
-			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
-			 "category": "Audit",
-			 "operationName": "JobSubmitted",
-			 "identity": "zhictan@microsoft.com",
-			 "properties": {"JobId":"FE5B7925-1722-4297-A4D8-565C355F834A","JobName":"Query a TSV file ","JobRuntimeName":"default","SubmitTime":"4/19/2016 10:21:10 PM"}
-		}
-		,
-		{
-			 "time": "2016-04-19T22:22:15.924Z",
-			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
-			 "category": "Audit",
-			 "operationName": "JobSubmitted",
-			 "identity": "zhictan@microsoft.com",
-			 "properties": {"JobId":"5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F","JobName":"Query a TSV file","JobRuntimeName":"default","SubmitTime":"4/19/2016 10:22:15 PM"}
-		}
-		,
-		{
-			 "time": "2016-04-19T22:23:14.332Z",
-			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
-			 "category": "Audit",
-			 "operationName": "JobEnded",
-			 "resultType": "CompletedSuccess",
-			 "resultSignature": "Succeeded",
-			 "identity": "zhictan@microsoft.com",
-			 "properties": {"JobId":"FE5B7925-1722-4297-A4D8-565C355F834A","JobName":"Query a TSV file ","JobRuntimeName":"kobo_vnext_4836194","SubmitTime":"4/19/2016 10:21:10 PM","StartTime":"4/19/2016 10:22:10 PM","EndTime":"4/19/2016 10:23:14 PM","Parallelism":"1"}
-		}
-		,
-		{
-			 "time": "2016-04-19T22:24:18.176Z",
-			 "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
-			 "category": "Audit",
-			 "operationName": "JobEnded",
-			 "resultType": "CompletedSuccess",
-			 "resultSignature": "Succeeded",
-			 "identity": "zhictan@microsoft.com",
-			 "properties": {"JobId":"5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F","JobName":"Query a TSV file","JobRuntimeName":"kobo_vnext_4836194","SubmitTime":"4/19/2016 10:22:15 PM","StartTime":"4/19/2016 10:22:55 PM","EndTime":"4/19/2016 10:24:18 PM","Parallelism":"1"}
-		}
+  "records": [
 
-	]
+    {
+      "time": "2016-04-19T22:22:10.518Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobStarted",
+      "identity": "zhictan@microsoft.com",
+      "properties": {
+        "JobId": "FE5B7925-1722-4297-A4D8-565C355F834A",
+        "JobName": "Query a TSV file ",
+        "JobRuntimeName": "",
+        "StartTime": "4/19/2016 10:22:10 PM"
+      }
+    },
+    {
+      "time": "2016-04-19T22:22:55.128Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobStarted",
+      "identity": "zhictan@microsoft.com",
+      "properties": {
+        "JobId": "5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F",
+        "JobName": "Query a TSV file",
+        "JobRuntimeName": "",
+        "StartTime": "4/19/2016 10:22:55 PM"
+      }
+    },
+    {
+      "time": "2016-04-19T22:21:11.705Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "zhictan@microsoft.com",
+      "properties": {
+        "JobId": "FE5B7925-1722-4297-A4D8-565C355F834A",
+        "JobName": "Query a TSV file ",
+        "JobRuntimeName": "default",
+        "SubmitTime": "4/19/2016 10:21:10 PM"
+      }
+    },
+    {
+      "time": "2016-04-19T22:22:15.924Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "zhictan@microsoft.com",
+      "properties": {
+        "JobId": "5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F",
+        "JobName": "Query a TSV file",
+        "JobRuntimeName": "default",
+        "SubmitTime": "4/19/2016 10:22:15 PM"
+      }
+    },
+    {
+      "time": "2016-04-19T22:23:14.332Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedSuccess",
+      "resultSignature": "Succeeded",
+      "identity": "zhictan@microsoft.com",
+      "properties": {
+        "JobId": "FE5B7925-1722-4297-A4D8-565C355F834A",
+        "JobName": "Query a TSV file ",
+        "JobRuntimeName": "kobo_vnext_4836194",
+        "SubmitTime": "4/19/2016 10:21:10 PM",
+        "StartTime": "4/19/2016 10:22:10 PM",
+        "EndTime": "4/19/2016 10:23:14 PM",
+        "Parallelism": "1"
+      }
+    },
+    {
+      "time": "2016-04-19T22:24:18.176Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedSuccess",
+      "resultSignature": "Succeeded",
+      "identity": "zhictan@microsoft.com",
+      "properties": {
+        "JobId": "5F1008C3-9DCF-4CA2-ACC2-21C9C9839A9F",
+        "JobName": "Query a TSV file",
+        "JobRuntimeName": "kobo_vnext_4836194",
+        "SubmitTime": "4/19/2016 10:22:15 PM",
+        "StartTime": "4/19/2016 10:22:55 PM",
+        "EndTime": "4/19/2016 10:24:18 PM",
+        "Parallelism": "1"
+      }
+    },
+    {
+      "time": "2016-04-20T01:01:47.445Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobStarted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "495D187C-457D-415A-AE17-911D6058AD60",
+        "JobName": "Script",
+        "JobRuntimeName": "",
+        "StartTime": "4/20/2016 1:01:47 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:03:02.680Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedFailure",
+      "resultSignature": "ExecutionFailed",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "495D187C-457D-415A-AE17-911D6058AD60",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:00:38 AM",
+        "StartTime": "4/20/2016 1:01:47 AM",
+        "EndTime": "4/20/2016 1:03:02 AM",
+        "Parallelism": "7"
+      }
+    },
+    {
+      "time": "2016-04-20T01:00:39.412Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "495D187C-457D-415A-AE17-911D6058AD60",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:00:38 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:12:57.081Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedFailure",
+      "resultSignature": "ExecutionFailed",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "37FA0894-EC2C-4E86-84CB-B428CBBE62CE",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:11:03 AM",
+        "StartTime": "4/20/2016 1:11:54 AM",
+        "EndTime": "4/20/2016 1:12:57 AM",
+        "Parallelism": "7"
+      }
+    },
+    {
+      "time": "2016-04-20T01:20:39.886Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedFailure",
+      "resultSignature": "ExecutionFailed",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "401E24B3-44DE-4631-A489-A91F3CA2B7E6",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:18:35 AM",
+        "StartTime": "4/20/2016 1:19:24 AM",
+        "EndTime": "4/20/2016 1:20:39 AM",
+        "Parallelism": "7"
+      }
+    },
+    {
+      "time": "2016-04-20T01:11:06.861Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "37FA0894-EC2C-4E86-84CB-B428CBBE62CE",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:11:03 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:18:36.899Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "401E24B3-44DE-4631-A489-A91F3CA2B7E6",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:18:35 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:11:54.893Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobStarted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "37FA0894-EC2C-4E86-84CB-B428CBBE62CE",
+        "JobName": "Script",
+        "JobRuntimeName": "",
+        "StartTime": "4/20/2016 1:11:54 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:19:24.119Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobStarted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "401E24B3-44DE-4631-A489-A91F3CA2B7E6",
+        "JobName": "Script",
+        "JobRuntimeName": "",
+        "StartTime": "4/20/2016 1:19:24 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:22:57.795Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedFailure",
+      "resultSignature": "CompilationFailed",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "7E8F562A-1610-433A-BD6A-13E5FAC7308E",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:22:44 AM",
+        "StartTime": "",
+        "EndTime": "4/20/2016 1:22:57 AM",
+        "Parallelism": "7"
+      }
+    },
+    {
+      "time": "2016-04-20T01:33:11.524Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedFailure",
+      "resultSignature": "ExecutionFailed",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "128A67A8-C136-4016-A828-99C71AB5687B",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:31:18 AM",
+        "StartTime": "4/20/2016 1:32:05 AM",
+        "EndTime": "4/20/2016 1:33:11 AM",
+        "Parallelism": "7"
+      }
+    },
+    {
+      "time": "2016-04-20T01:22:46.310Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "7E8F562A-1610-433A-BD6A-13E5FAC7308E",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:22:44 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:31:19.694Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "128A67A8-C136-4016-A828-99C71AB5687B",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:31:18 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:32:05.804Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobStarted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "128A67A8-C136-4016-A828-99C71AB5687B",
+        "JobName": "Script",
+        "JobRuntimeName": "",
+        "StartTime": "4/20/2016 1:32:05 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:44:43.879Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobStarted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "DEE4FC34-332E-4868-8859-C7FCD3D4DEF9",
+        "JobName": "Script",
+        "JobRuntimeName": "",
+        "StartTime": "4/20/2016 1:44:43 AM"
+      }
+    },
+    {
+      "time": "2016-04-20T01:45:56.209Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobEnded",
+      "resultType": "CompletedFailure",
+      "resultSignature": "ExecutionFailed",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "DEE4FC34-332E-4868-8859-C7FCD3D4DEF9",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:43:29 AM",
+        "StartTime": "4/20/2016 1:44:43 AM",
+        "EndTime": "4/20/2016 1:45:56 AM",
+        "Parallelism": "7"
+      }
+    },
+    {
+      "time": "2016-04-20T01:43:30.331Z",
+      "resourceId": "/SUBSCRIPTIONS/D66B1168-D835-4066-8C45-7D2ED713C082/RESOURCEGROUPS/BIGDATASANDBOX/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/SANDBOX",
+      "category": "Audit",
+      "operationName": "JobSubmitted",
+      "identity": "jameliu@microsoft.com",
+      "properties": {
+        "JobId": "DEE4FC34-332E-4868-8859-C7FCD3D4DEF9",
+        "JobName": "Script",
+        "JobRuntimeName": "jmrecordboundaryfixs6",
+        "SubmitTime": "4/20/2016 1:43:29 AM"
+      }
+    }
+
+
+  ]
 }
