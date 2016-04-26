@@ -1,4 +1,52 @@
-﻿USE Diagnostics;
+﻿
+USE Diagnostics;
+
+REFERENCE ASSEMBLY [AzureDiagnostics];
+REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+
+DECLARE @start_date string = "2016-04-20";
+DECLARE @end_date string = "2016-04-21";
+
+DECLARE @subscription string = "d66b1168-d835-4066-8c45-7d2ed713c082".ToUpper();
+DECLARE @resource_group string = "bigdatasandbox".ToUpper();
+DECLARE @adla_account_name string = "sandbox".ToUpper();
+DECLARE @adls_account_name string = "sandboxadl".ToUpper();
+DECLARE @wasb_account = "wasb://insights-logs-audit@sandboxazurestorage";
+
+@adla_rows = SELECT * FROM GetDataLakeAnalyticsRecords
+    (
+        @start_date ,
+        @end_date ,
+        @subscription,
+        @resource_group,
+        @adla_account_name,
+        @wasb_account    
+    ) AS T;
+
+@adls_rows = SELECT * FROM GetDataLakeStoreRecords
+    (
+        @start_date ,
+        @end_date ,
+        @subscription,
+        @resource_group,
+        @adla_account_name,
+        @wasb_account    
+    ) AS T;
+
+OUTPUT @adls_rows
+TO
+@"/Output/adls_out2.csv"
+USING Outputters.Csv();
+
+OUTPUT @adla_rows
+TO
+@"/Output/adla_out2.csv"
+USING Outputters.Csv();
+
+
+
+USE Diagnostics;
 
 REFERENCE ASSEMBLY [AzureDiagnostics];
 REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
@@ -32,32 +80,8 @@ DECLARE @end_date string = "2016-04-21";
     USING new AzureDiagnosticsExtractors.DataLakeStoreExtractor();
 
 @adls_rows =
-    SELECT *
+    EXTRACT *
     FROM @adls_rows
-    WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
-@adla_rows =
-    EXTRACT LogDate DateTime,
-            Time DateTime,
-            ResourceId string,
-            Category string,
-            OperationName string,
-            ResultType string,
-            ResultSignature string,
-            CorrelationId string,
-            Identity string,
-            ADLA_JobId string,
-            ADLA_JobName string,
-            ADLA_JobRuntimeName string,
-            ADLA_StartTime DateTime?,
-            ADLA_SubmitTime DateTime?,
-            ADLA_EndTime DateTime?
-            
-    FROM @adla_path 
-    USING new AzureDiagnosticsExtractors.DataLakeAnalyticsExtractor();
-
-@adla_rows = 
-    SELECT * 
-    FROM @adla_rows
     WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
 
 OUTPUT @adls_rows

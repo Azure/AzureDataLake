@@ -3,9 +3,9 @@
 
 
 
-DROP FUNCTION IF EXISTS GetDataLakeStoreRecords;
+DROP FUNCTION IF EXISTS Diagnostics.dbo.GetDataLakeStoreRecords;
 
-CREATE FUNCTION GetDataLakeStoreRecords(
+CREATE FUNCTION Diagnostics.dbo.GetDataLakeStoreRecords(
     @start_date string, 
     @end_date string,
     @subscription string ,
@@ -13,54 +13,43 @@ CREATE FUNCTION GetDataLakeStoreRecords(
     @adls_account_name string,
     @wasb_account string
     )
-RETURNS @rows TABLE (
-LogDate DateTime,
-            Time DateTime,
-            ResourceId string,
-            Category string,
-            OperationName string,
-            ResultType string,
-            ResultSignature string,
-            CorrelationId string,
-            Identity string,
-            ADLS_StreamName string
-     )
+RETURNS @rows 
 AS
 BEGIN
     
     USE Diagnostics;
 
-REFERENCE ASSEMBLY [AzureDiagnostics];
-REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
-REFERENCE ASSEMBLY [Newtonsoft.Json];
+    REFERENCE ASSEMBLY [AzureDiagnostics];
+    REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
+    REFERENCE ASSEMBLY [Newtonsoft.Json];
     
     DECLARE @adls_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group + "/PROVIDERS/MICROSOFT.DATALAKESTORE/ACCOUNTS/" + @adls_account_name + "/y={LogDate:yyyy}/m={LogDate:MM}/d={LogDate:dd}/h={LogDate:hh}/m={LogDate:mm}/PT1H.json";
 
-@rows =
-    EXTRACT LogDate DateTime,
-            Time DateTime,
-            ResourceId string,
-            Category string,
-            OperationName string,
-            ResultType string,
-            ResultSignature string,
-            CorrelationId string,
-            Identity string,
-            ADLS_StreamName string
-    FROM @adls_path 
-    USING new AzureDiagnosticsExtractors.DataLakeStoreExtractor();
+    @rows =
+        EXTRACT LogDate DateTime,
+                Time DateTime,
+                ResourceId string,
+                Category string,
+                OperationName string,
+                ResultType string,
+                ResultSignature string,
+                CorrelationId string,
+                Identity string,
+                ADLS_StreamName string
+        FROM @adls_path 
+        USING new AzureDiagnosticsExtractors.DataLakeStoreExtractor();
 
-@rows =
-    SELECT *
-    FROM @rows
-    WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
+    @rows =
+        SELECT *
+        FROM @rows
+        WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
     
 END;
 
 
-DROP FUNCTION IF EXISTS GetDataLakeAnalyticsRecords;
+DROP FUNCTION IF EXISTS Diagnostics.dbo.GetDataLakeAnalyticsRecords;
 
-CREATE FUNCTION GetDataLakeAnalyticsRecords(
+CREATE FUNCTION Diagnostics.dbo.GetDataLakeAnalyticsRecords(
     @start_date string, 
     @end_date string,
     @subscription string ,
@@ -68,59 +57,43 @@ CREATE FUNCTION GetDataLakeAnalyticsRecords(
     @adla_account_name string,
     @wasb_account string
     )
-RETURNS @rows TABLE (
-LogDate DateTime,
-            Time DateTime,
-            ResourceId string,
-            Category string,
-            OperationName string,
-            ResultType string,
-            ResultSignature string,
-            CorrelationId string,
-            Identity string,
-            ADLA_JobId string,
-            ADLA_JobName string,
-            ADLA_JobRuntimeName string,
-            ADLA_StartTime DateTime?,
-            ADLA_SubmitTime DateTime?,
-            ADLA_EndTime DateTime?
-     )
+RETURNS @rows 
 AS
 BEGIN
 
-USE Diagnostics;
+    USE Diagnostics;
 
-REFERENCE ASSEMBLY [AzureDiagnostics];
-REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
-REFERENCE ASSEMBLY [Newtonsoft.Json];
+    REFERENCE ASSEMBLY [AzureDiagnostics];
+    REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
+    REFERENCE ASSEMBLY [Newtonsoft.Json];
     
-DECLARE @adla_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group  + "/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/" + @adla_account_name + "/y={LogDate:yyyy}/m={LogDate:MM}/d={LogDate:dd}/h={LogDate:hh}/m={LogDate:mm}/PT1H.json";
+    DECLARE @adla_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group  + "/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/" + @adla_account_name + "/y={LogDate:yyyy}/m={LogDate:MM}/d={LogDate:dd}/h={LogDate:hh}/m={LogDate:mm}/PT1H.json";
 
 
-@rows =
-    EXTRACT LogDate DateTime,
-            Time DateTime,
-            ResourceId string,
-            Category string,
-            OperationName string,
-            ResultType string,
-            ResultSignature string,
-            CorrelationId string,
-            Identity string,
-            ADLA_JobId string,
-            ADLA_JobName string,
-            ADLA_JobRuntimeName string,
-            ADLA_StartTime DateTime?,
-            ADLA_SubmitTime DateTime?,
-            ADLA_EndTime DateTime?
+    @rows =
+        EXTRACT LogDate DateTime,
+                Time DateTime,
+                ResourceId string,
+                Category string,
+                OperationName string,
+                ResultType string,
+                ResultSignature string,
+                CorrelationId string,
+                Identity string,
+                ADLA_JobId string,
+                ADLA_JobName string,
+                ADLA_JobRuntimeName string,
+                ADLA_StartTime DateTime?,
+                ADLA_SubmitTime DateTime?,
+                ADLA_EndTime DateTime?
             
-    FROM @adla_path 
-    USING new AzureDiagnosticsExtractors.DataLakeAnalyticsExtractor();
+        FROM @adla_path 
+        USING new AzureDiagnosticsExtractors.DataLakeAnalyticsExtractor();
 
-@rows = 
-    SELECT * 
-    FROM @adla_rows
-    WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
+    @rows = 
+        SELECT * 
+        FROM @rows
+        WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
 
     
 END;
