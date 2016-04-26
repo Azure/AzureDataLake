@@ -11,14 +11,14 @@ DECLARE @adls_account_name string = "sandboxadl".ToUpper();
 DECLARE @wasb_account = "wasb://insights-logs-audit@sandboxazurestorage";
 
 
-DECLARE @adla_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group  + "/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/" + @adla_account_name + "/y={date:yyyy}/m={date:MM}/d={date:dd}/h={date:hh}/m={date:mm}/PT1H.json";
-DECLARE @adls_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group + "/PROVIDERS/MICROSOFT.DATALAKESTORE/ACCOUNTS/" + @adls_account_name + "/y={date:yyyy}/m={date:MM}/d={date:dd}/h={date:hh}/m={date:mm}/PT1H.json";
+DECLARE @adla_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group  + "/PROVIDERS/MICROSOFT.DATALAKEANALYTICS/ACCOUNTS/" + @adla_account_name + "/y={LogDate:yyyy}/m={LogDate:MM}/d={LogDate:dd}/h={LogDate:hh}/m={LogDate:mm}/PT1H.json";
+DECLARE @adls_path string = @wasb_account + "/resourceId=/SUBSCRIPTIONS/" + @subscription + "/RESOURCEGROUPS/" + @resource_group + "/PROVIDERS/MICROSOFT.DATALAKESTORE/ACCOUNTS/" + @adls_account_name + "/y={LogDate:yyyy}/m={LogDate:MM}/d={LogDate:dd}/h={LogDate:hh}/m={LogDate:mm}/PT1H.json";
 
 DECLARE @start_date string = "2016-04-20";
 DECLARE @end_date string = "2016-04-21";
 
 @adls_rows =
-    EXTRACT date DateTime,
+    EXTRACT LogDate DateTime,
             Time DateTime,
             ResourceId string,
             Category string,
@@ -34,9 +34,9 @@ DECLARE @end_date string = "2016-04-21";
 @adls_rows =
     SELECT *
     FROM @adls_rows
-    WHERE date >= System.DateTime.Parse(@start_date ) AND date <= System.DateTime.Parse(@end_date );
+    WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
 @adla_rows =
-    EXTRACT date DateTime,
+    EXTRACT LogDate DateTime,
             Time DateTime,
             ResourceId string,
             Category string,
@@ -58,7 +58,7 @@ DECLARE @end_date string = "2016-04-21";
 @adla_rows = 
     SELECT * 
     FROM @adla_rows
-    WHERE date >= System.DateTime.Parse(@start_date ) AND date <= System.DateTime.Parse(@end_date );
+    WHERE LogDate >= System.DateTime.Parse(@start_date ) AND LogDate <= System.DateTime.Parse(@end_date );
 
 OUTPUT @adls_rows
 TO
