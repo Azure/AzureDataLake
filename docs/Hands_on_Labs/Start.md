@@ -27,9 +27,9 @@ List of Azure Services need to Complete all the Hands-On-Labs
 
 IMPORTANT: For Microsoft Internal Training
 -------------------------------------------------------------
-If you are trying to learn about data lake as part of a Microsoft internal training course, then have a dedicated training environment setup for you. 
+If you are trying to learn about data lake as part of a Microsoft internal training course and have Microsoft CorpNet access, then have a dedicated training environment setup for you. 
 
-Please go to: https://microsoft.sharepoint.com/teams/AzureDataLake/SitePages/TrainingAccounts.aspx
+https://microsoft.sharepoint.com/teams/AzureDataLake/SitePages/TrainingAccounts.aspx
 
 
 Manual Steps for Creating the Required Services in the Azure Portal
