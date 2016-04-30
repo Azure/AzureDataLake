@@ -35,7 +35,7 @@
       <LocalDatabase>master</LocalDatabase>
       <LocalSchema>dbo</LocalSchema>
       <ClusterComputeAccount>sandbox</ClusterComputeAccount>
-      <ClusterDatabase>Diagnostics</ClusterDatabase>
+      <ClusterDatabase>master</ClusterDatabase>
       <ClusterSchema>dbo</ClusterSchema>
     </Script>
     <Script Include="FileSet.usql">
