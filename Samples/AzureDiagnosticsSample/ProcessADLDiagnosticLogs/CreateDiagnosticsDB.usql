@@ -9,12 +9,10 @@ CREATE FUNCTION Diagnostics.dbo.GetDataLakeStoreRecords(@start_date string, @end
 RETURNS @rows
 AS
 BEGIN
-
-    USE Diagnostics;
     
-    REFERENCE ASSEMBLY [AzureDiagnostics];
-    REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
-    REFERENCE ASSEMBLY [Newtonsoft.Json];
+    REFERENCE ASSEMBLY Diagnostics.[AzureDiagnostics];
+    REFERENCE ASSEMBLY Diagnostics.[AzureDiagnosticsExtractors];
+    REFERENCE ASSEMBLY Diagnostics.[Newtonsoft.Json];
 
     DECLARE @adls_path string = @wasb_account +
                                 "/resourceId=/SUBSCRIPTIONS/" + @subscription.ToUpper() +
@@ -50,12 +48,10 @@ CREATE FUNCTION Diagnostics.dbo.GetDataLakeAnalyticsRecords(@start_date string, 
 RETURNS @rows
 AS
 BEGIN
-
-    USE Diagnostics;
     
-    REFERENCE ASSEMBLY [AzureDiagnostics];
-    REFERENCE ASSEMBLY [AzureDiagnosticsExtractors];
-    REFERENCE ASSEMBLY [Newtonsoft.Json];
+    REFERENCE ASSEMBLY Diagnostics.[AzureDiagnostics];
+    REFERENCE ASSEMBLY Diagnostics.[AzureDiagnosticsExtractors];
+    REFERENCE ASSEMBLY Diagnostics.[Newtonsoft.Json];
 
     DECLARE @adla_path string = @wasb_account +
                                 "/resourceId=/SUBSCRIPTIONS/" + @subscription.ToUpper() +
