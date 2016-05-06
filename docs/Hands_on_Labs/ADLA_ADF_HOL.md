@@ -351,7 +351,7 @@ minutes.
                 }
             ],
             "start": "2016-01-08T00:00:00Z",
-            "end": "2016-01-09T0:00:00Z",
+            "end": "2016-01-09T00:00:00Z",
             "isPaused": false,
             "hubName": "adltrainingadf0_hub",
             "pipelineMode": "Scheduled"
