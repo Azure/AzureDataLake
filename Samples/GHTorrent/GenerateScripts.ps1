@@ -1,4 +1,4 @@
-#
+
 #SELECT account
 #
 
@@ -6,9 +6,17 @@
 # Login-AzureRmAccount
 # Select-AzureRmSubscription -SubscriptionId b44f0353-37bd-4376-bb56-351d8622535f
 
+Set-StrictMode -Version 2
+$ErrorActionPreference = "Stop"
 
 #Get a list of tables that we will be writing to a file
-$tables = Get-AzureRmDataLakeAnalyticsCatalogItem -Account ghtdev -ItemType Table -Path ghtorrent.dbo
+
+$src_account = "ghtdev"
+$src_db = "ghtorrent"
+$src_db_schema = $src_db + ".dbo"
+$staging_folder_name = "GHTStagingData"
+
+$tables = Get-AzureRmDataLakeAnalyticsCatalogItem -Account $src_account -ItemType Table -Path $src_db_schema 
 
 function doublequote( $s )
 {
@@ -20,14 +28,14 @@ Write-Host
 Write-Host
 Write-Host
 Write-Host // BEGIN --------------------------------------------------------------------
-Write-Host // This script runs on the ghtdev account by a Developer in the ghtdev account
+Write-Host // This script runs on the sourvce GHT account
 Write-Host
 
 #Get the script that will write the table to csv files
 foreach ($table in $tables)
 {
     $tablename = $table.DatabaseName+"."+$table.SchemaName+"."+$table.Name
-    $outputpath = "@`"/StagingData/"+ $tablename + "`""
+    $outputpath = "@" + (doublequote ("/" + $staging_folder_name + "/" + $tablename))
     Write-Host "OUTPUT $tablename TO $outputpath USING Outputters.Tsv();";
 }
  
@@ -45,13 +53,15 @@ Write-Host // BEGIN ------------------------------------------------------------
 Write-Host // This script runs on the GHT consumers account 
 Write-Host
 
-Write-Host "CREATE DATABASE IF NOT EXISTS ghtorrent;"
+Write-Host "CREATE DATABASE IF NOT EXISTS $src_db;"
 
 #Get the DDL statements that will recreate the tables
 foreach ($table in $tables)
 {
-    $base="CREATE TABLE "+ "ghtorrent.dbo." + $table.Name+"(";
+    $base="CREATE TABLE "+ $src_db_schema + "." + $table.Name+"(";
+
 	#Read and generate the schema
+
     for ($i = 0; $i -lt $table.ColumnList.Count; $i++)
     {
         $col = $table.ColumnList[$i];
@@ -146,18 +156,25 @@ foreach ($table in $tables)
 
 
 #Get the DDL statements that will read from the TSV files the data to insert into the tables created above
-foreach ($table in $tables){    
+foreach ($table in $tables)
+{    
     $base="@populate = EXTRACT ";
-	#Read schema for insert statements
-    for ($i = 0; $i -lt $table.ColumnList.Count; $i++){
+	
+    #Read schema for insert statements
+    for ($i = 0; $i -lt $table.ColumnList.Count; $i++)
+    {
         $col = $table.ColumnList[$i];
         $base += $col.Name + " ";
         $type = $col.Type.Replace("System.","").Replace("32","");
-        if (!$type.Contains("DateTime") -And !$type.Contains("Single")){
+        
+        if (!$type.Contains("DateTime") -And !$type.Contains("Single"))
+        {
             $type=$type.ToLower();
         }
         $base += $type;
-        if ($i -ne $table.ColumnList.Count-1){
+        
+        if ($i -ne $table.ColumnList.Count-1)
+        {
             $base +=",";
         }
         else {
@@ -165,10 +182,12 @@ foreach ($table in $tables){
         }
     }
 
-    $src_adls = "adl://ghtdev.azuredatalakestore.net"
+    $src_adls = "adl://" + $src_account + ".azuredatalakestore.net"
     $tablename = $table.DatabaseName+"."+$table.SchemaName+"."+$table.Name
-    $srcfile = $src_adls + "/StagingData/" + $tablename 
-    $base+="FROM `"$srcfile`" USING Extractors.Tsv(); INSERT INTO "+ $tablename +" SELECT * FROM @populate;";
+    $srcfile = $src_adls + "/" + $staging_folder_name + "/" + $tablename 
+    $srcfile = "@" + (doublequote $srcfile)
+    $base += "FROM $srcfile USING Extractors.Tsv(); "
+    $base += "INSERT INTO $tablename SELECT * FROM @populate;";
     Write-Host $base;
 }
 
