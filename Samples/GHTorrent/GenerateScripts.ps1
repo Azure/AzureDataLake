@@ -6,8 +6,15 @@
 # Login-AzureRmAccount
 # Select-AzureRmSubscription -SubscriptionId b44f0353-37bd-4376-bb56-351d8622535f
 
+
 #Get a list of tables that we will be writing to a file
 $tables = Get-AzureRmDataLakeAnalyticsCatalogItem -Account ghtdev -ItemType Table -Path ghtorrent.dbo
+
+function doublequote( $s )
+{
+    $output = "`"" + $s + "`""
+    $output
+}
 
 Write-Host
 Write-Host
@@ -20,7 +27,7 @@ Write-Host
 foreach ($table in $tables)
 {
     $tablename = $table.DatabaseName+"."+$table.SchemaName+"."+$table.Name
-    $outputpath = "@`"/StagingData/"+$table.DatabaseName+"."+$table.SchemaName+"."+$table.Name + "`""
+    $outputpath = "@`"/StagingData/"+ $tablename + "`""
     Write-Host "OUTPUT $tablename TO $outputpath USING Outputters.Tsv();";
 }
  
@@ -35,7 +42,7 @@ Write-Host
 Write-Host
 Write-Host
 Write-Host // BEGIN --------------------------------------------------------------------
-Write-Host // This script runs on the consuemrs account by a Consumer of the GHT data
+Write-Host // This script runs on the GHT consumers account 
 Write-Host
 
 #Get the DDL statements that will recreate the tables
@@ -100,15 +107,23 @@ foreach ($table in $tables)
 	#Read ordering for partitions
     for ($i = 0; $i -lt $distribution.Keys.Count; $i++)
     {
-        $partition+=$distribution.Keys[$i].Name;
-        if ($distribution.Keys[$i].Descending)
+
+         $partition+=$distribution.Keys[$i].Name;
+        
+        if (!($distribution.Type -eq 2))
         {
-            $partition += " DESC";
+
+            if ($distribution.Keys[$i].Descending)
+            {
+                $partition += " DESC";
+            }
+            else 
+            {
+                $partition += " ASC";
+            }
         }
-        else 
-        {
-            $partition += " ASC";
-        }
+
+
         if ($i -ne $index.Columns.Count-1)
         {
             $partition+=","
@@ -117,6 +132,7 @@ foreach ($table in $tables)
         {
             $partition+=")";
         }
+
     }
     
     $base+=$partition;
@@ -146,7 +162,11 @@ foreach ($table in $tables){
             $base +=" ";
         }
     }
-    $base+="FROM ""/StagingData/" + $table.DatabaseName+"."+$table.SchemaName+"."+$table.Name+ """ USING Extractors.Csv(); INSERT INTO "+$table.DatabaseName+"."+$table.SchemaName+"."+$table.Name+" SELECT * FROM @populate;";
+
+    $src_adls = "adl://ghtdev.azuredatalakestore.net"
+    $tablename = $table.DatabaseName+"."+$table.SchemaName+"."+$table.Name
+    $srcfile = $src_adls + "/StagingData/" + $tablename 
+    $base+="FROM `"$srcfile`" USING Extractors.Csv(); INSERT INTO "+ $tablename +" SELECT * FROM @populate;";
     Write-Host $base;
 }
 
