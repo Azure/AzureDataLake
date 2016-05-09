@@ -32,8 +32,8 @@ Reference material (MSDN):
 * [Azure Data Lake Analytics Cmdlets](https://msdn.microsoft.com/en-us/library/mt607124.aspx) 
 * [Azure Data Lake Store Cmdlets](https://msdn.microsoft.com/en-us/library/mt607120.aspx)
 
-# Exercise 0: Installing and configuring Azure PowerShell
-In this exercise you will install the Azure Resource Manager cmdlets in Windows PowerShell. These cmdlets will enable you to interact with Azure Data Lake (ADL) and complete the tasks in this lab.
+# Exercise 0: Launching Azure PowerShell
+In this exercise you will launch Azure PowerShell, which is needed in order to complete the tasks in this lab.
 
 1. Open a new PowerShell window.
 
