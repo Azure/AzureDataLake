@@ -39,13 +39,9 @@ In this exercise you will launch Azure PowerShell, which is needed in order to c
 
 2. Run the following cmdlet to log in to Azure PowerShell:
  
-        Login-AzureRmAccount
+        Login-AzureRmAccount -SubscriptionId <your subscription ID>
  
 3. At the authentication prompt, use the credentials provided by the instructor to log in.
-
-4. (Optional) If you think you have more than one subscription, you can specify the subscription by running the following cmdlet:
-
-        Select-AzureRmSubscription -SubscriptionName "<your subscription name>"
 
 5. (Optional) To save your login session and restore it later, you can run the following cmdlets:
 
