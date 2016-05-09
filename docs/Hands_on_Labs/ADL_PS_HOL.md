@@ -16,7 +16,7 @@ This process only takes a few minutes. Once your services are configured you can
 
 ## Setting up your computer
 
-To complete this lab, you will need a computer running Windows with the latest version of Windows PowerShell (v5) installed. Windows 10 ships with PowerShell v5.
+To complete this lab, you will need a computer running Windows with the latest version of Windows PowerShell (v5) installed and Azure PowerShell. Windows 10 ships with PowerShell v5.
 
 ## More information
 
@@ -35,32 +35,19 @@ Reference material (MSDN):
 # Exercise 0: Installing and configuring Azure PowerShell
 In this exercise you will install the Azure Resource Manager cmdlets in Windows PowerShell. These cmdlets will enable you to interact with Azure Data Lake (ADL) and complete the tasks in this lab.
 
-1. Open a new PowerShell window in administrator mode.
-   - At the Start menu, type **PowerShell**.
-   - Right-click **Windows PowerShell**, and then click **Run as administrator**.
-      
-2. At the PowerShell command prompt, run the following commands:
-     
-        Install-Module AzureRm
-        Install-AzureRm
-	 
-3. Close the PowerShell window.
+1. Open a new PowerShell window.
 
-   > NOTE: If the installation fails, [click here to install the Azure Resource Manager cmdlets by using the Web Platform Installer](https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/#step-1-install).
-
-4. Open a new PowerShell window (do not run as administrator).
-
-5. Run the following cmdlet to log in to Azure PowerShell:
+2. Run the following cmdlet to log in to Azure PowerShell:
  
         Login-AzureRmAccount
  
-6. At the authentication prompt, use the credentials provided by the instructor to log in.
+3. At the authentication prompt, use the credentials provided by the instructor to log in.
 
-7. (Optional) If you think you have more than one subscription, you can specify the subscription by running the following cmdlet:
+4. (Optional) If you think you have more than one subscription, you can specify the subscription by running the following cmdlet:
 
         Select-AzureRmSubscription -SubscriptionName "<your subscription name>"
 
-9. (Optional) To save your login session and restore it later, you can run the following cmdlets:
+5. (Optional) To save your login session and restore it later, you can run the following cmdlets:
 
         # Save the login session after logging in.
         Save-AzureRmProfile -Path C:\adldemo\profile
