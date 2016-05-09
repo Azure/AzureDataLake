@@ -45,10 +45,12 @@ Write-Host // BEGIN ------------------------------------------------------------
 Write-Host // This script runs on the GHT consumers account 
 Write-Host
 
+Write-Host "CREATE DATABASE IF NOT EXISTS ghtorrent;"
+
 #Get the DDL statements that will recreate the tables
 foreach ($table in $tables)
 {
-    $base="CREATE TABLE "+$table.Name+"(";
+    $base="CREATE TABLE "+ "ghtorrent.dbo." + $table.Name+"(";
 	#Read and generate the schema
     for ($i = 0; $i -lt $table.ColumnList.Count; $i++)
     {
