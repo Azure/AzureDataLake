@@ -168,7 +168,7 @@ foreach ($table in $tables){
     $src_adls = "adl://ghtdev.azuredatalakestore.net"
     $tablename = $table.DatabaseName+"."+$table.SchemaName+"."+$table.Name
     $srcfile = $src_adls + "/StagingData/" + $tablename 
-    $base+="FROM `"$srcfile`" USING Extractors.Csv(); INSERT INTO "+ $tablename +" SELECT * FROM @populate;";
+    $base+="FROM `"$srcfile`" USING Extractors.Tsv(); INSERT INTO "+ $tablename +" SELECT * FROM @populate;";
     Write-Host $base;
 }
 
