@@ -4,19 +4,18 @@
 
 # Login as a user to the correct subscription
 # Login-AzureRmAccount
-# Select-AzureRmSubscription -SubscriptionId b44f0353-37bd-4376-bb56-351d8622535f
+# Select-AzureRmSubscription -SubscriptionId dc4948fc-fa86-4bee-9410-c0891a1f62b0
 
 Set-StrictMode -Version 2
 $ErrorActionPreference = "Stop"
 
 #Get a list of tables that we will be writing to a file
 
-$src_account = "ghtdev"
-$src_db = "ghtorrent"
+$src_account = "githubanalytics"
+$src_db = "GitHubAnalytics" # NOTE the database name is CASE-SENSITIVE!!!
 $src_db_schema = $src_db + ".dbo"
-$staging_folder_name = "GHTStagingData"
+$staging_folder_name = "GitHubAnalytics.StagingData"
 
-$tables = Get-AzureRmDataLakeAnalyticsCatalogItem -Account $src_account -ItemType Table -Path $src_db_schema 
 
 function doublequote( $s )
 {
@@ -24,11 +23,19 @@ function doublequote( $s )
     $output
 }
 
+function get-tables( $account, $db )
+{
+    Get-AzureRmDataLakeAnalyticsCatalogItem -Account $account -ItemType Table -Path $db
+}
+
+$tables = get-tables $src_account $src_db_schema 
+
+
 Write-Host
 Write-Host
 Write-Host
 Write-Host // BEGIN --------------------------------------------------------------------
-Write-Host // This script runs on the sourvce GHT account
+Write-Host // This script runs on the sourvce account called $src_account
 Write-Host
 
 #Get the script that will write the table to csv files
