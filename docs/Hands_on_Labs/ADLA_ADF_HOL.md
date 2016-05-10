@@ -133,8 +133,8 @@ To confirm that the sample data is in the ADL Store Account, open the Data
 Explorer and look under **/Data/Samples**. You should see a file named
 **SearchLog.tsv**.
 
-Link services to your ADF account
----------------------------------
+Exercise 1: Link services to your ADF account
+============================================
 
 In this section, you will link your ADF account to three services:
 
@@ -237,7 +237,7 @@ click **Author and Deploy**.
 
 2.  Click **Deploy**.
 
-Exercise 1: Create input and output datasets
+Exercise 2: Create input and output datasets
 ============================================
 
 In this exercise, you'll create two datasets: one to represent the input file,
@@ -312,7 +312,7 @@ Create the output dataset
 
 3. Click **Deploy**
 
-Exercise 2: Create a pipeline
+Exercise 3: Create a pipeline
 =============================
 
 In this exercise, you will create a new pipeline that runs a script every 15
@@ -375,7 +375,7 @@ minutes.
 
 3.  Review the JSON you just added, and then click **Deploy**.
 
-Exercise 3: Monitor the Pipeline
+Exercise 4: Monitor the Pipeline
 ================================
 
 In this exercise, you will monitor the activity of the ADF pipeline you just
