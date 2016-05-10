@@ -381,8 +381,9 @@ Exercise 4: Monitor the Pipeline
 In this exercise, you will monitor the activity of the ADF pipeline you just
 created.
 
-1.  In the Azure Data Factory portal, review the output dataset. You should now
-    see the outputs being constructed.
-
-2.  Browse to your ADL Analytics account. You should see that jobs are being
+1.  Go to the Azure Data Factory portal
+2.  In the **Contents** tile, click on **Datasets**
+3.  CLick on the Dataset named **MyOutput**
+4.  In the Monitoring Tile review the **Recently updated slices** and **Recently failed slices** to see that the outputs are being constructed correctly.
+5.  Browse to your ADL Analytics account. You should see that jobs are being
     executed under the name **MyPipeline**.
