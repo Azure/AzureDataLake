@@ -16,7 +16,7 @@ Prerequisites
 Before you can start the lab exercises, you will need several Azure services
 created. Follow the instructions here: [Start](Start.md)
 
- 
+
 
 Important information
 ---------------------
@@ -65,9 +65,7 @@ To use this Storage Account you’ll need to two two things:
 
 -   Place a U-SQL Script file in the Storage Account
 
- 
-
- 
+Steps:
 
 -   In the Azure Portal, locate your ADLA account.
 
