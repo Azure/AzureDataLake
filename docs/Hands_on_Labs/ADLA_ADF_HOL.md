@@ -173,6 +173,10 @@ click **Author and Deploy**.
     }
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+3.  In the JSON replace the value for **$adla**
+4.  In the JSON replace the value for **$subid**
+5.  In the JSON replace the value for **$rg**
+ 
 3.  Click **Authorize**. When prompted, enter your credentials.
 
 4.  Click **Deploy**.
@@ -201,6 +205,10 @@ click **Author and Deploy**.
     }
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+3.  In the JSON replace the value for **$adls**
+4.  In the JSON replace the value for **$subid**
+5.  In the JSON replace the value for **$rg**
+
 3.  Click **Authorize**. If prompted, enter your credentials.
 
 4.  Click **Deploy**.
@@ -222,6 +230,10 @@ click **Author and Deploy**.
         }
     }
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+3.  In the JSON in the "connectionString" value, replace the value for **$blobs**
+3.  In the JSON in the "connectionString" value, replace the value for **$blobs_access_key**
+
 
 2.  Click **Deploy**.
 
