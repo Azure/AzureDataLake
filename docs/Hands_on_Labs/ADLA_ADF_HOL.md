@@ -25,21 +25,21 @@ This lab requires you to remember and reuse several pieces of information in
 various places. These pieces of information are provided to you when you visit
 the registration website. Keep track of the following items:
 
--   **\$subname** - the subscription name.
+-   **$subname** - the subscription name.
 
--   **\$subid** - the subscription ID.
+-   **$subid** - the subscription ID.
 
--   **\$rg** - the resource group name.
+-   **$rg** - the resource group name.
 
--   **\$blobs** - an Azure Storage account.
+-   **$blobs** - an Azure Storage account.
 
--   **\$adla** - the ADLA account.
+-   **$adla** - the ADLA account.
 
--   **\$adls** - the Azure Data Lake Store (ADLS) account.
+-   **$adls** - the Azure Data Lake Store (ADLS) account.
 
--   **\$blobs\_access\_key** - the Azure Blob access key.
+-   **$blobs\_access\_key** - the Azure Blob access key.
 
--   **\$adf** - the ADF account.
+-   **$adf** - the ADF account.
 
 Later in this lab, you will be asked to copy and paste some text that contains
 these variables (\$adla for example). You can either:
