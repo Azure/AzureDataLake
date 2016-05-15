@@ -160,6 +160,10 @@ foreach ($table in $tables)
 }
 
 
+Write-Host
+Write-Host
+Write-Host
+Write-Host
 
 
 #Get the DDL statements that will read from the TSV files the data to insert into the tables created above
