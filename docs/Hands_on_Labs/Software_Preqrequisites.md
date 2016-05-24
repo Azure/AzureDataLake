@@ -8,12 +8,13 @@ Visual Studio
 
 Download and install Visual Studio.
 
-Version Support:
+**Version Support**
+
 -   You can use VS2015, VS2013, or VS2012, but VS2015 is preferred.
 -   Any edition works: Community, Professional, etc.
 
 
-Download Visual Studio Community Edition 2015 from here:
+**Download Visual Studio Community Edition 2015 from here**
 
 [https://www.visualstudio.com/post-download-vs?sku=community&clcid=0x409\#](https://www.visualstudio.com/post-download-vs?sku=community&clcid=0x409)
 
@@ -21,8 +22,9 @@ Download Visual Studio Community Edition 2015 from here:
 Azure Data Lake Tools for Visual Studio
 ---------------------------------------
 
-Download from Here:
-https://www.microsoft.com/en-us/download/details.aspx?id=49504
+**Download from here:**
+
+* https://www.microsoft.com/en-us/download/details.aspx?id=49504
 
 
 PowerShell
