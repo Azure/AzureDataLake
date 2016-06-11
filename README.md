@@ -14,9 +14,6 @@
 * [ADL Analytics Doc Backlog](http://aka.ms/adla_doc_backlog)
 * [ADL OneDrive](https://onedrive.live.com/redir?resid=3BDE3286AB2E59F7!109&authkey=!AGlS_9glt1QEq2I&ithint=folder%2c)
 
-### Key Articles
-* [Creating ADF pipelines using ADL](https://azure.microsoft.com/en-us/blog/creating-big-data-pipelines-using-azure-data-lake-and-azure-data-factory/)
-
 ### Give feedback
 
 * [Azure UserVoice](https://aka.ms/adlfeedback) | [MSDN Forums](http://social.msdn.microsoft.com/Forums/office/en-US/home?forum=AzureDataLake) | [U-SQL](http://github.com/microsoftbigdata/usql/issues) | 
