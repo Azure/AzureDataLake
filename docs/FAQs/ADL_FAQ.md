@@ -8,9 +8,15 @@
 * [ADL Store](http://aka.ms/adlsfaq)
 * [U-SQL ](http://aka.ms/usqlfaq)
 
+### Q: What does it mean that  ADL Store and ADL Analytics are currently in "Preview"?
+
+Please see this link for details: https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/
+
+In H2 of CY 2016.
+
 ### Q: When will ADL Store and ADL Analytics be "Generally Available"?
 
-In CY2016.
+In H2 of CY 2016.
 
 ### Q: Is Azure Data Lake (Store, Analytics, or HDInsight) going to offered as an "on-premises" product?
 
