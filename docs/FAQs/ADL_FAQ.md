@@ -12,8 +12,6 @@
 
 Please see this link for details: https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/
 
-In H2 of CY 2016.
-
 ### Q: When will ADL Store and ADL Analytics be "Generally Available"?
 
 In H2 of CY 2016.
