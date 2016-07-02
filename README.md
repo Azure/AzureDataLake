@@ -12,7 +12,7 @@
 * Docs on Azure.com: [Store](https://azure.microsoft.com/en-us/documentation/services/data-lake-store/) | [Analytics](https://azure.microsoft.com/en-us/documentation/services/data-lake-analytics/) | [HDInsight](https://azure.microsoft.com/en-us/documentation/services/hdinsight/)
 * U-SQL: [Team Site](http://usql.io) | [GitHub](https://github.com/MicrosoftBigData/USQL) | [Language Reference](http://aka.ms/usql_reference) | [FAQ](http://aka.ms/usqlfaq)
 * [ADL Analytics Doc Backlog](http://aka.ms/adla_doc_backlog)
-* [ADL OneDrive](https://onedrive.live.com/redir?resid=3BDE3286AB2E59F7!109&authkey=!AGlS_9glt1QEq2I&ithint=folder%2c)
+* [ADL OneDrive](https://aka.ms/azuredatalakeonedrive)
 
 ### Give feedback
 
