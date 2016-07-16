@@ -159,7 +159,9 @@ USING json = [Microsoft.Analytics.Samples.Formats.Json.JsonExtractor];
 
 ...
 ````
+#### Visual Studio ADL Tool Provides Local Failed Vertex Debug for Self-service Debugging
+ 
+U-SQL provides a great extensibility model through C#, but sometimes the failures in your customized C# code are hard to debug. In the latest Azure Data Lake Tools for Visual Studio, you can debug failed customized C# code by downloading resources from your ADLA cluster to your local machine, and run the exact same code in both the cluster and local environment to catch the error and fix the code. The tool also provides a straightforward UI to help you download the required resources to your local machine for self-service debugging and troubleshooting. You can refer to this guide (http://go.microsoft.com/fwlink/?LinkId=820718) to learn more.
 
 ## PLEASE NOTE:
-In order to get access to these new syntactic features on your local environment, you will need to refresh your ADL Tools. Otherwise 
-you will not be able to use them during local run and submission to the cluster will give you syntax warnings.
+In order to get access to the new syntactic features and new tool capabilities on your local environment, you will need to refresh your ADL Tools. Otherwise you will not be able to use them during local run and submission to the cluster will give you syntax warnings for the new language features.
