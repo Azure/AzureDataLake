@@ -3,14 +3,12 @@
 
 ## Breaking Changes
  
- #### Start of Deprecation of `{col:*}` File Set pattern.
+#### Start of Deprecation of `{col:*}` File Set pattern.
  
- So far, one could write either `{col}` or `{col:*}` in a File Set pattern to wildcard part of a file path and 
- expose that part as a column with the name `col`.
-`{col}` required that a predicate on `col` was specified in the script while `{col:*}` indicated that 
+So far, one could write either `{col}` or `{col:*}` in a File Set pattern to wildcard part of a file path and expose that part as a column with the name `col`. `{col}` required that a predicate on `col` was specified in the script while `{col:*}` indicated that 
 the predicate was not required.
 
-After receiving some customer feedback and observing the customer issues, we decided that offering these two closely 
+After receiving some customer feedback and observing customer issues, we decided that offering these two closely 
 related options added too much complexity. Thus, the `{col:*}` pattern will be deprecated in the following steps in starting 
 with this release:
 
@@ -145,14 +143,14 @@ USING json = Microsoft.Analytics.Samples.Formats.Json;
 ...
 ````
 
-In the following example, we alias the full type name:
+In the following example, we alias the full type name. Note that we support quoting the name to allow all uppercase namespaces.
 ````
 DECLARE @ input string = "somejsonfile.json";
 
 REFERENCE ASSEMBLY [Newtonsoft.Json];
 REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
 
-USING json = Microsoft.Analytics.Samples.Formats.Json.JsonExtractor;
+USING json = [Microsoft.Analytics.Samples.Formats.Json.JsonExtractor];
 
 @data0 = 
     EXTRACT IPAddresses string
