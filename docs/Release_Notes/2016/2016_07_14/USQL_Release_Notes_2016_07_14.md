@@ -10,13 +10,13 @@ the predicate was not required.
 
 After receiving some customer feedback and observing customer issues, we decided that offering these two closely 
 related options added too much complexity. Thus, the `{col:*}` pattern will be deprecated in the following steps in starting 
-with this release:
+with this release and the requirement to add a predicate will be dropped:
 
 1. _Current release_: U-SQL supports both `{col}` and `{col:*}` as synonyms without requiring the predicate. A warning is raised if the script uses the `{col:*}` pattern.
 
 2. _A future release_ (probably before the GA release): U-SQL will remove `{col:*}` and will only support `{col}`.
 
-So please start to replace your {col:*} with {col}. 
+So please start to replace your {col:*} with {col}. Note that it is still good practise to add a predicate on such columns to reduce the number of processed files.
 
 We will announce the future phase out on our blog/release notes.
 
@@ -61,6 +61,8 @@ Alter_Table_AddDrop_Column_Statement :=
 	( 'ADD' 'COLUMN' Column_Definition_List 
 	| 'DROP' 'COLUMN' Identifier_List  ).
 ````
+Adding or dropping a column from a table is a meta data operation only and its performance will not be impacted by the size of the table. If the added column is of a nullable type, existing rows will contain null in the added column, if the added column is of a not-nullable type, then the column will contain the type's default value (e.g., `0` for type `int`).
+
 Examples:
 ````
 DROP TABLE IF EXISTS Logs;
@@ -73,7 +75,7 @@ CREATE TABLE Logs(date DateTime,
 ALTER TABLE Logs ADD COLUMN eventName string;
 
 // add another column
-ALTER TABLE Logs ADD COLUMN result string;
+ALTER TABLE Logs ADD COLUMN result int;
 
 // drop a column and add another one
 ALTER TABLE Logs DROP COLUMN result;
@@ -81,7 +83,7 @@ ALTER TABLE Logs ADD COLUMN clientId string;
 
 // drop a column and add 3 more columns
 ALTER TABLE Logs DROP COLUMN clientId;
-ALTER TABLE Logs ADD COLUMN result string, clientId string, payload string;
+ALTER TABLE Logs ADD COLUMN result string, clientId string, payload int?;
 
 // drop 2 columns
 ALTER TABLE Logs DROP COLUMN clientId, result;
@@ -164,4 +166,4 @@ USING json = [Microsoft.Analytics.Samples.Formats.Json.JsonExtractor];
 U-SQL provides a great extensibility model through C#, but sometimes the failures in your customized C# code are hard to debug. In the latest Azure Data Lake Tools for Visual Studio, you can debug failed customized C# code by downloading resources from your ADLA cluster to your local machine, and run the exact same code in both the cluster and local environment to catch the error and fix the code. The tool also provides a straightforward UI to help you download the required resources to your local machine for self-service debugging and troubleshooting. You can refer to this guide (http://go.microsoft.com/fwlink/?LinkId=820718) to learn more.
 
 ## PLEASE NOTE:
-In order to get access to the new syntactic features and new tool capabilities on your local environment, you will need to refresh your ADL Tools. Otherwise you will not be able to use them during local run and submission to the cluster will give you syntax warnings for the new language features.
+In order to get access to the new syntactic features and new tool capabilities on your local environment, you will need to [refresh your ADL Tools](http://aka.ms/adltoolsvs). Otherwise you will not be able to use them during local run and submission to the cluster will give you syntax warnings for the new language features.
