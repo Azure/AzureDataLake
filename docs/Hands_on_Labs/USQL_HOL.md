@@ -57,7 +57,7 @@ In this exercise you will submit a U-SQL script that reads data from an input fi
         TO "/output/<replace_this_with_your_output_name>.csv"
         USING Outputters.Csv();
 
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script. 
 	
 > NOTE: This U-SQL script has no transformation step. It reads from an input file called SearchLog.tsv, schematizes the data during the read process, and then outputs the intermediate rowset back into the file whose name you specified. The **Duration** field could be null or of type int, while the **UserId** cannot be null. Note that the C# **string** type is always nullable.
@@ -95,7 +95,7 @@ In this exercise, you will introduce scalar variables to make your scripts easie
 	    TO @out
 	    USING Outputters.Csv();
     
-2. As before, change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
+2. As before, change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script, and verify that the result is the same as that of Exercise 1.
 
 # Exercise 3: Transforming your rowset
@@ -125,7 +125,7 @@ First let's do a simple filter. Since the data is in a file and you have to prod
     	TO "/output/<replace_this_with_your_output_name>.csv"
     	USING Outputters.Csv();
     
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script. 
 
     > Note that the WHERE clause is using a boolean C# expression and thus the comparison operation is == (and not the = sign you may be familiar with from traditional SQL).
@@ -208,7 +208,7 @@ In many cases, you will want to perform some analytics as part of your queries. 
     	ORDER BY TotalDuration DESC
     	USING Outputters.Csv();
     
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique.
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script. 
 	
 	The query you just submitted finds the total duration per region and then outputs the top five durations in order. Rowsets in U-SQL do not preserve their order for the next query. Thus, if you want an ordered output, you must add the ORDER BY clause to the OUTPUT statement.
@@ -282,7 +282,7 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 	    ORDER BY TotalDuration DESC
 	    USING Outputters.Csv();
     
-3. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique, and then submit the script.
+3. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique, and then submit the script.
 	
 # Exercise 6: Creating table-valued functions
 In this exercise, you will create a table-valued function.
@@ -314,7 +314,7 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	          
     The code you just added retrieves the **Start**, **Region**, and **Duration** fields for the default region.
 	
-3. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique. 
+3. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 4. Submit your script. 
   
 # Exercise 7: Creating tables
@@ -333,7 +333,7 @@ You will now persist the searchlog data in a schematized format in a table calle
 	- **SearchLog2** is created based on the view that encapsulates the extraction expression (essentially a CTAS). Note that for scalability, **U-SQL requires you to define the index** for the table before you can insert.
 - Insert the data into the **SearchLog1** table.
 
-1. Copy the following U-SQL script into the editor of your choice, and then submit your query:
+1. Copy the following U-SQL script into the editor of your choice, select a unique database name instead of *&lt;insert your DB name&gt;*, and then submit your query:
 
         DROP DATABASE IF EXISTS <insert your name>;
         CREATE DATABASE <insert your name>;
@@ -352,14 +352,14 @@ You will now persist the searchlog data in a schematized format in a table calle
                     ClickedUrls     string,
         
                     INDEX sl_idx CLUSTERED (UserId ASC) 
-                          PARTITIONED BY HASH (UserId) INTO 2
+                          DISTRIBUTED BY HASH (UserId) INTO 2
         );
 	
         INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
 		
         CREATE TABLE SearchLog2(
                INDEX sl_idx CLUSTERED (UserId ASC) 
-               PARTITIONED BY HASH (UserId) INTO 2
+               DISTRIBUTED BY HASH (UserId) INTO 2
         ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
 You can now query the tables in the same way that you queried the unstructured data. Instead of creating a rowset using EXTRACT, you now can simply refer to the table name.
@@ -389,7 +389,7 @@ In this exercise, you will query data from the table you created in Exercise 7.
     
     > NOTE: Currently you cannot run a SELECT on a table in the same script as the script where you create that table.
 
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique. 
+2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 3. Submit your script. 
 
 # Exercise 9: Joining data
@@ -416,7 +416,7 @@ U-SQL includes many familiar join operators, such as INNER JOIN, LEFT/RIGHT/FULL
     	TO "/output/<replace_this_with_your_output_name>.csv"
     	USING Outputters.Csv();
 
-2. Change the name of the output file from *<replace_this_with_your_output_name>* to something unique. 
+2. Change the name of the database from *&lt;insert your DB name&gt;* to the database you selected earlier and change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 3. Submit your script.		
 
 When you work with joins in U-SQL, note that:

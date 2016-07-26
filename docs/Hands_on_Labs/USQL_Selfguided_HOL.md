@@ -51,7 +51,7 @@ In this section you will open Visual Studio and use Azure Data Lake Tools for Vi
 
     - On the **File** menu, point to **New**, and then click **Project**.
 	  ![New Project](/docs/Hands_on_Labs/Images/NewProject.jpg)
-    - In the New Project dialog box, in the navigation pane, expand **Installed**, expand **Templates**, and then expand **U-SQL**.
+    - In the New Project dialog box, in the navigation pane, expand **Installed**, expand **Templates**, expand **Azure Data Lake**, and then expand **U-SQL**.
 	- In the center pane, click **U-SQL Project**.	 
 	  ![Create Project](/docs/Hands_on_Labs/Images/CreateProject.jpg)
     - In the **Name** box, give your project a name and then click **OK**.
@@ -104,7 +104,7 @@ For example, the following error is shown if you did not complete step 2 correct
 5. Finally check the result by opening the resulting file in the job view:
 	![Query Job View Resulting File](/docs/Hands_on_Labs/Images/q1_jobview_output.jpg)
 
-	The resulting file should resemble the following after setting the **Delimiter** to `,` and the **Quoting** to `"`:
+	The resulting file should resemble the following:
 	![Query 1 Result](/docs/Hands_on_Labs/Images/q1_result.jpg)
 
 	
@@ -375,23 +375,14 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	
     	DROP FUNCTION IF EXISTS RegionalSearchlog;
     	CREATE FUNCTION RegionalSearchlog(@region string = "en-gb") 
-    	RETURNS @searchlog TABLE
-	      (
-	                UserId          int,
-	                Start           DateTime,
-	                Region          string,
-	                Query           string,
-	                Duration        int?,
-	                Urls            string,
-	                ClickedUrls     string
-	      )
+    	RETURNS @searchlog
 	    AS BEGIN 
 	      @searchlog =
 	        SELECT * FROM SearchlogView
 	        WHERE Region == @region;
 	    END;
     
-	The code you just added defines a function named **RegionalSearchlog()** in the default database and schema. The function includes a **@region** parameter that enables you to filter the view you created in the previous step by region. The parameter has a default value of "en-gb". The first statement drops any existing definitions of the function and then creates the version that we want to use. You can now use the function in your queries.
+	The code you just added defines a function named **RegionalSearchlog()** in the default database and schema. The function includes a **@region** parameter that enables you to filter the view you created in the previous step by region. The parameter has a default value of "en-gb". The schema of the TVF is inferred from the final query assigned to **@searchlog**. The first statement drops any existing definitions of the function and then creates the version that we want to use. You can now use the function in your queries.
 
 2. Review the registration in the Visual Studio Server Explorer:
 	![Query 6 Server Explorer](/docs/Hands_on_Labs/Images/q6_tvf_explorer.jpg)
@@ -449,14 +440,14 @@ You will now persist the searchlog data in a schematized format in a table calle
 	                ClickedUrls     string,
 	
 	                INDEX sl_idx CLUSTERED (UserId ASC) 
-	                      PARTITIONED BY HASH (UserId) INTO 4
+	                      DISTRIBUTED BY HASH (UserId) INTO 4
 	      );
 	
 	    INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
 		
 	    CREATE TABLE SearchLog2(
                    INDEX sl_idx CLUSTERED (UserId ASC) 
-                   PARTITIONED BY HASH (UserId) INTO 4
+                   DISTRIBUTED BY HASH (UserId) INTO 4
 	    ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
 2. Replace the string *&lt;insert your name&gt;* with a unique database name of your choosing.
