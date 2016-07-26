@@ -57,7 +57,7 @@ portal
 
 ### Step 1: Login to the Azure Portal
 
-Go to http://azure.portal.com
+Go to http://portal.azure.com
 
 ### Step 2: Create Azure Data Lake Analytics & Store accounts
 
