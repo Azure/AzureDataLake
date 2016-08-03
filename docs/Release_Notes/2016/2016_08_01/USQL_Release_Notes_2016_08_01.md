@@ -1,6 +1,6 @@
 # U-SQL Release Notes 2016-08-01
 --------------------------
-## Pending and Upcoming Depreciations
+## Pending and Upcoming Deprecations
 
 Please review your code and make sure you are cleaning your existing code to be ready for the following 
 deprecations later this year (follow links for more details).
@@ -57,7 +57,7 @@ If you want to use HASH partitions to scale out your data processing, you previo
 ````
 CREATE TABLE T(col1 int, col2 string, partcol DateTime, 
                INDEX idx CLUSTERED (col1, col2)
-			   PARTITIONED BY HASH (col1) INTO 5);
+              ) PARTITIONED BY HASH (col1) INTO 5;
 ````
 
 Now you write
@@ -65,15 +65,15 @@ Now you write
 ````
 CREATE TABLE T(col1 int, col2 string, partcol DateTime, 
                INDEX idx CLUSTERED (col1, col2)
-			   DISTRIBUTED BY HASH (col1) INTO 5);
+              ) DISTRIBUTED BY HASH (col1) INTO 5;
 ````
 If you want to add addressable partitions to manage your data life cycle, you previously wrote
 
 ````
 CREATE TABLE T(col1 int, col2 string, partcol DateTime, 
                INDEX idx CLUSTERED (col1, col2)
-			   PARTITIONED BY BUCKET(partcol)
-			   HASH (col1) INTO 5);
+	       PARTITIONED BY BUCKET(partcol)
+	       HASH (col1) INTO 5);
 ````
 
 Now you write
@@ -81,12 +81,11 @@ Now you write
 ````
 CREATE TABLE T(col1 int, col2 string, partcol DateTime, 
                INDEX idx CLUSTERED (col1, col2)
-			   PARTITIONED BY (partcol)
-			   DISTRIBUTED BY HASH (col1) INTO 5);
+	       PARTITIONED BY (partcol)
+	       DISTRIBUTED BY HASH (col1) INTO 5);
 ````
 
 Note that for now, both the old and new syntax are supported. 
-
 
 #### DateTime file set pattern will require `HH` instead of `hh` for the hour pattern to align with 24h clock semantics
 
@@ -94,7 +93,7 @@ Currently U-SQL supports both forms with 24h semantics. In the future, support f
 
 _Example:_ 
 
-Let's assume the following file path exists in your ADLS account: `/data/2016/08/01/23/hourlydata.csv` cotaining the word `"test"`.
+Let's assume the following file path exists in your ADLS account: `/data/2016/08/01/23/hourlydata.csv` containing the word `"test"`.
 
 Please use the following pattern to include the above file in your extract statement:
 
@@ -138,25 +137,27 @@ Several error messages received improvements, such as:
 
 1. Better error reporting when duplicate table names are used in `CROSS APPLY` expressions. Example of such invalid naming: 
        ````
-       @q4 = SELECT i FROM @a CROSS APPLY EXPLODE(a1) AS T(i) 
-	                       CROSS APPLY EXPLODE(a2) AS T(i);
+@q4 = SELECT i FROM @a CROSS APPLY EXPLODE(a1) AS T(i) 
+	               CROSS APPLY EXPLODE(a2) AS T(i);
        ````
 
 2. Error for the unsupported `TOP` syntax now guides users to use one of the two supported constructs for restricting the row count, `ORDER BY FETCH` clause or `SAMPLE ANY` expression.
 	
 3. Added more details to the resolution steps of the error message for when there is an unexpected number of columns in the input stream (`E_EXTRACT_UNEXPECTED_NUMBER_COLUMNS`)
 
+4. The error message for using a rowset variable in a scalar expression has been improved.
+
 ## New U-SQL capabilities
 
-#### U-SQL now offers a preview of sampling capabilites (requires a simple email signup)
+#### U-SQL now offers a preview of sampling capabilities (requires a simple email signup)
  
-U-SQL is providing a preview of several sampling expressions, such as
+U-SQL is providing a preview of several sampling expressions and capabilities, such as
 
 1. Inline operator for simple cases that provides random and probabilistic sampling: 
 ````
 @data0 = SELECT * FROM @data SAMPLE ANY(5);
 ````
-Samples the `@data` rowset by selecting any number of rows randomly (`5` in the example above).
+Samples the `@data` rowset by selecting the specified number of rows (`5` in the example above) in a completely arbitrary way.
 
 ````
 @data1 = SELECT * FROM @data SAMPLE UNIFORM (0.5);
@@ -164,21 +165,23 @@ Samples the `@data` rowset by selecting any number of rows randomly (`5` in the 
 
 Samples the `@data` rowset using a random uniform sampling with the provided probability (50% in the example above).
 
-2. Complex expression provides the ability to add weight information and provides more complex samplers:
+2. Complex expression provides the ability to obtain weight information and supports more complex samplers:
 
 ````
-@data2 =  SAMPLE @data ON name, deviceName UNIVERSE (0.1) WITH WEIGHT AS x; 
-````
-Samples the `@data` rowset such that the `name` and `deviceName` columns values are in some randomly chosen fraction 
-of the overall value space (10% in the above example) and adds a weight column called `x` to the resulting rowset. 
-U-SQL uses cryptographically strong hash functions to pick a random portion. 
- 
-````
-@data3 = SAMPLE @data ON name DISTINCT (0.1, 2); 
+@data2 =  SAMPLE @data ON name, deviceName UNIVERSE (0.1); 
 ````
 
-Samples the `@data` rowset such such at least 2 rows (in the example) per distinct value in the column `name` 
-are included, and additional rows are added with the indicated probability (10% in the example above).
+Samples the `@data` rowset by picking some randomly chosen fraction of the overall value-space of the ON columns and returning all rows whose value of the ON columns belongs in the chosen space. For example, the above statement implicitly picks 10% of all the values of the `name` and `deviceName` columns and returns all rows whose value of `name` and `deviceName` were in the randomly chosen fraction. U-SQL uses cryptographically strong hash functions to pick a random portion. 
+
+````
+@data3 = SAMPLE @data ON name DISTINCT (0.1, 2) WITH WEIGHT AS x; 
+````
+
+Samples the `@data` rowset such that at least 2 rows (in the given example) per distinct value in the column `name` are included, and additional rows are added with the indicated probability (10% in the example above). The weight of each passing row added to the resulting rowset in the weight column `x`. Weights can be used to estimate aggregates from the sampled data.
+
+3. Optimizer supports query-rewrites with sampler expressions
+
+Sampler-aware push-down rules move the sampler to a more performant location in the query plan (if possible) while ensuring that the desired statistical properties continue to hold. This offers better performance for plans with samplers w/o changing the accuracy.
 
 If you are interested in trying the sampling operators out before it gets enabled, please contact us at the usql@microsoft.com email address.
 
@@ -235,9 +238,9 @@ U-SQL now offers the ability to set access permissions on databases in addition 
 
 The creator of the ADLA account will be the owner of the catalog and the `master` database (that cannot be deleted).
 
-Enumeration access provides the right to see the objects and their definition inside a database, but not run queries against the data in tables. Note that views and TVFs that access files will have to be secured by setting ACLs on the files.
-Read access provides the right to query the data in the database's tables.
-Write access provides the right to create objects in the database and insert data into its tables.
+At the catalog-level, read access provides the right to enumerate/list the databases inside the ADLA account. Write access to a catalog provides the right to create a database or drop an owned database.
+
+At the database-level, read access provides the right to enumerate or read the objects and their definitions inside a database, and run queries against the data in tables. Note that views and TVFs that access files will have to be secured by setting ACLs on the files. Write access to a database provides the right to create objects in the database and insert data into its tables.
 
 The `master` database per default is both read and write accessible to any authorized security principal (user or security group) of the given ADLA account.
 
