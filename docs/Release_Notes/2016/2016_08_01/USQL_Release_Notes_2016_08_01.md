@@ -102,7 +102,7 @@ Please use the following pattern to include the above file in your extract state
 @data = EXTRACT data string, date DateTime
         FROM "/data/{date:yyyy}/{date:MM}/{date:dd}/{date:HH}/hourlydata.csv"
 		USING Extractors.Csv();
-
+````
 #### [Deprecation of `{col:*}` File Set pattern](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_07_14/USQL_Release_Notes_2016_07_14.md)
 
 ## Breaking Changes
@@ -128,22 +128,23 @@ Technically, the row splitter in the UDO model for both built-in and custom extr
 
 As part of fixing the Record-Boundary Alignment issue, the input properties provide the correct information:
 
-`input.Length` is the length of the input segment of the file that is being processed by the extractor (without the 4MB look into the next segment).
-`input.Start` is the byte offset of the start of the segment in relationship to the file. It is 0 for the first segment.
-`input.BaseStream.Position` is the local position where the reader on the input baseStream is in relation to the segment.
+- `input.Length` is the length of the input segment of the file that is being processed by the extractor (without the 4MB look into the next segment).
+- `input.Start` is the byte offset of the start of the segment in relationship to the file. It is 0 for the first segment.
+- `input.BaseStream.Position` is the local position where the reader on the input baseStream is in relation to the segment.
 
 #### Improved error messages
 
 Several error messages received improvements, such as:
 
 1. Better error reporting when duplicate table names are used in `CROSS APPLY` expressions. Example of such invalid naming: 
-
+       ````
        @q4 = SELECT i FROM @a CROSS APPLY EXPLODE(a1) AS T(i) 
 	                       CROSS APPLY EXPLODE(a2) AS T(i);
+       ````
 
-2. Error for the unsupported "TOP" syntax now guides users to use one of the two supported constructs for restricting the row count, ORDER BY FETCH clause or SAMPLE ANY clause.
+2. Error for the unsupported `TOP` syntax now guides users to use one of the two supported constructs for restricting the row count, `ORDER BY FETCH` clause or `SAMPLE ANY` expression.
 	
-3. Added more details to the resolution steps of the error message for when there is an unexpected number of columns in the input stream (E_EXTRACT_UNEXPECTED_NUMBER_COLUMNS)
+3. Added more details to the resolution steps of the error message for when there is an unexpected number of columns in the input stream (`E_EXTRACT_UNEXPECTED_NUMBER_COLUMNS`)
 
 ## New U-SQL capabilities
 
@@ -244,7 +245,12 @@ All other databases per default are owned by the creator of the database who has
 
 Access permissions on databases currently can only be set through the Azure Portal.
 
-Note that access permissions on databases created before the release have been propagated as part of the release. So if you had access to the database `myDB` before the update, you should still have the same access after the update. However, all newly added users will need to be granted explicit permissions on all previously existing databases (including `master`
-## PLEASE NOTE:either by an explicit grant or by adding the user to an authorized security group.
+Note that access permissions on databases created before the release have been propagated as part of the release. So if you had access to the database `myDB` before the update, you should still have the same access after the update. However, all newly added users will need to be granted explicit permissions on all previously existing databases (including `master`) either by an explicit grant or by adding the user to an authorized security group.
+
+#### U-SQL is starting to increase the limit on files in file set extractors (requires a simple email signup)
+
+Currently, U-SQL's file set pattern on `EXTRACT` expressions runs into compile time time-outs around 800 to 3000 files. We are currently working on raising this limit in an upcoming release. If you are willing to help us test the first phase of the improvement, please contact us via the usql@microsoft.com email alias, but please be aware that the real increase of this limit will be part of the second phase.
+
+## PLEASE NOTE:
 
 In order to get access to the new syntactic features and new tool capabilities on your local environment, you will need to [refresh your ADL Tools](http://aka.ms/adltoolsvs). Otherwise you will not be able to use them during local run and submission to the cluster will give you syntax warnings for the new language features.
