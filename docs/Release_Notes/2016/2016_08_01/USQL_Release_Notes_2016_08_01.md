@@ -1,6 +1,6 @@
 # U-SQL Release Notes 2016-08-01
 --------------------------
-## Pending and Upcoming Deprecations
+## Pending and Upcoming Depreciations
 
 Please review your code and make sure you are cleaning your existing code to be ready for the following 
 deprecations later this year (follow links for more details).
