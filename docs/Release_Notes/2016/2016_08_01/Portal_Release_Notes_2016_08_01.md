@@ -11,6 +11,7 @@ For greater compatilibity with HDFS, we've implemented the full POSIX ACL system
 Previously, any user that had access to submit jobs to an ADLA account can access and create anything in the Catalog. In this release, you can control who can access Catalogs and Databases and what permissions they have.
 
 To manage permissions on a Catalog/Database:
+
 1. Open the ADLA account
 
 1. Go to Data Explorer
