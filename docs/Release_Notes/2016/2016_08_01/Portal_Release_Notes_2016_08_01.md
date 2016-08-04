@@ -12,9 +12,13 @@ Previously, any user that had access to submit jobs to an ADLA account can acces
 
 To manage permissions on a Catalog/Database:
 1. Open the ADLA account
+
 1. Go to Data Explorer
+
 1. Click on the Catalog or Database
+
 1. Click Manage Access
+
 
 ## Simplified adding a new user to Azure Data Lake Analytics
 
