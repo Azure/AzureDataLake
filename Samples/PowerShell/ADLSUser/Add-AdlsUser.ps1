@@ -9,7 +9,7 @@ files and directories in the specified Data Lake Store account, with the specifi
 .PARAMETER Account
 The name of the Data Lake Store account to which to add or remove the user or group.
 
-.PARAMETER EntityToAdd
+.PARAMETER EntityIdToAdd
 The Azure AD Object ID of the user or group to add.
 The recommendation to ensure the right user or group is added is to run Get-AzureRMAdUser or 
 Get-AzureRMAdGroup and pass in the Object ID returned by that cmdlet.
@@ -25,7 +25,7 @@ The permissions to give the user or group. This can be "All" or "None".
 
 .EXAMPLE
 $objectId = (Get-AzureRmAdUser -Mail john@contoso.com).ObjectId
-Add-AdlsUser.ps1 -Account myadlsaccount -EntityToAdd $objectId -EntityType User
+Add-AdlsUser.ps1 -Account myadlsaccount -EntityIdToAdd $objectId -EntityType User
 #>
 param
 (
