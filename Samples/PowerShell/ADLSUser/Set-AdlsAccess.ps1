@@ -1,39 +1,40 @@
 <#
 .SYNOPSIS
-Script used to add or remove permissions for a Data Lake Store user or group
+Recursively sets permissions on a Data Lake Store filesystem, at the specified path.
 
 .DESCRIPTION
-This script adds or removes permissions for the specified user, service principal, or group to access 
-files and directories in the specified Data Lake Store account, with the specified level of access.
+Recursively sets permissions on a Data Lake Store filesystem, 
+at the specified path, for either (1) a given "User" or service 
+principal, (2) a given "Group", or (3) "Other".
 
 .PARAMETER Account
-The name of the Data Lake Store account to which to add or remove the user or group.
+The name of the Data Lake Store account to which to add or remove the user, group or other permission.
 
 .PARAMETER EntityIdToAdd
-The Azure AD Object ID of the user or group to add.
+The Azure AD Object ID of the user or group to add. This should not be specified for 'other' permissions.
 The recommendation to ensure the right user or group is added is to run Get-AzureRMAdUser or 
 Get-AzureRMAdGroup and pass in the Object ID returned by that cmdlet.
 
 .PARAMETER EntityType
-Indicates if the entity to be added is a user or group.
+Indicates if the entity to be added is a user, group or the other permission.
 
 .PARAMETER Path
 The path to start giving the specified entity permissions. This will also recursively propagate those permissions.
 
 .PARAMETER Permissions
-The permissions to give the user or group. This can be "All" or "None".
+The permissions to give the user, group or other. This can be "All" or "None".
 
 .EXAMPLE
 $objectId = (Get-AzureRmAdUser -Mail john@contoso.com).ObjectId
-Add-AdlsUser.ps1 -Account myadlsaccount -EntityIdToAdd $objectId -EntityType User
+Set-AdlsAccess.ps1 -Account myadlsaccount -EntityIdToAdd $objectId -EntityType User
 #>
 param
 (
     [Parameter(Mandatory=$true)]
     [string] $Account,
-    [Parameter(Mandatory=$true)]
-    [Guid] $EntityIdToAdd,
-    [ValidateSet("User", "Group")]
+    [Parameter(Mandatory=$false)]
+    [string] $EntityIdToAdd,
+    [ValidateSet("User", "Group", "Other")]
     [Parameter(Mandatory=$true)]
     [string] $EntityType,
     [Parameter(Mandatory=$true)]
@@ -51,8 +52,8 @@ function giveaccess
         [string] $Account,
         [Parameter(Mandatory=$true)]
         [string] $Path,
-        [Parameter(Mandatory=$true)]
-        [Guid] $IdToAdd,
+        [Parameter(Mandatory=$false)]
+        [string] $IdToAdd,
         [Parameter(Mandatory=$true)]
         [string] $entityType,
         [Parameter(Mandatory=$true)]
@@ -84,8 +85,8 @@ function copyacls
         [string] $Path,
         [Parameter(Mandatory=$true)]
         [string] $Permissions,
-        [Parameter(Mandatory=$true)]
-        [Guid] $IdToAdd,
+        [Parameter(Mandatory=$false)]
+        [string] $IdToAdd,
         [Parameter(Mandatory=$true)]
         [string] $entityType,
         [Parameter(Mandatory=$true)]
@@ -129,7 +130,22 @@ function copyacls
 # 1. The Azure PowerShell environment is installed
 # 2. The current session has already run "Login-AzureRMAccount" with a user account that has permissions to the specified ADLS account
 try
-{    
+{   if($EntityType -ieq "other" -and !([string]::IsNullOrEmpty($EntityIdToAdd)))
+	{
+		throw "EntityIdToAdd is not supported when modifying permissions for 'Other' entity types"
+	}
+	
+	if($EntityType -ine "other" -and [string]::IsNullOrEmpty($EntityIdToAdd))
+	{
+		throw "EntityIdToAdd is required when modifying permissions for 'user' and 'group' entity types"
+	}
+	
+	$ignored = [Guid]::Empty
+	if($EntityType -ine "other" -and !([Guid]::TryParse($EntityIdToAdd, [ref]$ignored)))
+	{
+		throw "EntityIdToAdd must be a valid GUID. EntityIdToAdd value was: $EntityIdToAdd"
+	}
+	
     $executingDir = Split-Path -parent $MyInvocation.MyCommand.Definition
     $executingFile = Split-Path -Leaf $MyInvocation.MyCommand.Definition
     
