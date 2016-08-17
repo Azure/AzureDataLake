@@ -26,7 +26,7 @@ The permissions to give the user, group or other. This can be "All" or "None".
 
 .EXAMPLE
 $objectId = (Get-AzureRmAdUser -Mail john@contoso.com).ObjectId
-Add-AdlsUser.ps1 -Account myadlsaccount -EntityIdToAdd $objectId -EntityType User
+Set-AdlsAccess.ps1 -Account myadlsaccount -EntityIdToAdd $objectId -EntityType User
 #>
 param
 (
