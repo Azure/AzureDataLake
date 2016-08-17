@@ -159,9 +159,16 @@ try
     
     Write-Host "Request to add entity: $EntityIdToAdd successfully submitted and will propagate over time depending on the size of the folder."
     Write-Host "Please do not close this PowerShell window; otherwise, the propagation will be cancelled."
-    
-    Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions
-    Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions -Default
+    if($EntityType -ieq "other")
+    {
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions
+    }
+    else
+    {
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions -Default
+    }
     copyacls -Account $Account -Path $Path -Permissions $Permissions -IdToAdd $EntityIdToAdd -entityType $EntityType -loginProfilePath $profilePath | Out-Null
 }
 catch
