@@ -161,8 +161,8 @@ try
     Write-Host "Please do not close this PowerShell window; otherwise, the propagation will be cancelled."
     if($EntityType -ieq "other")
     {
-        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions
-        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions
     }
     else
     {
