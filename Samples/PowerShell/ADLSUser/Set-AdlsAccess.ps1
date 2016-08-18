@@ -25,7 +25,7 @@ The path to start giving the specified entity permissions. This will also recurs
 The permissions to give the user, group or other. This can be "All" or "None".
 
 .EXAMPLE
-$objectId = (Get-AzureRmAdUser -Mail john@contoso.com).ObjectId
+$objectId = (Get-AzureRmAdUser -Mail john@contoso.com).Id
 Set-AdlsAccess.ps1 -Account myadlsaccount -EntityIdToAdd $objectId -EntityType User
 #>
 param
