@@ -72,7 +72,8 @@ function giveaccess
         $aceToAdd = "default:$aceToAdd,$aceToAdd"
     }
     
-    return Start-Job -ScriptBlock {param ($loginProfilePath, $Account, $Path, $aceToAdd) Select-AzureRMProfile -Path $loginProfilePath | Out-Null; Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -Acl "$aceToAdd"} -ArgumentList $loginProfilePath, $Account, $Path, $aceToAdd
+    Select-AzureRMProfile -Path $loginProfilePath | Out-Null; 
+    Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -Acl "$aceToAdd" -Force;
 }
 
 function copyacls
@@ -116,8 +117,8 @@ function copyacls
         elseif ($item.Type -ieq "DIRECTORY")
         {
             # set permission and recurse on the directory
-            giveaccess -Account $Account -Path $pathToSet -IdToAdd $IdToAdd -entityType $entityType -permissionToAdd $perms -isDefault -loginProfilePath $loginProfilePath  | Out-Null
-            copyacls -Account $Account -Path $pathToSet -Permissions $Permissions -IdToAdd $IdToAdd -entityType $entityType -loginProfilePath $loginProfilePath  | Out-Null
+            giveaccess -Account $Account -Path $pathToSet -IdToAdd $IdToAdd -entityType $entityType -permissionToAdd $perms -isDefault -loginProfilePath $loginProfilePath | Out-Null
+            copyacls -Account $Account -Path $pathToSet -Permissions $Permissions -IdToAdd $IdToAdd -entityType $entityType -loginProfilePath $loginProfilePath | Out-Null
         }
         else
         {
@@ -161,13 +162,13 @@ try
     Write-Host "Please do not close this PowerShell window; otherwise, the propagation will be cancelled."
     if($EntityType -ieq "other")
     {
-        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions
-        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions -Force
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Permissions $Permissions -Force
     }
     else
     {
-        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions
-        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions -Default
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions -Force
+        Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -AceType $EntityType -Id $EntityIdToAdd -Permissions $Permissions -Default -Force
     }
     copyacls -Account $Account -Path $Path -Permissions $Permissions -IdToAdd $EntityIdToAdd -entityType $EntityType -loginProfilePath $profilePath | Out-Null
 }
