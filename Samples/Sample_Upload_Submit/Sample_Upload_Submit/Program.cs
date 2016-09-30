@@ -1,5 +1,5 @@
 ﻿using ADL = Microsoft.Azure.Management.DataLake;
-
+using RESTAUTH = Microsoft.Rest.Azure.Authentication;
 
 namespace Sample_Upload_Submit
 {
@@ -9,10 +9,10 @@ namespace Sample_Upload_Submit
         static void Main(string[] args)
         {
             // -------------------------- 
-            var token = get_oauth_token();
+            var creds = get_creds();
 
             var adls_acct = "mahiadlsdemo";
-            var fs_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(token);
+            var fs_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(creds);
             var upload_params = new ADL.StoreUploader.UploadParameters(@"C:\mva\localinput.txt",
                                                         "/mva2/input1.csv",
                                                         adls_acct,
@@ -25,14 +25,14 @@ namespace Sample_Upload_Submit
             // ------------------------------
             var adla_acct = "mahiadlademo";
             //Microsoft.Azure.Management.DataLake.Analytics.
-            var job_client = new ADL.Analytics.DataLakeAnalyticsJobManagementClient(token);
+            var job_client = new ADL.Analytics.DataLakeAnalyticsJobManagementClient(creds);
             var job_props = new ADL.Analytics.Models.USqlJobProperties("your script here");
             var job_info = new ADL.Analytics.Models.JobInformation("Test job", ADL.Analytics.Models.JobType.USql, job_props);
             var job_id = System.Guid.NewGuid();
             ADL.Analytics.JobOperationsExtensions.Create(job_client.Job,adla_acct, job_id, job_info);
         }
 
-        private static Microsoft.Rest.ServiceClientCredentials get_oauth_token()
+        private static Microsoft.Rest.ServiceClientCredentials get_creds()
         {
             string nativeClientApp_clientId = "1950a258-227b-4e31-a9cf-717495945fc2";
             string domain = "common";
@@ -41,11 +41,9 @@ namespace Sample_Upload_Submit
             var sync_context = new System.Threading.SynchronizationContext();
             System.Threading.SynchronizationContext.SetSynchronizationContext(sync_context);
 
-            var ad_client_settings = Microsoft.Rest.Azure.Authentication.ActiveDirectoryClientSettings.UsePromptOnly(nativeClientApp_clientId,
-                    client_redirect_uri);
-            var token =
-                Microsoft.Rest.Azure.Authentication.UserTokenProvider.LoginWithPromptAsync(domain, ad_client_settings).Result;
-            return token;
+            var ad_client_settings = RESTAUTH.ActiveDirectoryClientSettings.UsePromptOnly(nativeClientApp_clientId, client_redirect_uri);
+            var creds = RESTAUTH.UserTokenProvider.LoginWithPromptAsync(domain, ad_client_settings).Result;
+            return creds;
         }
     }
 }
