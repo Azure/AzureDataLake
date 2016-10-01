@@ -81,6 +81,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureDataLake\Analytics\SubmitJobOptions.cs" />
+    <Compile Include="AzureDataLake\RESTUtil.cs" />
     <Compile Include="AzureDataLake\Analytics\GetJobListPagedOptions.cs" />
     <Compile Include="AzureDataLake\AccountClientBase.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsAccountClient.cs" />

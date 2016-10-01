@@ -60,40 +60,12 @@ namespace AzureDataLake.Analytics
 
             // Handle the initial response
             var page = this._adla_client.Job.List(this.Account, oDataQuery, @select, count, search, format);
-            foreach (var cur_page in EnumPages<JobInformation>(page, p => this._adla_client.Job.ListNext(p.NextPageLink)))
+            foreach (var cur_page in RESTUtil.EnumPages<JobInformation>(page, p => this._adla_client.Job.ListNext(p.NextPageLink)))
             {
                 yield return cur_page;
             }
         }
 
-        private IEnumerable<T[]> EnumPages<T>(IPage<T> page, System.Func<IPage<T>, IPage<T>> f_get_next_page )
-        {
-            var t_array = page_items_to_array(page);
-            yield return t_array;
-
-            // While there are additional pages left fetch them
-            while (!string.IsNullOrEmpty(page.NextPageLink))
-            {
-                var t_array_2 = page_items_to_array(page);
-
-                yield return t_array_2;
-                page = f_get_next_page(page);
-            }
-        }
-
-        private static T[] page_items_to_array<T>(Microsoft.Rest.Azure.IPage<T> page)
-        {
-            int num_items_in_page = page.Count();
-            var items = new T[num_items_in_page];
-
-            int i = 0;
-            foreach (var item in page)
-            {
-                items[i] = item;
-                i++;
-            }
-            return items;
-        }
 
         public ADL.Analytics.Models.JobInformation  SubmitJob(SubmitJobOptions options)
         {
@@ -127,12 +99,5 @@ namespace AzureDataLake.Analytics
 
             return jobInfo;
         }
-    }
-
-    public class SubmitJobOptions
-    {
-        public System.Guid JobID;
-        public string JobName;
-        public string ScriptText;
     }
 }

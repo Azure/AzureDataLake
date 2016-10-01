@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using ADL=Microsoft.Azure.Management.DataLake;
-using Microsoft.Azure.Management.DataLake.Store;
 
 namespace AzureDataLake.Analytics
 {
