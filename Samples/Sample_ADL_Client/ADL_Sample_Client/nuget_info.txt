@@ -1,0 +1,5 @@
+﻿Install-Package Microsoft.Azure.Management.DataLake.Analytics -Pre
+Install-Package Microsoft.Azure.Management.DataLake.Store -Pre
+Install-Package Microsoft.Azure.Management.DataLake.StoreUploader -Pre
+Install-Package Microsoft.Rest.ClientRuntime.Azure.Authentication -Pre
+Install-Package WindowsAzure.Storage
