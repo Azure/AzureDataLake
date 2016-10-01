@@ -14,10 +14,32 @@ namespace ADL_Client_Demo
 
             string store_account = "datainsightsadhoc";
             string analytics_account = "datainsightsadhoc";
-            var StoreClient = new AzureDataLake.Store.StoreClient(store_account, auth_session);
+            string subid = "045c28ea-c686-462f-9081-33c34e871ba3";
+            var sub = new AzureDataLake.Subscription(subid);
+
+            var StoreClient = new AzureDataLake.Store.StoreFileSystemClient(store_account, auth_session);
             var AnalyticsClient = new AzureDataLake.Analytics.AnalyticsClient(analytics_account, auth_session);
+            var StoreAccountClient = new AzureDataLake.Store.StoreAccountClient(sub, auth_session);
+            var AnalyticsAccountClient = new AzureDataLake.Analytics.AnalyticsAccountClient(sub, auth_session);
+
+            var directory = AzureDataLake.Authentication.Directory.Resolve("microsoft.com");
+
+            var adls_accounts = StoreAccountClient.ListStores(subid);
+            foreach (var a in adls_accounts)
+            {
+                System.Console.WriteLine("Store {0} ", a.Name);
+            }
+
+            var adla_accounts = AnalyticsAccountClient.ListStores(subid);
+            foreach (var a in adla_accounts)
+            {
+                System.Console.WriteLine("Analytics {0} ", a.Name);
+            }
 
 
+            int x = 1;
+
+            /*
             var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
             getjobs_options.Top = 30;
             getjobs_options.OrderByField = "submitTime";
@@ -30,6 +52,7 @@ namespace ADL_Client_Demo
 
             System.Console.WriteLine("{0} {1} {2}", ji.Name, ji.JobId, ji.SubmitTime);
 
+            */
             /*
             var jobs = AnalyticsClient.GetJobList(getjobs_options).ToArray();
 

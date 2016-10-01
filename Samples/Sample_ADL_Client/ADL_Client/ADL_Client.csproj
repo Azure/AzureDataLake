@@ -82,13 +82,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureDataLake\Analytics\GetJobListPagedOptions.cs" />
-    <Compile Include="AzureDataLake\ClientBase.cs" />
+    <Compile Include="AzureDataLake\AccountClientBase.cs" />
+    <Compile Include="AzureDataLake\Analytics\AnalyticsAccountClient.cs" />
     <Compile Include="AzureDataLake\Authentication\Directory.cs" />
     <Compile Include="AzureDataLake\Authentication\AuthenticatedSession.cs" />
+    <Compile Include="AzureDataLake\Store\StoreAccountClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AzureDataLake\Store\RecurseResult.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsClient.cs" />
-    <Compile Include="AzureDataLake\Store\StoreClient.cs" />
+    <Compile Include="AzureDataLake\Store\StoreFileSystemClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

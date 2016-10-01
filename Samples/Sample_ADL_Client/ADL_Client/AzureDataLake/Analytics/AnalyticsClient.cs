@@ -7,7 +7,7 @@ using ADL=Microsoft.Azure.Management.DataLake;
 
 namespace AzureDataLake.Analytics
 {
-    public class AnalyticsClient : ClientBase
+    public class AnalyticsClient : AccountClientBase
     {
         private ADL.Analytics.DataLakeAnalyticsJobManagementClient _adla_client;
 

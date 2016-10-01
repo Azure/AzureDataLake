@@ -4,12 +4,12 @@ using Microsoft.Azure.Management.DataLake.Store;
 
 namespace AzureDataLake.Store
 {
-    public class StoreClient : ClientBase
+    public class StoreFileSystemClient : AccountClientBase
     {
         private ADL.Store.DataLakeStoreAccountManagementClient store_mgmt_client;
         private ADL.Store.DataLakeStoreFileSystemManagementClient store_fs_client;
 
-        public StoreClient(string account, AzureDataLake.Authentication.AuthenticatedSession authSession) :
+        public StoreFileSystemClient(string account, AzureDataLake.Authentication.AuthenticatedSession authSession) :
             base(account,authSession)
         {
             store_mgmt_client = new ADL.Store.DataLakeStoreAccountManagementClient(this.AuthenticatedSession.Credentials);
