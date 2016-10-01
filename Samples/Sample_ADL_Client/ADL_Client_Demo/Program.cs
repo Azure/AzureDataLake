@@ -36,12 +36,21 @@ namespace ADL_Client_Demo
                 System.Console.WriteLine("Analytics {0} ", a.Name);
             }
 
-
-            /*
             var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
             getjobs_options.Top = 30;
             getjobs_options.OrderByField = "submitTime";
             getjobs_options.OrderByDirection = "desc";
+            var jobs = AnalyticsClient.GetJobList(getjobs_options).ToArray();
+
+
+            foreach (var job in jobs)
+            {
+                //var job2 = AnalyticsClient.GetJob(job.JobId.Value);
+                System.Console.WriteLine("{0} {1}", job.Name, job.JobId);
+            }
+
+
+            /*
 
 
             var sjo = new AzureDataLake.Analytics.SubmitJobOptions();
@@ -52,14 +61,6 @@ namespace ADL_Client_Demo
 
             */
             /*
-            var jobs = AnalyticsClient.GetJobList(getjobs_options).ToArray();
-
-
-            foreach (var job in jobs)
-            {
-                var job2 = AnalyticsClient.GetJob(job.JobId.Value);
-                System.Console.WriteLine("{0} {1}", job.Name, job.JobId);
-            }
             
             var pages = StoreClient.ListPaged("/",200);
             foreach (var page in pages)

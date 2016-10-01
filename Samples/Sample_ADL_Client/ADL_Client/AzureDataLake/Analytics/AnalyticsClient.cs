@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
+using Microsoft.Rest.Azure;
 using ADL=Microsoft.Azure.Management.DataLake;
 
 namespace AzureDataLake.Analytics
@@ -59,31 +60,39 @@ namespace AzureDataLake.Analytics
 
             // Handle the initial response
             var page = this._adla_client.Job.List(this.Account, oDataQuery, @select, count, search, format);
-            var jobs_a = job_page_to_array(page);
-            yield return jobs_a;
+            foreach (var cur_page in EnumPages<JobInformation>(page, p => this._adla_client.Job.ListNext(p.NextPageLink)))
+            {
+                yield return cur_page;
+            }
+        }
+
+        private IEnumerable<T[]> EnumPages<T>(IPage<T> page, System.Func<IPage<T>, IPage<T>> f_get_next_page )
+        {
+            var t_array = page_items_to_array(page);
+            yield return t_array;
 
             // While there are additional pages left fetch them
             while (!string.IsNullOrEmpty(page.NextPageLink))
             {
-                var jobs = job_page_to_array(page);
+                var t_array_2 = page_items_to_array(page);
 
-                yield return jobs;
-                page = this._adla_client.Job.ListNext(page.NextPageLink);
+                yield return t_array_2;
+                page = f_get_next_page(page);
             }
         }
 
-        private static JobInformation[] job_page_to_array(Microsoft.Rest.Azure.IPage<JobInformation> page)
+        private static T[] page_items_to_array<T>(Microsoft.Rest.Azure.IPage<T> page)
         {
-            int num_jobs_in_page = page.Count();
-            var jobs = new ADL.Analytics.Models.JobInformation[num_jobs_in_page];
+            int num_items_in_page = page.Count();
+            var items = new T[num_items_in_page];
 
             int i = 0;
-            foreach (var job in page)
+            foreach (var item in page)
             {
-                jobs[i] = job;
+                items[i] = item;
                 i++;
             }
-            return jobs;
+            return items;
         }
 
         public ADL.Analytics.Models.JobInformation  SubmitJob(SubmitJobOptions options)
