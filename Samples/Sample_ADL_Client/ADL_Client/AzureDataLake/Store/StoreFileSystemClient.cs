@@ -6,21 +6,19 @@ namespace AzureDataLake.Store
 {
     public class StoreFileSystemClient : AccountClientBase
     {
-        private ADL.Store.DataLakeStoreAccountManagementClient store_mgmt_client;
-        private ADL.Store.DataLakeStoreFileSystemManagementClient store_fs_client;
+        private ADL.Store.DataLakeStoreFileSystemManagementClient _adls_filesys_rest_client;
 
         public StoreFileSystemClient(string account, AzureDataLake.Authentication.AuthenticatedSession authSession) :
             base(account,authSession)
         {
-            store_mgmt_client = new ADL.Store.DataLakeStoreAccountManagementClient(this.AuthenticatedSession.Credentials);
-            store_fs_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(this.AuthenticatedSession.Credentials);
+            _adls_filesys_rest_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(this.AuthenticatedSession.Credentials);
         }
 
 
         public IList<ADL.Store.Models.FileStatusProperties> List(string path)
         {
             var listSize = 100;
-            var result = store_fs_client.FileSystem.ListFileStatus(this.Account, path, listSize);
+            var result = _adls_filesys_rest_client.FileSystem.ListFileStatus(this.Account, path, listSize);
             var files = result.FileStatuses.FileStatus;
             return files;
         }
@@ -56,7 +54,7 @@ namespace AzureDataLake.Store
             string after = null;
             while (true)
             {
-                var result = store_fs_client.FileSystem.ListFileStatus(this.Account, path, pagesize,after);
+                var result = _adls_filesys_rest_client.FileSystem.ListFileStatus(this.Account, path, pagesize,after);
 
                 if (result.FileStatuses.FileStatus.Count > 0)
                 {
@@ -73,23 +71,23 @@ namespace AzureDataLake.Store
         
         public void CreateDirectory(string path)
         {
-            var result = store_fs_client.FileSystem.Mkdirs(this.Account, path);
+            var result = _adls_filesys_rest_client.FileSystem.Mkdirs(this.Account, path);
         }
 
         public void Delete(string path)
         {
-            var result = store_fs_client.FileSystem.Delete(this.Account, path);
+            var result = _adls_filesys_rest_client.FileSystem.Delete(this.Account, path);
         }
 
         public void Delete(string path, bool recursive)
         {
-            var result = store_fs_client.FileSystem.Delete(this.Account, path, recursive );
+            var result = _adls_filesys_rest_client.FileSystem.Delete(this.Account, path, recursive );
         }
 
         public void CreateFile(string path, byte[] bytes, bool overwrite)
         {
             var memstream = new System.IO.MemoryStream(bytes);
-            store_fs_client.FileSystem.Create(this.Account, path,memstream,overwrite);
+            _adls_filesys_rest_client.FileSystem.Create(this.Account, path,memstream,overwrite);
         }
 
         public void CreateFile(string path, string content, bool overwrite)
@@ -100,7 +98,7 @@ namespace AzureDataLake.Store
 
         public ADL.Store.Models.FileStatusResult GetFileInformation( string path )
         {
-            var info = store_fs_client.FileSystem.GetFileStatus(this.Account, path);
+            var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path);
             return info;
         }
 
@@ -108,7 +106,7 @@ namespace AzureDataLake.Store
         {
             try
             {
-                var info = store_fs_client.FileSystem.GetFileStatus(this.Account, path);
+                var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path);
                 return info;
             }
             catch (Microsoft.Rest.Azure.CloudException e)
@@ -129,14 +127,14 @@ namespace AzureDataLake.Store
 
         public ADL.Store.Models.AclStatus GetPermissions(string path)
         {
-            var acl = this.store_fs_client.FileSystem.GetAclStatus(this.Account, path);
+            var acl = this._adls_filesys_rest_client.FileSystem.GetAclStatus(this.Account, path);
             var acl2 = acl.AclStatus;
             return acl2;
         }
 
         public void ModifyACLs(string path,string perms)
         {
-            this.store_fs_client.FileSystem.ModifyAclEntries(this.Account,  path, perms);
+            this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account,  path, perms);
         }
     }
 }

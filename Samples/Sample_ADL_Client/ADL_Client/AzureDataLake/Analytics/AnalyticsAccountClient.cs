@@ -7,22 +7,29 @@ namespace AzureDataLake.Analytics
 {
     public class AnalyticsAccountClient: ClientBase
     {
-        private ADL.Analytics.DataLakeAnalyticsAccountManagementClient analytics_mgmt_client;
+        private ADL.Analytics.DataLakeAnalyticsAccountManagementClient _adla_mgmt_rest_client;
         private AzureDataLake.Subscription Sub;
 
         public AnalyticsAccountClient(Subscription sub, AzureDataLake.Authentication.AuthenticatedSession authSession) :
             base(authSession)
         {
             this.Sub = sub;
-            this.analytics_mgmt_client = new ADL.Analytics.DataLakeAnalyticsAccountManagementClient(this.AuthenticatedSession.Credentials);
-            this.analytics_mgmt_client.SubscriptionId = sub.ID;
+            this._adla_mgmt_rest_client = new ADL.Analytics.DataLakeAnalyticsAccountManagementClient(this.AuthenticatedSession.Credentials);
+            this._adla_mgmt_rest_client.SubscriptionId = sub.ID;
         }
 
-        public List<ADL.Analytics.Models.DataLakeAnalyticsAccount> ListStores(string subscription_id)
+        public List<ADL.Analytics.Models.DataLakeAnalyticsAccount> ListAccounts(string subscription_id)
         {
-            var page = this.analytics_mgmt_client.Account.List();
-            var accounts = page.ToList();
-            return accounts;
+            var page = this._adla_mgmt_rest_client.Account.List();
+            var pages = AzureDataLake.RESTUtil.EnumPages(page,
+                p => this._adla_mgmt_rest_client.Account.ListNext(p.NextPageLink));
+
+            var result = new List<ADL.Analytics.Models.DataLakeAnalyticsAccount>();
+            foreach (var p in pages)
+            {
+                result.AddRange(p);
+            }
+            return result;
         }
     }
 }

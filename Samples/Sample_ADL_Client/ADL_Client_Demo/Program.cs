@@ -30,7 +30,7 @@ namespace ADL_Client_Demo
                 System.Console.WriteLine("Store {0} ", a.Name);
             }
 
-            var adla_accounts = AnalyticsAccountClient.ListStores(subid);
+            var adla_accounts = AnalyticsAccountClient.ListAccounts(subid);
             foreach (var a in adla_accounts)
             {
                 System.Console.WriteLine("Analytics {0} ", a.Name);

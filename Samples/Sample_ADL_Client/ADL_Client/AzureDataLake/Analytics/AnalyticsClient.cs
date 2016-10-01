@@ -10,14 +10,14 @@ namespace AzureDataLake.Analytics
 {
     public class AnalyticsClient : AccountClientBase
     {
-        private ADL.Analytics.DataLakeAnalyticsJobManagementClient _adla_client;
+        private ADL.Analytics.DataLakeAnalyticsJobManagementClient _adla_job_rest_client;
 
         public AnalyticsClient(string account, AzureDataLake.Authentication.AuthenticatedSession authSession) :
             base(account, authSession)
         {
-            if (this._adla_client == null)
+            if (this._adla_job_rest_client == null)
             {
-                this._adla_client = new ADL.Analytics.DataLakeAnalyticsJobManagementClient(this.AuthenticatedSession.Credentials);
+                this._adla_job_rest_client = new ADL.Analytics.DataLakeAnalyticsJobManagementClient(this.AuthenticatedSession.Credentials);
             }
         }
 
@@ -36,7 +36,7 @@ namespace AzureDataLake.Analytics
 
         public ADL.Analytics.Models.JobInformation GetJob(System.Guid jobid)
         {
-            var job = this._adla_client.Job.Get(this.Account, jobid);
+            var job = this._adla_job_rest_client.Job.Get(this.Account, jobid);
             return job;
         }
 
@@ -59,8 +59,8 @@ namespace AzureDataLake.Analytics
             }
 
             // Handle the initial response
-            var page = this._adla_client.Job.List(this.Account, oDataQuery, @select, count, search, format);
-            foreach (var cur_page in RESTUtil.EnumPages<JobInformation>(page, p => this._adla_client.Job.ListNext(p.NextPageLink)))
+            var page = this._adla_job_rest_client.Job.List(this.Account, oDataQuery, @select, count, search, format);
+            foreach (var cur_page in RESTUtil.EnumPages<JobInformation>(page, p => this._adla_job_rest_client.Job.ListNext(p.NextPageLink)))
             {
                 yield return cur_page;
             }
@@ -95,7 +95,7 @@ namespace AzureDataLake.Analytics
                 degreeOfParallelism: dop, 
                 jobId: options.JobID);
             
-            var jobInfo = this._adla_client.Job.Create(this.Account, options.JobID, parameters);
+            var jobInfo = this._adla_job_rest_client.Job.Create(this.Account, options.JobID, parameters);
 
             return jobInfo;
         }
