@@ -37,8 +37,6 @@ namespace ADL_Client_Demo
             }
 
 
-            int x = 1;
-
             /*
             var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
             getjobs_options.Top = 30;
