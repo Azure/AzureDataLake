@@ -22,7 +22,7 @@ Indicates if the entity to be added is a user, group or the other permission.
 The path to start giving the specified entity permissions. This will also recursively propagate those permissions.
 
 .PARAMETER Permissions
-The permissions to give the user, group or other. This can be "All" or "None".
+The permissions to give the user, group or other. This can be "All", "ReadExecute", or "None".
 
 .EXAMPLE
 $objectId = (Get-AzureRmAdUser -Mail john@contoso.com).Id
@@ -39,7 +39,7 @@ param
     [string] $EntityType,
     [Parameter(Mandatory=$true)]
     [string] $Path,
-    [ValidateSet("All", "None")]
+    [ValidateSet("All", "ReadExecute", "None")]
     [Parameter(Mandatory=$true)]
     [string] $Permissions
 )
@@ -69,11 +69,11 @@ function giveaccess
     $aceToAdd = "$entityType`:$idToAdd`:$permissionToAdd"
     if($isDefault)
     {
-        $aceToAdd = "default:$aceToAdd,$aceToAdd"
+        $aceToAdd = @("default:$aceToAdd","$aceToAdd")
     }
     
     Select-AzureRMProfile -Path $loginProfilePath | Out-Null
-    Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -Acl "$aceToAdd"
+    Set-AzureRmDataLakeStoreItemAclEntry -Account $Account -Path $Path -Acl $aceToAdd
 }
 
 function copyacls
@@ -104,7 +104,11 @@ function copyacls
         {
             $perms = "rwx";
         }
-        else 
+        elseif ($Permissions -ieq "ReadExecute")
+        {
+            $perms = "r-x";
+        }
+        else
         {
             $perms = "---";
         }
