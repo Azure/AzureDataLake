@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADL_Sample_Client", "ADL_Sample_Client\ADL_Sample_Client.csproj", "{B255D8FF-3031-43B5-8044-AA944DD62C36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADL_Client", "ADL_Client\ADL_Client.csproj", "{B255D8FF-3031-43B5-8044-AA944DD62C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADL_Client_Tests", "ADL_Client_Tests\ADL_Client_Tests.csproj", "{E8EC589D-3220-41CE-AC89-AA5EB9BAFF98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADL_Client_Demo", "ADL_Client_Demo\ADL_Client_Demo.csproj", "{97349649-6A7D-414E-8B6D-7B23678D3C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{B255D8FF-3031-43B5-8044-AA944DD62C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B255D8FF-3031-43B5-8044-AA944DD62C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B255D8FF-3031-43B5-8044-AA944DD62C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8EC589D-3220-41CE-AC89-AA5EB9BAFF98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8EC589D-3220-41CE-AC89-AA5EB9BAFF98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8EC589D-3220-41CE-AC89-AA5EB9BAFF98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8EC589D-3220-41CE-AC89-AA5EB9BAFF98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97349649-6A7D-414E-8B6D-7B23678D3C4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97349649-6A7D-414E-8B6D-7B23678D3C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97349649-6A7D-414E-8B6D-7B23678D3C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97349649-6A7D-414E-8B6D-7B23678D3C4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

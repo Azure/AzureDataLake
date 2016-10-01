@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ADLS_Demo_Create_File")]
+[assembly: AssemblyTitle("ADL_Client_Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ADLS_Demo_Create_File")]
+[assembly: AssemblyProduct("ADL_Client_Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b255d8ff-3031-43b5-8044-aa944dd62c36")]
+[assembly: Guid("e8ec589d-3220-41ce-ac89-aa5eb9baff98")]
 
 // Version information for an assembly consists of the following four values:
 //

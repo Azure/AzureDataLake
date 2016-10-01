@@ -1,5 +1,9 @@
-﻿
-namespace DataLakeSDKSamples
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ADL_Client_Demo
 {
     class Program
     {
@@ -17,14 +21,14 @@ namespace DataLakeSDKSamples
             var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
             getjobs_options.Top = 30;
             getjobs_options.OrderByField = "submitTime";
-            getjobs_options.OrderByDirection= "desc";
+            getjobs_options.OrderByDirection = "desc";
 
 
             var sjo = new AzureDataLake.Analytics.SubmitJobOptions();
-            sjo.ScriptText="FOOBAR";
+            sjo.ScriptText = "FOOBAR";
             var ji = AnalyticsClient.SubmitJob(sjo);
-            
-            System.Console.WriteLine("{0} {1} {2}",ji.Name,ji.JobId,ji.SubmitTime);
+
+            System.Console.WriteLine("{0} {1} {2}", ji.Name, ji.JobId, ji.SubmitTime);
 
             /*
             var jobs = AnalyticsClient.GetJobList(getjobs_options).ToArray();
