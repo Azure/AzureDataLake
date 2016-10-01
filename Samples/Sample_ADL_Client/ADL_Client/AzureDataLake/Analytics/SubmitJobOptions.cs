@@ -6,4 +6,18 @@ namespace AzureDataLake.Analytics
         public string JobName;
         public string ScriptText;
     }
+
+    public enum JobOrderByField
+    {
+        None,
+        SubmitTime,
+        Submitter
+    }
+
+    public enum JobOrderByDirection
+    {
+        Ascending,
+        Descending
+    }
+
 }

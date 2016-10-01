@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AzureDataLake.Analytics;
 
 namespace ADL_Client_Demo
 {
@@ -38,17 +39,15 @@ namespace ADL_Client_Demo
 
             var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
             getjobs_options.Top = 30;
-            getjobs_options.OrderByField = "submitTime";
-            getjobs_options.OrderByDirection = "desc";
+            getjobs_options.OrderByField = JobOrderByField.SubmitTime;
+            getjobs_options.OrderByDirection = JobOrderByDirection.Descending;
             var jobs = AnalyticsClient.GetJobList(getjobs_options).ToArray();
-
 
             foreach (var job in jobs)
             {
                 //var job2 = AnalyticsClient.GetJob(job.JobId.Value);
-                System.Console.WriteLine("{0} {1}", job.Name, job.JobId);
+                System.Console.WriteLine("{0} {1}", job.Submitter, job.JobId);
             }
-
 
             /*
 

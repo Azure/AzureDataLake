@@ -52,9 +52,12 @@ namespace AzureDataLake.Analytics
             if (options.Top > 0)
             {
                 oDataQuery.Top = options.Top;
-                if (options.OrderByField != null)
+                if (options.OrderByField != JobOrderByField.None)
                 {
-                    oDataQuery.OrderBy = string.Format("{0} {1}", options.OrderByField, options.OrderByDirection);
+                    var fieldname = get_order_field_name(options.OrderByField);
+                    var dir = (options.OrderByDirection == JobOrderByDirection.Ascending) ? "asc" : "desc";
+
+                    oDataQuery.OrderBy = string.Format("{0} {1}", fieldname, dir);
                 }
             }
 
@@ -64,6 +67,19 @@ namespace AzureDataLake.Analytics
             {
                 yield return cur_page;
             }
+        }
+
+        private static string get_order_field_name(JobOrderByField zz)
+        {
+            if (zz == JobOrderByField.None)
+            {
+                return null;
+            }
+            string v = zz.ToString();
+            string u = v.Substring(0, 1).ToLowerInvariant();
+            string w = v.Substring(1);
+            string x = u + w;
+            return x;
         }
 
 
