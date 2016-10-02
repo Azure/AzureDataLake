@@ -51,6 +51,11 @@ namespace AzureDataLake.Store
             this.Execute = (s[2] == 'x' || s[2] == 'X');
         }
 
+        public override string ToString()
+        {
+            return string.Format("{0}({1})", nameof(FSPermission), this.ToRwxString());
+        }
+
         public string ToRwxString()
         {
             char r = this.Read ? 'r' : '-';
