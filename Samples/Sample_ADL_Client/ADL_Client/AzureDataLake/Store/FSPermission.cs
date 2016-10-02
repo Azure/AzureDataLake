@@ -1,6 +1,6 @@
 namespace AzureDataLake.Store
 {
-    public struct FSPermission
+    public struct FsPermission
     {
         private int _bitValue;
 
@@ -23,7 +23,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public FSPermission(int i)
+        public FsPermission(int i)
         {
             if (i > 7)
             {
@@ -38,7 +38,7 @@ namespace AzureDataLake.Store
             this._bitValue = i;
         }
 
-        public FSPermission(string s)
+        public FsPermission(string s)
         {
             if (s.Length != 3)
             {
@@ -53,7 +53,7 @@ namespace AzureDataLake.Store
 
         public override string ToString()
         {
-            return string.Format("{0}({1})", nameof(FSPermission), this.ToRwxString());
+            return string.Format("{0}({1})", nameof(FsPermission), this.ToRwxString());
         }
 
         public string ToRwxString()
@@ -65,7 +65,7 @@ namespace AzureDataLake.Store
             return s;
         }
 
-        public FSPermission(bool read, bool write, bool execute)
+        public FsPermission(bool read, bool write, bool execute)
         {
             this._bitValue = 0;
             this.Read = read;
@@ -129,21 +129,21 @@ namespace AzureDataLake.Store
             }
         }
 
-        public FSPermission Invert()
+        public FsPermission Invert()
         {
-            var p = new FSPermission(!this.Read,!this.Write,!this.Execute);
+            var p = new FsPermission(!this.Read,!this.Write,!this.Execute);
             return p;
         }
 
-        public FSPermission AndWith(FSPermission p)
+        public FsPermission AndWith(FsPermission p)
         {
-            var np = new FSPermission(this.Read && p.Read, this.Write && p.Write, this.Execute && p.Execute);
+            var np = new FsPermission(this.Read && p.Read, this.Write && p.Write, this.Execute && p.Execute);
             return np;
         }
 
-        public FSPermission OrWith(FSPermission p)
+        public FsPermission OrWith(FsPermission p)
         {
-            var np = new FSPermission(this.Read || p.Read, this.Write || p.Write, this.Execute || p.Execute);
+            var np = new FsPermission(this.Read || p.Read, this.Write || p.Write, this.Execute || p.Execute);
             return np;
         }
     }

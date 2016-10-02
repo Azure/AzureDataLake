@@ -8,10 +8,10 @@ namespace ADL_Client_Tests
         [TestMethod]
         public void FSPath_Constructor_Root()
         {
-            var p0 = new AzureDataLake.Store.FSPath("/");
+            var p0 = new AzureDataLake.Store.FsPath("/");
             Assert.AreEqual("/",p0.ToString());
 
-            var p1 = AzureDataLake.Store.FSPath.Root;
+            var p1 = AzureDataLake.Store.FsPath.Root;
             Assert.AreEqual("/", p1.ToString());
 
             Assert.AreEqual(p1.ToString(), p1.ToString());
@@ -23,7 +23,7 @@ namespace ADL_Client_Tests
             bool caught = false;
             try
             {
-                var p0 = new AzureDataLake.Store.FSPath(null);
+                var p0 = new AzureDataLake.Store.FsPath(null);
             }
             catch (System.ArgumentNullException exc)
             {
@@ -39,7 +39,7 @@ namespace ADL_Client_Tests
             bool caught = false;
             try
             {
-                var p0 = new AzureDataLake.Store.FSPath("");
+                var p0 = new AzureDataLake.Store.FsPath("");
             }
             catch (System.ArgumentOutOfRangeException exc)
             {
@@ -53,7 +53,7 @@ namespace ADL_Client_Tests
         [TestMethod]
         public void FSPath_Constructor_Combine_Rooted()
         {
-            var p0 = new AzureDataLake.Store.FSPath("/");
+            var p0 = new AzureDataLake.Store.FsPath("/");
             var p1 = p0.Append("foo");
             var p2 = p0.Append("foo/bar");
             Assert.AreEqual("/", p0.ToString());
@@ -67,7 +67,7 @@ namespace ADL_Client_Tests
         [TestMethod]
         public void FSPath_Constructor_Combine_Unrooted()
         {
-            var p0 = new AzureDataLake.Store.FSPath("test");
+            var p0 = new AzureDataLake.Store.FsPath("test");
             var p1 = p0.Append("foo");
             var p2 = p0.Append("foo/bar");
             Assert.AreEqual("test", p0.ToString());

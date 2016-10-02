@@ -1,10 +1,10 @@
 namespace AzureDataLake.Store
 {
-    public class FSPath
+    public class FsPath
     {
         string s;
 
-        public FSPath(string s)
+        public FsPath(string s)
         {
             if (s == null)
             {
@@ -30,14 +30,14 @@ namespace AzureDataLake.Store
         }
 
 
-        public static FSPath Root
+        public static FsPath Root
         {
-            get { return FSPath.root; }
+            get { return FsPath.root; }
         }
 
-        private static readonly FSPath root = new FSPath("/");
+        private static readonly FsPath root = new FsPath("/");
 
-        public static FSPath Combine(FSPath left, FSPath right)
+        public static FsPath Combine(FsPath left, FsPath right)
         {
             if (right.IsRooted)
             {
@@ -47,26 +47,26 @@ namespace AzureDataLake.Store
 
             if (left.EndsWithSeparator)
             {
-                var p = new FSPath(left.ToString() + right.ToString());
+                var p = new FsPath(left.ToString() + right.ToString());
                 return p;
 
             }
             else
             {
-                var p = new FSPath(left.ToString() + "/" + right.ToString());
+                var p = new FsPath(left.ToString() + "/" + right.ToString());
                 return p;
             }
 
         }
 
-        public FSPath Append(FSPath p)
+        public FsPath Append(FsPath p)
         {
-            return FSPath.Combine(this, p);
+            return FsPath.Combine(this, p);
         }
 
-        public FSPath Append(string p)
+        public FsPath Append(string p)
         {
-            return FSPath.Combine(this, new FSPath(p));
+            return FsPath.Combine(this, new FsPath(p));
         }
 
         public bool EndsWithSeparator

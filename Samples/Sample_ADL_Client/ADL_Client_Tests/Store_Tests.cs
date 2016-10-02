@@ -36,7 +36,7 @@ namespace ADL_Client_Tests
             int page_count = 0;
             int child_count = 0;
 
-            var pages = this.adls_fs_client.ListFilesRecursive(AzureDataLake.Store.FSPath.Root, 4);
+            var pages = this.adls_fs_client.ListFilesRecursive(AzureDataLake.Store.FsPath.Root, 4);
             foreach (var page in pages)
             {
                 foreach (var child in page.Children)
@@ -63,7 +63,7 @@ namespace ADL_Client_Tests
             int page_count = 0;
             int child_count = 0;
 
-            var pages = this.adls_fs_client.ListFiles(AzureDataLake.Store.FSPath.Root, 4);
+            var pages = this.adls_fs_client.ListFiles(AzureDataLake.Store.FsPath.Root, 4);
             foreach (var page in pages)
             {
                 foreach (var child in page.Children)
@@ -100,9 +100,9 @@ namespace ADL_Client_Tests
 
         }
 
-        private FSPath create_test_dir()
+        private FsPath create_test_dir()
         {
-            var dir = new AzureDataLake.Store.FSPath("/test_adl_demo_client");
+            var dir = new AzureDataLake.Store.FsPath("/test_adl_demo_client");
 
             if (this.adls_fs_client.Exists(dir))
             {
