@@ -56,7 +56,7 @@ namespace ADL_Client_Tests
 
 
         [TestMethod]
-        public void FSPath_Constructor_Combine()
+        public void FSPath_Constructor_Combine_Rooted()
         {
             var p0 = new AzureDataLake.Store.FSPath("/");
             var p1 = p0.Append("foo");
@@ -64,6 +64,23 @@ namespace ADL_Client_Tests
             Assert.AreEqual("/", p0.ToString());
             Assert.AreEqual("/foo", p1.ToString());
             Assert.AreEqual("/foo/bar", p2.ToString());
+            Assert.IsTrue(p0.IsRooted);
+            Assert.IsTrue(p1.IsRooted);
+            Assert.IsTrue(p2.IsRooted);
+        }
+
+        [TestMethod]
+        public void FSPath_Constructor_Combine_Unrooted()
+        {
+            var p0 = new AzureDataLake.Store.FSPath("test");
+            var p1 = p0.Append("foo");
+            var p2 = p0.Append("foo/bar");
+            Assert.AreEqual("test", p0.ToString());
+            Assert.AreEqual("test/foo", p1.ToString());
+            Assert.AreEqual("test/foo/bar", p2.ToString());
+            Assert.IsFalse(p0.IsRooted);
+            Assert.IsFalse(p1.IsRooted);
+            Assert.IsFalse(p2.IsRooted);
         }
 
     }
