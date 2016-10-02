@@ -18,13 +18,6 @@ namespace AzureDataLake.Store
             this._adls_mgmt_rest_client.SubscriptionId = sub.ID;
         }
 
-        public List<ADL.Store.Models.DataLakeStoreAccount> ListStores()
-        {
-            var page = this._adls_mgmt_rest_client.Account.List();
-            var stores = page.ToList();
-            return stores;
-        }
-
         public List<ADL.Store.Models.DataLakeStoreAccount> ListAccounts()
         {
             var page = this._adls_mgmt_rest_client.Account.List();

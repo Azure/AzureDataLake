@@ -18,17 +18,17 @@ namespace ADL_Client_Tests
  
 
         [TestMethod]
-        public void TestMethod1()
+        public void Get_AD_Tenant_ID()
         {
             this.initialize();
             var directory = AzureDataLake.Authentication.Directory.Resolve("microsoft.com");
         }
 
         [TestMethod]
-        public void TestMethod2()
+        public void List_ADLS_Accounts()
         {
             this.initialize();
-            var adls_accounts = this.adls_mgmt_client.ListStores();
+            var adls_accounts = this.adls_mgmt_client.ListAccounts();
             foreach (var a in adls_accounts)
             {
                 System.Console.WriteLine("Store {0} ", a.Name);
@@ -36,10 +36,10 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void TestMethod3()
+        public void List_ADLA_Accounts()
         {
             this.initialize();
-            var adla_accounts = this.adls_mgmt_client.ListAccounts();
+            var adla_accounts = this.adla_mgmt_client.ListAccounts();
             foreach (var a in adla_accounts)
             {
                 System.Console.WriteLine("Analytics {0} ", a.Name);
@@ -48,7 +48,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void TestMethod4()
+        public void List_Jobs()
         {
             this.initialize();
             var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
@@ -66,7 +66,7 @@ namespace ADL_Client_Tests
 
 
         [TestMethod]
-        public void TestMethod5()
+        public void Submit_Job_with_Syntax_Error()
         {
             this.initialize();
             var sjo = new AzureDataLake.Analytics.SubmitJobOptions();
@@ -83,7 +83,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void TestMethod6()
+        public void List_Files_Recursive()
         {
             this.initialize();
 
@@ -110,7 +110,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void TestMethod7()
+        public void List_Files_Non_Recursive()
         {
             this.initialize();
 
@@ -131,7 +131,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void TestMethod8()
+        public void Basic_File_Scenario()
         {
             this.initialize();
 
