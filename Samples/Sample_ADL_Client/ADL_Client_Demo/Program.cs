@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using AzureDataLake.Analytics;
 
 namespace ADL_Client_Demo
@@ -50,8 +47,6 @@ namespace ADL_Client_Demo
             }
 
             /*
-
-
             var sjo = new AzureDataLake.Analytics.SubmitJobOptions();
             sjo.ScriptText = "FOOBAR";
             var ji = AnalyticsClient.SubmitJob(sjo);
@@ -73,7 +68,7 @@ namespace ADL_Client_Demo
             */
 
             /*
-            var pages = store_client.ListPagedRecursive("/",4);
+            va409r pages = store_client.ListPagedRecursive("/",4);
             foreach (var page in pages)
             {
                 foreach (var child in page.Children)
