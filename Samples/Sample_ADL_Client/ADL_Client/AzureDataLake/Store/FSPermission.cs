@@ -51,13 +51,21 @@ namespace AzureDataLake.Store
             this.Execute = (s[2] == 'x' || s[2] == 'X');
         }
 
+        public FSPermission(bool read, bool write, bool execute)
+        {
+            this._bitValue = 0;
+            this.Read = read;
+            this.Write = write;
+            this.Execute = execute;
+        }
+
         public bool Read
         {
             get
             {
                 return (0x4 & this.BitValue) != 0;
             }
-            set
+            private set
             {
                 if (value)
                 {
@@ -76,7 +84,7 @@ namespace AzureDataLake.Store
             {
                 return (0x2 & this.BitValue) != 0;
             }
-            set
+            private set
             {
                 if (value)
                 {
@@ -94,7 +102,7 @@ namespace AzureDataLake.Store
             {
                 return (0x1 & this.BitValue) != 0;
             }
-            set
+            private set
             {
                 if (value)
                 {
@@ -107,11 +115,10 @@ namespace AzureDataLake.Store
             }
         }
 
-        public void Invert()
+        public FSPermission Invert()
         {
-            this.Read = !this.Read;
-            this.Write= !this.Write;
-            this.Execute = !this.Execute;
+            var p = new FSPermission(!this.Read,!this.Write,!this.Execute);
+            return p;
         }
 
     }

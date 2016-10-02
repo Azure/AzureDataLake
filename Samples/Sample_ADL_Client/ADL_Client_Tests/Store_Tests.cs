@@ -61,11 +61,11 @@ namespace ADL_Client_Tests
             Assert.AreEqual(true, p0.Write);
             Assert.AreEqual(true, p0.Execute);
 
-            p0.Invert();
-            Assert.AreEqual(0, p0.BitValue);
-            Assert.AreEqual(false, p0.Read);
-            Assert.AreEqual(false, p0.Write);
-            Assert.AreEqual(false, p0.Execute);
+            var p1 = p0.Invert();
+            Assert.AreEqual(0, p1.BitValue);
+            Assert.AreEqual(false, p1.Read);
+            Assert.AreEqual(false, p1.Write);
+            Assert.AreEqual(false, p1.Execute);
 
         }
 
