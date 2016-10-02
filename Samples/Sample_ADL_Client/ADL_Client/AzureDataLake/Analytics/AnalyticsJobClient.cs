@@ -88,7 +88,7 @@ namespace AzureDataLake.Analytics
 
             if (options.JobName == null)
             {
-                options.JobName = "Job_" + System.DateTime.Now.ToString();
+                options.JobName = "ADL_Demo_Client_Job_" + System.DateTime.Now.ToString();
             }
 
             var jobprops = new USqlJobProperties();
@@ -97,7 +97,6 @@ namespace AzureDataLake.Analytics
             var jobType = JobType.USql;
             int priority = 1;
             int dop = 1;
-            string submitter = null;
 
             var parameters = new JobInformation(
                 name: options.JobName, 
