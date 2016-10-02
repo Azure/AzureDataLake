@@ -107,5 +107,12 @@ namespace AzureDataLake.Store
             }
         }
 
+        public void Invert()
+        {
+            this.Read = !this.Read;
+            this.Write= !this.Write;
+            this.Execute = !this.Execute;
+        }
+
     }
 }

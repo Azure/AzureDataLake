@@ -51,6 +51,24 @@ namespace ADL_Client_Tests
             Assert.AreEqual(true, p5.Execute);
 
         }
+
+        [TestMethod]
+        public void Test2()
+        {
+            var p0 = new AzureDataLake.Store.FSPermission("rwx");
+            Assert.AreEqual(7, p0.BitValue);
+            Assert.AreEqual(true, p0.Read);
+            Assert.AreEqual(true, p0.Write);
+            Assert.AreEqual(true, p0.Execute);
+
+            p0.Invert();
+            Assert.AreEqual(0, p0.BitValue);
+            Assert.AreEqual(false, p0.Read);
+            Assert.AreEqual(false, p0.Write);
+            Assert.AreEqual(false, p0.Execute);
+
+        }
+
     }
 
 
