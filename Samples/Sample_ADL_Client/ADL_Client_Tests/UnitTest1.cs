@@ -90,7 +90,7 @@ namespace ADL_Client_Tests
             int page_count = 0;
             int child_count = 0;
 
-            var pages = this.adls_fs_client.ListPagedRecursive("/", 4);
+            var pages = this.adls_fs_client.ListFilesRecursive("/", 4);
             foreach (var page in pages)
             {
                 foreach (var child in page.Children)
@@ -117,25 +117,55 @@ namespace ADL_Client_Tests
             int page_count = 0;
             int child_count = 0;
 
-            var pages = this.adls_fs_client.ListPaged("/", 4);
+            var pages = this.adls_fs_client.ListFiles("/", 4);
             foreach (var page in pages)
             {
-                /*
                 foreach (var child in page.Children)
                 {
                     child_count++;
                 }
                 page_count++;
 
-                if (page_count == 3)
-                {
-                    break;
-                }
-                */
             }
 
-            Assert.AreEqual(3, page_count);
-            Assert.AreEqual(3 * 4, child_count);
+        }
+
+        [TestMethod]
+        public void TestMethod8()
+        {
+            this.initialize();
+
+            string dir = "/test_adl_demo_client";
+
+            if (this.adls_fs_client.Exists(dir))
+            {
+                this.adls_fs_client.Delete(dir,true);
+            }
+
+            this.adls_fs_client.CreateDirectory(dir);
+
+            if (!this.adls_fs_client.Exists(dir))
+            {
+                Assert.Fail();
+            }
+
+            
+            string fname = dir + "/" + "foo.txt";
+            this.adls_fs_client.CreateFile(fname, "HelloWorld", true);
+            Assert.IsTrue( this.adls_fs_client.Exists(fname));
+            var fi = this.adls_fs_client.GetFileInformation(fname);
+            Assert.AreEqual(10,fi.FileStatus.Length);
+
+            using (var s = this.adls_fs_client.OpenFileForReadText(fname))
+            {
+                var content = s.ReadToEnd();
+                Assert.AreEqual("HelloWorld",content);
+            }
+
+            this.adls_fs_client.Delete(dir,true);
+            Assert.IsFalse(this.adls_fs_client.Exists(fname));
+            Assert.IsFalse(this.adls_fs_client.Exists(dir));
+
         }
 
         public void initialize()

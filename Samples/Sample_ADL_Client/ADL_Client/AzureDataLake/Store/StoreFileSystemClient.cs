@@ -14,16 +14,7 @@ namespace AzureDataLake.Store
             _adls_filesys_rest_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(this.AuthenticatedSession.Credentials);
         }
 
-
-        public IList<ADL.Store.Models.FileStatusProperties> List(string path)
-        {
-            var listSize = 100;
-            var result = _adls_filesys_rest_client.FileSystem.ListFileStatus(this.Account, path, listSize);
-            var files = result.FileStatuses.FileStatus;
-            return files;
-        }
-
-        public IEnumerable<FSPage> ListPagedRecursive(string path, int pagesize)
+        public IEnumerable<FSPage> ListFilesRecursive(string path, int pagesize)
         {
             var queue = new Queue<string>();
             queue.Enqueue(path);
@@ -32,14 +23,11 @@ namespace AzureDataLake.Store
             {
                 string cp = queue.Dequeue();
 
-                foreach (var page in ListPaged(cp, pagesize))
+                foreach (var page in ListFiles(cp, pagesize))
                 {
-                    var r = new FSPage();
-                    r.Path = cp;
-                    r.Children = page;
-                    yield return r;
+                    yield return page;
 
-                    foreach (var item in page)
+                    foreach (var item in page.Children)
                     {
                         if (item.Type.HasValue && item.Type.Value == ADL.Store.Models.FileType.DIRECTORY)
                         {
@@ -50,7 +38,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public IEnumerable<IList<ADL.Store.Models.FileStatusProperties>> ListPaged(string path, int pagesize)
+        public IEnumerable<FSPage> ListFiles(string path, int pagesize)
         {
             string after = null;
             while (true)
@@ -59,7 +47,11 @@ namespace AzureDataLake.Store
 
                 if (result.FileStatuses.FileStatus.Count > 0)
                 {
-                    yield return result.FileStatuses.FileStatus;
+                    var page = new FSPage();
+                    page.Path = path;
+
+                    page.Children = result.FileStatuses.FileStatus;
+                    yield return page;
                     after = result.FileStatuses.FileStatus[result.FileStatuses.FileStatus.Count - 1].PathSuffix;
                 }
                 else
@@ -110,9 +102,10 @@ namespace AzureDataLake.Store
                 var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path);
                 return info;
             }
-            catch (Microsoft.Rest.Azure.CloudException e)
+            catch (Microsoft.Azure.Management.DataLake.Store.Models.AdlsErrorException ex)
             {
-                if (e.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (ex.Body.RemoteException is Microsoft.Azure.Management.DataLake.Store.Models.AdlsFileNotFoundException || 
+                    ex.Response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
                     return null;
                 }
@@ -136,6 +129,22 @@ namespace AzureDataLake.Store
         public void ModifyACLs(string path,string perms)
         {
             this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account,  path, perms);
+        }
+
+        public System.IO.Stream OpenFileForReadBinary(string path)
+        {
+            return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path);
+        }
+
+        public System.IO.StreamReader OpenFileForReadText(string path)
+        {
+            var s = this._adls_filesys_rest_client.FileSystem.Open(this.Account, path);
+            return new System.IO.StreamReader(s);
+        }
+
+        public System.IO.Stream OpenFileForReadBinary(string path, long offset, long bytesToRead)
+        {
+            return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path, bytesToRead, offset);
         }
     }
 }
