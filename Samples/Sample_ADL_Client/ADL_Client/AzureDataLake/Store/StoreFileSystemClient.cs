@@ -14,16 +14,16 @@ namespace AzureDataLake.Store
             _adls_filesys_rest_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(this.AuthenticatedSession.Credentials);
         }
 
-        public IEnumerable<FSPage> ListFilesRecursive(string path, int pagesize)
+        public IEnumerable<FSPage> ListFilesRecursive(FSPath path, int pagesize)
         {
-            var queue = new Queue<string>();
+            var queue = new Queue<FSPath>();
             queue.Enqueue(path);
 
             while (queue.Count > 0)
             {
-                string cp = queue.Dequeue();
+                FSPath cur_path = queue.Dequeue();
 
-                foreach (var page in ListFiles(cp, pagesize))
+                foreach (var page in ListFiles(cur_path, pagesize))
                 {
                     yield return page;
 
@@ -31,19 +31,20 @@ namespace AzureDataLake.Store
                     {
                         if (item.Type.HasValue && item.Type.Value == ADL.Store.Models.FileType.DIRECTORY)
                         {
-                            queue.Enqueue(cp + "/" +item.PathSuffix);
+                            var new_path = cur_path.Append(item.PathSuffix);
+                            queue.Enqueue(new_path);
                         }
                     }
                 }
             }
         }
 
-        public IEnumerable<FSPage> ListFiles(string path, int pagesize)
+        public IEnumerable<FSPage> ListFiles(FSPath path, int pagesize)
         {
             string after = null;
             while (true)
             {
-                var result = _adls_filesys_rest_client.FileSystem.ListFileStatus(this.Account, path, pagesize,after);
+                var result = _adls_filesys_rest_client.FileSystem.ListFileStatus(this.Account, path.ToString(), pagesize,after);
 
                 if (result.FileStatuses.FileStatus.Count > 0)
                 {
@@ -62,44 +63,44 @@ namespace AzureDataLake.Store
             }
         }
         
-        public void CreateDirectory(string path)
+        public void CreateDirectory(FSPath path)
         {
-            var result = _adls_filesys_rest_client.FileSystem.Mkdirs(this.Account, path);
+            var result = _adls_filesys_rest_client.FileSystem.Mkdirs(this.Account, path.ToString());
         }
 
-        public void Delete(string path)
+        public void Delete(FSPath path)
         {
-            var result = _adls_filesys_rest_client.FileSystem.Delete(this.Account, path);
+            var result = _adls_filesys_rest_client.FileSystem.Delete(this.Account, path.ToString());
         }
 
-        public void Delete(string path, bool recursive)
+        public void Delete(FSPath path, bool recursive)
         {
-            var result = _adls_filesys_rest_client.FileSystem.Delete(this.Account, path, recursive );
+            var result = _adls_filesys_rest_client.FileSystem.Delete(this.Account, path.ToString(), recursive );
         }
 
-        public void CreateFile(string path, byte[] bytes, bool overwrite)
+        public void CreateFile(FSPath path, byte[] bytes, bool overwrite)
         {
             var memstream = new System.IO.MemoryStream(bytes);
-            _adls_filesys_rest_client.FileSystem.Create(this.Account, path,memstream,overwrite);
+            _adls_filesys_rest_client.FileSystem.Create(this.Account, path.ToString(),memstream,overwrite);
         }
 
-        public void CreateFile(string path, string content, bool overwrite)
+        public void CreateFile(FSPath path, string content, bool overwrite)
         {
             var bytes = System.Text.Encoding.UTF8.GetBytes(content);
             this.CreateFile(path, bytes, overwrite);
         }
 
-        public ADL.Store.Models.FileStatusResult GetFileInformation( string path )
+        public ADL.Store.Models.FileStatusResult GetFileInformation( FSPath path )
         {
-            var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path);
+            var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
             return info;
         }
 
-        public ADL.Store.Models.FileStatusResult TryGetFileInformation(string path)
+        public ADL.Store.Models.FileStatusResult TryGetFileInformation(FSPath path)
         {
             try
             {
-                var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path);
+                var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
                 return info;
             }
             catch (Microsoft.Azure.Management.DataLake.Store.Models.AdlsErrorException ex)
@@ -113,38 +114,38 @@ namespace AzureDataLake.Store
             }
         }
 
-        public bool Exists(string path)
+        public bool Exists(FSPath path)
         {
             var info = this.TryGetFileInformation(path);
             return (info != null);
         }
 
-        public ADL.Store.Models.AclStatus GetPermissions(string path)
+        public ADL.Store.Models.AclStatus GetPermissions(FSPath path)
         {
-            var acl = this._adls_filesys_rest_client.FileSystem.GetAclStatus(this.Account, path);
+            var acl = this._adls_filesys_rest_client.FileSystem.GetAclStatus(this.Account, path.ToString());
             var acl2 = acl.AclStatus;
             return acl2;
         }
 
-        public void ModifyACLs(string path,string perms)
+        public void ModifyACLs(FSPath path,string perms)
         {
-            this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account,  path, perms);
+            this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account,  path.ToString(), perms);
         }
 
-        public System.IO.Stream OpenFileForReadBinary(string path)
+        public System.IO.Stream OpenFileForReadBinary(FSPath path)
         {
-            return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path);
+            return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path.ToString());
         }
 
-        public System.IO.StreamReader OpenFileForReadText(string path)
+        public System.IO.StreamReader OpenFileForReadText(FSPath path)
         {
-            var s = this._adls_filesys_rest_client.FileSystem.Open(this.Account, path);
+            var s = this._adls_filesys_rest_client.FileSystem.Open(this.Account, path.ToString());
             return new System.IO.StreamReader(s);
         }
 
-        public System.IO.Stream OpenFileForReadBinary(string path, long offset, long bytesToRead)
+        public System.IO.Stream OpenFileForReadBinary(FSPath path, long offset, long bytesToRead)
         {
-            return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path, bytesToRead, offset);
+            return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path.ToString(), bytesToRead, offset);
         }
     }
 }

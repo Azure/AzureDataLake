@@ -97,7 +97,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Base_Tests.cs" />
+    <Compile Include="Analytics_Tests.cs" />
+    <Compile Include="FSPath_Tests.cs" />
+    <Compile Include="Store_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
