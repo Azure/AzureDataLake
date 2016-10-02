@@ -8,11 +8,11 @@ using ADL=Microsoft.Azure.Management.DataLake;
 
 namespace AzureDataLake.Analytics
 {
-    public class AnalyticsClient : AccountClientBase
+    public class AnalyticsJobClient : AccountClientBase
     {
         private ADL.Analytics.DataLakeAnalyticsJobManagementClient _adla_job_rest_client;
 
-        public AnalyticsClient(string account, AzureDataLake.Authentication.AuthenticatedSession authSession) :
+        public AnalyticsJobClient(string account, AzureDataLake.Authentication.AuthenticatedSession authSession) :
             base(account, authSession)
         {
             if (this._adla_job_rest_client == null)

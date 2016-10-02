@@ -5,12 +5,12 @@ using ADL=Microsoft.Azure.Management.DataLake;
 
 namespace AzureDataLake.Analytics
 {
-    public class AnalyticsAccountClient: ClientBase
+    public class AnalyticsManagementClient: ClientBase
     {
         private ADL.Analytics.DataLakeAnalyticsAccountManagementClient _adla_mgmt_rest_client;
         private AzureDataLake.Subscription Sub;
 
-        public AnalyticsAccountClient(Subscription sub, AzureDataLake.Authentication.AuthenticatedSession authSession) :
+        public AnalyticsManagementClient(Subscription sub, AzureDataLake.Authentication.AuthenticatedSession authSession) :
             base(authSession)
         {
             this.Sub = sub;

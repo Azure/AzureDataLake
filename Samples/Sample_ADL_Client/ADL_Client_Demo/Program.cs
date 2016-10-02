@@ -16,9 +16,9 @@ namespace ADL_Client_Demo
             var sub = new AzureDataLake.Subscription(subid);
 
             var StoreClient = new AzureDataLake.Store.StoreFileSystemClient(store_account, auth_session);
-            var AnalyticsClient = new AzureDataLake.Analytics.AnalyticsClient(analytics_account, auth_session);
-            var StoreAccountClient = new AzureDataLake.Store.StoreAccountClient(sub, auth_session);
-            var AnalyticsAccountClient = new AzureDataLake.Analytics.AnalyticsAccountClient(sub, auth_session);
+            var AnalyticsClient = new AzureDataLake.Analytics.AnalyticsJobClient(analytics_account, auth_session);
+            var StoreAccountClient = new AzureDataLake.Store.StoreManagementClient(sub, auth_session);
+            var AnalyticsAccountClient = new AzureDataLake.Analytics.AnalyticsManagementClient(sub, auth_session);
 
             var directory = AzureDataLake.Authentication.Directory.Resolve("microsoft.com");
 

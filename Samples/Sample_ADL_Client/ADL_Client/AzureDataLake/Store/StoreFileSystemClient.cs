@@ -26,11 +26,12 @@ namespace AzureDataLake.Store
         public IEnumerable<RecurseResult> ListPagedRecursive(string path, int pagesize)
         {
             var queue = new Queue<string>();
-
             queue.Enqueue(path);
+
             while (queue.Count > 0)
             {
                 string cp = queue.Dequeue();
+
                 foreach (var page in ListPaged(cp, pagesize))
                 {
                     var r = new RecurseResult();

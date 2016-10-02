@@ -5,12 +5,12 @@ using Microsoft.Azure.Management.DataLake.Store;
 
 namespace AzureDataLake.Store
 {
-    public class StoreAccountClient : ClientBase
+    public class StoreManagementClient : ClientBase
     {
         private ADL.Store.DataLakeStoreAccountManagementClient _adls_mgmt_rest_client;
         private AzureDataLake.Subscription Sub;
 
-        public StoreAccountClient(Subscription sub, AzureDataLake.Authentication.AuthenticatedSession authSession) :
+        public StoreManagementClient(Subscription sub, AzureDataLake.Authentication.AuthenticatedSession authSession) :
             base(authSession)
         {
             this.Sub = sub;
