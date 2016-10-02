@@ -23,7 +23,7 @@ namespace AzureDataLake.Store
             return files;
         }
 
-        public IEnumerable<RecurseResult> ListPagedRecursive(string path, int pagesize)
+        public IEnumerable<FSPage> ListPagedRecursive(string path, int pagesize)
         {
             var queue = new Queue<string>();
             queue.Enqueue(path);
@@ -34,7 +34,7 @@ namespace AzureDataLake.Store
 
                 foreach (var page in ListPaged(cp, pagesize))
                 {
-                    var r = new RecurseResult();
+                    var r = new FSPage();
                     r.Path = cp;
                     r.Children = page;
                     yield return r;

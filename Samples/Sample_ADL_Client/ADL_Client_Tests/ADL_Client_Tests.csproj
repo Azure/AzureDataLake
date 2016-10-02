@@ -104,6 +104,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ADL_Client\ADL_Client.csproj">
+      <Project>{b255d8ff-3031-43b5-8044-aa944dd62c36}</Project>
+      <Name>ADL_Client</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

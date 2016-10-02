@@ -3,7 +3,7 @@ using Microsoft.Azure.Management.DataLake.Store.Models;
 
 namespace AzureDataLake.Store
 {
-    public class RecurseResult
+    public class FSPage
     {
         public string Path;
         public IList<FileStatusProperties> Children;

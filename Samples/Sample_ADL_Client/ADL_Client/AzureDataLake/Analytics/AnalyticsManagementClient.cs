@@ -18,7 +18,7 @@ namespace AzureDataLake.Analytics
             this._adla_mgmt_rest_client.SubscriptionId = sub.ID;
         }
 
-        public List<ADL.Analytics.Models.DataLakeAnalyticsAccount> ListAccounts(string subscription_id)
+        public List<ADL.Analytics.Models.DataLakeAnalyticsAccount> ListAccounts()
         {
             var page = this._adla_mgmt_rest_client.Account.List();
             var pages = AzureDataLake.RESTUtil.EnumPages(page,

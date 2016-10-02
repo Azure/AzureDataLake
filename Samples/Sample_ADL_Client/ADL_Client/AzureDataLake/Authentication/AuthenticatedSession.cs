@@ -7,6 +7,22 @@ namespace AzureDataLake.Authentication
     public class AuthenticatedSession
     {
         public Microsoft.Rest.ServiceClientCredentials Credentials;
+        public string Name;
+
+        public AuthenticatedSession(string name)
+        {
+            if (name == null)
+            {
+                throw new System.ArgumentNullException(nameof(name));
+            }
+
+            if (name.Length < 1)
+            {
+                throw new System.ArgumentException(nameof(name));
+            }
+
+            this.Name = name;
+        }
 
         public void Authenticate()
         {
@@ -17,7 +33,7 @@ namespace AzureDataLake.Authentication
 
             // Load the token cache, if one exists.
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string basefname = "TokenCache.tc";
+            string basefname = "TokenCache_" + this.Name + ".tc";
             var tokenCachePath = System.IO.Path.Combine(path, basefname);
 
             Microsoft.IdentityModel.Clients.ActiveDirectory.TokenCache token_cache;

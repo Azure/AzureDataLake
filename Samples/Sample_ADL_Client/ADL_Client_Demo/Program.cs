@@ -7,7 +7,7 @@ namespace ADL_Client_Demo
     {
         private static void Main(string[] args)
         {
-            var auth_session = new AzureDataLake.Authentication.AuthenticatedSession();
+            var auth_session = new AzureDataLake.Authentication.AuthenticatedSession("ADL_Demo_Client");
             auth_session.Authenticate();
 
             string store_account = "datainsightsadhoc";
@@ -20,62 +20,12 @@ namespace ADL_Client_Demo
             var StoreAccountClient = new AzureDataLake.Store.StoreManagementClient(sub, auth_session);
             var AnalyticsAccountClient = new AzureDataLake.Analytics.AnalyticsManagementClient(sub, auth_session);
 
-            var directory = AzureDataLake.Authentication.Directory.Resolve("microsoft.com");
 
-            var adls_accounts = StoreAccountClient.ListStores(subid);
-            foreach (var a in adls_accounts)
-            {
-                System.Console.WriteLine("Store {0} ", a.Name);
-            }
 
-            var adla_accounts = AnalyticsAccountClient.ListAccounts(subid);
-            foreach (var a in adla_accounts)
-            {
-                System.Console.WriteLine("Analytics {0} ", a.Name);
-            }
 
-            var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
-            getjobs_options.Top = 30;
-            getjobs_options.OrderByField = JobOrderByField.DegreeOfParallelism;
-            getjobs_options.OrderByDirection = JobOrderByDirection.Descending;
-            var jobs = AnalyticsClient.GetJobList(getjobs_options).ToArray();
-
-            foreach (var job in jobs)
-            {
-                //var job2 = AnalyticsClient.GetJob(job.JobId.Value);
-                System.Console.WriteLine("submitter{0} dop {1}", job.Submitter, job.DegreeOfParallelism);
-            }
-
-            /*
-            var sjo = new AzureDataLake.Analytics.SubmitJobOptions();
-            sjo.ScriptText = "FOOBAR";
-            var ji = AnalyticsClient.SubmitJob(sjo);
-
-            System.Console.WriteLine("{0} {1} {2}", ji.Name, ji.JobId, ji.SubmitTime);
-
-            */
             /*
             
-            var pages = StoreClient.ListPaged("/",200);
-            foreach (var page in pages)
-            {
-                foreach (var file in page)
-                {
-                    System.Console.WriteLine(file.PathSuffix);
-                    //var acl = store_client.GetPermissions("/test/" + file.PathSuffix);
-                }
-            }
-            */
-
-            /*
-            va409r pages = store_client.ListPagedRecursive("/",4);
-            foreach (var page in pages)
-            {
-                foreach (var child in page.Children)
-                {
-                    System.Console.WriteLine(page.Path +"/"+ child.PathSuffix);
-                }
-            }*/
+             */
 
             //store_client.CreateDirectory("/testsaveen");
             //store_client.Delete("/testsaveen");

@@ -90,7 +90,7 @@
     <Compile Include="AzureDataLake\Authentication\AuthenticatedSession.cs" />
     <Compile Include="AzureDataLake\Store\StoreManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AzureDataLake\Store\RecurseResult.cs" />
+    <Compile Include="AzureDataLake\Store\FSPage.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsJobClient.cs" />
     <Compile Include="AzureDataLake\Store\StoreFileSystemClient.cs" />
   </ItemGroup>
