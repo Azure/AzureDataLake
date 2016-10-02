@@ -7,6 +7,54 @@ namespace ADL_Client_Tests
 {
 
     [TestClass]
+    public class FSPermissions_Tests : Base_Tests
+    {
+
+
+        [TestMethod]
+        public void Test1()
+        {
+            var p0 = new AzureDataLake.Store.FSPermission("rwx");
+            Assert.AreEqual(7,p0.BitValue);
+            Assert.AreEqual(true, p0.Read);
+            Assert.AreEqual(true, p0.Write);
+            Assert.AreEqual(true, p0.Execute);
+
+            var p1 = new AzureDataLake.Store.FSPermission("---");
+            Assert.AreEqual(0, p1.BitValue);
+            Assert.AreEqual(false, p1.Read);
+            Assert.AreEqual(false, p1.Write);
+            Assert.AreEqual(false, p1.Execute);
+
+            var p2 = new AzureDataLake.Store.FSPermission("r--");
+            Assert.AreEqual(4, p2.BitValue);
+            Assert.AreEqual(true, p2.Read);
+            Assert.AreEqual(false, p2.Write);
+            Assert.AreEqual(false, p2.Execute);
+
+            var p3 = new AzureDataLake.Store.FSPermission("-w-");
+            Assert.AreEqual(2, p3.BitValue);
+            Assert.AreEqual(false, p3.Read);
+            Assert.AreEqual(true, p3.Write);
+            Assert.AreEqual(false, p3.Execute);
+
+            var p4 = new AzureDataLake.Store.FSPermission("--x");
+            Assert.AreEqual(1, p4.BitValue);
+            Assert.AreEqual(false, p4.Read);
+            Assert.AreEqual(false, p4.Write);
+            Assert.AreEqual(true, p4.Execute);
+
+            var p5 = new AzureDataLake.Store.FSPermission("r-x");
+            Assert.AreEqual(5, p5.BitValue);
+            Assert.AreEqual(true, p5.Read);
+            Assert.AreEqual(false, p5.Write);
+            Assert.AreEqual(true, p5.Execute);
+
+        }
+    }
+
+
+    [TestClass]
     public class Store_Tests : Base_Tests
     {
  
@@ -132,8 +180,7 @@ namespace ADL_Client_Tests
             }
             this.adls_fs_client.CreateFile(fname, "HelloWorld", true);
 
-            var x = this.adls_fs_client.GetPermissions(fname);
-            var y = new AzureDataLake.Store.FSAcl(x);
+            var y = this.adls_fs_client.GetPermissions(fname);
 
             Assert.AreEqual(true, y.OwnerPermission.Value.Read);
             Assert.AreEqual(true, y.OwnerPermission.Value.Write);
@@ -149,8 +196,7 @@ namespace ADL_Client_Tests
 
             this.adls_fs_client.ModifyACLs(fname, "other::r-x");
 
-            var x2 = this.adls_fs_client.GetPermissions(fname);
-            var y2 = new AzureDataLake.Store.FSAcl(x2);
+            var y2 = this.adls_fs_client.GetPermissions(fname);
 
             Assert.AreEqual(true, y2.OwnerPermission.Value.Read);
             Assert.AreEqual(true, y2.OwnerPermission.Value.Write);
@@ -174,130 +220,5 @@ namespace ADL_Client_Tests
     }
 
 
-}
-
-namespace AzureDataLake.Store
-{
-    public class FSAcl
-    {
-        public string Group;
-        public string Owner;
-        public FSPermission? OwnerPermission;
-        public FSPermission? GroupPermission;
-        public FSPermission? OtherPermission;
-
-
-        public FSAcl(Microsoft.Azure.Management.DataLake.Store.Models.AclStatus acl)
-        {
-            this.Group = acl.Group;
-            this.Owner = acl.Owner;
-
-            if (acl.Permission.HasValue)
-            {
-                if (acl.Permission > 777)
-                {
-                    throw new System.ArgumentOutOfRangeException();
-                }
-                if (acl.Permission < 0)
-                {
-                    throw new System.ArgumentOutOfRangeException();
-                }
-
-                string s = acl.Permission.Value.ToString("000");
-                this.OwnerPermission = new AzureDataLake.Store.FSPermission(int.Parse(s[0].ToString()));
-                this.GroupPermission = new AzureDataLake.Store.FSPermission(int.Parse(s[1].ToString()));
-                this.OtherPermission = new AzureDataLake.Store.FSPermission(int.Parse(s[2].ToString()));
-            }
-        }
-    }
-
-    public struct FSPermission
-    {
-        public int value;
-        public FSPermission(int i)
-        {
-            if (i > 7)
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
-            if (i < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
-            this.value = i;
-        }
-
-        public FSPermission(string s)
-        {
-            if (s.Length !=3)
-            {
-                throw new ArgumentOutOfRangeException(nameof(s));
-            }
-
-            this.value = 0;
-            this.Read = (s[0] == 'r' || s[0] == 'R');
-            this.Write = (s[1] == 'w' || s[1] == 'W');
-            this.Execute = (s[2] == 'X' || s[2] == 'X');
-        }
-
-        public bool Read
-        {
-            get
-            {
-                return (0x4 & this.value) != 0;
-            }
-            set
-            {
-                if (value)
-                {
-                    this.value |= 0x4;
-                }
-                else
-                {
-                    this.value &= ~0x4;
-                }
-            }
-        }
-
-        public bool Write
-        {
-            get
-            {
-                return (0x2 & this.value) != 0;
-            }
-            set
-            {
-                if (value)
-                {
-                    this.value |= 0x2;
-                } 
-                else
-                {
-                    this.value &= ~0x2;
-                }
-            }
-        }
-        public bool Execute
-        {
-            get
-            {
-                return (0x1 & this.value) != 0;
-            }
-            set
-            {
-                if (value)
-                {
-                    this.value |= 0x1;
-                }
-                else
-                {
-                    this.value &= ~0x1;
-                }
-            }
-        }
-
-    }
 }
 
