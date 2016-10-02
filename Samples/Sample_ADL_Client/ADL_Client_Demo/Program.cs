@@ -20,22 +20,6 @@ namespace ADL_Client_Demo
             var StoreAccountClient = new AzureDataLake.Store.StoreManagementClient(sub, auth_session);
             var AnalyticsAccountClient = new AzureDataLake.Analytics.AnalyticsManagementClient(sub, auth_session);
 
-
-
-
-            /*
-            
-             */
-
-            //store_client.CreateDirectory("/testsaveen");
-            //store_client.Delete("/testsaveen");
-
-            //store_client.CreateFile("/saveenr/testdata.txt", "Hello World", true);
-            /// store_client.ModifyACLs(bname, "other::r-x");
-
-
-
-
         }
 
     }

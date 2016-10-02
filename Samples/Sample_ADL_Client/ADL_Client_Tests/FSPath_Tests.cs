@@ -1,15 +1,10 @@
-﻿using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ADL_Client_Tests
 {
-
     [TestClass]
     public class FSPath_Tests : Base_Tests
     {
-
-
         [TestMethod]
         public void FSPath_Constructor_Root()
         {
