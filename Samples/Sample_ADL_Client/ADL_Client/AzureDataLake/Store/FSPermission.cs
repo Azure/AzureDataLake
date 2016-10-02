@@ -51,6 +51,15 @@ namespace AzureDataLake.Store
             this.Execute = (s[2] == 'x' || s[2] == 'X');
         }
 
+        public string ToRwxString()
+        {
+            char r = this.Read ? 'r' : '-';
+            char w = this.Write? 'w' : '-';
+            char x = this.Execute? 'x' : '-';
+            string s = string.Format("{0}{1}{2}",r,w,x);
+            return s;
+        }
+
         public FSPermission(bool read, bool write, bool execute)
         {
             this._bitValue = 0;
@@ -121,5 +130,16 @@ namespace AzureDataLake.Store
             return p;
         }
 
+        public FSPermission AndWith(FSPermission p)
+        {
+            var np = new FSPermission(this.Read && p.Read, this.Write && p.Write, this.Execute && p.Execute);
+            return np;
+        }
+
+        public FSPermission OrWith(FSPermission p)
+        {
+            var np = new FSPermission(this.Read || p.Read, this.Write || p.Write, this.Execute || p.Execute);
+            return np;
+        }
     }
 }
