@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
-using Microsoft.Rest.Azure;
 using ADL=Microsoft.Azure.Management.DataLake;
 
 namespace AzureDataLake.Analytics
@@ -69,17 +66,16 @@ namespace AzureDataLake.Analytics
             }
         }
 
-        private static string get_order_field_name(JobOrderByField zz)
+        private static string get_order_field_name(JobOrderByField field)
         {
-            if (zz == JobOrderByField.None)
+            if (field == JobOrderByField.None)
             {
-                return null;
+                throw new System.ArgumentException();
             }
-            string v = zz.ToString();
-            string u = v.Substring(0, 1).ToLowerInvariant();
-            string w = v.Substring(1);
-            string x = u + w;
-            return x;
+
+            string field_name_str = field.ToString();
+            string result = field_name_str.Substring(0, 1).ToLowerInvariant() + field_name_str.Substring(1);
+            return result;
         }
 
 

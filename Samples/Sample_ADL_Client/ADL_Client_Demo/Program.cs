@@ -36,14 +36,14 @@ namespace ADL_Client_Demo
 
             var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
             getjobs_options.Top = 30;
-            getjobs_options.OrderByField = JobOrderByField.SubmitTime;
+            getjobs_options.OrderByField = JobOrderByField.DegreeOfParallelism;
             getjobs_options.OrderByDirection = JobOrderByDirection.Descending;
             var jobs = AnalyticsClient.GetJobList(getjobs_options).ToArray();
 
             foreach (var job in jobs)
             {
                 //var job2 = AnalyticsClient.GetJob(job.JobId.Value);
-                System.Console.WriteLine("{0} {1}", job.Submitter, job.JobId);
+                System.Console.WriteLine("submitter{0} dop {1}", job.Submitter, job.DegreeOfParallelism);
             }
 
             /*

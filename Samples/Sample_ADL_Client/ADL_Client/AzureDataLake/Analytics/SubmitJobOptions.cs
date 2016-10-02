@@ -11,7 +11,12 @@ namespace AzureDataLake.Analytics
     {
         None,
         SubmitTime,
-        Submitter
+        Submitter,
+        DegreeOfParallelism,
+        EndTime,
+        Name,
+        Priority,
+        Result
     }
 
     public enum JobOrderByDirection
