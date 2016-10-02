@@ -89,6 +89,7 @@
     <Compile Include="AzureDataLake\Authentication\Directory.cs" />
     <Compile Include="AzureDataLake\Authentication\AuthenticatedSession.cs" />
     <Compile Include="AzureDataLake\Store\FsAcl.cs" />
+    <Compile Include="AzureDataLake\Store\FsAclEntry.cs" />
     <Compile Include="AzureDataLake\Store\FsPath.cs" />
     <Compile Include="AzureDataLake\Store\FsPermission.cs" />
     <Compile Include="AzureDataLake\Store\StoreManagementClient.cs" />

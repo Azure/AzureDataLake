@@ -2,14 +2,6 @@ using System.Collections.Generic;
 
 namespace AzureDataLake.Store
 {
-    public class FsAclEntry
-    {
-        public string Type;
-        public string MiddleThing;
-        public FsPermission? Permission;
-    }
-
-
     public class FsAcl
     {
         public string Group;
@@ -46,12 +38,43 @@ namespace AzureDataLake.Store
             foreach (string e in acl.Entries)
             {
                 var tokens = e.Split(':');
-                var e2 = new FsAclEntry();
-                e2.Type = tokens[0];
-                e2.MiddleThing= tokens[1];
-                e2.Permission= new FsPermission(tokens[2]);
+                var acl_entry = new FsAclEntry();
 
-                this.Entries.Add(e2);
+                string type_str = tokens[0].ToLowerInvariant();
+                string user = tokens[1];
+                if ((type_str == "user") && (user.Length == 0))
+                {
+                    acl_entry.Type = AclType.OwningUser;
+                }
+                else if ((type_str == "user") && (user.Length > 0))
+                {
+                    acl_entry.Type = AclType.NamedUser;
+                }
+                else if ((type_str == "group") && (user.Length == 0))
+                {
+                    acl_entry.Type = AclType.OwningGroup;
+                }
+                else if ((type_str == "group") && (user.Length > 0))
+                {
+                    acl_entry.Type = AclType.NamedGroup;
+                }
+                else if (type_str == "mask")
+                {
+                    acl_entry.Type = AclType.Mask;
+                }
+                else if (type_str == "other")
+                {
+                    acl_entry.Type = AclType.Other;
+                }
+                else 
+                {
+                    throw new System.ArgumentOutOfRangeException();
+                }
+
+                acl_entry.Name = user;
+                acl_entry.Permission = new FsPermission(tokens[2]);
+
+                this.Entries.Add(acl_entry);
             }
         }
     }
