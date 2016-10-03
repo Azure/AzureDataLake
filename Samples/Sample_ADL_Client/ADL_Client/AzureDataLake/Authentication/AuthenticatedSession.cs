@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using REST = Microsoft.Rest.Azure;
 
 namespace AzureDataLake.Authentication
@@ -24,23 +25,35 @@ namespace AzureDataLake.Authentication
             this.Name = name;
         }
 
+        public void Clear()
+        {
+            string cache_filename = GetTokenCachePath();
+
+
+            if (System.IO.File.Exists(cache_filename))
+            {
+                var bytes = System.IO.File.ReadAllBytes(cache_filename);
+                var token_cache = new Microsoft.IdentityModel.Clients.ActiveDirectory.TokenCache(bytes);
+                token_cache.Clear();
+                System.IO.File.WriteAllBytes(cache_filename, token_cache.Serialize());
+            }
+        }
+
         public void Authenticate()
         {
             var domain = "common"; // Replace this string with the user's Azure Active Directory tenant ID or domain name, if needed.
-            var nativeClientApp_clientId = "1950a258-227b-4e31-a9cf-717495945fc2";
-            var clientRedirectUri = new System.Uri("urn:ietf:wg:oauth:2.0:oob");
-            var activeDirectoryClientSettings = REST.Authentication.ActiveDirectoryClientSettings.UsePromptOnly(nativeClientApp_clientId, clientRedirectUri);
+            var client_id = "1950a258-227b-4e31-a9cf-717495945fc2";
+            var client_redirect = new System.Uri("urn:ietf:wg:oauth:2.0:oob");
+            var AD_client_settings = REST.Authentication.ActiveDirectoryClientSettings.UsePromptOnly(client_id, client_redirect);
 
             // Load the token cache, if one exists.
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string basefname = "TokenCache_" + this.Name + ".tc";
-            var tokenCachePath = System.IO.Path.Combine(path, basefname);
+            string cache_filename = GetTokenCachePath();
 
             Microsoft.IdentityModel.Clients.ActiveDirectory.TokenCache token_cache;
 
-            if (System.IO.File.Exists(tokenCachePath))
+            if (System.IO.File.Exists(cache_filename))
             {
-                var bytes = System.IO.File.ReadAllBytes(tokenCachePath);
+                var bytes = System.IO.File.ReadAllBytes(cache_filename);
                 token_cache = new Microsoft.IdentityModel.Clients.ActiveDirectory.TokenCache(bytes);
             }
             else
@@ -53,12 +66,13 @@ namespace AzureDataLake.Authentication
             Microsoft.Rest.ServiceClientCredentials creds = null;
 
             // Get the cached token, if it exists and is not expired.
-            foreach (var item in token_cache.ReadItems())
+            var token_cache_items = token_cache.ReadItems().ToList();
+            foreach (var item in token_cache_items)
             {
                 if (item.ExpiresOn > System.DateTime.Now)
                 {
                     // Reuse token
-                    creds = REST.Authentication.UserTokenProvider.CreateCredentialsFromCache(nativeClientApp_clientId, item.TenantId, item.DisplayableId, token_cache).Result;
+                    creds = REST.Authentication.UserTokenProvider.CreateCredentialsFromCache(client_id, item.TenantId, item.DisplayableId, token_cache).Result;
                     break;
                 }
             }
@@ -68,12 +82,20 @@ namespace AzureDataLake.Authentication
                 // Did not find the token in the cache, show popup and save the token
                 var sync_context = new System.Threading.SynchronizationContext();
                 System.Threading.SynchronizationContext.SetSynchronizationContext(sync_context);
-                creds = REST.Authentication.UserTokenProvider.LoginWithPromptAsync(domain, activeDirectoryClientSettings, token_cache).Result;
-                System.IO.File.WriteAllBytes(tokenCachePath, token_cache.Serialize());
+                creds = REST.Authentication.UserTokenProvider.LoginWithPromptAsync(domain, AD_client_settings, token_cache).Result;
+                System.IO.File.WriteAllBytes(cache_filename, token_cache.Serialize());
             }
 
             this.Credentials = creds;
 
+        }
+
+        private string GetTokenCachePath()
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string basefname = "TokenCache_" + this.Name + ".tc";
+            var tokenCachePath = System.IO.Path.Combine(path, basefname);
+            return tokenCachePath;
         }
     }
 
