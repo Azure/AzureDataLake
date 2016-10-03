@@ -39,7 +39,7 @@ namespace ADL_Client_Tests
             var pages = this.adls_fs_client.ListFilesRecursive(AzureDataLake.Store.FsPath.Root, 4);
             foreach (var page in pages)
             {
-                foreach (var child in page.Children)
+                foreach (var child in page.FileItems)
                 {
                     child_count++;
                 }
@@ -66,7 +66,7 @@ namespace ADL_Client_Tests
             var pages = this.adls_fs_client.ListFiles(AzureDataLake.Store.FsPath.Root, 4);
             foreach (var page in pages)
             {
-                foreach (var child in page.Children)
+                foreach (var fileitem in page.FileItems)
                 {
                     child_count++;
                 }

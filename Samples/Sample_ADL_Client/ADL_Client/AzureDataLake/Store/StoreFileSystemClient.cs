@@ -27,7 +27,7 @@ namespace AzureDataLake.Store
                 {
                     yield return page;
 
-                    foreach (var item in page.Children)
+                    foreach (var item in page.FileItems)
                     {
                         if (item.Type.HasValue && item.Type.Value == ADL.Store.Models.FileType.DIRECTORY)
                         {
@@ -51,7 +51,7 @@ namespace AzureDataLake.Store
                     var page = new FsPage();
                     page.Path = path;
 
-                    page.Children = result.FileStatuses.FileStatus;
+                    page.FileItems = result.FileStatuses.FileStatus;
                     yield return page;
                     after = result.FileStatuses.FileStatus[result.FileStatuses.FileStatus.Count - 1].PathSuffix;
                 }

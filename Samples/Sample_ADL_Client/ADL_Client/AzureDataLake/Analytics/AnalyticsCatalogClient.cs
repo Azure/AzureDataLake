@@ -28,8 +28,6 @@ namespace AzureDataLake.Analytics
 
             string @select = null;
             bool? count = null;
-            string search = null;
-            string format = null;
 
             // Handle the initial response
             var page = this._adla_catalog_rest_client.Catalog.ListDatabases(this.Account, oDataQuery, @select, count);
@@ -45,8 +43,6 @@ namespace AzureDataLake.Analytics
 
             string @select = null;
             bool? count = null;
-            string search = null;
-            string format = null;
 
             // Handle the initial response
             var page = this._adla_catalog_rest_client.Catalog.ListAssemblies(this.Account, dbname, oDataQuery, @select, count);
@@ -62,8 +58,6 @@ namespace AzureDataLake.Analytics
 
             string @select = null;
             bool? count = null;
-            string search = null;
-            string format = null;
 
             // Handle the initial response
             var page = this._adla_catalog_rest_client.Catalog.ListExternalDataSources(this.Account, dbname, oDataQuery, @select, count);
@@ -79,8 +73,6 @@ namespace AzureDataLake.Analytics
 
             string @select = null;
             bool? count = null;
-            string search = null;
-            string format = null;
 
             // Handle the initial response
             var page = this._adla_catalog_rest_client.Catalog.ListProcedures(this.Account, dbname, schema, oDataQuery, @select, count);
