@@ -56,6 +56,20 @@ namespace ADL_Client_Tests
 
         }
 
+
+        [TestMethod]
+        public void List_Databases()
+        {
+            this.Initialize();
+            foreach (var page in this.adla_job_client.ListDatabases())
+            {
+                foreach (var db in page)
+                {
+                    System.Console.WriteLine("DB {0}",db.Name);
+                }
+            }
+        }
+
     }
 
 }
