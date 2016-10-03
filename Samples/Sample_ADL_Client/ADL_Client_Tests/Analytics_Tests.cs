@@ -61,7 +61,7 @@ namespace ADL_Client_Tests
         public void List_Databases()
         {
             this.Initialize();
-            foreach (var page in this.adla_job_client.ListDatabases())
+            foreach (var page in this.adla_catalog_client.ListDatabases())
             {
                 foreach (var db in page)
                 {

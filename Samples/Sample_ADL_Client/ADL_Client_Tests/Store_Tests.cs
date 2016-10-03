@@ -160,16 +160,7 @@ namespace ADL_Client_Tests
             Assert.AreEqual(true, y2.OtherPermission.Value.Read);
             Assert.AreEqual(false, y2.OtherPermission.Value.Write);
             Assert.AreEqual(true, y2.OtherPermission.Value.Execute);
-
-
-            int dsx = 1;
-
-
         }
-
-
     }
-
-
 }
 
