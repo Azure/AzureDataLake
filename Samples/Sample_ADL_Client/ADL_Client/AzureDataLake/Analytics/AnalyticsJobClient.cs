@@ -15,19 +15,6 @@ namespace AzureDataLake.Analytics
             this._adla_job_rest_client = new ADL.Analytics.DataLakeAnalyticsJobManagementClient(this.AuthenticatedSession.Credentials);
         }
 
-        public IEnumerable<ADL.Analytics.Models.JobInformation> GetJobList(GetJobListPagedOptions options)
-        {
-
-            foreach (var page in GetJobListPaged(options))
-            {
-                foreach (var job in page)
-                {
-                    yield return job;
-                }
-            }
-        }
-
-
         public ADL.Analytics.Models.JobInformation GetJob(System.Guid jobid)
         {
             var job = this._adla_job_rest_client.Job.Get(this.Account, jobid);
@@ -35,7 +22,7 @@ namespace AzureDataLake.Analytics
             return job;
         }
 
-        public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobListPaged(GetJobListPagedOptions options)
+        public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobList(GetJobListPagedOptions options)
         {
             var oDataQuery = new Microsoft.Rest.Azure.OData.ODataQuery<JobInformation>();
             

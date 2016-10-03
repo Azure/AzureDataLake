@@ -14,12 +14,14 @@ namespace ADL_Client_Tests
             getjobs_options.Top = 30;
             getjobs_options.OrderByField = AzureDataLake.Analytics.JobOrderByField.DegreeOfParallelism;
             getjobs_options.OrderByDirection = AzureDataLake.Analytics.JobOrderByDirection.Descending;
-            var jobs = this.adla_job_client.GetJobList(getjobs_options).ToArray();
 
-            foreach (var job in jobs)
+            foreach (var page in this.adla_job_client.GetJobList(getjobs_options))
             {
-                //var job2 = AnalyticsClient.GetJob(job.JobId.Value);
-                System.Console.WriteLine("submitter{0} dop {1}", job.Submitter, job.DegreeOfParallelism);
+                foreach (var job in page)
+                {
+                    //var job2 = AnalyticsClient.GetJob(job.JobId.Value);
+                    System.Console.WriteLine("submitter{0} dop {1}", job.Submitter, job.DegreeOfParallelism);
+                }
             }
         }
 
