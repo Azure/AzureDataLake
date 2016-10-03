@@ -103,7 +103,8 @@
     <Compile Include="Analytics_Job_Tests.cs" />
     <Compile Include="FSPath_Tests.cs" />
     <Compile Include="FSPermissions_Tests.cs" />
-    <Compile Include="Store_Tests.cs" />
+    <Compile Include="Store_Management_Tests.cs" />
+    <Compile Include="Store_Filesystem_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
