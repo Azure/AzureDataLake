@@ -52,7 +52,7 @@ namespace AzureDataLake.Store
             this.Integer = bools_to_int(read, write, execute);
         }
 
-        public static int bools_to_int(bool read, bool write, bool execute)
+        private static int bools_to_int(bool read, bool write, bool execute)
         {
             return (bool_to_int(read) << 2) | (bool_to_int(write) << 1) | (bool_to_int(execute) << 0);
         }
