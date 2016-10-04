@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureDataLake\Analytics\AnalyticsCatalogClient.cs" />
+    <Compile Include="AzureDataLake\StringUtil.cs" />
     <Compile Include="AzureDataLake\Analytics\SubmitJobOptions.cs" />
     <Compile Include="AzureDataLake\RESTUtil.cs" />
     <Compile Include="AzureDataLake\Analytics\GetJobListPagedOptions.cs" />

@@ -59,10 +59,8 @@ namespace AzureDataLake.Analytics
             }
 
             string field_name_str = field.ToString();
-            string result = field_name_str.Substring(0, 1).ToLowerInvariant() + field_name_str.Substring(1);
-            return result;
+            return StringUtil.ToLowercaseFirstLetter(field_name_str);
         }
-
 
         public ADL.Analytics.Models.JobInformation  SubmitJob(SubmitJobOptions options)
         {
