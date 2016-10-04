@@ -31,5 +31,19 @@ namespace AzureDataLake.Analytics
             }
             return result;
         }
+
+        public List<ADL.Analytics.Models.DataLakeAnalyticsAccount> ListAccountsByResourceGroup(string resource_group)
+        {
+            var page = this._adla_mgmt_rest_client.Account.ListByResourceGroup(resource_group);
+            var pages = AzureDataLake.RESTUtil.EnumPages(page,
+                p => this._adla_mgmt_rest_client.Account.ListByResourceGroupNext(p.NextPageLink));
+
+            var result = new List<ADL.Analytics.Models.DataLakeAnalyticsAccount>();
+            foreach (var p in pages)
+            {
+                result.AddRange(p);
+            }
+            return result;
+        }
     }
 }

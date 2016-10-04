@@ -31,5 +31,19 @@ namespace AzureDataLake.Store
             }
             return result;
         }
+
+        public List<ADL.Store.Models.DataLakeStoreAccount> ListAccountsByResourceGroup(string resource_group)
+        {
+            var page = this._adls_mgmt_rest_client.Account.ListByResourceGroup(resource_group);
+            var pages = AzureDataLake.RESTUtil.EnumPages(page,
+                p => this._adls_mgmt_rest_client.Account.ListByResourceGroupNext(p.NextPageLink));
+
+            var result = new List<ADL.Store.Models.DataLakeStoreAccount>();
+            foreach (var p in pages)
+            {
+                result.AddRange(p);
+            }
+            return result;
+        }
     }
 }
