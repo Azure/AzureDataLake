@@ -15,7 +15,7 @@ namespace AzureDataLake.Analytics
             this._adla_catalog_rest_client = new ADL.Analytics.DataLakeAnalyticsCatalogManagementClient(this.AuthenticatedSession.Credentials);
         }
 
-        public ADL.Analytics.Models.USqlDatabase GetDatabase(GetJobListPagedOptions options, string name)
+        public ADL.Analytics.Models.USqlDatabase GetDatabase(GetJobListOptions options, string name)
         {
 
             var db = this._adla_catalog_rest_client.Catalog.GetDatabase(this.Account, name);

@@ -10,7 +10,7 @@ namespace ADL_Client_Tests
         public void List_Jobs()
         {
             this.Initialize();
-            var getjobs_options = new AzureDataLake.Analytics.GetJobListPagedOptions();
+            var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
             getjobs_options.Top = 30;
             getjobs_options.OrderByField = AzureDataLake.Analytics.JobOrderByField.DegreeOfParallelism;
             getjobs_options.OrderByDirection = AzureDataLake.Analytics.JobOrderByDirection.Descending;

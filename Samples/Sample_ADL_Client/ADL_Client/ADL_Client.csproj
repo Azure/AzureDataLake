@@ -85,7 +85,7 @@
     <Compile Include="AzureDataLake\StringUtil.cs" />
     <Compile Include="AzureDataLake\Analytics\SubmitJobOptions.cs" />
     <Compile Include="AzureDataLake\RESTUtil.cs" />
-    <Compile Include="AzureDataLake\Analytics\GetJobListPagedOptions.cs" />
+    <Compile Include="AzureDataLake\Analytics\GetJobListOptions.cs" />
     <Compile Include="AzureDataLake\AccountClientBase.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsManagementClient.cs" />
     <Compile Include="AzureDataLake\Authentication\Directory.cs" />

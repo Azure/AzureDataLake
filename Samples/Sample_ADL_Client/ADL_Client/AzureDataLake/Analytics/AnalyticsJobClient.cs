@@ -22,7 +22,7 @@ namespace AzureDataLake.Analytics
             return job;
         }
 
-        public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobList(GetJobListPagedOptions options)
+        public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobList(GetJobListOptions options)
         {
             var oDataQuery = new Microsoft.Rest.Azure.OData.ODataQuery<JobInformation>();
             
