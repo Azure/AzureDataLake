@@ -74,6 +74,14 @@ namespace AzureDataLake.Analytics
                 options.JobName = "ADL_Demo_Client_Job_" + System.DateTime.Now.ToString();
             }
 
+            var parameters = CreateNewJobProperties(options);
+            var jobInfo = this._adla_job_rest_client.Job.Create(this.Account, options.JobID, parameters);
+
+            return jobInfo;
+        }
+
+        private static JobInformation CreateNewJobProperties(SubmitJobOptions options)
+        {
             var jobprops = new USqlJobProperties();
             jobprops.Script = options.ScriptText;
 
@@ -82,16 +90,26 @@ namespace AzureDataLake.Analytics
             int dop = 1;
 
             var parameters = new JobInformation(
-                name: options.JobName, 
-                type: jobType, 
-                properties: jobprops,               
-                priority: priority, 
-                degreeOfParallelism: dop, 
+                name: options.JobName,
+                type: jobType,
+                properties: jobprops,
+                priority: priority,
+                degreeOfParallelism: dop,
                 jobId: options.JobID);
-            
-            var jobInfo = this._adla_job_rest_client.Job.Create(this.Account, options.JobID, parameters);
+            return parameters;
+        }
 
-            return jobInfo;
+
+        public ADL.Analytics.Models.JobStatistics GetStatistics(System.Guid jobid)
+        {
+            var stats = this._adla_job_rest_client.Job.GetStatistics(this.Account, jobid);
+            return stats;
+        }
+
+        public ADL.Analytics.Models.JobDataPath GetDebugDataPath(System.Guid jobid)
+        {
+            var jobdatapath = this._adla_job_rest_client.Job.GetDebugDataPath(this.Account, jobid);
+            return jobdatapath;
         }
     }
 }
