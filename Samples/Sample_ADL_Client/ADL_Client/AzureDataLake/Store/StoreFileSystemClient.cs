@@ -80,16 +80,16 @@ namespace AzureDataLake.Store
             var result = _adls_filesys_rest_client.FileSystem.Delete(this.Account, path.ToString(), recursive );
         }
 
-        public void CreateFile(FsPath path, byte[] bytes, bool overwrite)
+        public void CreateFile(FsPath path, byte[] bytes, CreateFileOptions options)
         {
             var memstream = new System.IO.MemoryStream(bytes);
-            _adls_filesys_rest_client.FileSystem.Create(this.Account, path.ToString(),memstream,overwrite);
+            _adls_filesys_rest_client.FileSystem.Create(this.Account, path.ToString(),memstream,options.Overwrite);
         }
 
-        public void CreateFile(FsPath path, string content, bool overwrite)
+        public void CreateFile(FsPath path, string content, CreateFileOptions options)
         {
             var bytes = System.Text.Encoding.UTF8.GetBytes(content);
-            this.CreateFile(path, bytes, overwrite);
+            this.CreateFile(path, bytes, options);
         }
 
         public ADL.Store.Models.FileStatusResult GetFileInformation( FsPath path )

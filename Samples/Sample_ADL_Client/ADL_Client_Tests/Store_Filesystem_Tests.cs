@@ -63,7 +63,9 @@ namespace ADL_Client_Tests
             var dir = create_test_dir();
             
             var fname = dir.Append("foo.txt");
-            this.adls_fs_client.CreateFile(fname, "HelloWorld", true);
+            var cfo = new AzureDataLake.Store.CreateFileOptions();
+            cfo.Overwrite = true;
+            this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
             Assert.IsTrue( this.adls_fs_client.Exists(fname));
             var fi = this.adls_fs_client.GetFileInformation(fname);
             Assert.AreEqual(10,fi.FileStatus.Length);
@@ -109,7 +111,10 @@ namespace ADL_Client_Tests
             {
                 this.adls_fs_client.Delete(fname);
             }
-            this.adls_fs_client.CreateFile(fname, "HelloWorld", true);
+
+            var cfo = new AzureDataLake.Store.CreateFileOptions();
+            cfo.Overwrite = true;
+            this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
 
             var y = this.adls_fs_client.GetPermissions(fname);
 
