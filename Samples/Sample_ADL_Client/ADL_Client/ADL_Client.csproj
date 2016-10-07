@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="AzureDataLake\AnalyticsCatalogClient - Copy.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsCatalogClient.cs" />
+    <Compile Include="AzureDataLake\Store\UploadOptions.cs" />
     <Compile Include="AzureDataLake\StringUtil.cs" />
     <Compile Include="AzureDataLake\Analytics\SubmitJobOptions.cs" />
     <Compile Include="AzureDataLake\RESTUtil.cs" />

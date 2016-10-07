@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ADL=Microsoft.Azure.Management.DataLake;
 using Microsoft.Azure.Management.DataLake.Store;
 
@@ -149,6 +150,50 @@ namespace AzureDataLake.Store
         public System.IO.Stream OpenFileForReadBinary(FsPath path, long offset, long bytesToRead)
         {
             return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path.ToString(), bytesToRead, offset);
+        }
+
+        public void Upload(string src_local_filename, FsPath dest_remote_filename, UploadOptions options)
+        {
+            var parameters = new ADL.StoreUploader.UploadParameters(src_local_filename, dest_remote_filename.ToString(), this.Account, isOverwrite: options.Force);
+            var frontend = new ADL.StoreUploader.DataLakeStoreFrontEndAdapter(this.Account, this._adls_filesys_rest_client);
+            var uploader = new ADL.StoreUploader.DataLakeStoreUploader(parameters, frontend);
+            uploader.Execute();
+        }
+
+        public void Download(FsPath src_remote_filename, string destPath, DownloadOptions options)
+        {
+            using (var stream = this._adls_filesys_rest_client.FileSystem.Open(this.Account, src_remote_filename.ToString()))
+            {
+                var filemode = options.Append ? System.IO.FileMode.Append : System.IO.FileMode.Create;
+                using (var fileStream = new System.IO.FileStream(destPath, filemode))
+                {
+                    stream.CopyTo(fileStream);
+                }
+            }
+        }
+
+        public void Append(FsPage file,string content)
+        {
+            var bytes = System.Text.Encoding.UTF8.GetBytes(content);
+            using (var stream = new System.IO.MemoryStream(bytes))
+            {
+                this._adls_filesys_rest_client.FileSystem.Append(this.Account, file.ToString(), stream);
+            }
+        }
+
+        public void Append(FsPage file, byte[] bytes)
+        {
+            using (var stream = new System.IO.MemoryStream(bytes))
+            {
+                this._adls_filesys_rest_client.FileSystem.Append(this.Account, file.ToString(), stream);
+            }
+        }
+
+        public void Concatenate(IEnumerable<FsPage> src_files, FsPath dest_path)
+        {
+            var src_file_strings = src_files.Select(i => i.ToString()).ToList();
+            this._adls_filesys_rest_client.FileSystem.Concat(this.Account, dest_path.ToString(), src_file_strings);
+
         }
     }
 }
