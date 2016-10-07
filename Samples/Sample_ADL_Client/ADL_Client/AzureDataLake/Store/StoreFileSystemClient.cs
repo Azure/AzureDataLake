@@ -123,12 +123,12 @@ namespace AzureDataLake.Store
 
         public AzureDataLake.Store.FsAcl GetPermissions(FsPath path)
         {
-            var acl = this._adls_filesys_rest_client.FileSystem.GetAclStatus(this.Account, path.ToString());
-            var acl2 = acl.AclStatus;
+            var acl_result = this._adls_filesys_rest_client.FileSystem.GetAclStatus(this.Account, path.ToString());
+            var acl_status = acl_result.AclStatus;
 
-            var y = new AzureDataLake.Store.FsAcl(acl2);
+            var fs_acl = new AzureDataLake.Store.FsAcl(acl_status);
 
-            return y;
+            return fs_acl;
         }
 
         public void ModifyACLs(FsPath path,string perms)
