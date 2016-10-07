@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ADL=Microsoft.Azure.Management.DataLake;
 using Microsoft.Azure.Management.DataLake.Store;
+using Microsoft.Azure.Management.DataLake.Store.Models;
 
 namespace AzureDataLake.Store
 {
@@ -120,6 +121,51 @@ namespace AzureDataLake.Store
             var info = this.TryGetFileInformation(path);
             return (info != null);
         }
+
+        public bool ExistsFile(FsPath path)
+        {
+            var info = this.TryGetFileInformation(path);
+            if (info == null)
+            {
+                return false;
+            }
+
+            if (!info.FileStatus.Type.HasValue)
+            {
+                throw new System.ArgumentException();
+            }
+
+            if (info.FileStatus.Type.Value == FileType.DIRECTORY)
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
+        public bool ExistsFolder(FsPath path)
+        {
+            var info = this.TryGetFileInformation(path);
+            if (info == null)
+            {
+                return false;
+            }
+
+            if (!info.FileStatus.Type.HasValue)
+            {
+                throw new System.ArgumentException();
+            }
+
+            if (info.FileStatus.Type.Value == FileType.FILE)
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
 
         public AzureDataLake.Store.FsAcl GetPermissions(FsPath path)
         {
