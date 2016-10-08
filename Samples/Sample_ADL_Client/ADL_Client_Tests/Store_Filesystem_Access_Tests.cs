@@ -90,26 +90,24 @@ namespace ADL_Client_Tests
             cfo.Overwrite = true;
             this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
 
-            var permissions1 = this.adls_fs_client.GetPermissions(fname);
+            var permissions_before = this.adls_fs_client.GetPermissions(fname);
 
-            var entries1 = permissions1.Entries.Where(e => e.Permission.Value.Write).ToList();
-            Assert.AreEqual(7, entries1.Count);
+            // find all the named user entries that have write access
+            var entries_before = permissions_before.Entries.Where(e => e.Type == AclType.NamedUser).Where(e=>e.Permission.Value.Write).ToList();
+            Assert.IsTrue(entries_before.Count>0);
 
-            var userentries1 = entries1.Where(e => e.Type == AclType.NamedUser).Where(e=>e.Permission.Value.Write).ToList();
-
-            foreach (var entry in userentries1)
+            // Remove write access for all those entries
+            foreach (var entry in entries_before)
             {
                 var new_entry = string.Format("user:{0}:r-x",entry.Name);
                 this.adls_fs_client.ModifyACLs(fname, new_entry);
             }
 
-            var permissions2 = this.adls_fs_client.GetPermissions(fname);
-            var entries2 = permissions2.Entries.Where(e => e.Permission.Value.Write).ToList();
-
-            var userentries2 = entries2.Where(e => e.Type == AclType.NamedUser).Where(e => e.Permission.Value.Write).ToList();
-            Assert.AreEqual(0, userentries2.Count);
-
-            int x = 1;
+            var permissions_after = this.adls_fs_client.GetPermissions(fname);
+            // find all the named user entries that have write access
+            var entries_after = permissions_after.Entries.Where(e => e.Type == AclType.NamedUser).Where(e => e.Permission.Value.Write).ToList();
+            // verify that there are no such entries
+            Assert.AreEqual(0, entries_after.Count);
         }
 
     }
