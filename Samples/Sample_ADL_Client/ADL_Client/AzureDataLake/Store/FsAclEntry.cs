@@ -20,6 +20,18 @@ namespace AzureDataLake.Store
             
         }
 
+        public FsAclEntry(AclType type, string name, FsPermission permission)
+        {
+            this.Type = type;
+
+            if (name == null)
+            {
+                name = "";
+            }
+            this.Name = name;
+            this.Permission = permission;
+        }
+
         public FsAclEntry(string entry)
         {
             var tokens = entry.Split(':');

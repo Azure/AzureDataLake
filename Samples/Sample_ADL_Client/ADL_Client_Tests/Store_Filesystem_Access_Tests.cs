@@ -97,10 +97,11 @@ namespace ADL_Client_Tests
             Assert.IsTrue(entries_before.Count>0);
 
             // Remove write access for all those entries
+            var perms_mask = new FsPermission("r-x");
             foreach (var entry in entries_before)
             {
-                var new_entry = string.Format("user:{0}:r-x",entry.Name);
-                this.adls_fs_client.ModifyACLs(fname, new_entry);
+                var new_entry_x = new FsAclEntry(entry.Type,entry.Name,entry.Permission.Value.AndWith( perms_mask));
+                this.adls_fs_client.ModifyACLs(fname, new_entry_x.ToString());
             }
 
             var permissions_after = this.adls_fs_client.GetPermissions(fname);
