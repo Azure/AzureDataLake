@@ -52,7 +52,7 @@ namespace AzureDataLake.Store
 
             // validate the URI scheme
 
-            if (!(scheme == "adl" || scheme == "swebhdfs"))
+            if (!(scheme == "adl" || scheme == "swebhdfs" || scheme == "webhdfs"))
             {
                 throw new System.ArgumentException("Unsupported URI scheme");
             }
@@ -88,6 +88,12 @@ namespace AzureDataLake.Store
 
             string localpath = uri.LocalPath;
             this.Path = localpath;
+        }
+
+        public string ToUriString()
+        {
+            string s = string.Format("adl://{0}.azuredatalakestore.net{1}", this.Account, this.Path);
+            return s;
         }
 
     }
