@@ -92,7 +92,7 @@ namespace AzureDataLake.Store
             this.CreateFile(path, bytes, options);
         }
 
-        public ADL.Store.Models.FileStatusResult GetFileInformation( FsPath path )
+        public ADL.Store.Models.FileStatusResult GetFileInformation(FsPath path)
         {
             var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
             return info;
@@ -198,9 +198,9 @@ namespace AzureDataLake.Store
             return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path.ToString(), bytesToRead, offset);
         }
 
-        public void Upload(LocalPath src_path, FsPath dest_filename, UploadOptions options)
+        public void Upload(LocalPath src_path, FsPath dest_path, UploadOptions options)
         {
-            var parameters = new ADL.StoreUploader.UploadParameters(src_path.ToString(), dest_filename.ToString(), this.Account, isOverwrite: options.Force);
+            var parameters = new ADL.StoreUploader.UploadParameters(src_path.ToString(), dest_path.ToString(), this.Account, isOverwrite: options.Force);
             var frontend = new ADL.StoreUploader.DataLakeStoreFrontEndAdapter(this.Account, this._adls_filesys_rest_client);
             var uploader = new ADL.StoreUploader.DataLakeStoreUploader(parameters, frontend);
             uploader.Execute();
@@ -235,9 +235,9 @@ namespace AzureDataLake.Store
             }
         }
 
-        public void Concatenate(IEnumerable<FsPage> src_files, FsPath dest_path)
+        public void Concatenate(IEnumerable<FsPage> src_paths, FsPath dest_path)
         {
-            var src_file_strings = src_files.Select(i => i.ToString()).ToList();
+            var src_file_strings = src_paths.Select(i => i.ToString()).ToList();
             this._adls_filesys_rest_client.FileSystem.Concat(this.Account, dest_path.ToString(), src_file_strings);
 
         }
