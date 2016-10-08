@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="AzureDataLake\AnalyticsCatalogClient - Copy.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsCatalogClient.cs" />
+    <Compile Include="AzureDataLake\Store\AclType.cs" />
     <Compile Include="AzureDataLake\Store\CreateFileOptions.cs" />
     <Compile Include="AzureDataLake\Store\FsUri.cs" />
     <Compile Include="AzureDataLake\Store\LocalPath.cs" />

@@ -9,48 +9,44 @@ namespace AzureDataLake.Store
         public override string ToString()
         {
             var rwx = this.Permission.Value.ToRwxString();
-            string aclType = "ERROR";
-            if (this.Type == AclType.Mask)
-            {
-                aclType = "mask";
-            }
-            else if (this.Type == AclType.NamedGroup)
-            {
-                aclType = "group";
-            }
-            else if (this.Type == AclType.NamedUser)
-            {
-                aclType = "user";
-            }
-            else if (this.Type == AclType.Other)
-            {
-                aclType = "other";
-            }
-            else if (this.Type == AclType.OwningGroup)
-            {
-                aclType = "group";
-            }
-            else if (this.Type == AclType.OwningUser)
-            {
-                aclType = "user";
-            }
-            else 
-            {
-                throw new System.ArgumentOutOfRangeException();
-            }
+            var aclType = AclTypeToString(this.Type);
 
             string s = string.Format("{0}:{1}:{2}", aclType, this.Name, rwx);
             return s;
         }
-    }
 
-    public enum AclType
-    {
-        OwningUser,
-        OwningGroup,
-        NamedUser,
-        NamedGroup,
-        Mask,
-        Other
+        public static string AclTypeToString(AclType type)
+        {
+            string aclType = "ERROR";
+            if (type == AclType.Mask)
+            {
+                aclType = "mask";
+            }
+            else if (type == AclType.NamedGroup)
+            {
+                aclType = "group";
+            }
+            else if (type == AclType.NamedUser)
+            {
+                aclType = "user";
+            }
+            else if (type == AclType.Other)
+            {
+                aclType = "other";
+            }
+            else if (type == AclType.OwningGroup)
+            {
+                aclType = "group";
+            }
+            else if (type == AclType.OwningUser)
+            {
+                aclType = "user";
+            }
+            else
+            {
+                throw new System.ArgumentOutOfRangeException();
+            }
+            return aclType;
+        }
     }
 }
