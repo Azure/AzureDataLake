@@ -198,20 +198,20 @@ namespace AzureDataLake.Store
             return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path.ToString(), bytesToRead, offset);
         }
 
-        public void Upload(string src_local_filename, FsPath dest_remote_filename, UploadOptions options)
+        public void Upload(LocalPath src_path, FsPath dest_filename, UploadOptions options)
         {
-            var parameters = new ADL.StoreUploader.UploadParameters(src_local_filename, dest_remote_filename.ToString(), this.Account, isOverwrite: options.Force);
+            var parameters = new ADL.StoreUploader.UploadParameters(src_path.ToString(), dest_filename.ToString(), this.Account, isOverwrite: options.Force);
             var frontend = new ADL.StoreUploader.DataLakeStoreFrontEndAdapter(this.Account, this._adls_filesys_rest_client);
             var uploader = new ADL.StoreUploader.DataLakeStoreUploader(parameters, frontend);
             uploader.Execute();
         }
 
-        public void Download(FsPath src_remote_filename, string destPath, DownloadOptions options)
+        public void Download(FsPath src_path, LocalPath dest_path, DownloadOptions options)
         {
-            using (var stream = this._adls_filesys_rest_client.FileSystem.Open(this.Account, src_remote_filename.ToString()))
+            using (var stream = this._adls_filesys_rest_client.FileSystem.Open(this.Account, src_path.ToString()))
             {
                 var filemode = options.Append ? System.IO.FileMode.Append : System.IO.FileMode.Create;
-                using (var fileStream = new System.IO.FileStream(destPath, filemode))
+                using (var fileStream = new System.IO.FileStream(dest_path.ToString(), filemode))
                 {
                     stream.CopyTo(fileStream);
                 }
