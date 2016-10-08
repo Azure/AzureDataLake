@@ -100,52 +100,6 @@ namespace ADL_Client_Tests
             return dir;
         }
 
-        [TestMethod]
-        public void ACLs_Scenario()
-        {
-            this.Initialize();
-            var dir = create_test_dir();
-
-            var fname = dir.Append("foo.txt");
-            if (this.adls_fs_client.Exists(fname))
-            {
-                this.adls_fs_client.Delete(fname);
-            }
-
-            var cfo = new AzureDataLake.Store.CreateFileOptions();
-            cfo.Overwrite = true;
-            this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
-
-            var y = this.adls_fs_client.GetPermissions(fname);
-
-            Assert.AreEqual(true, y.OwnerPermission.Value.Read);
-            Assert.AreEqual(true, y.OwnerPermission.Value.Write);
-            Assert.AreEqual(true, y.OwnerPermission.Value.Execute);
-
-            Assert.AreEqual(true, y.GroupPermission.Value.Read);
-            Assert.AreEqual(true, y.GroupPermission.Value.Write);
-            Assert.AreEqual(true, y.GroupPermission.Value.Execute);
-
-            Assert.AreEqual(false, y.OtherPermission.Value.Read);
-            Assert.AreEqual(false, y.OtherPermission.Value.Write);
-            Assert.AreEqual(false, y.OtherPermission.Value.Execute);
-
-            this.adls_fs_client.ModifyACLs(fname, "other::r-x");
-
-            var y2 = this.adls_fs_client.GetPermissions(fname);
-
-            Assert.AreEqual(true, y2.OwnerPermission.Value.Read);
-            Assert.AreEqual(true, y2.OwnerPermission.Value.Write);
-            Assert.AreEqual(true, y2.OwnerPermission.Value.Execute);
-
-            Assert.AreEqual(true, y2.GroupPermission.Value.Read);
-            Assert.AreEqual(true, y2.GroupPermission.Value.Write);
-            Assert.AreEqual(true, y2.GroupPermission.Value.Execute);
-
-            Assert.AreEqual(true, y2.OtherPermission.Value.Read);
-            Assert.AreEqual(false, y2.OtherPermission.Value.Write);
-            Assert.AreEqual(true, y2.OtherPermission.Value.Execute);
-        }
     }
 }
 
