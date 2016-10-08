@@ -15,6 +15,50 @@ namespace AzureDataLake.Store
             return s;
         }
 
+        private FsAclEntry()
+        {
+            
+        }
+
+        public FsAclEntry(string entry)
+        {
+            var tokens = entry.Split(':');
+
+            string type_str = tokens[0].ToLowerInvariant();
+            string user = tokens[1];
+            if ((type_str == "user") && (user.Length == 0))
+            {
+                this.Type = AclType.OwningUser;
+            }
+            else if ((type_str == "user") && (user.Length > 0))
+            {
+                this.Type = AclType.NamedUser;
+            }
+            else if ((type_str == "group") && (user.Length == 0))
+            {
+                this.Type = AclType.OwningGroup;
+            }
+            else if ((type_str == "group") && (user.Length > 0))
+            {
+                this.Type = AclType.NamedGroup;
+            }
+            else if (type_str == "mask")
+            {
+                this.Type = AclType.Mask;
+            }
+            else if (type_str == "other")
+            {
+                this.Type = AclType.Other;
+            }
+            else
+            {
+                throw new System.ArgumentOutOfRangeException();
+            }
+
+            this.Name = user;
+            this.Permission = new FsPermission(tokens[2]);
+        }
+
         public static string AclTypeToString(AclType type)
         {
             string aclType = "ERROR";

@@ -37,43 +37,7 @@ namespace AzureDataLake.Store
             this.Entries = new List<FsAclEntry>( acl.Entries.Count);
             foreach (string e in acl.Entries)
             {
-                var tokens = e.Split(':');
-                var acl_entry = new FsAclEntry();
-
-                string type_str = tokens[0].ToLowerInvariant();
-                string user = tokens[1];
-                if ((type_str == "user") && (user.Length == 0))
-                {
-                    acl_entry.Type = AclType.OwningUser;
-                }
-                else if ((type_str == "user") && (user.Length > 0))
-                {
-                    acl_entry.Type = AclType.NamedUser;
-                }
-                else if ((type_str == "group") && (user.Length == 0))
-                {
-                    acl_entry.Type = AclType.OwningGroup;
-                }
-                else if ((type_str == "group") && (user.Length > 0))
-                {
-                    acl_entry.Type = AclType.NamedGroup;
-                }
-                else if (type_str == "mask")
-                {
-                    acl_entry.Type = AclType.Mask;
-                }
-                else if (type_str == "other")
-                {
-                    acl_entry.Type = AclType.Other;
-                }
-                else 
-                {
-                    throw new System.ArgumentOutOfRangeException();
-                }
-
-                acl_entry.Name = user;
-                acl_entry.Permission = new FsPermission(tokens[2]);
-
+                var acl_entry = new FsAclEntry(e);
                 this.Entries.Add(acl_entry);
             }
         }
