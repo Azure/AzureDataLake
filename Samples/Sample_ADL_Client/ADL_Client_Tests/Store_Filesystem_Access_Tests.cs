@@ -106,7 +106,6 @@ namespace ADL_Client_Tests
             var permissions2 = this.adls_fs_client.GetPermissions(fname);
             var entries2 = permissions2.Entries.Where(e => e.Permission.Value.Write).ToList();
 
-            Assert.AreEqual(7, entries2.Count);
             var userentries2 = entries2.Where(e => e.Type == AclType.NamedUser).Where(e => e.Permission.Value.Write).ToList();
             Assert.AreEqual(0, userentries2.Count);
 
