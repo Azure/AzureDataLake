@@ -4,7 +4,7 @@ namespace AzureDataLake.Store
 {
     public struct FsUnixTime
     {
-        public readonly long SecondsSinceEpoch;
+        public readonly long MillisecondsSinceEpoch;
 
         public FsUnixTime(long value)
         {
@@ -12,7 +12,7 @@ namespace AzureDataLake.Store
             {
                 throw new System.ArgumentOutOfRangeException(nameof(value));
             }
-            this.SecondsSinceEpoch = value;
+            this.MillisecondsSinceEpoch = value;
         }
 
         public FsUnixTime(System.DateTime time)
@@ -35,7 +35,7 @@ namespace AzureDataLake.Store
                 throw new System.ArgumentOutOfRangeException(nameof(time));
             }
 
-            this.SecondsSinceEpoch = v;
+            this.MillisecondsSinceEpoch = v;
         }
 
         public static FsUnixTime UtcNow()
@@ -63,7 +63,14 @@ namespace AzureDataLake.Store
 
         public DateTime ToToDateTimeUtc()
         {
-            var dt = FsUnixTime.EpochDateTime.AddSeconds(this.SecondsSinceEpoch);
+            var dt = FsUnixTime.EpochDateTime.AddMilliseconds(this.MillisecondsSinceEpoch);
+            return dt;
+        }
+
+        public static DateTime ToToDateTimeUtc(long seconds)
+        {
+            var ut = new FsUnixTime(seconds);
+            var dt = ut.ToToDateTimeUtc();
             return dt;
         }
     }

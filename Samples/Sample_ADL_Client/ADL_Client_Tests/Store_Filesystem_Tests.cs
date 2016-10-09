@@ -118,32 +118,32 @@ namespace ADL_Client_Tests
             var dir = create_test_dir();
 
             var fname1 = dir.Append("foo.txt");
-            var fname2 = dir.Append("bar.txt");
-            var fname3 = dir.Append("beer.txt");
 
             var cfo = new AzureDataLake.Store.CreateFileOptions();
             cfo.Overwrite = true;
 
             this.adls_fs_client.CreateFileWithContent(fname1, "Hello", cfo);
-            this.adls_fs_client.CreateFileWithContent(fname2, "World", cfo);
-            this.adls_fs_client.CreateFileWithContent(fname3, "HelloWorld", cfo);
 
-            var filestat1 = this.adls_fs_client.GetFileStatus(fname1);
+            var before_fstat1 = this.adls_fs_client.GetFileStatus(fname1);
 
-            Assert.AreEqual(0,filestat1.ExpirationTime.Value);
+            // Having no expiry is the same as having an expiry of the UNix Epoch (1970/1/1)
+            var before_exp = FsUnixTime.ToToDateTimeUtc(before_fstat1.ExpirationTime.Value);
+            Assert.AreEqual(FsUnixTime.EpochDateTime,before_exp);
 
+            var now = System.DateTime.UtcNow;
+            this.adls_fs_client.SetFileExpiryRelativeToNow(fname1, 60 * 60 * 24 * 1000);
 
-            this.adls_fs_client.ClearFileExpiry(fname1);
+            var end_fstat1 = this.adls_fs_client.GetFileStatus(fname1);
+            var end_exp = FsUnixTime.ToToDateTimeUtc(end_fstat1.ExpirationTime.Value);
 
-            //this.adls_fs_client.SetFileExpiry(fname1, System.DateTime.UtcNow.AddYears(1));
+            var dif = end_exp - now;
+            Assert.AreEqual(1.0,dif.TotalDays,0.0001);
 
-            var filestat2 = this.adls_fs_client.GetFileStatus(fname1);
+            int x = 1;
 
-            Assert.IsTrue(filestat2.ExpirationTime.Value>filestat1.ExpirationTime.Value);
-
-            //this.adls_fs_client.Delete(dir, true);
-            //Assert.IsFalse(this.adls_fs_client.Exists(fname1));
-            //Assert.IsFalse(this.adls_fs_client.Exists(dir));
+            this.adls_fs_client.Delete(dir, true);
+            Assert.IsFalse(this.adls_fs_client.Exists(fname1));
+            Assert.IsFalse(this.adls_fs_client.Exists(dir));
 
         }
 
