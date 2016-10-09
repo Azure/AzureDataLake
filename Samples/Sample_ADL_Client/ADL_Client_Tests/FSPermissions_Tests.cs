@@ -9,7 +9,7 @@ namespace ADL_Client_Tests
 
 
         [TestMethod]
-        public void Test1()
+        public void Parse_Rwx_Strings()
         {
             var p0 = new AzureDataLake.Store.FsPermission("rwx");
             Assert.AreEqual(7,p0.Integer);
@@ -50,7 +50,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void Test2()
+        public void Verify_Permission_Inversion()
         {
             var p0 = new AzureDataLake.Store.FsPermission("rwx");
             Assert.AreEqual(7, p0.Integer);
@@ -67,7 +67,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void Test3()
+        public void Verify_Permission_And_Operator()
         {
             var p1 = new AzureDataLake.Store.FsPermission("rwx").AndWith( new FsPermission("---"));
             Assert.AreEqual(0, p1.Integer);
@@ -90,7 +90,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void Test4()
+        public void Verify_Permission_Or_Operator()
         {
             var p1 = new AzureDataLake.Store.FsPermission("rwx").OrWith(new FsPermission("---"));
             Assert.AreEqual(7, p1.Integer);
@@ -113,7 +113,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void Test5()
+        public void Roundtrip_Rwx_Strings()
         {
             var p1 = new AzureDataLake.Store.FsPermission("rwx");
             Assert.AreEqual("rwx", p1.ToRwxString());
