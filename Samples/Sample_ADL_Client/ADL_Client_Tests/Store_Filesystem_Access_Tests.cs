@@ -109,6 +109,35 @@ namespace ADL_Client_Tests
             Assert.AreEqual(0, entries_after.Count);
         }
 
+        [TestMethod]
+        public void ACLs_Scenario_Removed_Named_users()
+        {
+            this.Initialize();
+            var dir = create_test_dir();
+
+            var fname = dir.Append("foo.txt");
+            if (this.adls_fs_client.Exists(fname))
+            {
+                this.adls_fs_client.Delete(fname);
+            }
+
+            var cfo = new AzureDataLake.Store.CreateFileOptions();
+            cfo.Overwrite = true;
+            this.adls_fs_client.CreateFileWithContent(fname, "HelloWorld", cfo);
+
+            var permissions_before = this.adls_fs_client.GetPermissions(fname);
+
+            // copy the entries except for the named users
+            var new_entries = permissions_before.Entries.Where(e => e.Type != AclType.NamedUser).ToList();
+            this.adls_fs_client.SetACLs(fname, new_entries);
+
+            var permissions_after = this.adls_fs_client.GetPermissions(fname);
+            // find all the named user entries that have write access
+            var entries_after = permissions_after.Entries.Where(e => e.Type == AclType.NamedUser).ToList();
+            // verify that there are no such entries
+            Assert.AreEqual(0, entries_after.Count);
+        }
+
     }
 }
 

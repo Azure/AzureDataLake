@@ -188,6 +188,12 @@ namespace AzureDataLake.Store
             this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account, path.ToString(), s);
         }
 
+        public void SetACLs(FsPath path, IEnumerable<FsAclEntry> entries)
+        {
+            var s = FsAclEntry.EntriesToString(entries);
+            this._adls_filesys_rest_client.FileSystem.SetAcl(this.Account, path.ToString(), s);
+        }
+
         public void RemoveAcl(FsPath path)
         {
             this._adls_filesys_rest_client.FileSystem.RemoveAcl(this.Account, path.ToString());
