@@ -182,6 +182,16 @@ namespace AzureDataLake.Store
             this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account,  path.ToString(), entry.ToString());
         }
 
+        public void RemoveAcl(FsPath path)
+        {
+            this._adls_filesys_rest_client.FileSystem.RemoveAcl(this.Account, path.ToString());
+        }
+
+        public void RemoveDefaultAcl(FsPath path)
+        {
+            this._adls_filesys_rest_client.FileSystem.RemoveDefaultAcl(this.Account, path.ToString());
+        }
+
         public System.IO.Stream OpenFileForReadBinary(FsPath path)
         {
             return this._adls_filesys_rest_client.FileSystem.Open(this.Account, path.ToString());
