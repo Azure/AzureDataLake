@@ -82,6 +82,34 @@ namespace ADL_Client_Tests
 
         }
 
+        [TestMethod]
+        public void Basic_File_Concatenate_Scenario()
+        {
+            this.Initialize();
+            var dir = create_test_dir();
+
+            var fname1 = dir.Append("foo.txt");
+            var fname2 = dir.Append("bar.txt");
+            var fname3 = dir.Append("beer.txt");
+
+            var cfo = new AzureDataLake.Store.CreateFileOptions();
+            cfo.Overwrite = true;
+
+            this.adls_fs_client.CreateFileWithContent(fname1, "Hello", cfo);
+            this.adls_fs_client.CreateFileWithContent(fname2, "World", cfo);          
+            this.adls_fs_client.Concatenate(new [] { fname1, fname2 },fname3);
+            using (var s = this.adls_fs_client.OpenFileForReadText(fname3))
+            {
+                var content = s.ReadToEnd();
+                Assert.AreEqual("HelloWorld", content);
+            }
+
+            this.adls_fs_client.Delete(dir, true);
+            Assert.IsFalse(this.adls_fs_client.Exists(fname1));
+            Assert.IsFalse(this.adls_fs_client.Exists(dir));
+
+        }
+
         private FsPath create_test_dir()
         {
             var dir = new AzureDataLake.Store.FsPath("/test_adl_demo_client");

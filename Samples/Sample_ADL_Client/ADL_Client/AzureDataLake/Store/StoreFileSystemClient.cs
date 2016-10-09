@@ -257,7 +257,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public void Concatenate(IEnumerable<FsFileStatusPage> src_paths, FsPath dest_path)
+        public void Concatenate(IEnumerable<FsPath> src_paths, FsPath dest_path)
         {
             var src_file_strings = src_paths.Select(i => i.ToString()).ToList();
             this._adls_filesys_rest_client.FileSystem.Concat(this.Account, dest_path.ToString(), src_file_strings);
