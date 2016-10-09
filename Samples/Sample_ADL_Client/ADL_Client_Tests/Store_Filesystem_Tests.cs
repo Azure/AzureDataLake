@@ -127,14 +127,14 @@ namespace ADL_Client_Tests
             var before_fstat1 = this.adls_fs_client.GetFileStatus(fname1);
 
             // Having no expiry is the same as having an expiry of the UNix Epoch (1970/1/1)
-            var before_exp = FsUnixTime.ToToDateTimeUtc(before_fstat1.ExpirationTime.Value);
+            var before_exp = FsUnixTime.ToToDateTimeUtc(before_fstat1.ExpirationTime.Value.MillisecondsSinceEpoch);
             Assert.AreEqual(FsUnixTime.EpochDateTime,before_exp);
 
             var now = System.DateTime.UtcNow;
             this.adls_fs_client.SetFileExpiryRelativeToNow(fname1, 60 * 60 * 24 * 1000);
 
             var end_fstat1 = this.adls_fs_client.GetFileStatus(fname1);
-            var end_exp = FsUnixTime.ToToDateTimeUtc(end_fstat1.ExpirationTime.Value);
+            var end_exp = FsUnixTime.ToToDateTimeUtc(end_fstat1.ExpirationTime.Value.MillisecondsSinceEpoch);
 
             var dif = end_exp - now;
             Assert.AreEqual(1.0,dif.TotalDays,0.0001);

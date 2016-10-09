@@ -93,18 +93,18 @@ namespace AzureDataLake.Store
             this.CreateFileWithContent(path, bytes, options);
         }
 
-        public ADL.Store.Models.FileStatusProperties GetFileStatus(FsPath path)
+        public FsFileStatus GetFileStatus(FsPath path)
         {
             var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
-            return info.FileStatus;
+            return new FsFileStatus(info.FileStatus);
         }
 
-        public ADL.Store.Models.FileStatusProperties TryGetFileInformation(FsPath path)
+        public FsFileStatus TryGetFileInformation(FsPath path)
         {
             try
             {
                 var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
-                return info.FileStatus;
+                return new FsFileStatus(info.FileStatus);
             }
             catch (Microsoft.Azure.Management.DataLake.Store.Models.AdlsErrorException ex)
             {
@@ -131,12 +131,7 @@ namespace AzureDataLake.Store
                 return false;
             }
 
-            if (!filestat.Type.HasValue)
-            {
-                throw new System.ArgumentException();
-            }
-
-            if (filestat.Type.Value == FileType.DIRECTORY)
+            if (filestat.Type == FileType.DIRECTORY)
             {
                 return false;
             }
@@ -153,12 +148,8 @@ namespace AzureDataLake.Store
                 return false;
             }
 
-            if (!info.Type.HasValue)
-            {
-                throw new System.ArgumentException();
-            }
 
-            if (info.Type.Value == FileType.FILE)
+            if (info.Type == FileType.FILE)
             {
                 return false;
             }
