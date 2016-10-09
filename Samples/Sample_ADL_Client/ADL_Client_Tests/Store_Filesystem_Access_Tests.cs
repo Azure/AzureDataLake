@@ -41,7 +41,7 @@ namespace ADL_Client_Tests
 
             var cfo = new AzureDataLake.Store.CreateFileOptions();
             cfo.Overwrite = true;
-            this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
+            this.adls_fs_client.CreateFileWithContent(fname, "HelloWorld", cfo);
 
             var permissions_before = this.adls_fs_client.GetPermissions(fname);
 
@@ -89,7 +89,7 @@ namespace ADL_Client_Tests
 
             var cfo = new AzureDataLake.Store.CreateFileOptions();
             cfo.Overwrite = true;
-            this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
+            this.adls_fs_client.CreateFileWithContent(fname, "HelloWorld", cfo);
 
             var permissions_before = this.adls_fs_client.GetPermissions(fname);
 

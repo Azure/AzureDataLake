@@ -65,7 +65,7 @@ namespace ADL_Client_Tests
             var fname = dir.Append("foo.txt");
             var cfo = new AzureDataLake.Store.CreateFileOptions();
             cfo.Overwrite = true;
-            this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
+            this.adls_fs_client.CreateFileWithContent(fname, "HelloWorld", cfo);
             Assert.IsTrue( this.adls_fs_client.Exists(fname));
             var fi = this.adls_fs_client.GetFileInformation(fname);
             Assert.AreEqual(10,fi.FileStatus.Length);
