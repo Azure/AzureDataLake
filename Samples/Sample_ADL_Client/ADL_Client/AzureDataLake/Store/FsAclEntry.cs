@@ -104,5 +104,23 @@ namespace AzureDataLake.Store
             }
             return aclType;
         }
+
+        public FsAclEntry AndWith(FsPermission mask)
+        {
+            var new_perm = this.Permission.Value.AndWith(mask);
+            return this.CloneWithPermission(new_perm);
+        }
+
+        public FsAclEntry OrWith(FsPermission mask)
+        {
+            var new_perm = this.Permission.Value.OrWith(mask);
+            return this.CloneWithPermission(new_perm);
+        }
+
+        public FsAclEntry CloneWithPermission(FsPermission permission)
+        {
+            var new_entry = new FsAclEntry(this.Type, this.Name, permission);
+            return new_entry;
+        }
     }
 }

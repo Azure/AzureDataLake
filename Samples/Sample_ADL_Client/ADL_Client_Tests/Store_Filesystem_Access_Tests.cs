@@ -57,7 +57,8 @@ namespace ADL_Client_Tests
             Assert.AreEqual(false, y.OtherPermission.Value.Write);
             Assert.AreEqual(false, y.OtherPermission.Value.Execute);
 
-            this.adls_fs_client.ModifyACLs(fname, "other::r-x");
+            var x = new FsAclEntry( AclType.Other,null, new FsPermission("r-x"));
+            this.adls_fs_client.ModifyACLs(fname, x);
 
             var y2 = this.adls_fs_client.GetPermissions(fname);
 
@@ -100,8 +101,7 @@ namespace ADL_Client_Tests
             var perms_mask = new FsPermission("r-x");
             foreach (var entry in entries_before)
             {
-                var new_entry_x = new FsAclEntry(entry.Type,entry.Name,entry.Permission.Value.AndWith( perms_mask));
-                this.adls_fs_client.ModifyACLs(fname, new_entry_x.ToString());
+                this.adls_fs_client.ModifyACLs(fname, entry.AndWith(perms_mask) );
             }
 
             var permissions_after = this.adls_fs_client.GetPermissions(fname);

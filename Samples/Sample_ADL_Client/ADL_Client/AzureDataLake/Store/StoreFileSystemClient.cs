@@ -177,9 +177,9 @@ namespace AzureDataLake.Store
             return fs_acl;
         }
 
-        public void ModifyACLs(FsPath path,string perms)
+        public void ModifyACLs(FsPath path, FsAclEntry entry)
         {
-            this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account,  path.ToString(), perms);
+            this._adls_filesys_rest_client.FileSystem.ModifyAclEntries(this.Account,  path.ToString(), entry.ToString());
         }
 
         public System.IO.Stream OpenFileForReadBinary(FsPath path)
