@@ -142,6 +142,7 @@
     <Compile Include="FSPath_Tests.cs" />
     <Compile Include="FSPermissions_Tests.cs" />
     <Compile Include="Store_Filesystem_Access_Tests.cs" />
+    <Compile Include="Store_Filesystem_Expiry_Tests.cs" />
     <Compile Include="Store_Management_Tests.cs" />
     <Compile Include="Store_Filesystem_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
