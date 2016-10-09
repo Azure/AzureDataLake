@@ -137,7 +137,7 @@
     <Compile Include="Analytics_Management_Tests.cs" />
     <Compile Include="Base_Tests.cs" />
     <Compile Include="Analytics_Job_Tests.cs" />
-    <Compile Include="UnixTime.cs" />
+    <Compile Include="FsUnixTime_Tests.cs" />
     <Compile Include="FSUri_Tests.cs" />
     <Compile Include="FSPath_Tests.cs" />
     <Compile Include="FSPermissions_Tests.cs" />
