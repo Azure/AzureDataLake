@@ -131,10 +131,11 @@ namespace ADL_Client_Tests
             var filestat1 = this.adls_fs_client.GetFileStatus(fname1);
 
             Assert.AreEqual(0,filestat1.ExpirationTime.Value);
-            
-          
 
-            this.adls_fs_client.SetFileExpiry(fname1, ExpiryOptionType.Absolute, System.DateTime.UtcNow.AddYears(1));
+
+            this.adls_fs_client.ClearFileExpiry(fname1);
+
+            //this.adls_fs_client.SetFileExpiry(fname1, System.DateTime.UtcNow.AddYears(1));
 
             var filestat2 = this.adls_fs_client.GetFileStatus(fname1);
 

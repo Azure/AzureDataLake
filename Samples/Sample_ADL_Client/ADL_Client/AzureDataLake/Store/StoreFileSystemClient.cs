@@ -264,25 +264,15 @@ namespace AzureDataLake.Store
             this._adls_filesys_rest_client.FileSystem.Concat(this.Account, dest_path.ToString(), src_file_strings);
         }
 
-        public void SetFileExpiry(FsPath path, ExpiryOptionType expiry_option, System.DateTime? expiretime)
+        public void ClearFileExpiry(FsPath path)
         {
-            if (expiretime.HasValue)
-            {
-                if (expiretime.Value.Kind != DateTimeKind.Utc)
-                {
-                    throw new System.ArgumentException(nameof(expiretime));
-                }
-            }
+            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.NeverExpire, null);
+        }
 
-            if (expiry_option == ExpiryOptionType.NeverExpire)
-            {
-                this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), expiry_option, null);
-            }
-            else if (expiry_option == ExpiryOptionType.Absolute)
-            {
-                var ut = new FsUnixTime(expiretime.Value);
-                this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), expiry_option, ut.SecondsSinceEpoch);
-            }
+        public void SetFileExpiry(FsPath path, System.DateTime expiretime)
+        {
+            var ut = new FsUnixTime(expiretime);
+            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.Absolute, ut.SecondsSinceEpoch);
         }
 
         public void SetFileExpiry_(FsPath path, ExpiryOptionType expiry_option, long? expiretime)
