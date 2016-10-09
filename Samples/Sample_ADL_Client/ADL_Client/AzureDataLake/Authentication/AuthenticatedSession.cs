@@ -80,7 +80,11 @@ namespace AzureDataLake.Authentication
                 var sync_context = new System.Threading.SynchronizationContext();
                 System.Threading.SynchronizationContext.SetSynchronizationContext(sync_context);
                 creds = REST.Authentication.UserTokenProvider.LoginWithPromptAsync(domain, AD_client_settings, token_cache).Result;
-                System.IO.File.WriteAllBytes(cache_filename, token_cache.Serialize());
+                if (token_cache.Count > 0)
+                {
+                    // If token cache has no items then trying serialize it will fail when deserializing
+                    System.IO.File.WriteAllBytes(cache_filename, token_cache.Serialize());
+                }
             }
 
             this.Credentials = creds;

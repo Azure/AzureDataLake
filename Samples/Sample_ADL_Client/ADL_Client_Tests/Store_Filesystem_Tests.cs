@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AzureDataLake.Store;
+using Microsoft.Azure.Management.DataLake.Store.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ADL_Client_Tests
@@ -128,12 +129,20 @@ namespace ADL_Client_Tests
             this.adls_fs_client.CreateFileWithContent(fname3, "HelloWorld", cfo);
 
             var filestat1 = this.adls_fs_client.GetFileStatus(fname1);
-            var filestat2 = this.adls_fs_client.GetFileStatus(fname2);
-            var filestat3 = this.adls_fs_client.GetFileStatus(fname3);
 
-            this.adls_fs_client.Delete(dir, true);
-            Assert.IsFalse(this.adls_fs_client.Exists(fname1));
-            Assert.IsFalse(this.adls_fs_client.Exists(dir));
+            Assert.AreEqual(0,filestat1.ExpirationTime.Value);
+            
+          
+
+            this.adls_fs_client.SetFileExpiry(fname1, ExpiryOptionType.Absolute, System.DateTime.UtcNow.AddYears(1));
+
+            var filestat2 = this.adls_fs_client.GetFileStatus(fname1);
+
+            Assert.IsTrue(filestat2.ExpirationTime.Value>filestat1.ExpirationTime.Value);
+
+            //this.adls_fs_client.Delete(dir, true);
+            //Assert.IsFalse(this.adls_fs_client.Exists(fname1));
+            //Assert.IsFalse(this.adls_fs_client.Exists(dir));
 
         }
 
