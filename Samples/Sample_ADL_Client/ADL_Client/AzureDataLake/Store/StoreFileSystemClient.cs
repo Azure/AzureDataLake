@@ -16,7 +16,7 @@ namespace AzureDataLake.Store
             _adls_filesys_rest_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(this.AuthenticatedSession.Credentials);
         }
 
-        public IEnumerable<FsPage> ListFilesRecursive(FsPath path, int pagesize)
+        public IEnumerable<FsFileStatusPage> ListFilesRecursive(FsPath path, int pagesize)
         {
             var queue = new Queue<FsPath>();
             queue.Enqueue(path);
@@ -41,7 +41,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public IEnumerable<FsPage> ListFiles(FsPath path, int pagesize)
+        public IEnumerable<FsFileStatusPage> ListFiles(FsPath path, int pagesize)
         {
             string after = null;
             while (true)
@@ -50,7 +50,7 @@ namespace AzureDataLake.Store
 
                 if (result.FileStatuses.FileStatus.Count > 0)
                 {
-                    var page = new FsPage();
+                    var page = new FsFileStatusPage();
                     page.Path = path;
 
                     page.FileItems = result.FileStatuses.FileStatus;
@@ -240,7 +240,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public void Append(FsPage file,string content)
+        public void AppendString(FsFileStatusPage file,string content)
         {
             var bytes = System.Text.Encoding.UTF8.GetBytes(content);
             using (var stream = new System.IO.MemoryStream(bytes))
@@ -249,7 +249,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public void Append(FsPage file, byte[] bytes)
+        public void AppendBytes(FsFileStatusPage file, byte[] bytes)
         {
             using (var stream = new System.IO.MemoryStream(bytes))
             {
@@ -257,11 +257,32 @@ namespace AzureDataLake.Store
             }
         }
 
-        public void Concatenate(IEnumerable<FsPage> src_paths, FsPath dest_path)
+        public void Concatenate(IEnumerable<FsFileStatusPage> src_paths, FsPath dest_path)
         {
             var src_file_strings = src_paths.Select(i => i.ToString()).ToList();
             this._adls_filesys_rest_client.FileSystem.Concat(this.Account, dest_path.ToString(), src_file_strings);
+        }
 
+        public void SetFileExpiry(FsPath path, ExpiryOptionType expiry_option, long? expiretime)
+        {
+            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), expiry_option, expiretime);
+        }
+
+        public ContentSummary GetContentSummary(FsPath path, ExpiryOptionType expiry_option, long? expiretime)
+        {
+            var summary = this._adls_filesys_rest_client.FileSystem.GetContentSummary(this.Account, path.ToString());
+            return summary.ContentSummary;
+        }
+
+        public void SetOwner(FsPath path, ExpiryOptionType expiry_option, string owner, string group)
+        {
+            this._adls_filesys_rest_client.FileSystem.SetOwner(this.Account, path.ToString(), owner, group);
+        }
+
+
+        public void Move(FsPath src_path, FsPath dest_path)
+        {
+            this._adls_filesys_rest_client.FileSystem.Rename(this.Account, src_path.ToString(), dest_path.ToString());
         }
     }
 }

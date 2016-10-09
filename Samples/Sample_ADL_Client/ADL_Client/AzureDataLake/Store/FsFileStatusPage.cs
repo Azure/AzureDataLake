@@ -3,7 +3,7 @@ using Microsoft.Azure.Management.DataLake.Store.Models;
 
 namespace AzureDataLake.Store
 {
-    public class FsPage
+    public class FsFileStatusPage
     {
         public FsPath Path;
         public IList<FileStatusProperties> FileItems;
