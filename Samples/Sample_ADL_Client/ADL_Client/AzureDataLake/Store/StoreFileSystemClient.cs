@@ -267,14 +267,14 @@ namespace AzureDataLake.Store
             this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.Absolute, unix_time);
         }
 
-        public void SetFileExpiryRelativeToNow(FsPath path, long seconds)
+        public void SetFileExpiryRelativeToNow(FsPath path, System.TimeSpan timespan)
         {
-            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.RelativeToNow, seconds);
+            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.RelativeToNow, (long) timespan.TotalMilliseconds);
         }
 
-        public void SetFileExpiryRelativeToCreationDate(FsPath path, long seconds)
+        public void SetFileExpiryRelativeToCreationDate(FsPath path, System.TimeSpan timespan)
         {
-            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.RelativeToCreationDate, seconds);
+            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.RelativeToCreationDate, (long) timespan.TotalMilliseconds);
         }
 
         public void SetFileExpiry_(FsPath path, ExpiryOptionType expiry_option, long? expiretime)

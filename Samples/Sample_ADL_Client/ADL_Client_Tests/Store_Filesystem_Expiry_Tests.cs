@@ -44,7 +44,8 @@ namespace ADL_Client_Tests
             this.adls_fs_client.CreateFileWithContent(fname1, "Hello", cfo);
 
             var now = System.DateTime.UtcNow;
-            this.adls_fs_client.SetFileExpiryRelativeToNow(fname1, 60 * 60 * 24 * 1000);
+            var one_day = new TimeSpan(1,0,0,0);
+            this.adls_fs_client.SetFileExpiryRelativeToNow(fname1, one_day);
 
             var end_fstat1 = this.adls_fs_client.GetFileStatus(fname1);
             var end_exp = end_fstat1.ExpirationTime.Value.ToToDateTimeUtc();
