@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace AzureDataLake.Store
 {
     public class FsAclEntry
@@ -11,7 +15,7 @@ namespace AzureDataLake.Store
             var rwx = this.Permission.Value.ToRwxString();
             var aclType = AclTypeToString(this.Type);
 
-            string s = string.Format("{0}:{1}:{2}", aclType, this.Name, rwx);
+            string s = String.Format("{0}:{1}:{2}", aclType, this.Name, rwx);
             return s;
         }
 
@@ -64,7 +68,7 @@ namespace AzureDataLake.Store
             }
             else
             {
-                throw new System.ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
 
             this.Name = user;
@@ -100,7 +104,7 @@ namespace AzureDataLake.Store
             }
             else
             {
-                throw new System.ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException();
             }
             return aclType;
         }
@@ -121,6 +125,13 @@ namespace AzureDataLake.Store
         {
             var new_entry = new FsAclEntry(this.Type, this.Name, permission);
             return new_entry;
+        }
+
+        public static string EntriesToString(IEnumerable<FsAclEntry> entries)
+        {
+            var strings = entries.Select(e => e.ToString());
+            var s = String.Join(",", strings);
+            return s;
         }
     }
 }
