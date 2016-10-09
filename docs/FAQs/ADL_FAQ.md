@@ -40,7 +40,7 @@ Because both ADL Store and ADL Analytics use HTTPS for all communication. The on
 
 No. Azure Data Lake Tools for Visual Studio works with Visual Studio Community Editions which are free.
 
-### W: Which versions of Visual Studio work with Azure Data Lake Tools for Visual Studio?
+### !: Which versions of Visual Studio work with Azure Data Lake Tools for Visual Studio?
 
 These versions are supported:
 - VS 2012
@@ -57,7 +57,7 @@ These Editions are NOT supported
 - Visual Studio Express
 - Visual Studio Test Edition
 
-### W: Why the "Data Lake" menu does not show in Visual Studio even whenIi installed the ADL tool for VS?
+### Q: Why does the "Data Lake" menu  not show in Visual Studio even when i installed the ADL tool for VS?
 
 We have changed the Data Lake Tools for Visual Studio plugin release cycle and now it is released with Azure SDK (from 2.9 on). Since Azure SDK has a large installation base, in order not to disturb users who don't use Data Lake service, we now hide the Data Lake menu. You can "activite" the menu by creating a Data Lake project, or open Server Explorer, etc.
 
