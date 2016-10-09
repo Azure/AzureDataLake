@@ -18,7 +18,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void FSPath_Constructor_Empty1()
+        public void FSPath_Construct_with_no_parameters()
         {
             bool caught = false;
             try
@@ -34,7 +34,7 @@ namespace ADL_Client_Tests
         }
 
         [TestMethod]
-        public void FSPath_Constructor_Empty2()
+        public void FSPath_Construct_empty_string_should_fail()
         {
             bool caught = false;
             try
