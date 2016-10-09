@@ -277,11 +277,6 @@ namespace AzureDataLake.Store
             this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), ExpiryOptionType.RelativeToCreationDate, (long) timespan.TotalMilliseconds);
         }
 
-        public void SetFileExpiry_(FsPath path, ExpiryOptionType expiry_option, long? expiretime)
-        {
-            this._adls_filesys_rest_client.FileSystem.SetFileExpiry(this.Account, path.ToString(), expiry_option, expiretime);
-        }
-
         public ContentSummary GetContentSummary(FsPath path, ExpiryOptionType expiry_option, long? expiretime)
         {
             var summary = this._adls_filesys_rest_client.FileSystem.GetContentSummary(this.Account, path.ToString());
@@ -292,7 +287,7 @@ namespace AzureDataLake.Store
         {
             this._adls_filesys_rest_client.FileSystem.SetOwner(this.Account, path.ToString(), owner, group);
         }
-
+        
 
         public void Move(FsPath src_path, FsPath dest_path)
         {
