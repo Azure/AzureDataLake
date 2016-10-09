@@ -68,7 +68,7 @@ namespace ADL_Client_Tests
             this.adls_fs_client.CreateFileWithContent(fname, "HelloWorld", cfo);
             Assert.IsTrue( this.adls_fs_client.Exists(fname));
             var fi = this.adls_fs_client.GetFileStatus(fname);
-            Assert.AreEqual(10,fi.FileStatus.Length);
+            Assert.AreEqual(10,fi.Length);
 
             using (var s = this.adls_fs_client.OpenFileForReadText(fname))
             {

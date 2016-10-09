@@ -92,18 +92,18 @@ namespace AzureDataLake.Store
             this.CreateFileWithContent(path, bytes, options);
         }
 
-        public ADL.Store.Models.FileStatusResult GetFileStatus(FsPath path)
+        public ADL.Store.Models.FileStatusProperties GetFileStatus(FsPath path)
         {
             var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
-            return info;
+            return info.FileStatus;
         }
 
-        public ADL.Store.Models.FileStatusResult TryGetFileInformation(FsPath path)
+        public ADL.Store.Models.FileStatusProperties TryGetFileInformation(FsPath path)
         {
             try
             {
                 var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
-                return info;
+                return info.FileStatus;
             }
             catch (Microsoft.Azure.Management.DataLake.Store.Models.AdlsErrorException ex)
             {
@@ -124,18 +124,18 @@ namespace AzureDataLake.Store
 
         public bool ExistsFile(FsPath path)
         {
-            var info = this.TryGetFileInformation(path);
-            if (info == null)
+            var filestat = this.TryGetFileInformation(path);
+            if (filestat == null)
             {
                 return false;
             }
 
-            if (!info.FileStatus.Type.HasValue)
+            if (!filestat.Type.HasValue)
             {
                 throw new System.ArgumentException();
             }
 
-            if (info.FileStatus.Type.Value == FileType.DIRECTORY)
+            if (filestat.Type.Value == FileType.DIRECTORY)
             {
                 return false;
             }
@@ -152,12 +152,12 @@ namespace AzureDataLake.Store
                 return false;
             }
 
-            if (!info.FileStatus.Type.HasValue)
+            if (!info.Type.HasValue)
             {
                 throw new System.ArgumentException();
             }
 
-            if (info.FileStatus.Type.Value == FileType.FILE)
+            if (info.Type.Value == FileType.FILE)
             {
                 return false;
             }
