@@ -4,9 +4,4 @@ namespace AzureDataLake.Store
     {
         public bool Force;
     }
-
-    public class DownloadOptions
-    {
-        public bool Append;
-    }
 }
