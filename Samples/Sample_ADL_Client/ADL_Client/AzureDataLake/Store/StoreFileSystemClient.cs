@@ -92,7 +92,7 @@ namespace AzureDataLake.Store
             this.CreateFileWithContent(path, bytes, options);
         }
 
-        public ADL.Store.Models.FileStatusResult GetFileInformation(FsPath path)
+        public ADL.Store.Models.FileStatusResult GetFileStatus(FsPath path)
         {
             var info = _adls_filesys_rest_client.FileSystem.GetFileStatus(this.Account, path.ToString());
             return info;

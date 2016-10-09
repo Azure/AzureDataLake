@@ -67,7 +67,7 @@ namespace ADL_Client_Tests
             cfo.Overwrite = true;
             this.adls_fs_client.CreateFileWithContent(fname, "HelloWorld", cfo);
             Assert.IsTrue( this.adls_fs_client.Exists(fname));
-            var fi = this.adls_fs_client.GetFileInformation(fname);
+            var fi = this.adls_fs_client.GetFileStatus(fname);
             Assert.AreEqual(10,fi.FileStatus.Length);
 
             using (var s = this.adls_fs_client.OpenFileForReadText(fname))
@@ -127,9 +127,9 @@ namespace ADL_Client_Tests
             this.adls_fs_client.CreateFileWithContent(fname2, "World", cfo);
             this.adls_fs_client.CreateFileWithContent(fname3, "HelloWorld", cfo);
 
-            var filestat1 = this.adls_fs_client.GetFileInformation(fname1);
-            var filestat2 = this.adls_fs_client.GetFileInformation(fname2);
-            var filestat3 = this.adls_fs_client.GetFileInformation(fname3);
+            var filestat1 = this.adls_fs_client.GetFileStatus(fname1);
+            var filestat2 = this.adls_fs_client.GetFileStatus(fname2);
+            var filestat3 = this.adls_fs_client.GetFileStatus(fname3);
 
             this.adls_fs_client.Delete(dir, true);
             Assert.IsFalse(this.adls_fs_client.Exists(fname1));
