@@ -110,6 +110,33 @@ namespace ADL_Client_Tests
 
         }
 
+        [TestMethod]
+        public void Basic_File_Expiry_Scenario()
+        {
+            this.Initialize();
+            var dir = create_test_dir();
+
+            var fname1 = dir.Append("foo.txt");
+            var fname2 = dir.Append("bar.txt");
+            var fname3 = dir.Append("beer.txt");
+
+            var cfo = new AzureDataLake.Store.CreateFileOptions();
+            cfo.Overwrite = true;
+
+            this.adls_fs_client.CreateFileWithContent(fname1, "Hello", cfo);
+            this.adls_fs_client.CreateFileWithContent(fname2, "World", cfo);
+            this.adls_fs_client.CreateFileWithContent(fname3, "HelloWorld", cfo);
+
+            var filestat1 = this.adls_fs_client.GetFileInformation(fname1);
+            var filestat2 = this.adls_fs_client.GetFileInformation(fname2);
+            var filestat3 = this.adls_fs_client.GetFileInformation(fname3);
+
+            this.adls_fs_client.Delete(dir, true);
+            Assert.IsFalse(this.adls_fs_client.Exists(fname1));
+            Assert.IsFalse(this.adls_fs_client.Exists(dir));
+
+        }
+
         private FsPath create_test_dir()
         {
             var dir = new AzureDataLake.Store.FsPath("/test_adl_demo_client");
