@@ -99,11 +99,9 @@ namespace ADL_Client_Tests
 
             // Remove write access for all those entries
             var perms_mask = new FsPermission("r-x");
-            foreach (var entry in entries_before)
-            {
-                this.adls_fs_client.ModifyACLs(fname, entry.AndWith(perms_mask) );
-            }
-
+            var new_acls = entries_before.Select(e => e.AndWith(perms_mask));
+            this.adls_fs_client.ModifyACLs(fname, new_acls);
+ 
             var permissions_after = this.adls_fs_client.GetPermissions(fname);
             // find all the named user entries that have write access
             var entries_after = permissions_after.Entries.Where(e => e.Type == AclType.NamedUser).Where(e => e.Permission.Value.Write).ToList();
