@@ -6,6 +6,6 @@ namespace AzureDataLake.Store
     public class FsFileStatusPage
     {
         public FsPath Path;
-        public IList<FileStatusProperties> FileItems;
+        public IList<FsFileStatus> FileItems;
     }
 }

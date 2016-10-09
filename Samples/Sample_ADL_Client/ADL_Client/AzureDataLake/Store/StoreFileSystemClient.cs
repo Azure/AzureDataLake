@@ -32,7 +32,7 @@ namespace AzureDataLake.Store
 
                     foreach (var item in page.FileItems)
                     {
-                        if (item.Type.HasValue && item.Type.Value == ADL.Store.Models.FileType.DIRECTORY)
+                        if (item.Type == ADL.Store.Models.FileType.DIRECTORY)
                         {
                             var new_path = cur_path.Append(item.PathSuffix);
                             queue.Enqueue(new_path);
@@ -54,7 +54,7 @@ namespace AzureDataLake.Store
                     var page = new FsFileStatusPage();
                     page.Path = path;
 
-                    page.FileItems = result.FileStatuses.FileStatus;
+                    page.FileItems = result.FileStatuses.FileStatus.Select(i=>new FsFileStatus(i)).ToList();
                     yield return page;
                     after = result.FileStatuses.FileStatus[result.FileStatuses.FileStatus.Count - 1].PathSuffix;
                 }

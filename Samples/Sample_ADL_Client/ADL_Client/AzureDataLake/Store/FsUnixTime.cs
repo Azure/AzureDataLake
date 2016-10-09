@@ -1,7 +1,40 @@
 using System;
+using Microsoft.Azure.Management.DataLake.Store.Models;
 
 namespace AzureDataLake.Store
 {
+    public class FsFileStatus
+    {
+        public FsUnixTime? ExpirationTime;
+        public FsUnixTime? AccessTime;
+        public FsUnixTime? ModificationTime;
+        public long BlockSize;
+        public long? ChildrenNum;
+        public long Length;
+        public string Group;
+        public string Owner;
+        public string PathSuffix;
+        public string Permission;
+        public FileType Type;
+        public FsFileStatus(FileStatusProperties fs)
+        {
+            this.ExpirationTime = FsUnixTime.TryParseDouble(fs.ExpirationTime);
+            this.AccessTime= new FsUnixTime(fs.AccessTime.Value);
+            this.ModificationTime= new FsUnixTime(fs.ModificationTime.Value);
+            this.BlockSize = fs.BlockSize.Value;
+            this.ChildrenNum = fs.ChildrenNum;
+            this.Length = fs.Length.Value;
+            this.Group = fs.Group;
+            this.Owner = fs.Owner;
+            this.PathSuffix = fs.PathSuffix;
+            this.Permission = fs.Permission;
+            this.Type = fs.Type.Value;
+
+
+            /*
+             */
+        }
+    }
     public struct FsUnixTime
     {
         public readonly long MillisecondsSinceEpoch;
@@ -28,7 +61,7 @@ namespace AzureDataLake.Store
                 throw new System.ArgumentOutOfRangeException(nameof(time));
             }
 
-            int v = (int) time.Subtract(FsUnixTime.EpochDateTime).TotalSeconds;
+            long v = (long) time.Subtract(FsUnixTime.EpochDateTime).TotalMilliseconds;
 
             if (v < 0)
             {
@@ -72,6 +105,18 @@ namespace AzureDataLake.Store
             var ut = new FsUnixTime(seconds);
             var dt = ut.ToToDateTimeUtc();
             return dt;
+        }
+
+        public static FsUnixTime? TryParseDouble(long? d)
+        {
+            if (d.HasValue)
+            {
+                return  new FsUnixTime(d.Value);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

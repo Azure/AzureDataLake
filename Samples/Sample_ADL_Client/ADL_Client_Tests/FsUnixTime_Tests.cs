@@ -43,6 +43,26 @@ namespace ADL_Client_Tests
 
 
         [TestMethod]
+        public void FsUnixTime_Move_One_Hour_ahead_from_epoch()
+        {
+            var ut0 = new AzureDataLake.Store.FsUnixTime();
+            var ut1 = new AzureDataLake.Store.FsUnixTime(60*60*1000);
+
+            Assert.AreEqual((60 * 60 *1000), ut1.MillisecondsSinceEpoch - ut0.MillisecondsSinceEpoch);
+
+            var d2 = ut1.ToToDateTimeUtc();
+            Assert.AreEqual(1970, d2.Year);
+            Assert.AreEqual(1, d2.Month);
+            Assert.AreEqual(1, d2.Day);
+            Assert.AreEqual(1, d2.Hour);
+            Assert.AreEqual(0, d2.Minute);
+            Assert.AreEqual(0, d2.Second);
+
+
+        }
+
+
+        [TestMethod]
         public void FsUnixTime_Move_One_Hour_ahead()
         {
             var d0 = new System.DateTime(2016, 3, 31, 1, 2, 3, DateTimeKind.Utc);
@@ -51,7 +71,7 @@ namespace ADL_Client_Tests
             var ut0 = new AzureDataLake.Store.FsUnixTime(d0);
             var ut1 = new AzureDataLake.Store.FsUnixTime(d1);
 
-            Assert.AreEqual( (60*60), ut1.MillisecondsSinceEpoch - ut0.MillisecondsSinceEpoch);
+            Assert.AreEqual( (60*60*1000), ut1.MillisecondsSinceEpoch - ut0.MillisecondsSinceEpoch);
 
             var d2 = ut1.ToToDateTimeUtc();
             Assert.AreEqual(2016, d2.Year);
