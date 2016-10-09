@@ -40,11 +40,16 @@ namespace AzureDataLake.Store
 
         public string ToRwxString()
         {
-            char r = this.Read ? 'r' : '-';
-            char w = this.Write? 'w' : '-';
-            char x = this.Execute? 'x' : '-';
+            char r = bool_to_char(this.Read,'r');
+            char w = bool_to_char(this.Write,'w');
+            char x = bool_to_char(this.Execute,'x');
             string s = string.Format("{0}{1}{2}",r,w,x);
             return s;
+        }
+
+        private static char bool_to_char(bool b, char true_char)
+        {
+            return (b ? true_char : '-');
         }
 
         public FsPermission(bool read, bool write, bool execute)
