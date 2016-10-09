@@ -81,7 +81,7 @@ namespace ADL_Client_Tests
             Assert.AreEqual(true, p2.Write);
             Assert.AreEqual(false, p2.Execute);
 
-            var p3 = new AzureDataLake.Store.FsPermission("rwx").AndWith(new FsPermission("r_x"));
+            var p3 = new AzureDataLake.Store.FsPermission("rwx").AndWith(new FsPermission("r-x"));
             Assert.AreEqual(5, p3.Integer);
             Assert.AreEqual(true, p3.Read);
             Assert.AreEqual(false, p3.Write);

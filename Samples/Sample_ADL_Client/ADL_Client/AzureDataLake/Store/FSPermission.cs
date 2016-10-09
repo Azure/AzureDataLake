@@ -26,9 +26,9 @@ namespace AzureDataLake.Store
                 throw new System.ArgumentOutOfRangeException(nameof(value));
             }
 
-            bool r = (value[0] == 'r' || value[0] == 'R');
-            bool w = (value[1] == 'w' || value[1] == 'W');
-            bool x = (value[2] == 'x' || value[2] == 'X');
+            bool r = char_to_bool(value[0], 'r', 'R');
+            bool w = char_to_bool(value[1], 'w', 'W');
+            bool x = char_to_bool(value[2], 'x', 'X');
 
             this.Integer = bools_to_int(r, w, x);
         }
@@ -45,6 +45,21 @@ namespace AzureDataLake.Store
             char x = bool_to_char(this.Execute,'x');
             string s = string.Format("{0}{1}{2}",r,w,x);
             return s;
+        }
+
+        private static bool char_to_bool(char input_char, char true_value_1, char true_value_2)
+        {
+            if ((input_char == true_value_1) || (input_char == true_value_2))
+            {
+                return true;
+            }
+
+            if (input_char == '-')
+            {
+                return false;
+            }
+
+            throw new System.ArgumentOutOfRangeException(nameof(input_char));
         }
 
         private static char bool_to_char(bool b, char true_char)
