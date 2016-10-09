@@ -122,6 +122,7 @@
     <Compile Include="AzureDataLake\Store\AclType.cs" />
     <Compile Include="AzureDataLake\Store\CreateFileOptions.cs" />
     <Compile Include="AzureDataLake\Store\DownloadOptions.cs" />
+    <Compile Include="AzureDataLake\Store\FsFileStatus.cs" />
     <Compile Include="AzureDataLake\Store\FsUri.cs" />
     <Compile Include="AzureDataLake\Store\LocalPath.cs" />
     <Compile Include="AzureDataLake\Store\FsUnixTime.cs" />
