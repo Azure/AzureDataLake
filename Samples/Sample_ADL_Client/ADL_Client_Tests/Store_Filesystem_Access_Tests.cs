@@ -43,36 +43,36 @@ namespace ADL_Client_Tests
             cfo.Overwrite = true;
             this.adls_fs_client.CreateFile(fname, "HelloWorld", cfo);
 
-            var y = this.adls_fs_client.GetPermissions(fname);
+            var permissions_before = this.adls_fs_client.GetPermissions(fname);
 
-            Assert.AreEqual(true, y.OwnerPermission.Value.Read);
-            Assert.AreEqual(true, y.OwnerPermission.Value.Write);
-            Assert.AreEqual(true, y.OwnerPermission.Value.Execute);
+            Assert.AreEqual(true, permissions_before.OwnerPermission.Value.Read);
+            Assert.AreEqual(true, permissions_before.OwnerPermission.Value.Write);
+            Assert.AreEqual(true, permissions_before.OwnerPermission.Value.Execute);
 
-            Assert.AreEqual(true, y.GroupPermission.Value.Read);
-            Assert.AreEqual(true, y.GroupPermission.Value.Write);
-            Assert.AreEqual(true, y.GroupPermission.Value.Execute);
+            Assert.AreEqual(true, permissions_before.GroupPermission.Value.Read);
+            Assert.AreEqual(true, permissions_before.GroupPermission.Value.Write);
+            Assert.AreEqual(true, permissions_before.GroupPermission.Value.Execute);
 
-            Assert.AreEqual(false, y.OtherPermission.Value.Read);
-            Assert.AreEqual(false, y.OtherPermission.Value.Write);
-            Assert.AreEqual(false, y.OtherPermission.Value.Execute);
+            Assert.AreEqual(false, permissions_before.OtherPermission.Value.Read);
+            Assert.AreEqual(false, permissions_before.OtherPermission.Value.Write);
+            Assert.AreEqual(false, permissions_before.OtherPermission.Value.Execute);
 
-            var x = new FsAclEntry( AclType.Other,null, new FsPermission("r-x"));
-            this.adls_fs_client.ModifyACLs(fname, x);
+            var modified_entry = new FsAclEntry( AclType.Other,null, new FsPermission("r-x"));
+            this.adls_fs_client.ModifyACLs(fname, modified_entry);
 
-            var y2 = this.adls_fs_client.GetPermissions(fname);
+            var permissions_after = this.adls_fs_client.GetPermissions(fname);
 
-            Assert.AreEqual(true, y2.OwnerPermission.Value.Read);
-            Assert.AreEqual(true, y2.OwnerPermission.Value.Write);
-            Assert.AreEqual(true, y2.OwnerPermission.Value.Execute);
+            Assert.AreEqual(true, permissions_after.OwnerPermission.Value.Read);
+            Assert.AreEqual(true, permissions_after.OwnerPermission.Value.Write);
+            Assert.AreEqual(true, permissions_after.OwnerPermission.Value.Execute);
 
-            Assert.AreEqual(true, y2.GroupPermission.Value.Read);
-            Assert.AreEqual(true, y2.GroupPermission.Value.Write);
-            Assert.AreEqual(true, y2.GroupPermission.Value.Execute);
+            Assert.AreEqual(true, permissions_after.GroupPermission.Value.Read);
+            Assert.AreEqual(true, permissions_after.GroupPermission.Value.Write);
+            Assert.AreEqual(true, permissions_after.GroupPermission.Value.Execute);
 
-            Assert.AreEqual(true, y2.OtherPermission.Value.Read);
-            Assert.AreEqual(false, y2.OtherPermission.Value.Write);
-            Assert.AreEqual(true, y2.OtherPermission.Value.Execute);
+            Assert.AreEqual(true, permissions_after.OtherPermission.Value.Read);
+            Assert.AreEqual(false, permissions_after.OtherPermission.Value.Write);
+            Assert.AreEqual(true, permissions_after.OtherPermission.Value.Execute);
         }
 
         [TestMethod]
