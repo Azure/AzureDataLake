@@ -117,7 +117,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureDataLake\AnalyticsCatalogClient - Copy.cs" />
+    <Compile Include="AzureDataLake\ResourceManagementClient.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsCatalogClient.cs" />
     <Compile Include="AzureDataLake\Store\AclType.cs" />
     <Compile Include="AzureDataLake\Store\CreateFileOptions.cs" />
