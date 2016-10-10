@@ -46,17 +46,13 @@ namespace AzureDataLake.Analytics
             var filter = new List<string>();
             if (!string.IsNullOrEmpty(this.FilterSubmitter))
             {
-                string expr = QueryEqualsString("submitter",this.FilterSubmitter);
+                string expr = ExprStringEquals("submitter",this.FilterSubmitter);
                 filter.Add(expr);
             }
 
-            // due to issue: https://github.com/Azure/autorest/issues/975,
-            // date time offsets must be explicitly escaped before being passed to the filter
             if (this.FilterSubmittedAfter.HasValue)
             {
-                string datestring = this.FilterSubmittedAfter.Value.ToString("O");
-                var escaped_datestring = System.Uri.EscapeDataString(datestring);
-                var expr = string.Format("submitTime ge datetimeoffset'{0}'", escaped_datestring);
+                string expr = ExprDateTimeGreaterThan("name", this.FilterSubmittedAfter.Value);
                 filter.Add(expr);
             }
 
@@ -69,41 +65,55 @@ namespace AzureDataLake.Analytics
             if (this.FilterState != null && this.FilterState.Length > 0)
             {
                 var states = this.FilterState.Select(state => state.ToString());
-                states = states.Select(s=>QueryEqualsString("state",s));
-                string expr = QueryParens( QueryOR(states) );
+                states = states.Select(s=>ExprStringEquals("state",s));
+                string expr = ExprParens( ExprOr(states) );
                 filter.Add(expr);
             }
             
             if (this.FilterResult != null && this.FilterResult.Length > 0)
             {
                 var results = this.FilterResult.Select(s => s.ToString());
-                results = results.Select(s => QueryEqualsString("result", s));
-                var expr = QueryParens( QueryOR(results) );
+                results = results.Select(s => ExprStringEquals("result", s));
+                var expr = ExprParens( ExprOr(results) );
                 filter.Add(expr);
             }
 
-            var filterString = QueryAND(filter);
+            var filterString = ExprAnd(filter);
             return filterString;
         }
 
-        public string QueryEqualsString(string prop, string s)
+        public string ExprStringEquals(string prop, string value)
         {
-            return string.Format("{0} eq '{1}'", prop, s);
+            return string.Format("{0} eq '{1}'", prop, value);
         }
 
-        public string QueryParens(string s)
+        public string ExprParens(string s)
         {
             return "(" + s + ")";
         }
 
-        public string QueryAND(IEnumerable<string> items)
+        public string ExprAnd(IEnumerable<string> items)
         {
             return string.Join(" and ", items);
         }
 
-        public string QueryOR(IEnumerable<string> items)
+        public string ExprOr(IEnumerable<string> items)
         {
             return string.Join(" or ", items);
+        }
+
+        public string ExprDateTimeGreaterThan(string name, System.DateTime value)
+        {
+
+            string datestring = value.ToString("O");
+
+            // due to issue: https://github.com/Azure/autorest/issues/975,
+            // date time offsets must be explicitly escaped before being passed to the filter
+
+            var escaped_datestring = System.Uri.EscapeDataString(datestring);
+
+            var expr = string.Format("{0} ge datetimeoffset'{1}'", name, escaped_datestring);
+            return expr;
         }
     }
 }

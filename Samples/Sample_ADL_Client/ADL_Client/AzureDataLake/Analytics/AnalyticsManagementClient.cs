@@ -20,28 +20,27 @@ namespace AzureDataLake.Analytics
 
         public List<ADL.Analytics.Models.DataLakeAnalyticsAccount> ListAccounts()
         {
-            var page = this._adla_mgmt_rest_client.Account.List();
-            var pages = AzureDataLake.RESTUtil.EnumPages(page,
+            var initial_page = this._adla_mgmt_rest_client.Account.List();
+            var pages = AzureDataLake.RESTUtil.EnumPages(initial_page,
                 p => this._adla_mgmt_rest_client.Account.ListNext(p.NextPageLink));
 
             var result = new List<ADL.Analytics.Models.DataLakeAnalyticsAccount>();
-            foreach (var p in pages)
+            foreach (var cur_page in pages)
             {
-                result.AddRange(p);
+                result.AddRange(cur_page);
             }
             return result;
         }
 
         public List<ADL.Analytics.Models.DataLakeAnalyticsAccount> ListAccountsByResourceGroup(string resource_group)
         {
-            var page = this._adla_mgmt_rest_client.Account.ListByResourceGroup(resource_group);
-            var pages = AzureDataLake.RESTUtil.EnumPages(page,
-                p => this._adla_mgmt_rest_client.Account.ListByResourceGroupNext(p.NextPageLink));
+            var initial_page = this._adla_mgmt_rest_client.Account.ListByResourceGroup(resource_group);
+            var pages = AzureDataLake.RESTUtil.EnumPages(initial_page, p => this._adla_mgmt_rest_client.Account.ListByResourceGroupNext(p.NextPageLink));
 
             var result = new List<ADL.Analytics.Models.DataLakeAnalyticsAccount>();
-            foreach (var p in pages)
+            foreach (var cur_page in pages)
             {
-                result.AddRange(p);
+                result.AddRange(cur_page);
             }
             return result;
         }
