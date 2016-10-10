@@ -7,11 +7,6 @@ using Microsoft.Azure.Management.DataLake.Store.Models;
 
 namespace AzureDataLake.Store
 {
-    public class ListFilesOptions
-    {
-        public int PageSize = 100;
-    }
-
     public class StoreFileSystemClient : AccountClientBase
     {
         private ADL.Store.DataLakeStoreFileSystemManagementClient _adls_filesys_rest_client;
