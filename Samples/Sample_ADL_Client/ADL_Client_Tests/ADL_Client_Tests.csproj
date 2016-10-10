@@ -133,18 +133,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Analytics_Catalog_Tests.cs" />
-    <Compile Include="Analytics_Management_Tests.cs" />
+    <Compile Include="Analytics\Analytics_Catalog_Tests.cs" />
+    <Compile Include="Analytics\Analytics_Management_Tests.cs" />
     <Compile Include="Base_Tests.cs" />
-    <Compile Include="Analytics_Job_Tests.cs" />
-    <Compile Include="FsUnixTime_Tests.cs" />
-    <Compile Include="FSUri_Tests.cs" />
-    <Compile Include="FSPath_Tests.cs" />
-    <Compile Include="FSPermissions_Tests.cs" />
-    <Compile Include="Store_Filesystem_Access_Tests.cs" />
-    <Compile Include="Store_Filesystem_Expiry_Tests.cs" />
-    <Compile Include="Store_Management_Tests.cs" />
-    <Compile Include="Store_Filesystem_Tests.cs" />
+    <Compile Include="Analytics\Analytics_Job_Tests.cs" />
+    <Compile Include="Store\FsUnixTime_Tests.cs" />
+    <Compile Include="Store\FSUri_Tests.cs" />
+    <Compile Include="Store\FSPath_Tests.cs" />
+    <Compile Include="Store\FSPermissions_Tests.cs" />
+    <Compile Include="Store\Store_Filesystem_Access_Tests.cs" />
+    <Compile Include="Store\Store_Filesystem_Expiry_Tests.cs" />
+    <Compile Include="Store\Store_Management_Tests.cs" />
+    <Compile Include="Store\Store_Filesystem_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

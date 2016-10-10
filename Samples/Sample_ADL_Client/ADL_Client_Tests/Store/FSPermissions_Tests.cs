@@ -1,7 +1,7 @@
 using AzureDataLake.Store;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ADL_Client_Tests
+namespace ADL_Client_Tests.Store
 {
     [TestClass]
     public class FSPermissions_Tests : Base_Tests

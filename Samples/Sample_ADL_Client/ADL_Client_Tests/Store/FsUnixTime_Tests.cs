@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ADL_Client_Tests
+namespace ADL_Client_Tests.Store
 {
     [TestClass]
     public class FsUnixTime_Tests : Base_Tests

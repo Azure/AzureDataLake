@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ADL_Client_Tests
+namespace ADL_Client_Tests.Store
 {
     [TestClass]
     public class FSUri_Tests : Base_Tests

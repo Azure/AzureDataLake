@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using AzureDataLake.Store;
-using Microsoft.Azure.Management.DataLake.Store.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ADL_Client_Tests
+namespace ADL_Client_Tests.Store
 {
     [TestClass]
     public class Store_Filesystem_Expiry_Tests : Base_Tests

@@ -1,7 +1,6 @@
-﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ADL_Client_Tests
+namespace ADL_Client_Tests.Analytics
 {
     [TestClass]
     public class Analytics_Management_Tests : Base_Tests
