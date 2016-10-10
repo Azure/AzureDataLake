@@ -53,7 +53,7 @@ namespace AzureDataLake.Analytics
 
             if (this.FilterSubmittedAfter.HasValue)
             {
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeAfter("submittedafter", this.FilterSubmittedAfter.Value));
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison("submittedafter", this.FilterSubmittedAfter.Value, ODataQuery.CompareOps.GreaterThanOrEquals));
             }
 
             if (!string.IsNullOrEmpty(this.FilterName))

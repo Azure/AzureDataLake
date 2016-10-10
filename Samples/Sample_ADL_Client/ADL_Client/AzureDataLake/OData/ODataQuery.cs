@@ -3,6 +3,15 @@ using System.Linq;
 
 namespace AzureDataLake.ODataQuery
 {
+    public enum CompareOps
+    {
+        Equals,
+        GreaterThan,
+        GreaterThanOrEquals,
+        LesserThan,
+        LesserThanOrEquals
+    }
+
     public abstract class Expr
     {
 
@@ -102,11 +111,12 @@ namespace AzureDataLake.ODataQuery
         }
     }
 
-    public class ExprDateTimeAfter : Expr
+    public class ExprDateTimeComparison : Expr
     {
         public string Column;
         public System.DateTime Value;
-        public ExprDateTimeAfter(string col, System.DateTime val)
+        public CompareOps Op;
+        public ExprDateTimeComparison(string col, System.DateTime val, CompareOps op)
         {
             this.Column = col;
             this.Value = val;
@@ -121,7 +131,43 @@ namespace AzureDataLake.ODataQuery
 
             var escaped_datestring = System.Uri.EscapeDataString(datestring);
 
-            sb.Append(string.Format("{0} ge datetimeoffset'{1}'", this.Column, escaped_datestring));
+            var op = FilterUtils.OpToString(this.Op);
+            sb.Append(string.Format("{0} {1} datetimeoffset'{2}'", this.Column, op, escaped_datestring));
+        }
+
+
+    }
+
+    public class FilterUtils
+    {
+        public static string OpToString(CompareOps Op)
+        {
+            string op = "ge";
+            if (Op == CompareOps.GreaterThan)
+            {
+                op = "gt";
+            }
+            else if (Op == CompareOps.GreaterThanOrEquals)
+            {
+                op = "ge";
+            }
+            else if (Op == CompareOps.LesserThan)
+            {
+                op = "lt";
+            }
+            else if (Op == CompareOps.LesserThanOrEquals)
+            {
+                op = "le";
+            }
+            else if (Op == CompareOps.Equals)
+            {
+                op = "eq";
+            }
+            else
+            {
+                throw new System.ArgumentOutOfRangeException();
+            }
+            return op;
         }
     }
 
