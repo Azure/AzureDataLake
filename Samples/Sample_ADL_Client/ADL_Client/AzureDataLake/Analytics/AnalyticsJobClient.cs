@@ -25,17 +25,17 @@ namespace AzureDataLake.Analytics
             return job;
         }
 
-        public List<ADL.Analytics.Models.JobInformation> GetJobListUnpaged(GetJobListOptions options)
+        public List<ADL.Analytics.Models.JobInformation> GetJobList(GetJobListOptions options)
         {
             var results = new List<ADL.Analytics.Models.JobInformation>();
-            foreach (var page in this.GetJobList(options))
+            foreach (var page in this.GetJobListPaged(options))
             {
                 results.AddRange(page);
             }
             return results;
         }
 
-        public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobList(GetJobListOptions options)
+        public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobListPaged(GetJobListOptions options)
         {
 
             // Construct OData query from options

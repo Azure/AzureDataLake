@@ -22,7 +22,7 @@ namespace AzureDataLake.Analytics
             return db;
         }
 
-        public IEnumerable<ADL.Analytics.Models.USqlDatabase[]> ListDatabases()
+        public IEnumerable<ADL.Analytics.Models.USqlDatabase[]> ListDatabasesPaged()
         {
             var oDataQuery = new Microsoft.Rest.Azure.OData.ODataQuery<ADL.Analytics.Models.USqlDatabase>();
 
@@ -37,7 +37,7 @@ namespace AzureDataLake.Analytics
             }
         }
 
-        public IEnumerable<ADL.Analytics.Models.USqlAssemblyClr[]> ListAssemblies(string name, string dbname)
+        public IEnumerable<ADL.Analytics.Models.USqlAssemblyClr[]> ListAssembliesPaged(string name, string dbname)
         {
             var oDataQuery = new Microsoft.Rest.Azure.OData.ODataQuery<ADL.Analytics.Models.USqlAssembly>();
 
@@ -52,7 +52,7 @@ namespace AzureDataLake.Analytics
             }
         }
 
-        public IEnumerable<ADL.Analytics.Models.USqlExternalDataSource[]> ListExternalDatasources(string name, string dbname)
+        public IEnumerable<ADL.Analytics.Models.USqlExternalDataSource[]> ListExternalDatasourcesPaged(string name, string dbname)
         {
             var oDataQuery = new Microsoft.Rest.Azure.OData.ODataQuery<ADL.Analytics.Models.USqlExternalDataSource>();
 
@@ -67,7 +67,7 @@ namespace AzureDataLake.Analytics
             }
         }
 
-        public IEnumerable<ADL.Analytics.Models.USqlProcedure[]> ListProcedures(string name, string dbname, string schema)
+        public IEnumerable<ADL.Analytics.Models.USqlProcedure[]> ListProceduresPaged(string name, string dbname, string schema)
         {
             var oDataQuery = new Microsoft.Rest.Azure.OData.ODataQuery<ADL.Analytics.Models.USqlProcedure>();
 

@@ -17,7 +17,7 @@ namespace AzureDataLake.Store
             _adls_filesys_rest_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(this.AuthenticatedSession.Credentials);
         }
 
-        public IEnumerable<FsFileStatusPage> ListFilesRecursive(FsPath path, int pagesize)
+        public IEnumerable<FsFileStatusPage> ListFilesRecursivePaged(FsPath path, int pagesize)
         {
             var queue = new Queue<FsPath>();
             queue.Enqueue(path);
@@ -26,7 +26,7 @@ namespace AzureDataLake.Store
             {
                 FsPath cur_path = queue.Dequeue();
 
-                foreach (var page in ListFiles(cur_path, pagesize))
+                foreach (var page in ListFilesPage(cur_path, pagesize))
                 {
                     yield return page;
 
@@ -42,7 +42,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public IEnumerable<FsFileStatusPage> ListFiles(FsPath path, int pagesize)
+        public IEnumerable<FsFileStatusPage> ListFilesPage(FsPath path, int pagesize)
         {
             string after = null;
             while (true)

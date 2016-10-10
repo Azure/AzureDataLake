@@ -9,7 +9,7 @@ namespace ADL_Client_Tests.Analytics
         public void List_Databases()
         {
             this.Initialize();
-            foreach (var page in this.adla_catalog_client.ListDatabases())
+            foreach (var page in this.adla_catalog_client.ListDatabasesPaged())
             {
                 foreach (var db in page)
                 {
