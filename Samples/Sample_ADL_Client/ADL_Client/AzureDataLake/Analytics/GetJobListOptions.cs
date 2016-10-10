@@ -26,6 +26,7 @@ namespace AzureDataLake.Analytics
             string field_name_str = field.ToString();
             return StringUtil.ToLowercaseFirstLetter(field_name_str);
         }
+
         public string CreateOrderByString()
         {
             if (this.OrderByField != JobOrderByField.None)
@@ -45,7 +46,7 @@ namespace AzureDataLake.Analytics
             var filter = new List<string>();
             if (!string.IsNullOrEmpty(this.FilterSubmitter))
             {
-                string expr = string.Format("submitter eq '{0}'", this.FilterSubmitter);
+                string expr = QueryEqualsString("submitter",this.FilterSubmitter);
                 filter.Add(expr);
             }
 
@@ -67,20 +68,42 @@ namespace AzureDataLake.Analytics
             
             if (this.FilterState != null && this.FilterState.Length > 0)
             {
-                var states = this.FilterState.Select(state => string.Format("state eq '{0}'", state));
-                string expr = "(" + string.Join(" or ", states) + ")";
+                var states = this.FilterState.Select(state => state.ToString());
+                states = states.Select(s=>QueryEqualsString("state",s));
+                string expr = QueryParens( QueryOR(states) );
                 filter.Add(expr);
             }
             
             if (this.FilterResult != null && this.FilterResult.Length > 0)
             {
-                var results = this.FilterResult.Select(result => string.Format("result eq '{0}'", result));
-                var expr = "(" +  string.Join(" or ", results) + ")";
+                var results = this.FilterResult.Select(s => s.ToString());
+                results = results.Select(s => QueryEqualsString("result", s));
+                var expr = QueryParens( QueryOR(results) );
                 filter.Add(expr);
             }
 
-            var filterString = string.Join(" and ", filter);
+            var filterString = QueryAND(filter);
             return filterString;
+        }
+
+        public string QueryEqualsString(string prop, string s)
+        {
+            return string.Format("{0} eq '{1}'", prop, s);
+        }
+
+        public string QueryParens(string s)
+        {
+            return "(" + s + ")";
+        }
+
+        public string QueryAND(IEnumerable<string> items)
+        {
+            return string.Join(" and ", items);
+        }
+
+        public string QueryOR(IEnumerable<string> items)
+        {
+            return string.Join(" or ", items);
         }
     }
 }
