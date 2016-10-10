@@ -17,10 +17,11 @@ namespace AzureDataLake
             // Handle the remaining pages
             while (!string.IsNullOrEmpty(page.NextPageLink))
             {
+                page = f_get_next_page(page);
+
                 var t_array_next = page_items_to_array(page);
                 yield return t_array_next;
 
-                page = f_get_next_page(page);
             }
         }
 

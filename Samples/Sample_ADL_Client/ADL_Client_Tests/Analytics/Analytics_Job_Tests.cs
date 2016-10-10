@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ADL_Client_Tests.Analytics
 {
@@ -24,6 +26,35 @@ namespace ADL_Client_Tests.Analytics
             }
         }
 
+        public IEnumerable<T> FlattenArrays<T>(IEnumerable<IEnumerable<T>> arrays)
+        {
+            foreach (var array in arrays)
+            {
+                foreach (var item in array)
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Verify_No_Dupes_in_Paging()
+        {
+            this.Initialize();
+            var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
+
+            var pages = this.adla_job_client.GetJobList(getjobs_options).Take(3).ToList();
+            var count1 = pages.Select(p => p.Length).Sum();
+            var items_raw = FlattenArrays(pages).ToList();
+
+            var count2 = items_raw.Count;
+
+            var items_unique = items_raw.Select(i => i.JobId).Distinct().ToList();
+            var count3 = items_unique.Count;
+
+            Assert.AreEqual(count1, count2);
+            Assert.AreEqual(count2, count3);
+        }
 
         [TestMethod]
         public void Submit_Job_with_Syntax_Error()
