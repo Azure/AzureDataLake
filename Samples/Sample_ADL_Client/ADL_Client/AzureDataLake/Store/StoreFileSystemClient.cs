@@ -31,7 +31,7 @@ namespace AzureDataLake.Store
             {
                 FsPath cur_path = queue.Dequeue();
 
-                foreach (var page in ListFilesPage(cur_path, options))
+                foreach (var page in ListFilesPaged(cur_path, options))
                 {
                     yield return page;
 
@@ -47,7 +47,7 @@ namespace AzureDataLake.Store
             }
         }
 
-        public IEnumerable<FsFileStatusPage> ListFilesPage(FsPath path, ListFilesOptions options)
+        public IEnumerable<FsFileStatusPage> ListFilesPaged(FsPath path, ListFilesOptions options)
         {
             string after = null;
             while (true)

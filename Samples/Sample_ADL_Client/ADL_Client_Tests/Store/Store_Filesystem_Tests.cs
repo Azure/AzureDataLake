@@ -47,7 +47,7 @@ namespace ADL_Client_Tests.Store
             var lfo = new AzureDataLake.Store.ListFilesOptions();
             lfo.PageSize = 4;
 
-            var pages = this.adls_fs_client.ListFilesPage(AzureDataLake.Store.FsPath.Root, lfo);
+            var pages = this.adls_fs_client.ListFilesPaged(AzureDataLake.Store.FsPath.Root, lfo);
             foreach (var page in pages)
             {
                 foreach (var fileitem in page.FileItems)
