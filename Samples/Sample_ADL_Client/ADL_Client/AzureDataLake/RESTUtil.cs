@@ -10,15 +10,16 @@ namespace AzureDataLake
     {
         public static IEnumerable<T[]> EnumPages<T>(IPage<T> page, System.Func<IPage<T>, IPage<T>> f_get_next_page)
         {
+            // Handle the first page
             var t_array = page_items_to_array(page);
             yield return t_array;
 
-            // While there are additional pages left fetch them
+            // Handle the remaining pages
             while (!string.IsNullOrEmpty(page.NextPageLink))
             {
-                var t_array_2 = page_items_to_array(page);
+                var t_array_next = page_items_to_array(page);
+                yield return t_array_next;
 
-                yield return t_array_2;
                 page = f_get_next_page(page);
             }
         }
