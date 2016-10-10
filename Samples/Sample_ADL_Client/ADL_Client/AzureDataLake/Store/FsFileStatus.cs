@@ -28,10 +28,6 @@ namespace AzureDataLake.Store
             this.PathSuffix = fs.PathSuffix;
             this.Permission = fs.Permission;
             this.Type = fs.Type.Value;
-
-
-            /*
-             */
         }
     }
 }
