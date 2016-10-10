@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Azure.Management.DataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using ADL=Microsoft.Azure.Management.DataLake;
@@ -22,44 +23,60 @@ namespace AzureDataLake.Analytics
             return job;
         }
 
+        public List<ADL.Analytics.Models.JobInformation> GetJobListUnpaged(GetJobListOptions options, int count)
+        {
+            var results = new List<ADL.Analytics.Models.JobInformation>();
+            if (count < 0)
+            {
+                throw new System.ArgumentOutOfRangeException(nameof(count));
+            }
+            else if (count > 300)
+            {
+                options.Top = 300;
+            }
+            else
+            {
+                options.Top = count;
+            }
+
+            int actual_count = 0;
+            foreach (var page in this.GetJobList(options))
+            {
+                results.AddRange(page);
+                actual_count += page.Length;
+
+                if (actual_count >= count)
+                {
+                    break;
+                }
+            }
+
+            return results;
+        }
+
         public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobList(GetJobListOptions options)
         {
-            var oDataQuery = new Microsoft.Rest.Azure.OData.ODataQuery<JobInformation>();
             
             string @select = null;
             bool? count = null;
             string search = null;
             string format = null;
 
+            // Construct OData query from options
+            var odata_query = new Microsoft.Rest.Azure.OData.ODataQuery<JobInformation>();
             if (options.Top > 0)
             {
-                oDataQuery.Top = options.Top;
-                if (options.OrderByField != JobOrderByField.None)
-                {
-                    var fieldname = get_order_field_name(options.OrderByField);
-                    var dir = (options.OrderByDirection == JobOrderByDirection.Ascending) ? "asc" : "desc";
-
-                    oDataQuery.OrderBy = string.Format("{0} {1}", fieldname, dir);
-                }
+                odata_query.Top = options.Top;
             }
+            odata_query.OrderBy = options.CreateOrderByString();
+            odata_query.Filter = options.CreateFilterString();
 
             // Handle the initial response
-            var page = this._adla_job_rest_client.Job.List(this.Account, oDataQuery, @select, count, search, format);
+            var page = this._adla_job_rest_client.Job.List(this.Account, odata_query, @select, count, search, format);
             foreach (var cur_page in RESTUtil.EnumPages<JobInformation>(page, p => this._adla_job_rest_client.Job.ListNext(p.NextPageLink)))
             {
                 yield return cur_page;
             }
-        }
-
-        private static string get_order_field_name(JobOrderByField field)
-        {
-            if (field == JobOrderByField.None)
-            {
-                throw new System.ArgumentException();
-            }
-
-            string field_name_str = field.ToString();
-            return StringUtil.ToLowercaseFirstLetter(field_name_str);
         }
 
         public ADL.Analytics.Models.JobInformation  SubmitJob(SubmitJobOptions options)
