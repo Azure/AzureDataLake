@@ -117,7 +117,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureDataLake\Analytics\ODataQuery.cs" />
+    <Compile Include="AzureDataLake\OData\ODataQuery.cs" />
     <Compile Include="AzureDataLake\Analytics\JobListPage.cs" />
     <Compile Include="AzureDataLake\Analytics\JobOrderByDirection.cs" />
     <Compile Include="AzureDataLake\Analytics\JobOrderByField.cs" />
