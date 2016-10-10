@@ -1,5 +1,12 @@
+using ADL = Microsoft.Azure.Management.DataLake;
+
 namespace AzureDataLake.Analytics
 {
+    public class JobListPage
+    {
+        public ADL.Analytics.Models.JobInformation[] Jobs;
+    }
+
     public class SubmitJobOptions
     {
         public System.Guid JobID;

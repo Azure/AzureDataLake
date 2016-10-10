@@ -54,7 +54,7 @@ namespace ADL_Client_Tests.Analytics
 
             foreach (var page in this.adla_job_client.GetJobListPaged(getjobs_options))
             {
-                foreach (var job in page)
+                foreach (var job in page.Jobs)
                 {
                     //var job2 = AnalyticsClient.GetJob(job.JobId.Value);
                     System.Console.WriteLine("submitter{0} dop {1}", job.Submitter, job.DegreeOfParallelism);
@@ -73,24 +73,6 @@ namespace ADL_Client_Tests.Analytics
             }
         }
 
-        [TestMethod]
-        public void Verify_No_Dupes_in_Paging()
-        {
-            this.Initialize();
-            var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
-
-            var pages = this.adla_job_client.GetJobListPaged(getjobs_options).Take(3).ToList();
-            var count1 = pages.Select(p => p.Length).Sum();
-            var items_raw = FlattenArrays(pages).ToList();
-
-            var count2 = items_raw.Count;
-
-            var items_unique = items_raw.Select(i => i.JobId).Distinct().ToList();
-            var count3 = items_unique.Count;
-
-            Assert.AreEqual(count1, count2);
-            Assert.AreEqual(count2, count3);
-        }
 
         [TestMethod]
         public void Submit_Job_with_Syntax_Error()
