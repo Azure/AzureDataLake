@@ -7,6 +7,11 @@ using Microsoft.Azure.Management.DataLake.Store.Models;
 
 namespace AzureDataLake.Store
 {
+    public class ListFilesOptions
+    {
+        public int PageSize = 100;
+    }
+
     public class StoreFileSystemClient : AccountClientBase
     {
         private ADL.Store.DataLakeStoreFileSystemManagementClient _adls_filesys_rest_client;
@@ -17,7 +22,7 @@ namespace AzureDataLake.Store
             _adls_filesys_rest_client = new ADL.Store.DataLakeStoreFileSystemManagementClient(this.AuthenticatedSession.Credentials);
         }
 
-        public IEnumerable<FsFileStatusPage> ListFilesRecursivePaged(FsPath path, int pagesize)
+        public IEnumerable<FsFileStatusPage> ListFilesRecursivePaged(FsPath path, ListFilesOptions options)
         {
             var queue = new Queue<FsPath>();
             queue.Enqueue(path);
@@ -26,7 +31,7 @@ namespace AzureDataLake.Store
             {
                 FsPath cur_path = queue.Dequeue();
 
-                foreach (var page in ListFilesPage(cur_path, pagesize))
+                foreach (var page in ListFilesPage(cur_path, options))
                 {
                     yield return page;
 
@@ -42,12 +47,12 @@ namespace AzureDataLake.Store
             }
         }
 
-        public IEnumerable<FsFileStatusPage> ListFilesPage(FsPath path, int pagesize)
+        public IEnumerable<FsFileStatusPage> ListFilesPage(FsPath path, ListFilesOptions options)
         {
             string after = null;
             while (true)
             {
-                var result = _adls_filesys_rest_client.FileSystem.ListFileStatus(this.Account, path.ToString(), pagesize,after);
+                var result = _adls_filesys_rest_client.FileSystem.ListFileStatus(this.Account, path.ToString(), options.PageSize, after);
 
                 if (result.FileStatuses.FileStatus.Count > 0)
                 {

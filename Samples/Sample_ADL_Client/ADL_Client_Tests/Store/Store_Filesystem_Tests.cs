@@ -14,7 +14,10 @@ namespace ADL_Client_Tests.Store
             int page_count = 0;
             int child_count = 0;
 
-            var pages = this.adls_fs_client.ListFilesRecursivePaged(AzureDataLake.Store.FsPath.Root, 4);
+            var lfo = new AzureDataLake.Store.ListFilesOptions();
+            lfo.PageSize = 4;
+
+            var pages = this.adls_fs_client.ListFilesRecursivePaged(AzureDataLake.Store.FsPath.Root, lfo);
             foreach (var page in pages)
             {
                 foreach (var child in page.FileItems)
@@ -41,7 +44,10 @@ namespace ADL_Client_Tests.Store
             int page_count = 0;
             int child_count = 0;
 
-            var pages = this.adls_fs_client.ListFilesPage(AzureDataLake.Store.FsPath.Root, 4);
+            var lfo = new AzureDataLake.Store.ListFilesOptions();
+            lfo.PageSize = 4;
+
+            var pages = this.adls_fs_client.ListFilesPage(AzureDataLake.Store.FsPath.Root, lfo);
             foreach (var page in pages)
             {
                 foreach (var fileitem in page.FileItems)
