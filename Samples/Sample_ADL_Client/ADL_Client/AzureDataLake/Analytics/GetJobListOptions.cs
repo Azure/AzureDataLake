@@ -82,8 +82,9 @@ namespace AzureDataLake.Analytics
 
             }
 
-            var filterString = q.ToExprString();
-            return filterString;
+            var sb = new System.Text.StringBuilder();
+            q.ToExprString(sb);
+            return sb.ToString();
         }
     }
 }

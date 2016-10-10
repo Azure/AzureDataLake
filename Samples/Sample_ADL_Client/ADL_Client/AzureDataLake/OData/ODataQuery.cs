@@ -6,7 +6,7 @@ namespace AzureDataLake.ODataQuery
     public abstract class Expr
     {
 
-        public abstract string ToExprString();
+        public abstract void ToExprString(System.Text.StringBuilder sb);
     }
 
     public class ExprAnd : Expr
@@ -18,9 +18,25 @@ namespace AzureDataLake.ODataQuery
             this.Items.AddRange(items);
         }
 
-        public override string ToExprString()
+        public override void ToExprString(System.Text.StringBuilder sb)
         {
-            return string.Join(" and ", this.Items.Select( s=> "("+s.ToExprString()+")"));
+            if (this.Items.Count < 1)
+            {
+                return;
+            }
+
+            sb.Append("(");
+            for (int i = 0; i < this.Items.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sb.Append(" and ");
+                }
+
+                this.Items[i].ToExprString(sb);
+            }
+
+            sb.Append(")");
         }
     }
 
@@ -33,9 +49,24 @@ namespace AzureDataLake.ODataQuery
             this.Items.AddRange(items);
         }
 
-        public override string ToExprString()
+        public override void ToExprString(System.Text.StringBuilder sb)
         {
-            return string.Join(" or ", this.Items.Select(s => "(" + s.ToExprString() + ")"));
+            if (this.Items.Count < 1)
+            {
+                return;
+            }
+            sb.Append("(");
+            for (int i = 0; i < this.Items.Count; i++)
+            {
+                if (i > 0)
+                {
+                    sb.Append(" or ");
+                }
+
+                this.Items[i].ToExprString(sb);
+            }
+
+            sb.Append(")");
         }
     }
 
@@ -47,9 +78,11 @@ namespace AzureDataLake.ODataQuery
             this.Item = item;
         }
 
-        public override string ToExprString()
+        public override void ToExprString(System.Text.StringBuilder sb)
         {
-            return string.Format("({0})",this.Item.ToExprString());
+            sb.Append("(");
+            this.Item.ToExprString(sb);
+            sb.Append(")");
         }
     }
 
@@ -63,9 +96,9 @@ namespace AzureDataLake.ODataQuery
             this.Value = val;
         }
 
-        public override string ToExprString()
+        public override void ToExprString(System.Text.StringBuilder sb)
         {
-            return string.Format("{0} eq '{1}'", this.Column, this.Value);
+            sb.Append(string.Format("{0} eq '{1}'", this.Column, this.Value));
         }
     }
 
@@ -79,7 +112,7 @@ namespace AzureDataLake.ODataQuery
             this.Value = val;
         }
 
-        public override string ToExprString()
+        public override void ToExprString(System.Text.StringBuilder sb)
         {
             string datestring = this.Value.ToString("O");
 
@@ -88,8 +121,7 @@ namespace AzureDataLake.ODataQuery
 
             var escaped_datestring = System.Uri.EscapeDataString(datestring);
 
-            var expr = string.Format("{0} ge datetimeoffset'{1}'", this.Column, escaped_datestring);
-            return expr;
+            sb.Append(string.Format("{0} ge datetimeoffset'{1}'", this.Column, escaped_datestring));
         }
     }
 
@@ -101,9 +133,9 @@ namespace AzureDataLake.ODataQuery
             this.Item = s;
         }
 
-        public override string ToExprString()
+        public override void ToExprString(System.Text.StringBuilder sb)
         {
-            return this.Item;
+            sb.Append(this.Item);
         }
     }
 
