@@ -8,6 +8,8 @@ namespace AzureDataLake.Analytics
 {
     public class AnalyticsJobClient : AccountClientBase
     {
+        public static int ADLJobPageSize = 300;
+
         private ADL.Analytics.DataLakeAnalyticsJobManagementClient _adla_job_rest_client;
 
         public AnalyticsJobClient(string account, AzureDataLake.Authentication.AuthenticatedSession authSession) :
@@ -23,59 +25,54 @@ namespace AzureDataLake.Analytics
             return job;
         }
 
-        public List<ADL.Analytics.Models.JobInformation> GetJobListUnpaged(GetJobListOptions options, int count)
+        public List<ADL.Analytics.Models.JobInformation> GetJobListUnpaged(GetJobListOptions options)
         {
             var results = new List<ADL.Analytics.Models.JobInformation>();
-            if (count < 0)
-            {
-                throw new System.ArgumentOutOfRangeException(nameof(count));
-            }
-            else if (count > 300)
-            {
-                options.Top = 300;
-            }
-            else
-            {
-                options.Top = count;
-            }
-
-            int actual_count = 0;
             foreach (var page in this.GetJobList(options))
             {
                 results.AddRange(page);
-                actual_count += page.Length;
-
-                if (actual_count >= count)
-                {
-                    break;
-                }
             }
-
             return results;
         }
 
         public IEnumerable<ADL.Analytics.Models.JobInformation[]> GetJobList(GetJobListOptions options)
         {
-            
-            string @select = null;
-            bool? count = null;
-            string search = null;
-            string format = null;
 
             // Construct OData query from options
             var odata_query = new Microsoft.Rest.Azure.OData.ODataQuery<JobInformation>();
             if (options.Top > 0)
             {
-                odata_query.Top = options.Top;
+                if (options.Top > AnalyticsJobClient.ADLJobPageSize)
+                {
+                    
+                }
+                else
+                {
+                    odata_query.Top = options.Top;
+                }
             }
             odata_query.OrderBy = options.CreateOrderByString();
             odata_query.Filter = options.CreateFilterString();
 
+            // Other parameters
+            string list_select = null;
+            bool? list_count = null;
+            string list_search = null;
+            string list_format = null;
+
             // Handle the initial response
-            var page = this._adla_job_rest_client.Job.List(this.Account, odata_query, @select, count, search, format);
+
+            int item_count = 0;
+            var page = this._adla_job_rest_client.Job.List(this.Account, odata_query, list_select, list_count, list_search, list_format);
             foreach (var cur_page in RESTUtil.EnumPages<JobInformation>(page, p => this._adla_job_rest_client.Job.ListNext(p.NextPageLink)))
             {
                 yield return cur_page;
+
+                item_count += cur_page.Length;
+                if (item_count >= options.Top)
+                {
+                    break;
+                }
             }
         }
 

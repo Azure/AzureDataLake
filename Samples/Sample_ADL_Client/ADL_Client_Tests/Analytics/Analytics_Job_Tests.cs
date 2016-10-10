@@ -8,6 +8,41 @@ namespace ADL_Client_Tests.Analytics
     [TestClass]
     public class Analytics_Job_Tests : Base_Tests
     {
+
+        [TestMethod]
+        public void Verify_Paging_1()
+        {
+            this.Initialize();
+            var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
+            getjobs_options.Top = 100;
+
+            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options);
+            Assert.AreEqual(100,jobs.Count);
+        }
+
+        [TestMethod]
+        public void Verify_Paging_300()
+        {
+            this.Initialize();
+            var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
+            getjobs_options.Top = AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize;
+
+            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options);
+            Assert.AreEqual(AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize, jobs.Count);
+        }
+
+        [TestMethod]
+        public void Verify_Paging_400()
+        {
+            this.Initialize();
+            var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
+            getjobs_options.Top = AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize + (AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize/2);
+
+            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options);
+            Assert.IsTrue(jobs.Count>= getjobs_options.Top);
+        }
+
+
         [TestMethod]
         public void List_Jobs()
         {
@@ -82,7 +117,7 @@ namespace ADL_Client_Tests.Analytics
             getjobs_options.Top = 30;
             getjobs_options.FilterState = new JobState[] {JobState.Ended};
 
-            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options, 10);
+            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options);
             if (jobs.Count > 0)
             {
                 foreach (var job in jobs)
@@ -100,7 +135,7 @@ namespace ADL_Client_Tests.Analytics
             getjobs_options.Top = 30;
             getjobs_options.FilterState = new JobState[] { JobState.Running };
 
-            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options, 10);
+            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options);
             if (jobs.Count > 0)
             {
                 foreach (var job in jobs)
@@ -119,7 +154,7 @@ namespace ADL_Client_Tests.Analytics
             getjobs_options.FilterState = new JobState[] { JobState.Ended };
             getjobs_options.FilterResult= new JobResult[] { JobResult.Failed };
 
-            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options, 1000);
+            var jobs = this.adla_job_client.GetJobListUnpaged(getjobs_options);
             if (jobs.Count > 0)
             {
                 foreach (var job in jobs)
