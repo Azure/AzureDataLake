@@ -95,11 +95,11 @@ namespace AzureDataLake.ODataQuery
         }
     }
 
-    public class ExprStringEquals : Expr
+    public class ExprStringComparison : Expr
     {
         public string Column;
         public string Value;
-        public ExprStringEquals(string col, string val)
+        public ExprStringComparison(string col, string val)
         {
             this.Column = col;
             this.Value = val;
@@ -107,7 +107,8 @@ namespace AzureDataLake.ODataQuery
 
         public override void ToExprString(System.Text.StringBuilder sb)
         {
-            sb.Append(string.Format("{0} eq '{1}'", this.Column, this.Value));
+            string op = "eq";
+            sb.Append(string.Format("{0} {1} '{2}'", this.Column, op, this.Value));
         }
     }
 
