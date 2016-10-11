@@ -23,7 +23,7 @@ namespace ADL_Client_Demo
             opts.FilterState = new List<JobState> { JobState.Ended};
 
             opts.FilterDegreeOfParallelism = 1;
-            var jobs = client.GetJobList(opts);
+            var jobs = client.GetJobListPaged(opts);
 
             foreach (var job in jobs)
             {

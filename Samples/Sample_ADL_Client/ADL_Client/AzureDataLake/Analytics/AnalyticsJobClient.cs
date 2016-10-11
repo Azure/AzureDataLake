@@ -25,17 +25,7 @@ namespace AzureDataLake.Analytics
             return job;
         }
 
-        public List<ADL.Analytics.Models.JobInformation> GetJobList(GetJobListOptions options)
-        {
-            var results = new List<ADL.Analytics.Models.JobInformation>();
-            foreach (var page in this.GetJobListPaged(options))
-            {
-                results.AddRange(page.Jobs);
-            }
-            return results;
-        }
-
-        public IEnumerable<JobListPage> GetJobListPaged(GetJobListOptions options)
+        public IEnumerable<JobInformation> GetJobListPaged(GetJobListOptions options)
         {
 
             // Construct OData query from options
@@ -64,14 +54,10 @@ namespace AzureDataLake.Analytics
 
             int item_count = 0;
             var page = this._adla_job_rest_client.Job.List(this.Account, odata_query, list_select, list_count, list_search, list_format);
-            foreach (var cur_page in RESTUtil.EnumPages<JobInformation>(page, p => this._adla_job_rest_client.Job.ListNext(p.NextPageLink)))
+            foreach (var job in RESTUtil.EnumPagesEx<JobInformation>(page, p => this._adla_job_rest_client.Job.ListNext(p.NextPageLink)))
             {
-                var job_page = new JobListPage();
-                job_page.Jobs = cur_page;
-
-                yield return job_page;
-
-                item_count += cur_page.Length;
+                yield return job;
+                item_count++;
                 if (item_count >= options.Top)
                 {
                     break;

@@ -8,6 +8,26 @@ namespace AzureDataLake
 {
     public class RESTUtil
     {
+        public static IEnumerable<T> EnumPagesEx<T>(IPage<T> page, System.Func<IPage<T>, IPage<T>> f_get_next_page)
+        {
+            // Handle the first page
+            foreach (var item in page)
+            {
+                yield return item;
+            }
+
+            // Handle the remaining pages
+            while (!string.IsNullOrEmpty(page.NextPageLink))
+            {
+                page = f_get_next_page(page);
+
+                foreach (var item in page)
+                {
+                    yield return item;
+                }
+            }
+        }
+
         public static IEnumerable<T[]> EnumPages<T>(IPage<T> page, System.Func<IPage<T>, IPage<T>> f_get_next_page)
         {
             // Handle the first page
