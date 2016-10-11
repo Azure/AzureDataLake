@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AzureDataLake.ODataQuery;
-
+using Microsoft.Azure.Management.DataLake.Analytics.Models;
+using ADL= Microsoft.Azure.Management.DataLake;
 namespace AzureDataLake.Analytics
 {
     public class GetJobListOptions
@@ -17,9 +18,12 @@ namespace AzureDataLake.Analytics
         public string FilterNameContains;
         public System.DateTime? FilterSubmittedAfter;
         public System.DateTime? FilterSubmittedBefore;
-        public Microsoft.Azure.Management.DataLake.Analytics.Models.JobState[] FilterState;
-        public Microsoft.Azure.Management.DataLake.Analytics.Models.JobResult[] FilterResult;
+        public List<ADL.Analytics.Models.JobState> FilterState;
+        public List<ADL.Analytics.Models.JobResult> FilterResult;
 
+        public GetJobListOptions()
+        {
+        }
         private static string get_order_field_name(JobOrderByField field)
         {
             if (field == JobOrderByField.None)
@@ -67,7 +71,7 @@ namespace AzureDataLake.Analytics
 
             if (this.FilterSubmittedAfter.HasValue)
             {
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison("submittedafter", this.FilterSubmittedAfter.Value, ODataQuery.CompareOps.GreaterThanOrEquals));
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison("submittedafter", this.FilterSubmittedAfter.Value, ODataQuery.NumericCompareOps.GreaterThanOrEquals));
             }
 
             if (!string.IsNullOrEmpty(this.FilterName))
@@ -75,7 +79,7 @@ namespace AzureDataLake.Analytics
                 q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison("name", this.FilterName, StringCompareOps.Equals));
             }
             
-            if (this.FilterState != null && this.FilterState.Length > 0)
+            if (this.FilterState != null && this.FilterState.Count > 0)
             {
                 var expr_and = new AzureDataLake.ODataQuery.ExprOr();
                 q.Items.Add(expr_and);
@@ -85,7 +89,7 @@ namespace AzureDataLake.Analytics
                 }
             }
             
-            if (this.FilterResult != null && this.FilterResult.Length > 0)
+            if (this.FilterResult != null && this.FilterResult.Count > 0)
             {
                 var expr_and = new AzureDataLake.ODataQuery.ExprOr();
                 q.Items.Add(expr_and);

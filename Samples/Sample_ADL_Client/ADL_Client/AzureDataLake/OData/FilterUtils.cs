@@ -2,28 +2,32 @@ namespace AzureDataLake.ODataQuery
 {
     public class FilterUtils
     {
-        public static string OpToString(CompareOps Op)
+        public static string OpToString(NumericCompareOps Op)
         {
             string op = "ge";
-            if (Op == CompareOps.GreaterThan)
+            if (Op == NumericCompareOps.GreaterThan)
             {
                 op = "gt";
             }
-            else if (Op == CompareOps.GreaterThanOrEquals)
+            else if (Op == NumericCompareOps.GreaterThanOrEquals)
             {
                 op = "ge";
             }
-            else if (Op == CompareOps.LesserThan)
+            else if (Op == NumericCompareOps.LesserThan)
             {
                 op = "lt";
             }
-            else if (Op == CompareOps.LesserThanOrEquals)
+            else if (Op == NumericCompareOps.LesserThanOrEquals)
             {
                 op = "le";
             }
-            else if (Op == CompareOps.Equals)
+            else if (Op == NumericCompareOps.Equals)
             {
                 op = "eq";
+            }
+            else if (Op == NumericCompareOps.NotEquals)
+            {
+                op = "ne";
             }
             else
             {
