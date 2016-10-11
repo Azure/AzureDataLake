@@ -11,7 +11,23 @@ namespace AzureDataLake.ODataQuery
 
         public override void ToExprString(ExBuilder sb)
         {
-            sb.AppendQuotedString(this.Content);
+            string s = string.Format("'{0}'", this.Content);
+            sb.Append(s);
+        }
+    }
+
+    public class ExprIntLiteral : Expr
+    {
+        public int Content;
+
+        public ExprIntLiteral(int content)
+        {
+            this.Content = content;
+        }
+
+        public override void ToExprString(ExBuilder sb)
+        {
+            sb.Append(this.Content.ToString());
         }
     }
 }

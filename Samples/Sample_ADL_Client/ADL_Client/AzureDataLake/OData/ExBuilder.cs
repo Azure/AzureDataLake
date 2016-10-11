@@ -14,16 +14,6 @@ namespace AzureDataLake.ODataQuery
             this.sb.Append(s);
         }
 
-        public void AppendQuotedString(string s)
-        {
-            this.sb.Append(string.Format("'{0}'",s));
-        }
-
-        public void Append(int s)
-        {
-            this.sb.Append(s);
-        }
-
         public void Append(Expr e)
         {
             e.ToExprString(this);

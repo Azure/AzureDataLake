@@ -32,9 +32,9 @@ namespace AzureDataLake.ODataQuery
     public class IntegerComparison : Expr
     {
         public ExprColumn Column;
-        public int Value;
+        public ExprIntLiteral Value;
         public NumericCompareOps Op;
-        public IntegerComparison(ExprColumn col, int val, NumericCompareOps op)
+        public IntegerComparison(ExprColumn col, ExprIntLiteral val, NumericCompareOps op)
         {
             this.Column = col;
             this.Value = val;
@@ -47,6 +47,7 @@ namespace AzureDataLake.ODataQuery
             sb.Append(this.Column);
             sb.Append(" ");
             sb.Append(op);
+            sb.Append(" ");
             sb.Append(this.Value);
         }
     }

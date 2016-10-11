@@ -19,13 +19,20 @@ namespace ADL_Client_Demo
             opts.Top = 20;
             //opts.FilterSubmitter = "srevanka@microsoft.com";
             //opts.FilterSubmitterContains = "saveenr";
-            //opts.FilterResult  = new JobResult[] { JobResult.Cancelled};
+            opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
             opts.FilterState = new List<JobState> { JobState.Ended};
+
+            opts.FilterDegreeOfParallelism = 1;
             var jobs = client.GetJobList(opts);
 
             foreach (var job in jobs)
             {
-                Console.WriteLine("{0} {1} {2}", job.Result, job.Name, job.Submitter);
+                Console.WriteLine("------------------------------------------------------------");
+                Console.WriteLine("DOP={0}", job.DegreeOfParallelism);
+                Console.WriteLine("Result={0}", job.Result);
+                Console.WriteLine("Name={0}", job.Name);
+                Console.WriteLine("Result={0}", job.Result);
+                Console.WriteLine("Submitter={0}", job.Submitter);
             }
         }
 

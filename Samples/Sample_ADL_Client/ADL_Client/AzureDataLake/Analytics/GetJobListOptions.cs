@@ -18,12 +18,14 @@ namespace AzureDataLake.Analytics
         public string FilterNameContains;
         public System.DateTime? FilterSubmittedAfter;
         public System.DateTime? FilterSubmittedBefore;
+        public int? FilterDegreeOfParallelism;
         public List<ADL.Analytics.Models.JobState> FilterState;
         public List<ADL.Analytics.Models.JobResult> FilterResult;
 
         public GetJobListOptions()
         {
         }
+
         private static string get_order_field_name(JobOrderByField field)
         {
             if (field == JobOrderByField.None)
@@ -57,6 +59,12 @@ namespace AzureDataLake.Analytics
             var col_submittedtime = new ExprColumn("submittedtime");
             var col_state = new ExprColumn("state");
             var col_result = new ExprColumn("result");
+            var col_dop = new ExprColumn("degreeOfParallelism");
+
+            if (this.FilterDegreeOfParallelism.HasValue)
+            {
+                q.Items.Add(new AzureDataLake.ODataQuery.IntegerComparison(col_dop, new ExprIntLiteral(this.FilterDegreeOfParallelism.Value), ODataQuery.NumericCompareOps.Equals));
+            }
 
             if (!string.IsNullOrEmpty(this.FilterSubmitter))
             {
