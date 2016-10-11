@@ -11,7 +11,7 @@ namespace AzureDataLake.ODataQuery
         public override void ToExprString(System.Text.StringBuilder sb)
         {
             sb.Append("(");
-            this.Item.ToExprString(sb);
+            sb.AppendExpr(this.Item);
             sb.Append(")");
         }
     }

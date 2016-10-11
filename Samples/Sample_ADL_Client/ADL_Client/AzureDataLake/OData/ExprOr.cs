@@ -25,7 +25,7 @@ namespace AzureDataLake.ODataQuery
                     sb.Append(" or ");
                 }
 
-                this.Items[i].ToExprString(sb);
+                sb.AppendExpr(this.Items[i]);
             }
 
             sb.Append(")");

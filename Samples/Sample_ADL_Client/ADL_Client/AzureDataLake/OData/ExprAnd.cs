@@ -2,9 +2,26 @@ using System.Collections.Generic;
 
 namespace AzureDataLake.ODataQuery
 {
+
+    public class ExprColumn : Expr
+    {
+        public string Name;
+
+        public ExprColumn(string name)
+        {
+            this.Name = name;
+        }
+
+        public override void ToExprString(System.Text.StringBuilder sb)
+        {
+            sb.Append(this.Name);
+        }
+    }
+
     public class ExprAnd : Expr
     {
         public List<Expr> Items;
+
         public ExprAnd(params Expr[] items)
         {
             this.Items = new List<Expr>();
@@ -26,7 +43,7 @@ namespace AzureDataLake.ODataQuery
                     sb.Append(" and ");
                 }
 
-                this.Items[i].ToExprString(sb);
+                sb.AppendExpr(this.Items[i]);
             }
 
             sb.Append(")");
