@@ -12,6 +12,7 @@ namespace AzureDataLake.Analytics
         public JobOrderByDirection OrderByDirection;
 
         public string FilterSubmitter;
+        public string FilterSubmitterContains;
         public string FilterName;
         public string FilterNameContains;
         public System.DateTime? FilterSubmittedAfter;
@@ -52,6 +53,11 @@ namespace AzureDataLake.Analytics
             if (!string.IsNullOrEmpty(this.FilterSubmitter))
             {
                 q.Items.Add( new AzureDataLake.ODataQuery.ExprStringComparison("submitter",this.FilterSubmitter, StringCompareOps.Equals));
+            }
+
+            if (!string.IsNullOrEmpty(this.FilterSubmitterContains))
+            {
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison("submitter", this.FilterSubmitterContains, StringCompareOps.Contains));
             }
 
             if (!string.IsNullOrEmpty(this.FilterNameContains))

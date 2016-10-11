@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AzureDataLake.Analytics;
+using Microsoft.Azure.Management.DataLake.Analytics.Models;
 
 namespace ADL_Client_Demo
 {
@@ -16,12 +17,13 @@ namespace ADL_Client_Demo
             var opts =new AzureDataLake.Analytics.GetJobListOptions();
             opts.Top = 20;
             //opts.FilterSubmitter = "srevanka@microsoft.com";
-            opts.FilterNameContains= "AllJobsHourlyForAdHoc";
+            //opts.FilterSubmitterContains = "saveenr";
+            //opts.FilterResult  = new JobResult[] { JobResult.Cancelled};
             var jobs = client.GetJobList(opts);
 
             foreach (var job in jobs)
             {
-                Console.WriteLine("{0} {1}",job.Name, job.Submitter);
+                Console.WriteLine("{0} {1} {2}", job.Result, job.Name, job.Submitter);
             }
         }
 
