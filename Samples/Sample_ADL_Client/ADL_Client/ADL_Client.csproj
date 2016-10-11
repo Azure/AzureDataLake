@@ -117,6 +117,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
+    <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
+    <Compile Include="AzureDataLake\OData\ExprStringLiteral.cs" />
     <Compile Include="AzureDataLake\OData\NumericCompareOps.cs" />
     <Compile Include="AzureDataLake\OData\Expr.cs" />
     <Compile Include="AzureDataLake\OData\ExprAnd.cs" />
