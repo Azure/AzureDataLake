@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AzureDataLake.ODataQuery;
 
 namespace AzureDataLake.Analytics
 {
@@ -48,7 +49,7 @@ namespace AzureDataLake.Analytics
 
             if (!string.IsNullOrEmpty(this.FilterSubmitter))
             {
-                q.Items.Add( new AzureDataLake.ODataQuery.ExprStringComparison("submitter",this.FilterSubmitter));
+                q.Items.Add( new AzureDataLake.ODataQuery.ExprStringComparison("submitter",this.FilterSubmitter, StringCompareOps.Equals));
             }
 
             if (this.FilterSubmittedAfter.HasValue)
@@ -58,7 +59,7 @@ namespace AzureDataLake.Analytics
 
             if (!string.IsNullOrEmpty(this.FilterName))
             {
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison("name", this.FilterName));
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison("name", this.FilterName, StringCompareOps.Equals));
             }
             
             if (this.FilterState != null && this.FilterState.Length > 0)
@@ -67,7 +68,7 @@ namespace AzureDataLake.Analytics
                 q.Items.Add(expr_and);
                 foreach (var state in this.FilterState)
                 {
-                    expr_and.Items.Add( new AzureDataLake.ODataQuery.ExprStringComparison("state", state.ToString()));
+                    expr_and.Items.Add( new AzureDataLake.ODataQuery.ExprStringComparison("state", state.ToString(), StringCompareOps.Equals));
                 }
             }
             
@@ -77,7 +78,7 @@ namespace AzureDataLake.Analytics
                 q.Items.Add(expr_and);
                 foreach (var result in this.FilterResult)
                 {
-                    expr_and.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison("result", result.ToString()));
+                    expr_and.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison("result", result.ToString(), StringCompareOps.Equals));
                 }
 
             }
