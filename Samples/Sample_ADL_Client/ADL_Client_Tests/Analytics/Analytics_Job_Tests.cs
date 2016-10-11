@@ -36,10 +36,11 @@ namespace ADL_Client_Tests.Analytics
         {
             this.Initialize();
             var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
-            getjobs_options.Top = AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize + (AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize/2);
+            var top = AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize + (AzureDataLake.Analytics.AnalyticsJobClient.ADLJobPageSize/2);
+            getjobs_options.Top = top;
 
             var jobs = this.adla_job_client.GetJobListPaged(getjobs_options).ToList();
-            Assert.IsTrue(jobs.Count>= getjobs_options.Top);
+            Assert.AreEqual(top,jobs.Count);
         }
 
 
