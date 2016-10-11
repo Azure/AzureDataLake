@@ -11,7 +11,7 @@ namespace AzureDataLake.ODataQuery
             this.Items.AddRange(items);
         }
 
-        public override void ToExprString(System.Text.StringBuilder sb)
+        public override void ToExprString(ExBuilder sb)
         {
             if (this.Items.Count < 1)
             {
@@ -25,7 +25,7 @@ namespace AzureDataLake.ODataQuery
                     sb.Append(" or ");
                 }
 
-                sb.AppendExpr(this.Items[i]);
+                sb.Append(this.Items[i]);
             }
 
             sb.Append(")");

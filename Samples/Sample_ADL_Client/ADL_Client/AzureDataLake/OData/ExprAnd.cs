@@ -3,6 +3,56 @@ using System.Collections.Generic;
 namespace AzureDataLake.ODataQuery
 {
 
+    public class ExBuilder
+    {
+        private System.Text.StringBuilder sb;
+
+        public ExBuilder()
+        {
+            this.sb = new System.Text.StringBuilder();    
+        }
+
+        public void Append(string s)
+        {
+            this.sb.Append(s);
+        }
+
+        public void AppendQuotedString(string s)
+        {
+            this.sb.Append(string.Format("'{0}'",s));
+        }
+
+        public void Append(int s)
+        {
+            this.sb.Append(s);
+        }
+
+        public void Append(Expr e)
+        {
+            e.ToExprString(this);
+        }
+
+        public override string ToString()
+        {
+            return this.sb.ToString();
+        }
+    }
+
+    public class ExprStringLiteral : Expr
+    {
+        public string Content;
+
+        public ExprStringLiteral(string content)
+        {
+            this.Content = content;
+        }
+
+        public override void ToExprString(ExBuilder sb)
+        {
+            sb.AppendQuotedString(this.Content);
+        }
+    }
+
     public class ExprColumn : Expr
     {
         public string Name;
@@ -12,7 +62,7 @@ namespace AzureDataLake.ODataQuery
             this.Name = name;
         }
 
-        public override void ToExprString(System.Text.StringBuilder sb)
+        public override void ToExprString(ExBuilder sb)
         {
             sb.Append(this.Name);
         }
@@ -28,7 +78,7 @@ namespace AzureDataLake.ODataQuery
             this.Items.AddRange(items);
         }
 
-        public override void ToExprString(System.Text.StringBuilder sb)
+        public override void ToExprString(ExBuilder sb)
         {
             if (this.Items.Count < 1)
             {
@@ -43,7 +93,7 @@ namespace AzureDataLake.ODataQuery
                     sb.Append(" and ");
                 }
 
-                sb.AppendExpr(this.Items[i]);
+                sb.Append(this.Items[i]);
             }
 
             sb.Append(")");

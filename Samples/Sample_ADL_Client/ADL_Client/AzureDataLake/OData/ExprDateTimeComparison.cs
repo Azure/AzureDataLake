@@ -11,7 +11,7 @@ namespace AzureDataLake.ODataQuery
             this.Value = val;
         }
 
-        public override void ToExprString(System.Text.StringBuilder sb)
+        public override void ToExprString(ExBuilder sb)
         {
             string datestring = this.Value.ToString("O");
 
@@ -21,11 +21,11 @@ namespace AzureDataLake.ODataQuery
             var escaped_datestring = System.Uri.EscapeDataString(datestring);
 
             var op = FilterUtils.OpToString(this.Op);
-            sb.AppendExpr(this.Column);
+            sb.Append(this.Column);
             sb.Append(" ");
             sb.Append(op);
             sb.Append("datetimeoffset");
-            sb.AppendQuotedString(escaped_datestring);
+            sb.Append(escaped_datestring);
         }
     }
 
@@ -40,11 +40,11 @@ namespace AzureDataLake.ODataQuery
             this.Value = val;
         }
 
-        public override void ToExprString(System.Text.StringBuilder sb)
+        public override void ToExprString(ExBuilder sb)
         {
             var op = FilterUtils.OpToString(this.Op);
 
-            sb.AppendExpr(this.Column);
+            sb.Append(this.Column);
             sb.Append(" ");
             sb.Append(op);
             sb.Append(this.Value);

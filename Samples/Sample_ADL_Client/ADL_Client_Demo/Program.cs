@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AzureDataLake.Analytics;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
@@ -19,6 +20,7 @@ namespace ADL_Client_Demo
             //opts.FilterSubmitter = "srevanka@microsoft.com";
             //opts.FilterSubmitterContains = "saveenr";
             //opts.FilterResult  = new JobResult[] { JobResult.Cancelled};
+            opts.FilterState = new List<JobState> { JobState.Ended};
             var jobs = client.GetJobList(opts);
 
             foreach (var job in jobs)
