@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AzureDataLake.ODataQuery;
@@ -12,6 +13,7 @@ namespace AzureDataLake.Analytics
 
         public string FilterSubmitter;
         public string FilterName;
+        public string FilterNameContains;
         public System.DateTime? FilterSubmittedAfter;
         public System.DateTime? FilterSubmittedBefore;
         public Microsoft.Azure.Management.DataLake.Analytics.Models.JobState[] FilterState;
@@ -52,6 +54,11 @@ namespace AzureDataLake.Analytics
                 q.Items.Add( new AzureDataLake.ODataQuery.ExprStringComparison("submitter",this.FilterSubmitter, StringCompareOps.Equals));
             }
 
+            if (!string.IsNullOrEmpty(this.FilterNameContains))
+            {
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison("name", this.FilterNameContains, StringCompareOps.Contains));
+            }
+
             if (this.FilterSubmittedAfter.HasValue)
             {
                 q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison("submittedafter", this.FilterSubmittedAfter.Value, ODataQuery.CompareOps.GreaterThanOrEquals));
@@ -85,7 +92,9 @@ namespace AzureDataLake.Analytics
 
             var sb = new System.Text.StringBuilder();
             q.ToExprString(sb);
-            return sb.ToString();
+            string fs = sb.ToString();
+            Console.WriteLine(fs);
+            return fs;
         }
     }
 }

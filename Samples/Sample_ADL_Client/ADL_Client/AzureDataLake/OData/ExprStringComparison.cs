@@ -21,7 +21,7 @@ namespace AzureDataLake.ODataQuery
             }
             else if (this.Op == StringCompareOps.Contains)
             {
-                sb.Append(string.Format("substringof({0}, '{1}')", this.Column, this.Value));
+                sb.Append(string.Format("substringof('{0}', {1})", this.Value, this.Column));
             }
             else if (this.Op == StringCompareOps.StartsWith)
             {
