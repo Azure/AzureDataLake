@@ -45,7 +45,7 @@ namespace AzureDataLake.Analytics
                 foreach (var item in this.OneOfList)
                 {
                     var expr2 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(item), ODataQuery.ComparisonString.Equals );
-                    expr1.Items.Add(expr2);
+                    expr1.Add(expr2);
                 }
                 return expr1;
             }

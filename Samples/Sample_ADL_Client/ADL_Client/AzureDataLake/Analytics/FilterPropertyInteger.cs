@@ -41,19 +41,19 @@ namespace AzureDataLake.Analytics
             if (this.value_before.HasValue)
             {
                 var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.value_before.Value), ComparisonNumeric.LesserThan);
-                expr1.Items.Add(expr2);
+                expr1.Add(expr2);
             }
 
             if (this.value_after.HasValue)
             {
                 var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.value_after.Value), ComparisonNumeric.GreaterThan);
-                expr1.Items.Add(expr2);
+                expr1.Add(expr2);
             }
 
             if (this.value_exactly.HasValue)
             {
                 var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.value_exactly.Value), ComparisonNumeric.Equals);
-                expr1.Items.Add(expr2);
+                expr1.Add(expr2);
             }
 
             return expr1;

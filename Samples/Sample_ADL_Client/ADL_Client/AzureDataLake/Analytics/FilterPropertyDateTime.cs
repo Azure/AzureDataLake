@@ -34,14 +34,14 @@ namespace AzureDataLake.Analytics
 
             if (this.value_before.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.value_before.Value), ComparisonNumeric.LesserThan);
-                expr1.Items.Add(expr2);
+                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.value_before.Value), ComparisonDateTime.LesserThan);
+                expr1.Add(expr2);
             }
 
             if (this.value_after.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.value_after.Value), ComparisonNumeric.GreaterThan);
-                expr1.Items.Add(expr2);
+                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.value_after.Value), ComparisonDateTime.GreaterThan);
+                expr1.Add(expr2);
             }
 
             return expr1;
