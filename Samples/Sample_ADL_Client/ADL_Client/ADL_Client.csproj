@@ -124,6 +124,7 @@
     <Compile Include="AzureDataLake\OData\ExprLiteralInt.cs" />
     <Compile Include="AzureDataLake\OData\ExprLiteralString.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompareNumeric.cs" />
+    <Compile Include="AzureDataLake\OData\ExprLogicalNot.cs" />
     <Compile Include="AzureDataLake\OData\NumericComparisonOperator.cs" />
     <Compile Include="AzureDataLake\OData\Expr.cs" />
     <Compile Include="AzureDataLake\OData\ExprLogicalAnd.cs" />
