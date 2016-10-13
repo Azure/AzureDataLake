@@ -12,7 +12,7 @@ Follow our [Azure Data Lake Blog](http://blogs.msdn.microsoft.com/azuredatalake)
 #### [Start of Deprecation of old `PARTITIONED BY` Syntax.](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_08_01/USQL_Release_Notes_2016_08_01.md#start-of-deprecation-of-old-partitioned-by-syntax)
 
  
-In order to adjust our syntax with other SQL products and to more clearly differentiate the addressable partitions from the internal data distributions in a table, we are changing the `PARTITIONED BY` syntax in the following way:
+In order to adjust our syntax with other SQL products and to more clearly differentiate the addressable partitions from the internal data distributions in a table, we are changing the `PARTITIONED BY` syntax. See [link](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_08_01/USQL_Release_Notes_2016_08_01.md#start-of-deprecation-of-old-partitioned-by-syntax) for more details.
 
 #### [DateTime file set pattern will require `HH` instead of `hh` for the hour pattern to align with 24h clock semantics](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_08_01/USQL_Release_Notes_2016_08_01.md#datetime-file-set-pattern-will-require-hh-instead-of-hh-for-the-hour-pattern-to-align-with-24h-clock-semantics)
 
