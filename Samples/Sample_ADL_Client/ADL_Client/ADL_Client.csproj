@@ -119,7 +119,10 @@
   <ItemGroup>
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
     <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
+    <Compile Include="AzureDataLake\OData\ExprDateLiteral.cs" />
+    <Compile Include="AzureDataLake\OData\ExprIntLiteral.cs" />
     <Compile Include="AzureDataLake\OData\ExprStringLiteral.cs" />
+    <Compile Include="AzureDataLake\OData\IntegerComparison.cs" />
     <Compile Include="AzureDataLake\OData\NumericCompareOps.cs" />
     <Compile Include="AzureDataLake\OData\Expr.cs" />
     <Compile Include="AzureDataLake\OData\ExprAnd.cs" />
