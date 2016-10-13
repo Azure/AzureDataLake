@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using AzureDataLake.Authentication;
 using AzureDataLake.ODataQuery;
-using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using ADL= Microsoft.Azure.Management.DataLake;
 namespace AzureDataLake.Analytics
 {
@@ -125,6 +124,67 @@ namespace AzureDataLake.Analytics
         }
     }
 
+    public class FilterPropertyInteger
+    {
+        private string colname;
+        private ODataQuery.ExprColumn expr_col;
+        private int? before;
+        private int? after;
+        private int? exactly;
+
+        public FilterPropertyInteger(string colname)
+        {
+            this.colname = colname;
+            this.expr_col = new ExprColumn(colname);
+        }
+
+        public void Before(int dt)
+        {
+            this.before = dt;
+        }
+
+        public void After(int dt)
+        {
+            this.after = dt;
+        }
+
+        public void Exactly(int dt)
+        {
+            this.exactly = dt;
+        }
+
+
+        public ODataQuery.Expr ToExpr()
+        {
+            if (!(this.before.HasValue || this.after.HasValue || this.exactly.HasValue))
+            {
+                return null;
+            }
+
+            var expr1 = new ODataQuery.ExprLogicalAnd();
+
+            if (this.before.HasValue)
+            {
+                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.before.Value), NumericComparisonOperator.LesserThan);
+                expr1.Items.Add(expr2);
+            }
+
+            if (this.after.HasValue)
+            {
+                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.after.Value), NumericComparisonOperator.GreaterThan);
+                expr1.Items.Add(expr2);
+            }
+
+            if (this.exactly.HasValue)
+            {
+                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.exactly.Value), NumericComparisonOperator.Equals);
+                expr1.Items.Add(expr2);
+            }
+
+            return expr1;
+        }
+    }
+
 
     public class GetJobListOptions
     {
@@ -139,8 +199,9 @@ namespace AzureDataLake.Analytics
         public FilterPropertyDateTime FilterSubmitTime;
         public FilterPropertyDateTime FilterStartTime;
         public FilterPropertyDateTime FilterEndTime;
+        public FilterPropertyInteger FilterDegreeOfParallelism;
+        public FilterPropertyInteger FilterPriority;
 
-        public int? FilterDegreeOfParallelism;
         public List<ADL.Analytics.Models.JobState> FilterState;
         public List<ADL.Analytics.Models.JobResult> FilterResult;
 
@@ -151,6 +212,8 @@ namespace AzureDataLake.Analytics
             this.FilterSubmitTime = new FilterPropertyDateTime("submitTime");
             this.FilterStartTime = new FilterPropertyDateTime("startTime");
             this.FilterEndTime = new FilterPropertyDateTime("endTime");
+            this.FilterDegreeOfParallelism = new FilterPropertyInteger("degreeOfParallelism");
+            this.FilterPriority = new FilterPropertyInteger("priority");
         }
 
         private static string get_order_field_name(JobOrderByField field)
@@ -184,17 +247,29 @@ namespace AzureDataLake.Analytics
             var col_submitter = new ExprColumn("submitter");
             var col_state = new ExprColumn("state");
             var col_result = new ExprColumn("result");
-            var col_dop = new ExprColumn("degreeOfParallelism");
 
-            if (this.FilterDegreeOfParallelism.HasValue)
+            if (this.FilterDegreeOfParallelism!= null)
             {
-                var exprIntLiteral = new ExprLiteralInt(this.FilterDegreeOfParallelism.Value);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareNumeric(col_dop, exprIntLiteral, ODataQuery.NumericComparisonOperator.Equals));
+                var expr = this.FilterDegreeOfParallelism.ToExpr();
+                if (expr != null)
+                {
+                    q.Items.Add(expr);
+                }
             }
+
 
             if (this.FilterSubmitter != null)
             {
                 var expr = this.FilterSubmitter.ToExpr();
+                if (expr != null)
+                {
+                    q.Items.Add(expr);
+                }
+            }
+
+            if (this.FilterPriority != null)
+            {
+                var expr = this.FilterPriority.ToExpr();
                 if (expr != null)
                 {
                     q.Items.Add(expr);

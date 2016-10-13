@@ -21,12 +21,11 @@ namespace ADL_Client_Demo
             opts.OrderByDirection = JobOrderByDirection.Descending;
             opts.OrderByField = JobOrderByField.SubmitTime;
 
-            opts.FilterSubmitTime.Before(new System.DateTime(2016, 9, 17));
+            //opts.FilterSubmitTime.Before(new System.DateTime(2016, 9, 17));
 
+            opts.FilterPriority.Exactly(1);
             //opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
             //opts.FilterState = new List<JobState> { JobState.Ended};
-
-            //opts.FilterDegreeOfParallelism = 1;
             //opts.FilterSubmitterToCurrentUser = true;
 
             var jobs = client.GetJobListPaged(opts);
@@ -39,6 +38,7 @@ namespace ADL_Client_Demo
                 Console.WriteLine("Result={0}", job.Result);
                 Console.WriteLine("Result={0}", job.Result);
                 Console.WriteLine("SubmitTime={0}", job.SubmitTime);
+                Console.WriteLine("Priority={0}", job.Priority);
                 Console.WriteLine("Submitter={0}", job.Submitter);
                 Console.WriteLine("Name={0}", job.Name);                
             }
