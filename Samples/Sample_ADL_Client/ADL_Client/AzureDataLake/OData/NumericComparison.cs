@@ -1,11 +1,12 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class IntegerComparison : Expr
+    public class NumericComparison : Expr
     {
-        public ExprColumn Column;
-        public ExprIntLiteral Value;
+        public Expr Column;
+        public Expr Value;
         public NumericComparisonOperator Op;
-        public IntegerComparison(ExprColumn col, ExprIntLiteral val, NumericComparisonOperator op)
+
+        public NumericComparison(Expr col, Expr val, NumericComparisonOperator op)
         {
             this.Column = col;
             this.Value = val;

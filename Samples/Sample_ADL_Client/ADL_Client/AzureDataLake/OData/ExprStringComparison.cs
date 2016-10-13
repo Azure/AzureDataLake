@@ -2,11 +2,11 @@ namespace AzureDataLake.ODataQuery
 {
     public class ExprStringComparison : Expr
     {
-        public ExprColumn Column;
-        public ExprStringLiteral Value;
-        public StringCompareOps Op;
+        public Expr Column;
+        public Expr Value;
+        public StringCompareOperator Op;
 
-        public ExprStringComparison(ExprColumn col, ExprStringLiteral val, StringCompareOps op)
+        public ExprStringComparison(Expr col, Expr val, StringCompareOperator op)
         {
             this.Column = col;
             this.Value = val;
@@ -15,7 +15,7 @@ namespace AzureDataLake.ODataQuery
 
         public override void ToExprString(ExBuilder sb)
         {
-            if (this.Op == StringCompareOps.Equals)
+            if (this.Op == StringCompareOperator.Equals)
             {
                 string op = "eq";
                 sb.Append(this.Column);
@@ -24,7 +24,16 @@ namespace AzureDataLake.ODataQuery
                 sb.Append(" ");
                 sb.Append(this.Value);
             }
-            else if (this.Op == StringCompareOps.Contains)
+            else if (this.Op == StringCompareOperator.NotEquals)
+            {
+                string op = "ne";
+                sb.Append(this.Column);
+                sb.Append(" ");
+                sb.Append(op);
+                sb.Append(" ");
+                sb.Append(this.Value);
+            }
+            else if (this.Op == StringCompareOperator.Contains)
             {
                 sb.Append("substringof(");
                 sb.Append(this.Value);
@@ -32,7 +41,7 @@ namespace AzureDataLake.ODataQuery
                 sb.Append(this.Column);
                 sb.Append(")");
             }
-            else if (this.Op == StringCompareOps.StartsWith)
+            else if (this.Op == StringCompareOperator.StartsWith)
             {
 
                 sb.Append("startswith(");
@@ -41,7 +50,7 @@ namespace AzureDataLake.ODataQuery
                 sb.Append(this.Value);
                 sb.Append(")");
             }
-            else if (this.Op == StringCompareOps.EndsWith)
+            else if (this.Op == StringCompareOperator.EndsWith)
             {
                 sb.Append("endswith(");
                 sb.Append(this.Column);
