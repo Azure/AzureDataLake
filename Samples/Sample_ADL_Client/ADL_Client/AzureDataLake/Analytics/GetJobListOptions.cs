@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AzureDataLake.Authentication;
 using AzureDataLake.ODataQuery;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using ADL= Microsoft.Azure.Management.DataLake;
@@ -12,6 +13,7 @@ namespace AzureDataLake.Analytics
         public JobOrderByField OrderByField;
         public JobOrderByDirection OrderByDirection;
 
+        public bool FilterSubmitterToCurrentUser;
         public string FilterSubmitter;
         public string FilterSubmitterContains;
         public string FilterName;
@@ -51,7 +53,7 @@ namespace AzureDataLake.Analytics
             return null;
         }
 
-        public string CreateFilterString()
+        public string CreateFilterString(AuthenticatedSession auth_session)
         {
             var q = new AzureDataLake.ODataQuery.ExprAnd();
             var col_name = new ExprColumn("name");
@@ -123,6 +125,12 @@ namespace AzureDataLake.Analytics
                     expr_and.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison(col_result, new ExprStringLiteral(result.ToString()), StringCompareOps.Equals));
                 }
 
+            }
+
+            if (this.FilterSubmitterToCurrentUser)
+            {
+                var exprStringLiteral = new ExprStringLiteral(auth_session.Token.DisplayableId);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison(col_submitter, exprStringLiteral, StringCompareOps.Equals));
             }
 
             var sb = new AzureDataLake.ODataQuery.ExBuilder();

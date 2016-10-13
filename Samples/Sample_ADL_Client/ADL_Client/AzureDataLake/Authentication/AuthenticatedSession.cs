@@ -9,6 +9,7 @@ namespace AzureDataLake.Authentication
     public class AuthenticatedSession
     {
         public Microsoft.Rest.ServiceClientCredentials Credentials;
+        public TokenCacheItem Token;
         public string Name;
 
         public AuthenticatedSession(string name)
@@ -85,9 +86,13 @@ namespace AzureDataLake.Authentication
                     // If token cache has no items then trying serialize it will fail when deserializing
                     System.IO.File.WriteAllBytes(cache_filename, token_cache.Serialize());
                 }
+
             }
 
+
+
             this.Credentials = creds;
+            this.Token = token_cache.ReadItems().First();
 
         }
 

@@ -26,9 +26,12 @@ namespace ADL_Client_Demo
             //opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
             //opts.FilterState = new List<JobState> { JobState.Ended};
 
-            opts.FilterSubmittedBefore = new System.DateTime(2016,10,1);
+            //opts.FilterSubmittedBefore = new System.DateTime(2016,10,1);
             //opts.FilterDegreeOfParallelism = 1;
+            opts.FilterSubmitterToCurrentUser = true;
+
             var jobs = client.GetJobListPaged(opts);
+
 
             foreach (var job in jobs)
             {
