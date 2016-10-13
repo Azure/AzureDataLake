@@ -16,19 +16,19 @@ namespace ADL_Client_Demo
             var client = new AzureDataLake.Analytics.AnalyticsJobClient("datainsightsadhoc", auth_session);
 
             var opts =new AzureDataLake.Analytics.GetJobListOptions();
-            opts.Top = 20;
+            opts.Top = 5;
 
             opts.OrderByDirection = JobOrderByDirection.Descending;
             opts.OrderByField = JobOrderByField.SubmitTime;
 
-            //opts.FilterSubmitter = "srevanka@microsoft.com";
-            //opts.FilterSubmitterContains = "saveenr";
+            opts.FilterName.Contains("Daily");
+
             //opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
             //opts.FilterState = new List<JobState> { JobState.Ended};
 
             //opts.FilterSubmittedBefore = new System.DateTime(2016,10,1);
             //opts.FilterDegreeOfParallelism = 1;
-            opts.FilterSubmitterToCurrentUser = true;
+            //opts.FilterSubmitterToCurrentUser = true;
 
             var jobs = client.GetJobListPaged(opts);
 
