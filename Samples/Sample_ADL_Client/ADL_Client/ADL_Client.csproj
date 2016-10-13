@@ -117,6 +117,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureDataLake\Analytics\FilterPropertyDateTime.cs" />
+    <Compile Include="AzureDataLake\Analytics\FilterPropertyInteger.cs" />
+    <Compile Include="AzureDataLake\Analytics\FilterPropertyString.cs" />
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
     <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompare.cs" />
