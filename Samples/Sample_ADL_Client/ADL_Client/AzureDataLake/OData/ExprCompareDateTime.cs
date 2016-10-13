@@ -13,11 +13,8 @@ namespace AzureDataLake.ODataQuery
         public override void ToExprString(ExBuilder sb)
         {
             var op = ExprCompareDateTime.OpToString(this.Operator);
-            sb.Append(this.LeftValue);
-            sb.Append(" ");
-            sb.Append(op);
-            sb.Append(" ");
-            sb.Append(this.RightValue);
+
+            this.WriteBinaryOperation(sb,op,this.LeftValue,this.RightValue);
         }
 
         public static string OpToString(ComparisonDateTime operation)

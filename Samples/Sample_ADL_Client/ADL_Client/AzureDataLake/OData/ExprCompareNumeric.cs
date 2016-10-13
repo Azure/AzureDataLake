@@ -14,11 +14,7 @@ namespace AzureDataLake.ODataQuery
         {
             var op = ExprCompareNumeric.OpToString(this.Operator);
 
-            sb.Append(this.LeftValue);
-            sb.Append(" ");
-            sb.Append(op);
-            sb.Append(" ");
-            sb.Append(this.RightValue);
+            this.WriteBinaryOperation(sb,op,this.LeftValue,this.RightValue);
         }
 
         public static string OpToString(ComparisonNumeric operation)

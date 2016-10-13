@@ -15,20 +15,12 @@ namespace AzureDataLake.ODataQuery
             if (this.Operator == ComparisonString.Equals)
             {
                 string op = "eq";
-                sb.Append(this.LeftValue);
-                sb.Append(" ");
-                sb.Append(op);
-                sb.Append(" ");
-                sb.Append(this.RightValue);
+                this.WriteBinaryOperation(sb,op,this.LeftValue,this.RightValue);
             }
             else if (this.Operator == ComparisonString.NotEquals)
             {
                 string op = "ne";
-                sb.Append(this.LeftValue);
-                sb.Append(" ");
-                sb.Append(op);
-                sb.Append(" ");
-                sb.Append(this.RightValue);
+                this.WriteBinaryOperation(sb, op, this.LeftValue, this.RightValue);
             }
             else if (this.Operator == ComparisonString.Contains)
             {
