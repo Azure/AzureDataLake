@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS SampleDBTutorials.dbo.SearchLog
         ClickedUrls     string,
     INDEX idx1 //Name of index
     CLUSTERED (Region ASC) //Column to cluster by
-    PARTITIONED BY HASH (Region) //Column to partition by
+    DISTRIUBTED BY HASH (Region) //Column to partition by
 );

@@ -13,7 +13,7 @@ namespace AzureDataLake.ODataQuery
 
         public override void ToExprString(ExBuilder sb)
         {
-            sb.Append("(not ");
+            sb.Append("(not");
             sb.Append(this.Expression);
             sb.Append(")");
         }

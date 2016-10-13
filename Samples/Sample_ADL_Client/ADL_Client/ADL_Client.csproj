@@ -123,6 +123,7 @@
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
     <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompare.cs" />
+    <Compile Include="AzureDataLake\OData\ExprList.cs" />
     <Compile Include="AzureDataLake\OData\ExprLiteralDateTime.cs" />
     <Compile Include="AzureDataLake\OData\ExprLiteralInt.cs" />
     <Compile Include="AzureDataLake\OData\ExprLiteralString.cs" />
