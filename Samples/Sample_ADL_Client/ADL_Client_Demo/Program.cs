@@ -21,12 +21,11 @@ namespace ADL_Client_Demo
             opts.OrderByDirection = JobOrderByDirection.Descending;
             opts.OrderByField = JobOrderByField.SubmitTime;
 
-            opts.FilterName.Contains("Daily");
+            opts.FilterSubmitTime.Before(new System.DateTime(2016, 9, 17));
 
             //opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
             //opts.FilterState = new List<JobState> { JobState.Ended};
 
-            //opts.FilterSubmittedBefore = new System.DateTime(2016,10,1);
             //opts.FilterDegreeOfParallelism = 1;
             //opts.FilterSubmitterToCurrentUser = true;
 
@@ -41,7 +40,7 @@ namespace ADL_Client_Demo
                 Console.WriteLine("Result={0}", job.Result);
                 Console.WriteLine("SubmitTime={0}", job.SubmitTime);
                 Console.WriteLine("Submitter={0}", job.Submitter);
-                Console.WriteLine("Name={0}", job.Name);
+                Console.WriteLine("Name={0}", job.Name);                
             }
         }
 

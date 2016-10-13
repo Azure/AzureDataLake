@@ -77,6 +77,55 @@ namespace AzureDataLake.Analytics
         }
     }
 
+    public class FilterPropertyDateTime
+    {
+        private string colname;
+        private ODataQuery.ExprColumn expr_col;
+        private System.DateTime? before;
+        private System.DateTime? after;
+
+        public FilterPropertyDateTime(string colname)
+        {
+            this.colname = colname;
+            this.expr_col = new ExprColumn(colname);
+        }
+
+        public void Before(System.DateTime dt)
+        {
+            this.before = dt;
+        }
+
+        public void After(System.DateTime dt)
+        {
+            this.after = dt;
+        }
+
+        public ODataQuery.Expr ToExpr()
+        {
+            if (!(this.before.HasValue || this.after.HasValue))
+            {
+                return null;
+            }
+
+            var expr1 = new ODataQuery.ExprLogicalAnd();
+
+            if (this.before.HasValue)
+            {
+                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.before.Value), NumericComparisonOperator.LesserThan);
+                expr1.Items.Add(expr2);
+            }
+
+            if (this.after.HasValue)
+            {
+                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.after.Value), NumericComparisonOperator.GreaterThan);
+                expr1.Items.Add(expr2);
+            }
+
+            return expr1;
+        }
+    }
+
+
     public class GetJobListOptions
     {
         public int Top=0; // 300 is the ADLA limit
@@ -87,9 +136,10 @@ namespace AzureDataLake.Analytics
 
         public FilterPropertyString FilterName;
         public FilterPropertyString FilterSubmitter;
+        public FilterPropertyDateTime FilterSubmitTime;
+        public FilterPropertyDateTime FilterStartTime;
+        public FilterPropertyDateTime FilterEndTime;
 
-        public System.DateTime? FilterSubmittedAfter;
-        public System.DateTime? FilterSubmittedBefore;
         public int? FilterDegreeOfParallelism;
         public List<ADL.Analytics.Models.JobState> FilterState;
         public List<ADL.Analytics.Models.JobResult> FilterResult;
@@ -98,6 +148,9 @@ namespace AzureDataLake.Analytics
         {
             this.FilterSubmitter = new FilterPropertyString("submitter");
             this.FilterName = new FilterPropertyString("name");
+            this.FilterSubmitTime = new FilterPropertyDateTime("submitTime");
+            this.FilterStartTime = new FilterPropertyDateTime("startTime");
+            this.FilterEndTime = new FilterPropertyDateTime("endTime");
         }
 
         private static string get_order_field_name(JobOrderByField field)
@@ -128,9 +181,7 @@ namespace AzureDataLake.Analytics
         public string CreateFilterString(AuthenticatedSession auth_session)
         {
             var q = new AzureDataLake.ODataQuery.ExprLogicalAnd();
-            var col_name = new ExprColumn("name");
             var col_submitter = new ExprColumn("submitter");
-            var col_submittedtime = new ExprColumn("submitTime");
             var col_state = new ExprColumn("state");
             var col_result = new ExprColumn("result");
             var col_dop = new ExprColumn("degreeOfParallelism");
@@ -159,17 +210,15 @@ namespace AzureDataLake.Analytics
                 }
             }
 
-            if (this.FilterSubmittedAfter.HasValue)
+            if (this.FilterSubmitTime != null)
             {
-                var expr_dt = new AzureDataLake.ODataQuery.ExprLiteralDateTime(this.FilterSubmittedAfter.Value);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareDateTime(col_submittedtime, expr_dt, ODataQuery.NumericComparisonOperator.GreaterThanOrEquals));
+                var expr = this.FilterSubmitTime.ToExpr();
+                if (expr != null)
+                {
+                    q.Items.Add(expr);
+                }
             }
 
-            if (this.FilterSubmittedBefore.HasValue)
-            {
-                var exprDateLiteral = new ExprLiteralDateTime(this.FilterSubmittedBefore.Value);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareDateTime(col_submittedtime, exprDateLiteral, NumericComparisonOperator.LesserThan));
-            }
 
             if (this.FilterState != null && this.FilterState.Count > 0)
             {
@@ -202,8 +251,7 @@ namespace AzureDataLake.Analytics
             var sb = new AzureDataLake.ODataQuery.ExBuilder();
             sb.Append(q);
             string fs = sb.ToString();
-            Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!");
-            Console.WriteLine(fs);
+            Console.WriteLine("DEBUG: FILTER {0}", fs);
             return fs;
         }
     }
