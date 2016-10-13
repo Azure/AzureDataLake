@@ -120,6 +120,7 @@
     <Compile Include="AzureDataLake\Analytics\FilterPropertyDateTime.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyInteger.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyString.cs" />
+    <Compile Include="AzureDataLake\OData\ComparisonDateTime.cs" />
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
     <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompare.cs" />
@@ -129,7 +130,7 @@
     <Compile Include="AzureDataLake\OData\ExprLiteralString.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompareNumeric.cs" />
     <Compile Include="AzureDataLake\OData\ExprLogicalNot.cs" />
-    <Compile Include="AzureDataLake\OData\NumericComparisonOperator.cs" />
+    <Compile Include="AzureDataLake\OData\ComparisonNumeric.cs" />
     <Compile Include="AzureDataLake\OData\Expr.cs" />
     <Compile Include="AzureDataLake\OData\ExprLogicalAnd.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompareDateTime.cs" />
@@ -141,7 +142,7 @@
     <Compile Include="AzureDataLake\Analytics\JobListPage.cs" />
     <Compile Include="AzureDataLake\Analytics\JobOrderByDirection.cs" />
     <Compile Include="AzureDataLake\Analytics\JobOrderByField.cs" />
-    <Compile Include="AzureDataLake\OData\StringCompareOperator.cs" />
+    <Compile Include="AzureDataLake\OData\ComparisonString.cs" />
     <Compile Include="AzureDataLake\ResourceManagementClient.cs" />
     <Compile Include="AzureDataLake\Analytics\AnalyticsCatalogClient.cs" />
     <Compile Include="AzureDataLake\Store\AclType.cs" />

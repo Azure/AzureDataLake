@@ -2,9 +2,9 @@ namespace AzureDataLake.ODataQuery
 {
     public class ExprCompareDateTime : ExprCompare
     {
-        public NumericComparisonOperator Operator;
+        public ComparisonDateTime Operator;
 
-        public ExprCompareDateTime(Expr left, Expr right, NumericComparisonOperator op) :
+        public ExprCompareDateTime(Expr left, Expr right, ComparisonDateTime op) :
             base(left,right)
         {
             this.Operator = op;

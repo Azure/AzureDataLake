@@ -2,29 +2,29 @@ namespace AzureDataLake.ODataQuery
 {
     public class FilterUtils
     {
-        public static string OpToString(NumericComparisonOperator operation)
+        public static string OpToString(ComparisonNumeric operation)
         {
-            if (operation == NumericComparisonOperator.GreaterThan)
+            if (operation == ComparisonNumeric.GreaterThan)
             {
                 return "gt";
             }
-            else if (operation == NumericComparisonOperator.GreaterThanOrEquals)
+            else if (operation == ComparisonNumeric.GreaterThanOrEquals)
             {
                 return "ge";
             }
-            else if (operation == NumericComparisonOperator.LesserThan)
+            else if (operation == ComparisonNumeric.LesserThan)
             {
                 return "lt";
             }
-            else if (operation == NumericComparisonOperator.LesserThanOrEquals)
+            else if (operation == ComparisonNumeric.LesserThanOrEquals)
             {
                 return "le";
             }
-            else if (operation == NumericComparisonOperator.Equals)
+            else if (operation == ComparisonNumeric.Equals)
             {
                 return "eq";
             }
-            else if (operation == NumericComparisonOperator.NotEquals)
+            else if (operation == ComparisonNumeric.NotEquals)
             {
                 return "ne";
             }
@@ -34,5 +34,37 @@ namespace AzureDataLake.ODataQuery
             }
         }
 
+        public static string OpToString(ComparisonDateTime operation)
+        {
+            if (operation == ComparisonDateTime.GreaterThan)
+            {
+                return "gt";
+            }
+            else if (operation == ComparisonDateTime.GreaterThanOrEquals)
+            {
+                return "ge";
+            }
+            else if (operation == ComparisonDateTime.LesserThan)
+            {
+                return "lt";
+            }
+            else if (operation == ComparisonDateTime.LesserThanOrEquals)
+            {
+                return "le";
+            }
+            else if (operation == ComparisonDateTime.Equals)
+            {
+                return "eq";
+            }
+            else if (operation == ComparisonDateTime.NotEquals)
+            {
+                return "ne";
+            }
+            else
+            {
+                throw new System.ArgumentOutOfRangeException();
+            }
+        }
     }
+}
 }

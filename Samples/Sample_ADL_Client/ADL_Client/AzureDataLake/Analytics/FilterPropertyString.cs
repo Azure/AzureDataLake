@@ -44,26 +44,26 @@ namespace AzureDataLake.Analytics
                 var expr1 = new ODataQuery.ExprLogicalOr();
                 foreach (var item in this.OneOfList)
                 {
-                    var expr2 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(item), ODataQuery.StringCompareOperator.Equals );
+                    var expr2 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(item), ODataQuery.ComparisonString.Equals );
                     expr1.Items.Add(expr2);
                 }
                 return expr1;
             }
             if (this.contains !=null)
             {
-                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.contains), ODataQuery.StringCompareOperator.Contains);
+                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.contains), ODataQuery.ComparisonString.Contains);
                 return expr1;
             }
 
             if (this.endswith_suffix != null)
             {
-                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.endswith_suffix), ODataQuery.StringCompareOperator.EndsWith);
+                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.endswith_suffix), ODataQuery.ComparisonString.EndsWith);
                 return expr1;
             }
 
             if (this.beginsswith_prefix != null)
             {
-                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.beginsswith_prefix), ODataQuery.StringCompareOperator.StartsWith);
+                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.beginsswith_prefix), ODataQuery.ComparisonString.StartsWith);
                 return expr1;
             }
 

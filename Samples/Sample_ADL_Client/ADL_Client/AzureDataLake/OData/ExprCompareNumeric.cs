@@ -2,9 +2,9 @@ namespace AzureDataLake.ODataQuery
 {
     public class ExprCompareNumeric : ExprCompare
     {
-        public NumericComparisonOperator Operator;
+        public ComparisonNumeric Operator;
 
-        public ExprCompareNumeric(Expr left, Expr right, NumericComparisonOperator op) :
+        public ExprCompareNumeric(Expr left, Expr right, ComparisonNumeric op) :
             base(left,right)
         {
             this.Operator = op;
