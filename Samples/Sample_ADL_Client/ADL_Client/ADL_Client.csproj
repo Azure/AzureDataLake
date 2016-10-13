@@ -119,18 +119,19 @@
   <ItemGroup>
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
     <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
-    <Compile Include="AzureDataLake\OData\ExprDateLiteral.cs" />
-    <Compile Include="AzureDataLake\OData\ExprIntLiteral.cs" />
-    <Compile Include="AzureDataLake\OData\ExprStringLiteral.cs" />
-    <Compile Include="AzureDataLake\OData\NumericComparison.cs" />
+    <Compile Include="AzureDataLake\OData\ExprCompare.cs" />
+    <Compile Include="AzureDataLake\OData\ExprLiteralDateTime.cs" />
+    <Compile Include="AzureDataLake\OData\ExprLiteralInt.cs" />
+    <Compile Include="AzureDataLake\OData\ExprLiteralString.cs" />
+    <Compile Include="AzureDataLake\OData\ExprCompareNumeric.cs" />
     <Compile Include="AzureDataLake\OData\NumericComparisonOperator.cs" />
     <Compile Include="AzureDataLake\OData\Expr.cs" />
-    <Compile Include="AzureDataLake\OData\ExprAnd.cs" />
-    <Compile Include="AzureDataLake\OData\ExprDateTimeComparison.cs" />
-    <Compile Include="AzureDataLake\OData\ExprOr.cs" />
+    <Compile Include="AzureDataLake\OData\ExprLogicalAnd.cs" />
+    <Compile Include="AzureDataLake\OData\ExprCompareDateTime.cs" />
+    <Compile Include="AzureDataLake\OData\ExprLogicalOr.cs" />
     <Compile Include="AzureDataLake\OData\ExprParens.cs" />
     <Compile Include="AzureDataLake\OData\ExprRaw.cs" />
-    <Compile Include="AzureDataLake\OData\ExprStringComparison.cs" />
+    <Compile Include="AzureDataLake\OData\ExprCompareString.cs" />
     <Compile Include="AzureDataLake\OData\FilterUtils.cs" />
     <Compile Include="AzureDataLake\Analytics\JobListPage.cs" />
     <Compile Include="AzureDataLake\Analytics\JobOrderByDirection.cs" />

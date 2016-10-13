@@ -1,10 +1,10 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprDateLiteral : Expr
+    public class ExprLiteralDateTime : Expr
     {
         public System.DateTime DateTime;
 
-        public ExprDateLiteral(System.DateTime dateTime)
+        public ExprLiteralDateTime(System.DateTime dateTime)
         {
             this.DateTime = dateTime;
         }

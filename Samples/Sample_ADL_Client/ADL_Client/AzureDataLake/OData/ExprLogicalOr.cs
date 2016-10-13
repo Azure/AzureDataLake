@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprOr : Expr
+    public class ExprLogicalOr : Expr
     {
         public List<Expr> Items;
-        public ExprOr(params Expr[] items)
+        public ExprLogicalOr(params Expr[] items)
         {
             this.Items = new List<Expr>();
             this.Items.AddRange(items);

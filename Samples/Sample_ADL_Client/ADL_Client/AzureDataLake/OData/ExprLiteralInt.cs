@@ -1,10 +1,10 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprIntLiteral : Expr
+    public class ExprLiteralInt : Expr
     {
         public int Integer;
 
-        public ExprIntLiteral(int integer)
+        public ExprLiteralInt(int integer)
         {
             this.Integer = integer;
         }

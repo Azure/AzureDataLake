@@ -55,7 +55,7 @@ namespace AzureDataLake.Analytics
 
         public string CreateFilterString(AuthenticatedSession auth_session)
         {
-            var q = new AzureDataLake.ODataQuery.ExprAnd();
+            var q = new AzureDataLake.ODataQuery.ExprLogicalAnd();
             var col_name = new ExprColumn("name");
             var col_submitter = new ExprColumn("submitter");
             var col_submittedtime = new ExprColumn("submitTime");
@@ -65,72 +65,72 @@ namespace AzureDataLake.Analytics
 
             if (this.FilterDegreeOfParallelism.HasValue)
             {
-                var exprIntLiteral = new ExprIntLiteral(this.FilterDegreeOfParallelism.Value);
-                q.Items.Add(new AzureDataLake.ODataQuery.NumericComparison(col_dop, exprIntLiteral, ODataQuery.NumericComparisonOperator.Equals));
+                var exprIntLiteral = new ExprLiteralInt(this.FilterDegreeOfParallelism.Value);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareNumeric(col_dop, exprIntLiteral, ODataQuery.NumericComparisonOperator.Equals));
             }
 
             if (!string.IsNullOrEmpty(this.FilterSubmitter))
             {
-                var exprStringLiteral = new ExprStringLiteral(this.FilterSubmitter);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison( col_submitter, exprStringLiteral, StringCompareOperator.Equals));
+                var exprStringLiteral = new ExprLiteralString(this.FilterSubmitter);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareString( col_submitter, exprStringLiteral, StringCompareOperator.Equals));
             }
 
             if (!string.IsNullOrEmpty(this.FilterSubmitterContains))
             {
-                var exprStringLiteral = new ExprStringLiteral(this.FilterSubmitterContains);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison(col_submitter, exprStringLiteral, StringCompareOperator.Contains));
+                var exprStringLiteral = new ExprLiteralString(this.FilterSubmitterContains);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral, StringCompareOperator.Contains));
             }
 
             if (!string.IsNullOrEmpty(this.FilterNameContains))
             {
-                var exprStringLiteral = new ExprStringLiteral(this.FilterNameContains);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison(col_submitter, exprStringLiteral, StringCompareOperator.Contains));
+                var exprStringLiteral = new ExprLiteralString(this.FilterNameContains);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral, StringCompareOperator.Contains));
             }
 
             if (this.FilterSubmittedAfter.HasValue)
             {
-                var expr_dt = new AzureDataLake.ODataQuery.ExprDateLiteral(this.FilterSubmittedAfter.Value);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison(col_submittedtime, expr_dt, ODataQuery.NumericComparisonOperator.GreaterThanOrEquals));
+                var expr_dt = new AzureDataLake.ODataQuery.ExprLiteralDateTime(this.FilterSubmittedAfter.Value);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareDateTime(col_submittedtime, expr_dt, ODataQuery.NumericComparisonOperator.GreaterThanOrEquals));
             }
 
             if (!string.IsNullOrEmpty(this.FilterName))
             {
-                var exprStringLiteral = new ExprStringLiteral(this.FilterName);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison( col_name, exprStringLiteral, StringCompareOperator.Equals));
+                var exprStringLiteral = new ExprLiteralString(this.FilterName);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareString( col_name, exprStringLiteral, StringCompareOperator.Equals));
             }
 
             if (this.FilterSubmittedBefore.HasValue)
             {
-                var exprDateLiteral = new ExprDateLiteral(this.FilterSubmittedBefore.Value);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison(col_submittedtime, exprDateLiteral, NumericComparisonOperator.LesserThan));
+                var exprDateLiteral = new ExprLiteralDateTime(this.FilterSubmittedBefore.Value);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareDateTime(col_submittedtime, exprDateLiteral, NumericComparisonOperator.LesserThan));
             }
 
             if (this.FilterState != null && this.FilterState.Count > 0)
             {
-                var expr_and = new AzureDataLake.ODataQuery.ExprOr();
+                var expr_and = new AzureDataLake.ODataQuery.ExprLogicalOr();
                 q.Items.Add(expr_and);
                 foreach (var state in this.FilterState)
                 {
-                    var exprStringLiteral = new ExprStringLiteral(state.ToString());
-                    expr_and.Items.Add( new AzureDataLake.ODataQuery.ExprStringComparison(col_state, exprStringLiteral, StringCompareOperator.Equals));
+                    var exprStringLiteral = new ExprLiteralString(state.ToString());
+                    expr_and.Items.Add( new AzureDataLake.ODataQuery.ExprCompareString(col_state, exprStringLiteral, StringCompareOperator.Equals));
                 }
             }
             
             if (this.FilterResult != null && this.FilterResult.Count > 0)
             {
-                var expr_and = new AzureDataLake.ODataQuery.ExprOr();
+                var expr_and = new AzureDataLake.ODataQuery.ExprLogicalOr();
                 q.Items.Add(expr_and);
                 foreach (var result in this.FilterResult)
                 {
-                    expr_and.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison(col_result, new ExprStringLiteral(result.ToString()), StringCompareOperator.Equals));
+                    expr_and.Items.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_result, new ExprLiteralString(result.ToString()), StringCompareOperator.Equals));
                 }
 
             }
 
             if (this.FilterSubmitterToCurrentUser)
             {
-                var exprStringLiteral = new ExprStringLiteral(auth_session.Token.DisplayableId);
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprStringComparison(col_submitter, exprStringLiteral, StringCompareOperator.Equals));
+                var exprStringLiteral = new ExprLiteralString(auth_session.Token.DisplayableId);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral, StringCompareOperator.Equals));
             }
 
             var sb = new AzureDataLake.ODataQuery.ExBuilder();

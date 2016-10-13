@@ -1,15 +1,12 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprStringComparison : Expr
+    public class ExprCompareString : ExprCompare
     {
-        public Expr LeftValue;
-        public Expr RightValue;
         public StringCompareOperator Operator;
 
-        public ExprStringComparison(Expr leftvalue, Expr rightvalue, StringCompareOperator op)
+        public ExprCompareString(Expr left, Expr right, StringCompareOperator op) :
+            base(left, right)
         {
-            this.LeftValue = leftvalue;
-            this.RightValue = rightvalue;
             this.Operator = op;
         }
 

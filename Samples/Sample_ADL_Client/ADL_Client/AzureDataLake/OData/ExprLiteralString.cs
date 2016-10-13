@@ -1,10 +1,10 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprStringLiteral : Expr
+    public class ExprLiteralString : Expr
     {
         public string Content;
 
-        public ExprStringLiteral(string content)
+        public ExprLiteralString(string content)
         {
             this.Content = content;
         }
