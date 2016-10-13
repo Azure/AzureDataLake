@@ -138,7 +138,6 @@
     <Compile Include="AzureDataLake\OData\ExprParens.cs" />
     <Compile Include="AzureDataLake\OData\ExprRaw.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompareString.cs" />
-    <Compile Include="AzureDataLake\OData\FilterUtils.cs" />
     <Compile Include="AzureDataLake\Analytics\JobListPage.cs" />
     <Compile Include="AzureDataLake\Analytics\JobOrderByDirection.cs" />
     <Compile Include="AzureDataLake\Analytics\JobOrderByField.cs" />

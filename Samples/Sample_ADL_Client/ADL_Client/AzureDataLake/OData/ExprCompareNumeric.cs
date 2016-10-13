@@ -12,13 +12,45 @@ namespace AzureDataLake.ODataQuery
 
         public override void ToExprString(ExBuilder sb)
         {
-            var op = FilterUtils.OpToString(this.Operator);
+            var op = ExprCompareNumeric.OpToString(this.Operator);
 
             sb.Append(this.LeftValue);
             sb.Append(" ");
             sb.Append(op);
             sb.Append(" ");
             sb.Append(this.RightValue);
+        }
+
+        public static string OpToString(ComparisonNumeric operation)
+        {
+            if (operation == ComparisonNumeric.GreaterThan)
+            {
+                return "gt";
+            }
+            else if (operation == ComparisonNumeric.GreaterThanOrEquals)
+            {
+                return "ge";
+            }
+            else if (operation == ComparisonNumeric.LesserThan)
+            {
+                return "lt";
+            }
+            else if (operation == ComparisonNumeric.LesserThanOrEquals)
+            {
+                return "le";
+            }
+            else if (operation == ComparisonNumeric.Equals)
+            {
+                return "eq";
+            }
+            else if (operation == ComparisonNumeric.NotEquals)
+            {
+                return "ne";
+            }
+            else
+            {
+                throw new System.ArgumentOutOfRangeException();
+            }
         }
     }
 }
