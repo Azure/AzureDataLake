@@ -30,9 +30,10 @@ namespace ADL_Client_Demo
                 Console.WriteLine("------------------------------------------------------------");
                 Console.WriteLine("DOP={0}", job.DegreeOfParallelism);
                 Console.WriteLine("Result={0}", job.Result);
-                Console.WriteLine("Name={0}", job.Name);
                 Console.WriteLine("Result={0}", job.Result);
+                Console.WriteLine("SubmitTime={0}", job.SubmitTime);
                 Console.WriteLine("Submitter={0}", job.Submitter);
+                Console.WriteLine("Name={0}", job.Name);
             }
         }
 

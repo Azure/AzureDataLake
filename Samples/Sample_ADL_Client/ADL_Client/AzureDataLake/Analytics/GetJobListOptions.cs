@@ -83,7 +83,8 @@ namespace AzureDataLake.Analytics
 
             if (this.FilterSubmittedAfter.HasValue)
             {
-                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison(col_submittedtime, this.FilterSubmittedAfter.Value, ODataQuery.NumericCompareOps.GreaterThanOrEquals));
+                var expr_dt = new AzureDataLake.ODataQuery.ExprDateLiteral(this.FilterSubmittedAfter.Value);
+                q.Items.Add(new AzureDataLake.ODataQuery.ExprDateTimeComparison(col_submittedtime, expr_dt, ODataQuery.NumericCompareOps.GreaterThanOrEquals));
             }
 
             if (!string.IsNullOrEmpty(this.FilterName))

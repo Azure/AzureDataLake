@@ -3,9 +3,9 @@ namespace AzureDataLake.ODataQuery
     public class ExprDateTimeComparison : Expr
     {
         public ExprColumn Column;
-        public System.DateTime Value;
+        public ExprDateLiteral Value;
         public NumericCompareOps Op;
-        public ExprDateTimeComparison(ExprColumn col, System.DateTime val, NumericCompareOps op)
+        public ExprDateTimeComparison(ExprColumn col, ExprDateLiteral val, NumericCompareOps op)
         {
             this.Column = col;
             this.Value = val;
@@ -13,19 +13,13 @@ namespace AzureDataLake.ODataQuery
 
         public override void ToExprString(ExBuilder sb)
         {
-            string datestring = this.Value.ToString("O");
-
-            // due to issue: https://github.com/Azure/autorest/issues/975,
-            // date time offsets must be explicitly escaped before being passed to the filter
-
-            var escaped_datestring = System.Uri.EscapeDataString(datestring);
 
             var op = FilterUtils.OpToString(this.Op);
             sb.Append(this.Column);
             sb.Append(" ");
             sb.Append(op);
-            sb.Append("datetimeoffset");
-            sb.Append(escaped_datestring);
+            sb.Append(" ");
+            sb.Append(this.Value);
         }
     }
 
