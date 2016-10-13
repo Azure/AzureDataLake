@@ -2,60 +2,60 @@ namespace AzureDataLake.ODataQuery
 {
     public class ExprStringComparison : Expr
     {
-        public Expr Column;
-        public Expr Value;
-        public StringCompareOperator Op;
+        public Expr LeftValue;
+        public Expr RightValue;
+        public StringCompareOperator Operator;
 
-        public ExprStringComparison(Expr col, Expr val, StringCompareOperator op)
+        public ExprStringComparison(Expr leftvalue, Expr rightvalue, StringCompareOperator op)
         {
-            this.Column = col;
-            this.Value = val;
-            this.Op = op;
+            this.LeftValue = leftvalue;
+            this.RightValue = rightvalue;
+            this.Operator = op;
         }
 
         public override void ToExprString(ExBuilder sb)
         {
-            if (this.Op == StringCompareOperator.Equals)
+            if (this.Operator == StringCompareOperator.Equals)
             {
                 string op = "eq";
-                sb.Append(this.Column);
+                sb.Append(this.LeftValue);
                 sb.Append(" ");
                 sb.Append(op);
                 sb.Append(" ");
-                sb.Append(this.Value);
+                sb.Append(this.RightValue);
             }
-            else if (this.Op == StringCompareOperator.NotEquals)
+            else if (this.Operator == StringCompareOperator.NotEquals)
             {
                 string op = "ne";
-                sb.Append(this.Column);
+                sb.Append(this.LeftValue);
                 sb.Append(" ");
                 sb.Append(op);
                 sb.Append(" ");
-                sb.Append(this.Value);
+                sb.Append(this.RightValue);
             }
-            else if (this.Op == StringCompareOperator.Contains)
+            else if (this.Operator == StringCompareOperator.Contains)
             {
                 sb.Append("substringof(");
-                sb.Append(this.Value);
+                sb.Append(this.RightValue);
                 sb.Append(",");
-                sb.Append(this.Column);
+                sb.Append(this.LeftValue);
                 sb.Append(")");
             }
-            else if (this.Op == StringCompareOperator.StartsWith)
+            else if (this.Operator == StringCompareOperator.StartsWith)
             {
 
                 sb.Append("startswith(");
-                sb.Append(this.Column);
+                sb.Append(this.LeftValue);
                 sb.Append(",");
-                sb.Append(this.Value);
+                sb.Append(this.RightValue);
                 sb.Append(")");
             }
-            else if (this.Op == StringCompareOperator.EndsWith)
+            else if (this.Operator == StringCompareOperator.EndsWith)
             {
                 sb.Append("endswith(");
-                sb.Append(this.Column);
+                sb.Append(this.LeftValue);
                 sb.Append(",");
-                sb.Append(this.Value);
+                sb.Append(this.RightValue);
                 sb.Append(")");
             }
             else

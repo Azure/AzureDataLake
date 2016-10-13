@@ -2,25 +2,26 @@ namespace AzureDataLake.ODataQuery
 {
     public class NumericComparison : Expr
     {
-        public Expr Column;
-        public Expr Value;
-        public NumericComparisonOperator Op;
+        public Expr LeftValue;
+        public Expr RightValue;
+        public NumericComparisonOperator Operator;
 
-        public NumericComparison(Expr col, Expr val, NumericComparisonOperator op)
+        public NumericComparison(Expr left, Expr right, NumericComparisonOperator op)
         {
-            this.Column = col;
-            this.Value = val;
+            this.LeftValue = left;
+            this.RightValue = right;
+            this.Operator = op;
         }
 
         public override void ToExprString(ExBuilder sb)
         {
-            var op = FilterUtils.OpToString(this.Op);
+            var op = FilterUtils.OpToString(this.Operator);
 
-            sb.Append(this.Column);
+            sb.Append(this.LeftValue);
             sb.Append(" ");
             sb.Append(op);
             sb.Append(" ");
-            sb.Append(this.Value);
+            sb.Append(this.RightValue);
         }
     }
 }
