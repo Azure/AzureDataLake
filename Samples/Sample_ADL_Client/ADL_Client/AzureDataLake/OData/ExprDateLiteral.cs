@@ -14,10 +14,9 @@ namespace AzureDataLake.ODataQuery
             // due to issue: https://github.com/Azure/autorest/issues/975,
             // date time offsets must be explicitly escaped before being passed to the filter
 
-            sb.Append("datetimeoffset");
             string datestring = this.DateTime.ToString("O");
             var escaped_datestring = System.Uri.EscapeDataString(datestring);
-            sb.Append(escaped_datestring);
+            sb.Append(string.Format("datetimeoffset'{0}'", escaped_datestring));
         }
     }
 }

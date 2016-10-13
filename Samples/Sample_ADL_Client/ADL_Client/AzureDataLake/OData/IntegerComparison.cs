@@ -4,8 +4,8 @@ namespace AzureDataLake.ODataQuery
     {
         public ExprColumn Column;
         public ExprIntLiteral Value;
-        public NumericCompareOps Op;
-        public IntegerComparison(ExprColumn col, ExprIntLiteral val, NumericCompareOps op)
+        public NumericComparisonOperator Op;
+        public IntegerComparison(ExprColumn col, ExprIntLiteral val, NumericComparisonOperator op)
         {
             this.Column = col;
             this.Value = val;

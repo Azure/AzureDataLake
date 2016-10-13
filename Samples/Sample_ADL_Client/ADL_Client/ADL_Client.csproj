@@ -123,7 +123,7 @@
     <Compile Include="AzureDataLake\OData\ExprIntLiteral.cs" />
     <Compile Include="AzureDataLake\OData\ExprStringLiteral.cs" />
     <Compile Include="AzureDataLake\OData\IntegerComparison.cs" />
-    <Compile Include="AzureDataLake\OData\NumericCompareOps.cs" />
+    <Compile Include="AzureDataLake\OData\NumericComparisonOperator.cs" />
     <Compile Include="AzureDataLake\OData\Expr.cs" />
     <Compile Include="AzureDataLake\OData\ExprAnd.cs" />
     <Compile Include="AzureDataLake\OData\ExprDateTimeComparison.cs" />

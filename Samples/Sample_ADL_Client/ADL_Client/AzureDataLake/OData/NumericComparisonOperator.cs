@@ -1,6 +1,6 @@
 namespace AzureDataLake.ODataQuery
 {
-    public enum NumericCompareOps
+    public enum NumericComparisonOperator
     {
         Equals,
         NotEquals,

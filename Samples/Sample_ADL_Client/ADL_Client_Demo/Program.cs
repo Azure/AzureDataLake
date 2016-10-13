@@ -17,12 +17,17 @@ namespace ADL_Client_Demo
 
             var opts =new AzureDataLake.Analytics.GetJobListOptions();
             opts.Top = 20;
+
+            opts.OrderByDirection = JobOrderByDirection.Descending;
+            opts.OrderByField = JobOrderByField.SubmitTime;
+
             //opts.FilterSubmitter = "srevanka@microsoft.com";
             //opts.FilterSubmitterContains = "saveenr";
-            opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
-            opts.FilterState = new List<JobState> { JobState.Ended};
+            //opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
+            //opts.FilterState = new List<JobState> { JobState.Ended};
 
-            opts.FilterDegreeOfParallelism = 1;
+            opts.FilterSubmittedBefore = new System.DateTime(2016,10,1);
+            //opts.FilterDegreeOfParallelism = 1;
             var jobs = client.GetJobListPaged(opts);
 
             foreach (var job in jobs)

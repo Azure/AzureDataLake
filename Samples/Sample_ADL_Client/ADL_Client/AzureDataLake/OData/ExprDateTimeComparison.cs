@@ -4,17 +4,18 @@ namespace AzureDataLake.ODataQuery
     {
         public ExprColumn Column;
         public ExprDateLiteral Value;
-        public NumericCompareOps Op;
-        public ExprDateTimeComparison(ExprColumn col, ExprDateLiteral val, NumericCompareOps op)
+        public NumericComparisonOperator Operator;
+        public ExprDateTimeComparison(ExprColumn col, ExprDateLiteral val, NumericComparisonOperator op)
         {
             this.Column = col;
             this.Value = val;
+            this.Operator = op;
         }
 
         public override void ToExprString(ExBuilder sb)
         {
 
-            var op = FilterUtils.OpToString(this.Op);
+            var op = FilterUtils.OpToString(this.Operator);
             sb.Append(this.Column);
             sb.Append(" ");
             sb.Append(op);
