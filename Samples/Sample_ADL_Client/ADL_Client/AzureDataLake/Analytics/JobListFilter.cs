@@ -1,4 +1,6 @@
 using System;
+using AzureDataLake.Authentication;
+using AzureDataLake.ODataQuery;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 
 namespace AzureDataLake.Analytics
@@ -30,57 +32,9 @@ namespace AzureDataLake.Analytics
 
         }
 
-        public string CreateFilterString(Authentication.AuthenticatedSession auth_session)
+        public string ToFilterString(Authentication.AuthenticatedSession auth_session)
         {
-            var expr_and = new AzureDataLake.ODataQuery.ExprLogicalAnd();
-            var col_submitter = new ODataQuery.ExprField("submitter");
-
-            if (this.DegreeOfParallelism != null)
-            {
-                var expr = this.DegreeOfParallelism.ToExpr();
-                expr_and.Add(expr);
-            }
-
-
-            if (this.Submitter != null)
-            {
-                var expr = this.Submitter.ToExpr();
-                expr_and.Add(expr);
-            }
-
-            if (this.Priority != null)
-            {
-                var expr = this.Priority.ToExpr();
-                expr_and.Add(expr);
-            }
-
-            if (this.Name != null)
-            {
-                var expr = this.Name.ToExpr();
-                expr_and.Add(expr);
-            }
-
-            if (this.SubmitTime != null)
-            {
-                var expr = this.SubmitTime.ToExpr();
-                expr_and.Add(expr);
-            }
-
-            if (this.State != null)
-            {
-                expr_and.Add(this.State.ToExpr());
-            }
-
-            if (this.Result != null)
-            {
-                expr_and.Add(this.Result.ToExpr());
-            }
-
-            if (this.SubmitterToCurrentUser)
-            {
-                var exprStringLiteral = new ODataQuery.ExprLiteralString(auth_session.Token.DisplayableId);
-                expr_and.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral, ODataQuery.ComparisonString.Equals));
-            }
+            var expr_and = ToExpression(auth_session);
 
             var sb = new AzureDataLake.ODataQuery.ExBuilder();
             sb.Append(expr_and);
@@ -89,5 +43,59 @@ namespace AzureDataLake.Analytics
             return fs;
         }
 
+        private Expr ToExpression(AuthenticatedSession auth_session)
+        {
+            var expr_and = new AzureDataLake.ODataQuery.ExprLogicalAnd();
+            var col_submitter = new ODataQuery.ExprField("submitter");
+
+            if (this.DegreeOfParallelism != null)
+            {
+                var expr = this.DegreeOfParallelism.ToExpression();
+                expr_and.Add(expr);
+            }
+
+
+            if (this.Submitter != null)
+            {
+                var expr = this.Submitter.ToExpression();
+                expr_and.Add(expr);
+            }
+
+            if (this.Priority != null)
+            {
+                var expr = this.Priority.ToExpression();
+                expr_and.Add(expr);
+            }
+
+            if (this.Name != null)
+            {
+                var expr = this.Name.ToExpression();
+                expr_and.Add(expr);
+            }
+
+            if (this.SubmitTime != null)
+            {
+                var expr = this.SubmitTime.ToExpression();
+                expr_and.Add(expr);
+            }
+
+            if (this.State != null)
+            {
+                expr_and.Add(this.State.ToExpression());
+            }
+
+            if (this.Result != null)
+            {
+                expr_and.Add(this.Result.ToExpression());
+            }
+
+            if (this.SubmitterToCurrentUser)
+            {
+                var exprStringLiteral = new ODataQuery.ExprLiteralString(auth_session.Token.DisplayableId);
+                expr_and.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral,
+                    ODataQuery.ComparisonString.Equals));
+            }
+            return expr_and;
+        }
     }
 }

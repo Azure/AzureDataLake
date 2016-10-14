@@ -22,7 +22,7 @@ namespace AzureDataLake.ODataQuery
             this.after_value = value;
         }
 
-        public override ODataQuery.Expr ToExpr()
+        public override ODataQuery.Expr ToExpression()
         {
             if (!(this.before_value.HasValue || this.after_value.HasValue))
             {

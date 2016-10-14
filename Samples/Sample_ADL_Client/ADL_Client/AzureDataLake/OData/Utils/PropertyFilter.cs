@@ -10,6 +10,6 @@ namespace AzureDataLake.ODataQuery
             this.expr_field = new ExprField(field_name);
         }
 
-        public abstract ODataQuery.Expr ToExpr();
+        public abstract ODataQuery.Expr ToExpression();
     }
 }
