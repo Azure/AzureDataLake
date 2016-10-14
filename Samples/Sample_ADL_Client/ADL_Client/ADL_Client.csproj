@@ -121,6 +121,7 @@
     <Compile Include="AzureDataLake\Analytics\FilterPropertyInteger.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyEnum.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyString.cs" />
+    <Compile Include="AzureDataLake\Analytics\JobListFilter.cs" />
     <Compile Include="AzureDataLake\OData\ComparisonDateTime.cs" />
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
     <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
