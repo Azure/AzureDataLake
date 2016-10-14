@@ -8,6 +8,7 @@ namespace AzureDataLake.ODataQuery
         private string begins_with_text;
         private string ends_with_text;
         private string contains_text;
+        public bool IgnoreCase;
 
         public PropertyFilterString(string field_name) :
             base(field_name)
@@ -43,6 +44,7 @@ namespace AzureDataLake.ODataQuery
                 foreach (var item in this.one_of_text)
                 {
                     var expr_compare = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(item), ODataQuery.ComparisonString.Equals );
+                    expr_compare.IgnoreCase = this.IgnoreCase;
                     expr_or.Add(expr_compare);
                 }
                 return expr_or;
@@ -50,18 +52,21 @@ namespace AzureDataLake.ODataQuery
             if (this.contains_text !=null)
             {
                 var expr_compare = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(this.contains_text), ODataQuery.ComparisonString.Contains);
+                expr_compare.IgnoreCase = this.IgnoreCase;
                 return expr_compare;
             }
 
             if (this.ends_with_text != null)
             {
                 var expr_compare = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(this.ends_with_text), ODataQuery.ComparisonString.EndsWith);
+                expr_compare.IgnoreCase = this.IgnoreCase;
                 return expr_compare;
             }
 
             if (this.begins_with_text != null)
             {
                 var expr_compare = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(this.begins_with_text), ODataQuery.ComparisonString.StartsWith);
+                expr_compare.IgnoreCase = this.IgnoreCase;
                 return expr_compare;
             }
 

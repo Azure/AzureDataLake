@@ -44,6 +44,7 @@ namespace AzureDataLake.Analytics
             odata_query.OrderBy = options.CreateOrderByString();
             odata_query.Filter = options.Filter.ToFilterString(this.AuthenticatedSession);
 
+            System.Console.WriteLine("FILTER: {0}", odata_query.Filter);
             // Other parameters
             string list_select = null;
             bool? list_count = null;

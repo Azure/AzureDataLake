@@ -22,13 +22,14 @@ namespace ADL_Client_Demo
             opts.OrderByField = JobOrderByField.SubmitTime;
 
             //opts.FilterSubmitTime.Before(new System.DateTime(2016, 9, 17));
+            //opts.Filter.Priority.Exactly(1);
+            //opts.Filter.Result  = new List<JobResult> { JobResult.Cancelled};
+            //opts.Filter.State = new List<JobState> { JobState.Ended};
+            //opts.Filter.SubmitterToCurrentUser = true;
+            //opts.Filter.State.OneOf( JobState.Running, JobState.Accepted, JobState.Compiling);
+            //opts.Filter.Submitter.OneOf("SAVEENR@microSOFT.COM");
+            //opts.Filter.Submitter.IgnoreCase = true;
 
-            //opts.FilterPriority.Exactly(1);
-            //opts.FilterResult  = new List<JobResult> { JobResult.Cancelled};
-            //opts.FilterState = new List<JobState> { JobState.Ended};
-            //opts.FilterSubmitterToCurrentUser = true;
-
-            opts.Filter.State.OneOf( JobState.Running, JobState.Accepted, JobState.Compiling);
             var jobs = client.GetJobListPaged(opts);
 
 
