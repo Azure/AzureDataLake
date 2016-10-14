@@ -1,9 +1,9 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprParens : Expr
+    public class ExprGroup : Expr
     {
         public Expr Item;
-        public ExprParens( Expr item)
+        public ExprGroup( Expr item)
         {
             this.Item = item;
         }

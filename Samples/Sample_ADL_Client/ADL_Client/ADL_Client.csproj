@@ -135,7 +135,7 @@
     <Compile Include="AzureDataLake\OData\ExprLogicalAnd.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompareDateTime.cs" />
     <Compile Include="AzureDataLake\OData\ExprLogicalOr.cs" />
-    <Compile Include="AzureDataLake\OData\ExprParens.cs" />
+    <Compile Include="AzureDataLake\OData\ExprGroup.cs" />
     <Compile Include="AzureDataLake\OData\ExprRaw.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompareString.cs" />
     <Compile Include="AzureDataLake\Analytics\JobListPage.cs" />
