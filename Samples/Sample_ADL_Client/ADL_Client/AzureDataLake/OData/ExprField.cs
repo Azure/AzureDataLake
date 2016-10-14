@@ -1,10 +1,10 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprColumn : Expr
+    public class ExprField : Expr
     {
         public string Name;
 
-        public ExprColumn(string name)
+        public ExprField(string name)
         {
             this.Name = name;
         }

@@ -2,18 +2,16 @@ using AzureDataLake.ODataQuery;
 
 namespace AzureDataLake.Analytics
 {
-    public class FilterPropertyInteger
+    public class FilterPropertyInteger : FilterProperty
     {
-        private ODataQuery.ExprColumn expr_col;
         private int? value_before;
         private int? value_after;
         private int? value_exactly;
 
-        public FilterPropertyInteger(string colname)
+        public FilterPropertyInteger(string colname) :
+            base(colname)
         {
-            this.expr_col = new ExprColumn(colname);
         }
-
         public void Before(int value)
         {
             this.value_before = value;
@@ -40,19 +38,19 @@ namespace AzureDataLake.Analytics
 
             if (this.value_before.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.value_before.Value), ComparisonNumeric.LesserThan);
+                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.value_before.Value), ComparisonNumeric.LesserThan);
                 expr1.Add(expr2);
             }
 
             if (this.value_after.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.value_after.Value), ComparisonNumeric.GreaterThan);
+                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.value_after.Value), ComparisonNumeric.GreaterThan);
                 expr1.Add(expr2);
             }
 
             if (this.value_exactly.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_col, new ODataQuery.ExprLiteralInt(this.value_exactly.Value), ComparisonNumeric.Equals);
+                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.value_exactly.Value), ComparisonNumeric.Equals);
                 expr1.Add(expr2);
             }
 

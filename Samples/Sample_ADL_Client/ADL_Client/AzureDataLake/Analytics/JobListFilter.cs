@@ -33,7 +33,7 @@ namespace AzureDataLake.Analytics
         public string CreateFilterString(Authentication.AuthenticatedSession auth_session)
         {
             var q = new AzureDataLake.ODataQuery.ExprLogicalAnd();
-            var col_submitter = new ODataQuery.ExprColumn("submitter");
+            var col_submitter = new ODataQuery.ExprField("submitter");
 
             if (this.DegreeOfParallelism != null)
             {

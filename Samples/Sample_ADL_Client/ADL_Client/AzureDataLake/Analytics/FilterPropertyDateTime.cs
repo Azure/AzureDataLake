@@ -2,15 +2,14 @@ using AzureDataLake.ODataQuery;
 
 namespace AzureDataLake.Analytics
 {
-    public class FilterPropertyDateTime
+    public class FilterPropertyDateTime : FilterProperty
     {
-        private ODataQuery.ExprColumn expr_col;
         private System.DateTime? value_before;
         private System.DateTime? value_after;
 
-        public FilterPropertyDateTime(string colname)
+        public FilterPropertyDateTime(string colname) :
+            base(colname)
         {
-            this.expr_col = new ExprColumn(colname);
         }
 
         public void Before(System.DateTime value)
@@ -34,13 +33,13 @@ namespace AzureDataLake.Analytics
 
             if (this.value_before.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.value_before.Value), ComparisonDateTime.LesserThan);
+                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_field, new ODataQuery.ExprLiteralDateTime(this.value_before.Value), ComparisonDateTime.LesserThan);
                 expr1.Add(expr2);
             }
 
             if (this.value_after.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_col, new ODataQuery.ExprLiteralDateTime(this.value_after.Value), ComparisonDateTime.GreaterThan);
+                var expr2 = new ODataQuery.ExprCompareDateTime(this.expr_field, new ODataQuery.ExprLiteralDateTime(this.value_after.Value), ComparisonDateTime.GreaterThan);
                 expr1.Add(expr2);
             }
 

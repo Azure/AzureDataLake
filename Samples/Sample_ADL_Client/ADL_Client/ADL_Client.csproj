@@ -117,6 +117,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureDataLake\Analytics\FilterProperty.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyDateTime.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyInteger.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyEnum.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="AzureDataLake\Analytics\JobListFilter.cs" />
     <Compile Include="AzureDataLake\OData\ComparisonDateTime.cs" />
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
-    <Compile Include="AzureDataLake\OData\ExprColumn.cs" />
+    <Compile Include="AzureDataLake\OData\ExprField.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompare.cs" />
     <Compile Include="AzureDataLake\OData\ExprList.cs" />
     <Compile Include="AzureDataLake\OData\ExprLiteralDateTime.cs" />

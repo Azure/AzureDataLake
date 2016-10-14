@@ -1,19 +1,17 @@
 using System.Collections.Generic;
-using AzureDataLake.ODataQuery;
 
 namespace AzureDataLake.Analytics
 {
-    public class FilterPropertyString
+    public class FilterPropertyString : FilterProperty
     {
-        private ODataQuery.ExprColumn expr_col;
         private List<string> OneOfList;
         private string beginsswith_prefix;
         private string endswith_suffix;
         private string contains;
 
-        public FilterPropertyString(string colname)
+        public FilterPropertyString(string colname) :
+            base(colname)
         {
-            this.expr_col = new ExprColumn(colname);
         }
 
         public void OneOf(params string[] items)
@@ -44,26 +42,26 @@ namespace AzureDataLake.Analytics
                 var expr1 = new ODataQuery.ExprLogicalOr();
                 foreach (var item in this.OneOfList)
                 {
-                    var expr2 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(item), ODataQuery.ComparisonString.Equals );
+                    var expr2 = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(item), ODataQuery.ComparisonString.Equals );
                     expr1.Add(expr2);
                 }
                 return expr1;
             }
             if (this.contains !=null)
             {
-                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.contains), ODataQuery.ComparisonString.Contains);
+                var expr1 = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(this.contains), ODataQuery.ComparisonString.Contains);
                 return expr1;
             }
 
             if (this.endswith_suffix != null)
             {
-                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.endswith_suffix), ODataQuery.ComparisonString.EndsWith);
+                var expr1 = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(this.endswith_suffix), ODataQuery.ComparisonString.EndsWith);
                 return expr1;
             }
 
             if (this.beginsswith_prefix != null)
             {
-                var expr1 = new ODataQuery.ExprCompareString(this.expr_col, new ODataQuery.ExprLiteralString(this.beginsswith_prefix), ODataQuery.ComparisonString.StartsWith);
+                var expr1 = new ODataQuery.ExprCompareString(this.expr_field, new ODataQuery.ExprLiteralString(this.beginsswith_prefix), ODataQuery.ComparisonString.StartsWith);
                 return expr1;
             }
 
