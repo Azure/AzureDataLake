@@ -3,35 +3,35 @@ using AzureDataLake.ODataQuery;
 
 namespace AzureDataLake.Analytics
 {
-    public class FilterPropertyEnum<T> : FilterProperty where T : struct, System.IComparable, System.IConvertible, System.IFormattable 
+    public class PropertyFilterEnum<T> : PropertyFilter where T : struct, System.IComparable, System.IConvertible, System.IFormattable 
     {
-        private List<T> OneOfList;
+        private List<T> one_of_value;
 
-        public FilterPropertyEnum(string colname) :
-            base(colname)
+        public PropertyFilterEnum(string field_name) :
+            base(field_name)
         {
         }
 
         public void OneOf(params T[] items)
         {
-            this.OneOfList = new List<T>(items.Length);
-            this.OneOfList.AddRange(items);    
+            this.one_of_value = new List<T>(items.Length);
+            this.one_of_value.AddRange(items);    
         }
 
         public ODataQuery.Expr ToExpr()
         {
-            if (this.OneOfList != null && this.OneOfList.Count > 0)
+            if (this.one_of_value != null && this.one_of_value.Count > 0)
             {
-                var expr1 = new ODataQuery.ExprLogicalOr();
-                foreach (var item in this.OneOfList)
+                var expr_or = new ODataQuery.ExprLogicalOr();
+                foreach (var item in this.one_of_value)
                 {
                     var t_value = (T) item;
                     string t_string_value = t_value.ToString();
                     var expr_t = new ODataQuery.ExprLiteralString(t_string_value);
                     var expr_compare = new ODataQuery.ExprCompareString(this.expr_field, expr_t, ODataQuery.ComparisonString.Equals );
-                    expr1.Add(expr_compare);
+                    expr_or.Add(expr_compare);
                 }
-                return expr1;
+                return expr_or;
             }
             return null;
         }

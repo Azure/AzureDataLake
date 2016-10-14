@@ -6,27 +6,27 @@ namespace AzureDataLake.Analytics
     public class JobListFilter
     {
         public bool SubmitterToCurrentUser;
-        public FilterPropertyString Name;
-        public FilterPropertyString Submitter;
-        public FilterPropertyDateTime SubmitTime;
-        public FilterPropertyDateTime StartTime;
-        public FilterPropertyDateTime EndTime;
-        public FilterPropertyInteger DegreeOfParallelism;
-        public FilterPropertyInteger Priority;
-        public FilterPropertyEnum<JobState> State;
-        public FilterPropertyEnum<JobResult> Result;
+        public PropertyFilterString Name;
+        public PropertyFilterString Submitter;
+        public PropertyFilterDateTime SubmitTime;
+        public PropertyFilterDateTime StartTime;
+        public PropertyFilterDateTime EndTime;
+        public PropertyFilterInteger DegreeOfParallelism;
+        public PropertyFilterInteger Priority;
+        public PropertyFilterEnum<JobState> State;
+        public PropertyFilterEnum<JobResult> Result;
 
         public JobListFilter()
         {
-            this.Submitter = new FilterPropertyString("submitter");
-            this.Name = new FilterPropertyString("name");
-            this.SubmitTime = new FilterPropertyDateTime("submitTime");
-            this.StartTime = new FilterPropertyDateTime("startTime");
-            this.EndTime = new FilterPropertyDateTime("endTime");
-            this.DegreeOfParallelism = new FilterPropertyInteger("degreeOfParallelism");
-            this.Priority = new FilterPropertyInteger("priority");
-            this.State = new FilterPropertyEnum<JobState>("state");
-            this.Result = new FilterPropertyEnum<JobResult>("result");
+            this.Submitter = new PropertyFilterString("submitter");
+            this.Name = new PropertyFilterString("name");
+            this.SubmitTime = new PropertyFilterDateTime("submitTime");
+            this.StartTime = new PropertyFilterDateTime("startTime");
+            this.EndTime = new PropertyFilterDateTime("endTime");
+            this.DegreeOfParallelism = new PropertyFilterInteger("degreeOfParallelism");
+            this.Priority = new PropertyFilterInteger("priority");
+            this.State = new PropertyFilterEnum<JobState>("state");
+            this.Result = new PropertyFilterEnum<JobResult>("result");
 
         }
 

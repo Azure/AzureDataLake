@@ -2,11 +2,11 @@ using AzureDataLake.ODataQuery;
 
 namespace AzureDataLake.Analytics
 {
-    public abstract class FilterProperty
+    public abstract class PropertyFilter
     {
         protected ODataQuery.ExprField expr_field;
 
-        public FilterProperty(string field_name)
+        public PropertyFilter(string field_name)
         {
             this.expr_field = new ExprField(field_name);
         }
