@@ -2,16 +2,16 @@ namespace AzureDataLake.ODataQuery
 {
     public class ExprGroup : Expr
     {
-        public Expr Item;
-        public ExprGroup( Expr item)
+        public Expr Expression;
+        public ExprGroup( Expr expression)
         {
-            this.Item = item;
+            this.Expression = expression;
         }
 
         public override void ToExprString(ExBuilder sb)
         {
             sb.Append("(");
-            sb.Append(this.Item);
+            sb.Append(this.Expression);
             sb.Append(")");
         }
     }
