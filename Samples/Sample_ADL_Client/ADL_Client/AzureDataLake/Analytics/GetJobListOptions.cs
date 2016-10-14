@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AzureDataLake.Authentication;
 using AzureDataLake.ODataQuery;
+using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using ADL= Microsoft.Azure.Management.DataLake;
 namespace AzureDataLake.Analytics
 {
@@ -21,9 +22,8 @@ namespace AzureDataLake.Analytics
         public FilterPropertyDateTime FilterEndTime;
         public FilterPropertyInteger FilterDegreeOfParallelism;
         public FilterPropertyInteger FilterPriority;
-
-        public List<ADL.Analytics.Models.JobState> FilterState;
-        public List<ADL.Analytics.Models.JobResult> FilterResult;
+        public FilterPropertyEnum<ADL.Analytics.Models.JobState> FilterState;
+        public FilterPropertyEnum<ADL.Analytics.Models.JobResult> FilterResult;
 
         public GetJobListOptions()
         {
@@ -34,6 +34,8 @@ namespace AzureDataLake.Analytics
             this.FilterEndTime = new FilterPropertyDateTime("endTime");
             this.FilterDegreeOfParallelism = new FilterPropertyInteger("degreeOfParallelism");
             this.FilterPriority = new FilterPropertyInteger("priority");
+            this.FilterState = new FilterPropertyEnum<JobState>("state");
+            this.FilterResult = new FilterPropertyEnum<JobResult>("result");
         }
 
         private static string get_order_field_name(JobOrderByField field)
@@ -65,76 +67,46 @@ namespace AzureDataLake.Analytics
         {
             var q = new AzureDataLake.ODataQuery.ExprLogicalAnd();
             var col_submitter = new ExprColumn("submitter");
-            var col_state = new ExprColumn("state");
-            var col_result = new ExprColumn("result");
 
             if (this.FilterDegreeOfParallelism!= null)
             {
                 var expr = this.FilterDegreeOfParallelism.ToExpr();
-                if (expr != null)
-                {
-                    q.Add(expr);
-                }
+                q.Add(expr);
             }
 
 
             if (this.FilterSubmitter != null)
             {
                 var expr = this.FilterSubmitter.ToExpr();
-                if (expr != null)
-                {
-                    q.Add(expr);
-                }
+                q.Add(expr);
             }
 
             if (this.FilterPriority != null)
             {
                 var expr = this.FilterPriority.ToExpr();
-                if (expr != null)
-                {
-                    q.Add(expr);
-                }
+                q.Add(expr);
             }
 
             if (this.FilterName != null)
             {
                 var expr = this.FilterName.ToExpr();
-                if (expr != null)
-                {
-                    q.Add(expr);
-                }
+                q.Add(expr);
             }
 
             if (this.FilterSubmitTime != null)
             {
                 var expr = this.FilterSubmitTime.ToExpr();
-                if (expr != null)
-                {
-                    q.Add(expr);
-                }
+                q.Add(expr);
             }
 
-
-            if (this.FilterState != null && this.FilterState.Count > 0)
+            if (this.FilterState != null)
             {
-                var expr_and = new AzureDataLake.ODataQuery.ExprLogicalOr();
-                q.Add(expr_and);
-                foreach (var state in this.FilterState)
-                {
-                    var exprStringLiteral = new ExprLiteralString(state.ToString());
-                    expr_and.Add( new AzureDataLake.ODataQuery.ExprCompareString(col_state, exprStringLiteral, ComparisonString.Equals));
-                }
+                q.Add(this.FilterState.ToExpr());
             }
-            
-            if (this.FilterResult != null && this.FilterResult.Count > 0)
-            {
-                var expr_and = new AzureDataLake.ODataQuery.ExprLogicalOr();
-                q.Add(expr_and);
-                foreach (var result in this.FilterResult)
-                {
-                    expr_and.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_result, new ExprLiteralString(result.ToString()), ComparisonString.Equals));
-                }
 
+            if (this.FilterResult != null)
+            {
+                q.Add(this.FilterResult.ToExpr());
             }
 
             if (this.FilterSubmitterToCurrentUser)

@@ -94,7 +94,7 @@ namespace ADL_Client_Tests.Analytics
             this.Initialize();
             var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
             getjobs_options.Top = 30;
-            getjobs_options.FilterState = new List<JobState> {JobState.Ended};
+            getjobs_options.FilterState.OneOf(JobState.Ended);
 
             var jobs = this.adla_job_client.GetJobListPaged(getjobs_options).ToList();
             if (jobs.Count > 0)
@@ -112,7 +112,7 @@ namespace ADL_Client_Tests.Analytics
             this.Initialize();
             var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
             getjobs_options.Top = 30;
-            getjobs_options.FilterState = new List<JobState> { JobState.Running };
+            getjobs_options.FilterState.OneOf(JobState.Running);
 
             var jobs = this.adla_job_client.GetJobListPaged(getjobs_options).ToList();
             if (jobs.Count > 0)
@@ -130,8 +130,6 @@ namespace ADL_Client_Tests.Analytics
             this.Initialize();
             var getjobs_options = new AzureDataLake.Analytics.GetJobListOptions();
             getjobs_options.Top = 30;
-            getjobs_options.FilterState = new List<JobState> { JobState.Ended };
-            getjobs_options.FilterResult= new List<JobResult> { JobResult.Failed };
 
             var jobs = this.adla_job_client.GetJobListPaged(getjobs_options).ToList();
             if (jobs.Count > 0)

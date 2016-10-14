@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="AzureDataLake\Analytics\FilterPropertyDateTime.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyInteger.cs" />
+    <Compile Include="AzureDataLake\Analytics\FilterPropertyEnum.cs" />
     <Compile Include="AzureDataLake\Analytics\FilterPropertyString.cs" />
     <Compile Include="AzureDataLake\OData\ComparisonDateTime.cs" />
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
