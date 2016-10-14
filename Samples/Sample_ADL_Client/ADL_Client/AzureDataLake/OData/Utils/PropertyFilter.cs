@@ -1,6 +1,5 @@
-using AzureDataLake.ODataQuery;
 
-namespace AzureDataLake.Analytics
+namespace AzureDataLake.ODataQuery
 {
     public abstract class PropertyFilter
     {

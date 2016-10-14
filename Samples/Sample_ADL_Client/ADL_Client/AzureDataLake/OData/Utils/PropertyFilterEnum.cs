@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using AzureDataLake.ODataQuery;
 
-namespace AzureDataLake.Analytics
+namespace AzureDataLake.ODataQuery
 {
     public class PropertyFilterEnum<T> : PropertyFilter where T : struct, System.IComparable, System.IConvertible, System.IFormattable 
     {

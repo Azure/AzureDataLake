@@ -117,11 +117,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureDataLake\Analytics\PropertyFilter.cs" />
-    <Compile Include="AzureDataLake\Analytics\PropertyFilterDateTime.cs" />
-    <Compile Include="AzureDataLake\Analytics\PropertyFilterInteger.cs" />
-    <Compile Include="AzureDataLake\Analytics\PropertyFilterEnum.cs" />
-    <Compile Include="AzureDataLake\Analytics\PropertyFilterString.cs" />
+    <Compile Include="AzureDataLake\OData\Utils\PropertyFilter.cs" />
+    <Compile Include="AzureDataLake\OData\Utils\PropertyFilterDateTime.cs" />
+    <Compile Include="AzureDataLake\OData\Utils\PropertyFilterInteger.cs" />
+    <Compile Include="AzureDataLake\OData\Utils\PropertyFilterEnum.cs" />
+    <Compile Include="AzureDataLake\OData\Utils\PropertyFilterString.cs" />
     <Compile Include="AzureDataLake\Analytics\JobListFilter.cs" />
     <Compile Include="AzureDataLake\OData\ComparisonDateTime.cs" />
     <Compile Include="AzureDataLake\OData\ExBuilder.cs" />

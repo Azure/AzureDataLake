@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AzureDataLake.Analytics
+namespace AzureDataLake.ODataQuery
 {
     public class PropertyFilterString : PropertyFilter
     {
