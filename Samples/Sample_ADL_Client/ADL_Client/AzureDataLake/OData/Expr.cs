@@ -17,5 +17,15 @@ namespace AzureDataLake.ODataQuery
             sb.Append(")");
         }
 
+        public void WriteFunction2(ExBuilder sb, string name, Expr p0, Expr p1)
+        {
+
+            sb.Append(name);
+            sb.Append("(");
+            sb.Append(p0);
+            sb.Append(",");
+            sb.Append(p1);
+            sb.Append(")");
+        }
     }
 }

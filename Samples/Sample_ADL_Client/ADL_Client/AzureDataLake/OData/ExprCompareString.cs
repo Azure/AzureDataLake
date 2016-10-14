@@ -24,28 +24,15 @@ namespace AzureDataLake.ODataQuery
             }
             else if (this.Operator == ComparisonString.Contains)
             {
-                sb.Append("substringof(");
-                sb.Append(this.RightValue);
-                sb.Append(",");
-                sb.Append(this.LeftValue);
-                sb.Append(")");
+                this.WriteFunction2(sb,"substringof", this.RightValue,this.LeftValue);
             }
             else if (this.Operator == ComparisonString.StartsWith)
             {
-
-                sb.Append("startswith(");
-                sb.Append(this.LeftValue);
-                sb.Append(",");
-                sb.Append(this.RightValue);
-                sb.Append(")");
+                this.WriteFunction2(sb,"substringof", this.LeftValue,this.RightValue);
             }
             else if (this.Operator == ComparisonString.EndsWith)
             {
-                sb.Append("endswith(");
-                sb.Append(this.LeftValue);
-                sb.Append(",");
-                sb.Append(this.RightValue);
-                sb.Append(")");
+                this.WriteFunction2(sb, "endswith", this.LeftValue, this.RightValue);
             }
             else
             {
