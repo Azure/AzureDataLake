@@ -16,6 +16,18 @@ namespace AzureDataLake.ODataQuery
             sb.Append(right);
             sb.Append(")");
         }
+        public void WriteFunction3(ExBuilder sb, string name, Expr p0, Expr p1, Expr p2)
+        {
+
+            sb.Append(name);
+            sb.Append("(");
+            sb.Append(p0);
+            sb.Append(",");
+            sb.Append(p1);
+            sb.Append(",");
+            sb.Append(p2);
+            sb.Append(")");
+        }
 
         public void WriteFunction2(ExBuilder sb, string name, Expr p0, Expr p1)
         {
@@ -25,6 +37,15 @@ namespace AzureDataLake.ODataQuery
             sb.Append(p0);
             sb.Append(",");
             sb.Append(p1);
+            sb.Append(")");
+        }
+
+        public void WriteFunction1(ExBuilder sb, string name, Expr p0)
+        {
+
+            sb.Append(name);
+            sb.Append("(");
+            sb.Append(p0);
             sb.Append(")");
         }
     }

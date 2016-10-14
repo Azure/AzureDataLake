@@ -117,6 +117,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzureDataLake\OData\ExprCeiling.cs" />
+    <Compile Include="AzureDataLake\OData\ExprDay.cs" />
+    <Compile Include="AzureDataLake\OData\ExprFloor.cs" />
+    <Compile Include="AzureDataLake\OData\ExprFunction1.cs" />
+    <Compile Include="AzureDataLake\OData\ExprHour.cs" />
+    <Compile Include="AzureDataLake\OData\ExprIndexOf.cs" />
+    <Compile Include="AzureDataLake\OData\ExprLength.cs" />
+    <Compile Include="AzureDataLake\OData\ExprMinute.cs" />
+    <Compile Include="AzureDataLake\OData\ExprMonth.cs" />
+    <Compile Include="AzureDataLake\OData\ExprReplace.cs" />
+    <Compile Include="AzureDataLake\OData\ExprRound.cs" />
+    <Compile Include="AzureDataLake\OData\ExprSecond.cs" />
+    <Compile Include="AzureDataLake\OData\ExprSubstring.cs" />
+    <Compile Include="AzureDataLake\OData\ExprToLower.cs" />
+    <Compile Include="AzureDataLake\OData\ExprToUpper.cs" />
+    <Compile Include="AzureDataLake\OData\ExprYear.cs" />
     <Compile Include="AzureDataLake\OData\Utils\PropertyFilter.cs" />
     <Compile Include="AzureDataLake\OData\Utils\PropertyFilterDateTime.cs" />
     <Compile Include="AzureDataLake\OData\Utils\PropertyFilterInteger.cs" />
