@@ -28,7 +28,7 @@ namespace ADL_Client_Demo
             //opts.FilterState = new List<JobState> { JobState.Ended};
             //opts.FilterSubmitterToCurrentUser = true;
 
-            opts.FilterState.OneOf( JobState.Running, JobState.Accepted, JobState.Compiling);
+            opts.Filter.State.OneOf( JobState.Running, JobState.Accepted, JobState.Compiling);
             var jobs = client.GetJobListPaged(opts);
 
 

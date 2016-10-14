@@ -42,7 +42,7 @@ namespace AzureDataLake.Analytics
                 }
             }
             odata_query.OrderBy = options.CreateOrderByString();
-            odata_query.Filter = options.CreateFilterString(this.AuthenticatedSession);
+            odata_query.Filter = options.Filter.CreateFilterString(this.AuthenticatedSession);
 
             // Other parameters
             string list_select = null;

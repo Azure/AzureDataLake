@@ -7,35 +7,105 @@ using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using ADL= Microsoft.Azure.Management.DataLake;
 namespace AzureDataLake.Analytics
 {
+    public class JobListFilter
+    {
+        public bool SubmitterToCurrentUser;
+        public FilterPropertyString Name;
+        public FilterPropertyString Submitter;
+        public FilterPropertyDateTime SubmitTime;
+        public FilterPropertyDateTime StartTime;
+        public FilterPropertyDateTime EndTime;
+        public FilterPropertyInteger DegreeOfParallelism;
+        public FilterPropertyInteger Priority;
+        public FilterPropertyEnum<ADL.Analytics.Models.JobState> State;
+        public FilterPropertyEnum<ADL.Analytics.Models.JobResult> Result;
+
+        public JobListFilter()
+        {
+            this.Submitter = new FilterPropertyString("submitter");
+            this.Name = new FilterPropertyString("name");
+            this.SubmitTime = new FilterPropertyDateTime("submitTime");
+            this.StartTime = new FilterPropertyDateTime("startTime");
+            this.EndTime = new FilterPropertyDateTime("endTime");
+            this.DegreeOfParallelism = new FilterPropertyInteger("degreeOfParallelism");
+            this.Priority = new FilterPropertyInteger("priority");
+            this.State = new FilterPropertyEnum<JobState>("state");
+            this.Result = new FilterPropertyEnum<JobResult>("result");
+
+        }
+
+        public string CreateFilterString(AuthenticatedSession auth_session)
+        {
+            var q = new AzureDataLake.ODataQuery.ExprLogicalAnd();
+            var col_submitter = new ExprColumn("submitter");
+
+            if (this.DegreeOfParallelism != null)
+            {
+                var expr = this.DegreeOfParallelism.ToExpr();
+                q.Add(expr);
+            }
+
+
+            if (this.Submitter != null)
+            {
+                var expr = this.Submitter.ToExpr();
+                q.Add(expr);
+            }
+
+            if (this.Priority != null)
+            {
+                var expr = this.Priority.ToExpr();
+                q.Add(expr);
+            }
+
+            if (this.Name != null)
+            {
+                var expr = this.Name.ToExpr();
+                q.Add(expr);
+            }
+
+            if (this.SubmitTime != null)
+            {
+                var expr = this.SubmitTime.ToExpr();
+                q.Add(expr);
+            }
+
+            if (this.State != null)
+            {
+                q.Add(this.State.ToExpr());
+            }
+
+            if (this.Result != null)
+            {
+                q.Add(this.Result.ToExpr());
+            }
+
+            if (this.SubmitterToCurrentUser)
+            {
+                var exprStringLiteral = new ExprLiteralString(auth_session.Token.DisplayableId);
+                q.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral, ComparisonString.Equals));
+            }
+
+            var sb = new AzureDataLake.ODataQuery.ExBuilder();
+            sb.Append(q);
+            string fs = sb.ToString();
+            Console.WriteLine("DEBUG: FILTER {0}", fs);
+            return fs;
+        }
+
+    }
+
     public class GetJobListOptions
     {
         public int Top=0; // 300 is the ADLA limit
         public JobOrderByField OrderByField;
         public JobOrderByDirection OrderByDirection;
-
-        public bool FilterSubmitterToCurrentUser;
-
-        public FilterPropertyString FilterName;
-        public FilterPropertyString FilterSubmitter;
-        public FilterPropertyDateTime FilterSubmitTime;
-        public FilterPropertyDateTime FilterStartTime;
-        public FilterPropertyDateTime FilterEndTime;
-        public FilterPropertyInteger FilterDegreeOfParallelism;
-        public FilterPropertyInteger FilterPriority;
-        public FilterPropertyEnum<ADL.Analytics.Models.JobState> FilterState;
-        public FilterPropertyEnum<ADL.Analytics.Models.JobResult> FilterResult;
+        public JobListFilter Filter;
 
         public GetJobListOptions()
         {
-            this.FilterSubmitter = new FilterPropertyString("submitter");
-            this.FilterName = new FilterPropertyString("name");
-            this.FilterSubmitTime = new FilterPropertyDateTime("submitTime");
-            this.FilterStartTime = new FilterPropertyDateTime("startTime");
-            this.FilterEndTime = new FilterPropertyDateTime("endTime");
-            this.FilterDegreeOfParallelism = new FilterPropertyInteger("degreeOfParallelism");
-            this.FilterPriority = new FilterPropertyInteger("priority");
-            this.FilterState = new FilterPropertyEnum<JobState>("state");
-            this.FilterResult = new FilterPropertyEnum<JobResult>("result");
+            this.Filter = new JobListFilter();
+
         }
 
         private static string get_order_field_name(JobOrderByField field)
@@ -63,63 +133,5 @@ namespace AzureDataLake.Analytics
             return null;
         }
 
-        public string CreateFilterString(AuthenticatedSession auth_session)
-        {
-            var q = new AzureDataLake.ODataQuery.ExprLogicalAnd();
-            var col_submitter = new ExprColumn("submitter");
-
-            if (this.FilterDegreeOfParallelism!= null)
-            {
-                var expr = this.FilterDegreeOfParallelism.ToExpr();
-                q.Add(expr);
-            }
-
-
-            if (this.FilterSubmitter != null)
-            {
-                var expr = this.FilterSubmitter.ToExpr();
-                q.Add(expr);
-            }
-
-            if (this.FilterPriority != null)
-            {
-                var expr = this.FilterPriority.ToExpr();
-                q.Add(expr);
-            }
-
-            if (this.FilterName != null)
-            {
-                var expr = this.FilterName.ToExpr();
-                q.Add(expr);
-            }
-
-            if (this.FilterSubmitTime != null)
-            {
-                var expr = this.FilterSubmitTime.ToExpr();
-                q.Add(expr);
-            }
-
-            if (this.FilterState != null)
-            {
-                q.Add(this.FilterState.ToExpr());
-            }
-
-            if (this.FilterResult != null)
-            {
-                q.Add(this.FilterResult.ToExpr());
-            }
-
-            if (this.FilterSubmitterToCurrentUser)
-            {
-                var exprStringLiteral = new ExprLiteralString(auth_session.Token.DisplayableId);
-                q.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral, ComparisonString.Equals));
-            }
-
-            var sb = new AzureDataLake.ODataQuery.ExBuilder();
-            sb.Append(q);
-            string fs = sb.ToString();
-            Console.WriteLine("DEBUG: FILTER {0}", fs);
-            return fs;
-        }
     }
 }
