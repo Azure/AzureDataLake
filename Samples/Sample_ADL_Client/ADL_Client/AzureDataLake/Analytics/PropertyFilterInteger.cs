@@ -27,34 +27,34 @@ namespace AzureDataLake.Analytics
             this.exactly_value = value;
         }
         
-        public ODataQuery.Expr ToExpr()
+        public override ODataQuery.Expr ToExpr()
         {
             if (!(this.before_value.HasValue || this.after_value.HasValue || this.exactly_value.HasValue))
             {
                 return null;
             }
 
-            var expr1 = new ODataQuery.ExprLogicalAnd();
+            var expr_and = new ODataQuery.ExprLogicalAnd();
 
             if (this.before_value.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.before_value.Value), ComparisonNumeric.LesserThan);
-                expr1.Add(expr2);
+                var expr_compare = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.before_value.Value), ComparisonNumeric.LesserThan);
+                expr_and.Add(expr_compare);
             }
 
             if (this.after_value.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.after_value.Value), ComparisonNumeric.GreaterThan);
-                expr1.Add(expr2);
+                var expr_compare = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.after_value.Value), ComparisonNumeric.GreaterThan);
+                expr_and.Add(expr_compare);
             }
 
             if (this.exactly_value.HasValue)
             {
-                var expr2 = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.exactly_value.Value), ComparisonNumeric.Equals);
-                expr1.Add(expr2);
+                var expr_compare = new ODataQuery.ExprCompareNumeric(this.expr_field, new ODataQuery.ExprLiteralInt(this.exactly_value.Value), ComparisonNumeric.Equals);
+                expr_and.Add(expr_compare);
             }
 
-            return expr1;
+            return expr_and;
         }
     }
 }

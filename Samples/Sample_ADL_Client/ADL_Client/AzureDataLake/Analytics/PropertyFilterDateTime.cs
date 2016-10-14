@@ -22,7 +22,7 @@ namespace AzureDataLake.Analytics
             this.after_value = value;
         }
 
-        public ODataQuery.Expr ToExpr()
+        public override ODataQuery.Expr ToExpr()
         {
             if (!(this.before_value.HasValue || this.after_value.HasValue))
             {

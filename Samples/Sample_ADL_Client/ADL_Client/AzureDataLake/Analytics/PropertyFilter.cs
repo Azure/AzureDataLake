@@ -10,5 +10,7 @@ namespace AzureDataLake.Analytics
         {
             this.expr_field = new ExprField(field_name);
         }
+
+        public abstract ODataQuery.Expr ToExpr();
     }
 }

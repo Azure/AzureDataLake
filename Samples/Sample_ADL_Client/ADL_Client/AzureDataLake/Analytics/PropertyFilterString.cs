@@ -35,7 +35,7 @@ namespace AzureDataLake.Analytics
             this.contains_text = text;
         }
 
-        public ODataQuery.Expr ToExpr()
+        public override ODataQuery.Expr ToExpr()
         {
             if (this.one_of_text != null && this.one_of_text.Count > 0)
             {

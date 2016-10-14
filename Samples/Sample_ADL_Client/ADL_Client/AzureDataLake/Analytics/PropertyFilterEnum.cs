@@ -18,7 +18,7 @@ namespace AzureDataLake.Analytics
             this.one_of_value.AddRange(items);    
         }
 
-        public ODataQuery.Expr ToExpr()
+        public override ODataQuery.Expr ToExpr()
         {
             if (this.one_of_value != null && this.one_of_value.Count > 0)
             {
