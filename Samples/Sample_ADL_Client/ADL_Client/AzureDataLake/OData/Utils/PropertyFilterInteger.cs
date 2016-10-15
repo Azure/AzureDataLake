@@ -14,14 +14,14 @@ namespace AzureDataLake.ODataQuery
         {
         }
 
-        public void Before(int value)
+        public void LessThan(int value)
         {
             this.upper_value = value;
             this.lower_value = null;
             this.exactly_value = null;
         }
 
-        public void After(int value)
+        public void GreaterThan(int value)
         {
             this.upper_value = null;
             this.lower_value = value;
