@@ -29,25 +29,25 @@ namespace AzureDataLake.ODataQuery
         }
 
 
-        public void WriteItems(ExpressionWriter sb, string op)
+        public void WriteItems(ExpressionWriter writer, string op)
         {
             if (this.Expressions.Count < 1)
             {
                 return;
             }
 
-            sb.Append("(");
+            writer.Append("(");
             for (int i = 0; i < this.Expressions.Count; i++)
             {
                 if (i > 0)
                 {
-                    sb.Append(op);
+                    writer.Append(op);
                 }
 
-                sb.Append(this.Expressions[i]);
+                writer.Append(this.Expressions[i]);
             }
 
-            sb.Append(")");
+            writer.Append(")");
         }
 
     }

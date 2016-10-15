@@ -35,11 +35,11 @@ namespace AzureDataLake.Analytics
         {
             var expr_and = ToExpression(auth_session);
 
-            var sb = new AzureDataLake.ODataQuery.ExpressionWriter();
-            sb.Append(expr_and);
-            string fs = sb.ToString();
-            Console.WriteLine("DEBUG: FILTER {0}", fs);
-            return fs;
+            var writer = new AzureDataLake.ODataQuery.ExpressionWriter();
+            writer.Append(expr_and);
+            string text = writer.ToString();
+            Console.WriteLine("DEBUG: FILTER {0}", text);
+            return text;
         }
 
         private Expr ToExpression(AuthenticatedSession auth_session)
