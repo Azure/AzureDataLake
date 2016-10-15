@@ -2,18 +2,18 @@ using System;
 
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprLogicalAnd : ExprList
+    public class ExprLogicalAnd : ExprLogicalList
     {
 
-        public ExprLogicalAnd(params Expr[] items) :
-            base(items)
+        public ExprLogicalAnd(params Expr[] expressions) :
+            base(expressions)
         {
-            this.AddRange(items);
+            this.AddRange(expressions);
         }
 
-        public override void ToExprString(ExpressionWriter sb)
+        public override void ToExprString(ExpressionWriter writer)
         {
-            this.WriteItems(sb, " and ");
+            this.WriteItems(writer, " and ");
         }
     }
 }

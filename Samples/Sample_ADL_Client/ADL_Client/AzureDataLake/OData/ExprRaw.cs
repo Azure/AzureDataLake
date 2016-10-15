@@ -8,9 +8,9 @@ namespace AzureDataLake.ODataQuery
             this.Item = s;
         }
 
-        public override void ToExprString(ExpressionWriter sb)
+        public override void ToExprString(ExpressionWriter writer)
         {
-            sb.Append(this.Item);
+            writer.Append(this.Item);
         }
     }
 }

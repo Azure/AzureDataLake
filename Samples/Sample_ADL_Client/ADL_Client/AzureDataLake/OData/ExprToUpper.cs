@@ -9,9 +9,9 @@ namespace AzureDataLake.ODataQuery
             this.Expression = expr;
         }
 
-        public override void ToExprString(ExpressionWriter sb)
+        public override void ToExprString(ExpressionWriter writer)
         {
-            this.WriteFunction1(sb, "toupper", this.Expression);
+            this.WriteFunction1(writer, "toupper", this.Expression);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AzureDataLake.ODataQuery
             this.Operator = op;
         }
 
-        public override void ToExprString(ExpressionWriter sb)
+        public override void ToExprString(ExpressionWriter writer)
         {
             var left = this.LeftValue;
             var right = this.RightValue;
@@ -25,24 +25,24 @@ namespace AzureDataLake.ODataQuery
             if (this.Operator == ComparisonString.Equals)
             {
                 string op = "eq";
-                this.WriteBinaryOperation(sb,op,left,right);
+                this.WriteBinaryOperation(writer,op,left,right);
             }
             else if (this.Operator == ComparisonString.NotEquals)
             {
                 string op = "ne";
-                this.WriteBinaryOperation(sb, op, left, right);
+                this.WriteBinaryOperation(writer, op, left, right);
             }
             else if (this.Operator == ComparisonString.Contains)
             {
-                this.WriteFunction2(sb,"substringof", right,left);
+                this.WriteFunction2(writer,"substringof", right,left);
             }
             else if (this.Operator == ComparisonString.StartsWith)
             {
-                this.WriteFunction2(sb,"substringof", left,right);
+                this.WriteFunction2(writer,"substringof", left,right);
             }
             else if (this.Operator == ComparisonString.EndsWith)
             {
-                this.WriteFunction2(sb, "endswith", left, right);
+                this.WriteFunction2(writer, "endswith", left, right);
             }
             else
             {

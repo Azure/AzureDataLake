@@ -1,16 +1,16 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprLogicalOr : ExprList
+    public class ExprLogicalOr : ExprLogicalList
     {
-        public ExprLogicalOr(params Expr[] items) :
-            base(items)
+        public ExprLogicalOr(params Expr[] expressions) :
+            base(expressions)
         {
-            this.AddRange(items);
+            this.AddRange(expressions);
         }
 
-        public override void ToExprString(ExpressionWriter sb)
+        public override void ToExprString(ExpressionWriter writer)
         {
-            this.WriteItems(sb, " or ");
+            this.WriteItems(writer, " or ");
         }
     }
 }

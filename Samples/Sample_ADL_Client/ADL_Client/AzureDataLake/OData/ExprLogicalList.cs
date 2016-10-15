@@ -2,21 +2,21 @@ using System.Collections.Generic;
 
 namespace AzureDataLake.ODataQuery
 {
-    public abstract class ExprList : Expr
+    public abstract class ExprLogicalList : Expr
     {
-        private List<Expr> Items;
+        private List<Expr> Expressions;
 
-        public ExprList(params Expr[] items)
+        public ExprLogicalList(params Expr[] expressions)
         {
-            this.Items = new List<Expr>();
-            this.Items.AddRange(items);
+            this.Expressions = new List<Expr>();
+            this.Expressions.AddRange(expressions);
         }
 
         public void Add(Expr e)
         {
             if (e != null)
             {
-                this.Items.Add(e);
+                this.Expressions.Add(e);
             }
         }
 
@@ -31,20 +31,20 @@ namespace AzureDataLake.ODataQuery
 
         public void WriteItems(ExpressionWriter sb, string op)
         {
-            if (this.Items.Count < 1)
+            if (this.Expressions.Count < 1)
             {
                 return;
             }
 
             sb.Append("(");
-            for (int i = 0; i < this.Items.Count; i++)
+            for (int i = 0; i < this.Expressions.Count; i++)
             {
                 if (i > 0)
                 {
                     sb.Append(op);
                 }
 
-                sb.Append(this.Items[i]);
+                sb.Append(this.Expressions[i]);
             }
 
             sb.Append(")");

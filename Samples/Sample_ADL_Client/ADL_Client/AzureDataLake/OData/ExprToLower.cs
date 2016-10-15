@@ -1,17 +1,12 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExprToLower : Expr
+    public class ExprToLower : ExprFunction1
     {
         public Expr Expression;
 
-        public ExprToLower(Expr expr)
+        public ExprToLower(Expr expr) :
+            base(expr, "tolower")
         {
-            this.Expression = expr;
-        }
-
-        public override void ToExprString(ExpressionWriter sb)
-        {
-            this.WriteFunction1(sb, "tolower", this.Expression);
         }
     }
 }

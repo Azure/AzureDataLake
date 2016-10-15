@@ -11,9 +11,9 @@ namespace AzureDataLake.ODataQuery
             this.name = name;
         }
 
-        public override void ToExprString(ExpressionWriter sb)
+        public override void ToExprString(ExpressionWriter writer)
         {
-            this.WriteFunction1(sb, this.name, this.Expression);
+            this.WriteFunction1(writer, this.name, this.Expression);
         }
     }
 }
