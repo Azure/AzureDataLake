@@ -126,6 +126,7 @@
     <Compile Include="AzureDataLake\OData\ExprLength.cs" />
     <Compile Include="AzureDataLake\OData\ExprMinute.cs" />
     <Compile Include="AzureDataLake\OData\ExprMonth.cs" />
+    <Compile Include="AzureDataLake\OData\ExprNull.cs" />
     <Compile Include="AzureDataLake\OData\ExprReplace.cs" />
     <Compile Include="AzureDataLake\OData\ExprRound.cs" />
     <Compile Include="AzureDataLake\OData\ExprSecond.cs" />
