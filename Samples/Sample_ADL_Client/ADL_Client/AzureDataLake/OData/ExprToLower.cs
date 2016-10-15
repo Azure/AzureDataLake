@@ -9,7 +9,7 @@ namespace AzureDataLake.ODataQuery
             this.Expression = expr;
         }
 
-        public override void ToExprString(ExBuilder sb)
+        public override void ToExprString(ExpressionWriter sb)
         {
             this.WriteFunction1(sb, "tolower", this.Expression);
         }

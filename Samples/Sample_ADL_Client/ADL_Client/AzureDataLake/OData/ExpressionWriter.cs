@@ -1,10 +1,10 @@
 namespace AzureDataLake.ODataQuery
 {
-    public class ExBuilder
+    public class ExpressionWriter
     {
         private System.Text.StringBuilder sb;
 
-        public ExBuilder()
+        public ExpressionWriter()
         {
             this.sb = new System.Text.StringBuilder();    
         }
@@ -14,9 +14,9 @@ namespace AzureDataLake.ODataQuery
             this.sb.Append(s);
         }
 
-        public void Append(Expr e)
+        public void Append(Expr expr)
         {
-            e.ToExprString(this);
+            expr.ToExprString(this);
         }
 
         public override string ToString()

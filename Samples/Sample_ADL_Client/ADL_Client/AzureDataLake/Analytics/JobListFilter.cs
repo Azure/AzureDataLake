@@ -7,7 +7,7 @@ namespace AzureDataLake.Analytics
 {
     public class JobListFilter
     {
-        public bool SubmitterToCurrentUser;
+        public bool SubmitterIsCurrentUser;
         public ODataQuery.PropertyFilterString Name;
         public ODataQuery.PropertyFilterString Submitter;
         public ODataQuery.PropertyFilterDateTime SubmitTime;
@@ -29,14 +29,13 @@ namespace AzureDataLake.Analytics
             this.Priority = new ODataQuery.PropertyFilterInteger("priority");
             this.State = new ODataQuery.PropertyFilterEnum<JobState>("state");
             this.Result = new ODataQuery.PropertyFilterEnum<JobResult>("result");
-
         }
 
         public string ToFilterString(Authentication.AuthenticatedSession auth_session)
         {
             var expr_and = ToExpression(auth_session);
 
-            var sb = new AzureDataLake.ODataQuery.ExBuilder();
+            var sb = new AzureDataLake.ODataQuery.ExpressionWriter();
             sb.Append(expr_and);
             string fs = sb.ToString();
             Console.WriteLine("DEBUG: FILTER {0}", fs);
@@ -89,7 +88,7 @@ namespace AzureDataLake.Analytics
                 expr_and.Add(this.Result.ToExpression());
             }
 
-            if (this.SubmitterToCurrentUser)
+            if (this.SubmitterIsCurrentUser)
             {
                 var exprStringLiteral = new ODataQuery.ExprLiteralString(auth_session.Token.DisplayableId);
                 expr_and.Add(new AzureDataLake.ODataQuery.ExprCompareString(col_submitter, exprStringLiteral,

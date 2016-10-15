@@ -9,7 +9,7 @@ namespace AzureDataLake.ODataQuery
             this.Integer = integer;
         }
 
-        public override void ToExprString(ExBuilder sb)
+        public override void ToExprString(ExpressionWriter sb)
         {
             sb.Append(this.Integer.ToString());
         }

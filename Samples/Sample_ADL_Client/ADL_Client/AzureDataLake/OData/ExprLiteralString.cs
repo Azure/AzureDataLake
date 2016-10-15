@@ -9,7 +9,7 @@ namespace AzureDataLake.ODataQuery
             this.Content = content;
         }
 
-        public override void ToExprString(ExBuilder sb)
+        public override void ToExprString(ExpressionWriter sb)
         {
             string s = string.Format("'{0}'", this.Content);
             sb.Append(s);

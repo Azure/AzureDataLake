@@ -9,7 +9,7 @@ namespace AzureDataLake.ODataQuery
             this.DateTime = dateTime;
         }
 
-        public override void ToExprString(ExBuilder sb)
+        public override void ToExprString(ExpressionWriter sb)
         {
             // due to issue: https://github.com/Azure/autorest/issues/975,
             // date time offsets must be explicitly escaped before being passed to the filter

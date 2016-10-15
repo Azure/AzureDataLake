@@ -140,7 +140,7 @@
     <Compile Include="AzureDataLake\OData\Utils\PropertyFilterString.cs" />
     <Compile Include="AzureDataLake\Analytics\JobListFilter.cs" />
     <Compile Include="AzureDataLake\OData\ComparisonDateTime.cs" />
-    <Compile Include="AzureDataLake\OData\ExBuilder.cs" />
+    <Compile Include="AzureDataLake\OData\ExpressionWriter.cs" />
     <Compile Include="AzureDataLake\OData\ExprField.cs" />
     <Compile Include="AzureDataLake\OData\ExprCompare.cs" />
     <Compile Include="AzureDataLake\OData\ExprList.cs" />

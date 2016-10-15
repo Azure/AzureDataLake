@@ -9,7 +9,7 @@ namespace AzureDataLake.ODataQuery
             this.Expression = expr;
         }
 
-        public override void ToExprString(ExBuilder sb)
+        public override void ToExprString(ExpressionWriter sb)
         {
             sb.Append("(not");
             sb.Append(this.Expression);

@@ -11,7 +11,7 @@ namespace AzureDataLake.ODataQuery
             this.Operator = op;
         }
 
-        public override void ToExprString(ExBuilder sb)
+        public override void ToExprString(ExpressionWriter sb)
         {
             var left = this.LeftValue;
             var right = this.RightValue;

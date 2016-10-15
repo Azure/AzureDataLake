@@ -13,7 +13,7 @@ namespace AzureDataLake.ODataQuery
             this.Expression3 = expr3;
         }
 
-        public override void ToExprString(ExBuilder sb)
+        public override void ToExprString(ExpressionWriter sb)
         {
             this.WriteFunction3(sb, "indexof", this.Expression1,this.Expression2,this.Expression2);
         }

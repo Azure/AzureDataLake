@@ -29,7 +29,7 @@ namespace AzureDataLake.ODataQuery
         }
 
 
-        public void WriteItems(ExBuilder sb, string op)
+        public void WriteItems(ExpressionWriter sb, string op)
         {
             if (this.Items.Count < 1)
             {

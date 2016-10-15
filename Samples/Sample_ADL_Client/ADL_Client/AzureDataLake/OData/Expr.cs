@@ -3,9 +3,9 @@ namespace AzureDataLake.ODataQuery
     public abstract class Expr
     {
 
-        public abstract void ToExprString(ExBuilder sb);
+        public abstract void ToExprString(ExpressionWriter sb);
 
-        public void WriteBinaryOperation(ExBuilder sb, string op, Expr left, Expr right)
+        public void WriteBinaryOperation(ExpressionWriter sb, string op, Expr left, Expr right)
         {
 
             sb.Append("(");
@@ -16,7 +16,7 @@ namespace AzureDataLake.ODataQuery
             sb.Append(right);
             sb.Append(")");
         }
-        public void WriteFunction3(ExBuilder sb, string name, Expr p0, Expr p1, Expr p2)
+        public void WriteFunction3(ExpressionWriter sb, string name, Expr p0, Expr p1, Expr p2)
         {
 
             sb.Append(name);
@@ -29,7 +29,7 @@ namespace AzureDataLake.ODataQuery
             sb.Append(")");
         }
 
-        public void WriteFunction2(ExBuilder sb, string name, Expr p0, Expr p1)
+        public void WriteFunction2(ExpressionWriter sb, string name, Expr p0, Expr p1)
         {
 
             sb.Append(name);
@@ -40,7 +40,7 @@ namespace AzureDataLake.ODataQuery
             sb.Append(")");
         }
 
-        public void WriteFunction1(ExBuilder sb, string name, Expr p0)
+        public void WriteFunction1(ExpressionWriter sb, string name, Expr p0)
         {
 
             sb.Append(name);
