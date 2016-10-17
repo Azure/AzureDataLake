@@ -63,7 +63,7 @@ We also have compiled scripts that access 30'000 files.
 
 For more information see the [earlier announcement](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_08_01/USQL_Release_Notes_2016_08_01.md#u-sql-now-offers-a-preview-of-sampling-capabilities-requires-a-simple-email-signup).
 
-#### Sharing of Catalogs on shared primary ADLS storage among ADLA accounts 
+#### Catalogs can be shared among ADLA accounts as long as they share their primary ADLS storage 
 
 One important ability of a data lake is to be able to share data across different analytics accounts. Starting in this release, U-SQL let's you use 4 part-names to access U-SQL catalog objects from a different Azure Data Lake Analytics account. 
 
