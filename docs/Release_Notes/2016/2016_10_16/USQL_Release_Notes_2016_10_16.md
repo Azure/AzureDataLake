@@ -53,11 +53,6 @@ We also have compiled scripts that access 30'000 files.
 
 **Since we are still testing some of the limits of the feature, you are required to opt in. Please [contact us](mailto:usql@microsoft.com) if you want to explore this capability.**
 
-#### Job manager performance got improved which helps short vertex executions
-
-Previously, the job manager created new containers for each vertex that could add a considerable overhead to a vertex execution if the vertex was only doing seconds worth of work. 
-Now the job manager is recycling containers which can reduce the overhead considerably on short vertex executions.
-
 ## New U-SQL capabilities
 
 #### The U-SQL sampling capabilities are now available per default
