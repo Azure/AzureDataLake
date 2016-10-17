@@ -28,6 +28,10 @@ Attempting to use any of the following items will result in a deprecation error 
 
 3. [Deprecation of `{col:*}` File Set pattern. Use `{col}` instead.](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_07_14/USQL_Release_Notes_2016_07_14.md)
 
+#### Introduction of a 4GB limit on .gz files
+
+U-SQL's extraction framework automatically decompresses `.gz` files. Since the GZip format extraction is not parallelizable, a single vertex is processing a GZipped file. We have repeatedly seen vertices run out of memory due to this and thus are now limiting the size of a single `.gz` file to 4GB. Please split your files to fit into this limit and use the file set capabilities to scale out your extraction.
+
 ## Major U-SQL Bug Fixes, Performance and Scale Improvements
 
 #### U-SQL quoted identifiers 
