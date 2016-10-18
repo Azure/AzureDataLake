@@ -72,6 +72,7 @@ The following restrictions apply:
 1. The two Azure Data Lake Analytics accounts need to share the same Azure Data Lake Storage account as their primary storage accounts.
 2. As in the primary catalog, database and catalog level access control needs to permit referring to the objects.
 3. You cannot create meta data objects in the other ADLA account's meta data object. Thus you cannot invoke any DDL statement with a 4-part name, nor invoking a U-SQL procedure.
+4. You cannot insert into a table of a different account.
 
 The following operations are supported.
 
@@ -83,13 +84,6 @@ Let's assume that you created the view `master.dbo.SearchlogView` (see the [U-SQ
     OUTPUT @res TO @"\output\remote-view.csv" USING Outputters.Csv();
 
 Note that currently only the short account name is supported. If you refer to a non-existing account or an account you don't have access to, an error is raised.
-
-###### Inserting into a table in another account
-
-Let's assume that there is a table `master.dbo.Searchlog1` in the account `mryskona` (see the [U-SQL Hands-On-Lab](https://github.com/Azure/AzureDataLake/blob/master/docs/Hands_on_Labs/USQL_HOL.md) for its definition). You can run the following script from the account `mrys`:
-
-    INSERT INTO mryskona.master.dbo.SearchLog1
-    VALUES ( 9999, DateTime.Now, "fr-fr", "plonger", (int?) null, "", "");
 
 ###### Invoking a table-valued function from another account
 
