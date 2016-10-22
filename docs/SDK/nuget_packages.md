@@ -1,6 +1,6 @@
-# Azure Data Lake SDKs
+# Azure Data Lake SDK NuGet Packges
 
-## Supported SDKs
+## Supported SDK NuGet packages
 * HDInsight Cluster management SDK:  https://www.nuget.org/packages/Microsoft.Azure.Management.HDInsight/
 * HDInsight Job management SDK:  https://www.nuget.org/packages/Microsoft.Azure.Management.HDInsight.Job/
 * Data Lake Analytics SDK:  https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.Analytics
