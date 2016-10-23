@@ -25,12 +25,6 @@ List of Azure Services need to Complete all the Hands-On-Labs
 
 -   Azure Data Factory
 
-IMPORTANT: For Microsoft Internal Training
--------------------------------------------------------------
-If you are trying to learn about data lake as part of a Microsoft internal training course and have Microsoft CorpNet access, then have a dedicated training environment setup for you. 
-
-https://microsoft.sharepoint.com/teams/AzureDataLake/SitePages/TrainingAccounts.aspx
-
 
 Manual Steps for Creating the Required Services in the Azure Portal
 -------------------------------------------------------------------
@@ -40,20 +34,16 @@ portal
 
 ### Before you begin:
 
--   Keep in mind that Azure Data Lake Store & Azure Data Lake Analytics are 
-    currently in PUBLIC PREVIEW. This means that when you first try to create
-    an ADLS or ADLA account, that you subscription needs to be approved by 
-    Microsoft. This process is automatic and usually occurs within 24 hours
+-   Pick an Azure subscription you want to use. The services can be in separate
+    subscriptions.
 
--   Pick an Azure subscription you want to use. All the services you create
-    should be in the same subscription
-
--   Pick a Location to use. All the Azure Data Lake services should be in the
-    same service. The Azure Data Factory account can be in the same region – but
-    it is not necessary at all
+-   Pick a Location (Region) to use. All the Data Lake services should be in the
+    same location. The Azure Data Factory account can be in any region
 
 -   You can choose any Azure Resource Group that you want. It won’t affect the
-    how the labs are done.
+    how the labs are done. We recommend using one like ....
+
+    "username_adl_hol"
 
 ### Step 1: Login to the Azure Portal
 

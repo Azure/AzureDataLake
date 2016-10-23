@@ -17,7 +17,6 @@ Before you can start the lab exercises, you will need several Azure services
 created. Follow the instructions here: [Start](Start.md)
 
 
-
 Important information
 ---------------------
 
@@ -55,7 +54,6 @@ Prepare the Azure Storage Account
 ---------------------------------
 
  
-
 The Azure storage account will be used to store a script that will be run as
 part of an ADF pipeline.
 
@@ -145,7 +143,6 @@ In this section, you will link your ADF account to three services:
 -   Azure Storage Account
 
  
-
 To get started, browse to http://portal.azure.com, open your ADF account, and
 click **Author and Deploy**.
 

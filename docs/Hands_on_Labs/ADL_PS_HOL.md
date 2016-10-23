@@ -83,11 +83,22 @@ In this exercise you will list the jobs that have run on your ADLA account. You 
 2. Submit a new job to your ADLA account. 
       * First,  save the following script to a file on your local machine, being sure to *change* the "UserName" part to something specific to you:
                             
-                        @searchlog = EXTRACT UserId int, Start DateTime, Region string,
-                        Query string, Duration int, Urls string, ClickedUrls string FROM
-                        @"/Samples/Data/SearchLog.tsv" USING Extractors.Tsv();
-                        OUTPUT @searchlog TO @"/Samples/Output/UserName/SearchLog_TestOutput.tsv" USING
-                        Outputters.Tsv();
+        @searchlog = 
+                EXTRACT 
+                        UserId int, 
+                        Start DateTime, 
+                        Region string,
+                        Query string, 
+                        Duration int, 
+                        Urls string, 
+                        ClickedUrls string
+        FROM
+                @"/Samples/Data/SearchLog.tsv"
+        USING Extractors.Tsv();
+        
+        OUTPUT @searchlog
+                TO @"/Samples/Output/UserName/SearchLog_TestOutput.tsv"
+                USING Outputters.Tsv();
 
       * Then, use the cmdlet ``Submit-AzureRmDataLakeAnalyticsJob`` with the ``-ScriptPath`` parameter.
 			
