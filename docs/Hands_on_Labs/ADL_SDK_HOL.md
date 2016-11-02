@@ -45,7 +45,7 @@ Reference material (MSDN):
             
             Install-Package Microsoft.Azure.Management.DataLake.StoreUploader –Pre
             
-            Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory
+            Install-Package Microsoft.Rest.ClientRuntime.Azure.Authentication -Pre
        
       > Note: If you encounter errors when installing packages, you can [follow the instructions on NuGet.org](http://www.nuget.org/packages?q=Microsoft.Azure.Management.DataLake) for each of the required packages.
 
@@ -92,33 +92,39 @@ Reference material (MSDN):
                 var remoteFilePath = remoteFolderPath + "file.txt";
     
                 ////////////// Authentication //////////////
+                Console.Write("Authenticating the end-user... ");
+                var resource = "https://management.core.windows.net/";
                 var authContext = new AuthenticationContext("https://login.microsoftonline.com/" + tenantId);
-                var tokenAuthResult = authContext.AcquireToken("https://management.core.windows.net/", appClientId, 
-                    appRedirectUri, PromptBehavior.Auto, UserIdentifier.AnyUser);
-                var tokenCreds = new TokenCredentials(tokenAuthResult.AccessToken);
-                
+                authContext.AcquireToken(resource, appClientId, appRedirectUri, PromptBehavior.Auto);
+                var tokenProvider = new UserTokenProvider(authContext, appClientId, new Uri(resource), UserIdentifier.AnyUser);
+                var tokenCreds = new TokenCredentials(tokenProvider);
+                Console.WriteLine("done. Press any key to continue.");
+                Console.ReadKey(true);
+
                 //////////////////  Service-to-service (alternative) //////////////
                 /* 
+                    Console.Write("Authenticating the application... ");
                     var clientSecret = GetSecureStringClientSecret();
                     var authContext = new AuthenticationContext("https://login.microsoftonline.com/" + tenantId);
                     var credential = new ClientCredential(appClientId, clientSecret);
-    
                     var tokenAuthResult = authContext.AcquireToken(resource, credential);
-    
-                    var tokenCreds = TokenCredentials(tokenAuthResult.AccessToken);
-                 */
+                    var tokenProvider = new ApplicationTokenProvider(authContext, resource, credential, tokenAuthResult);
+                    var tokenCreds = TokenCredentials(tokenProvider);
+                    Console.WriteLine("done. Press any key to continue.");
+                    Console.ReadKey(true);;
+                */
     
                 ////////////// Create clients //////////////
+                Console.Write("Creating clients... ");
                 var adlsClient = new DataLakeStoreAccountManagementClient(tokenCreds);
                 var adlsFileSystemClient = new DataLakeStoreFileSystemManagementClient(tokenCreds);
                 var adlaClient = new DataLakeAnalyticsAccountManagementClient(tokenCreds);
                 var adlaJobClient = new DataLakeAnalyticsJobManagementClient(tokenCreds);
-                var adlaCatalogClient = new DataLakeAnalyticsAccountManagementClient(tokenCreds);
+                var adlaCatalogClient = new DataLakeAnalyticsCatalogManagementClient(tokenCreds);
                 adlsClient.SubscriptionId = subscriptionId;
-                adlsFileSystemClient.SubscriptionId = subscriptionId;
                 adlaClient.SubscriptionId = subscriptionId;
-                adlaJobClient.SubscriptionId = subscriptionId;
-                adlaCatalogClient.SubscriptionId = subscriptionId;
+                Console.WriteLine("done. Press any key to continue.");
+                Console.ReadKey(true);
     
                 // Write your code here
     
