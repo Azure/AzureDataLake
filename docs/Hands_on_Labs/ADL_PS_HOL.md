@@ -61,23 +61,23 @@ In this exercise, you will explore the ADL cmdlets that are available for you to
  
 2. Run the following cmdlet to list all the Data Lake cmdlets that you can use:
  
-        Get-Command *DataLake*
+        Get-Command *Adl*
  
 3. Run the following cmdlet to get help on a specific cmdlet (in this case the ``Get-AzureRmDataLakeAnalyticsAccount`` cmdlet):
  
-        Get-Help Get-AzureRmDataLakeStoreAccount
+        Get-Help Get-AdlStore
 
 4. Run the following cmdlets to list all Data Lake Analytics and Store accounts in the currently-selected subscription:
 
-        Get-AzureRmDataLakeAnalyticsAccount
-        Get-AzureRmDataLakeStoreAccount
+        Get-AdlAnalyticsAccount
+        Get-AdlStore
 
 
 # Exercise 2: Listing and submitting ADLA jobs
 In this exercise you will list the jobs that have run on your ADLA account. You will also submit a new job and check its status.
 
 1. List all jobs that have run on your ADLA account.
-      * Use the cmdlet ``Get-AzureRmDataLakeAnalyticsJob``.
+      * Use the cmdlet ``Get-AdlJob``.
       * Use the ``-State`` parameter to filter by job state(s), like Running or Ended.
 
 2. Submit a new job to your ADLA account. 
@@ -100,19 +100,19 @@ In this exercise you will list the jobs that have run on your ADLA account. You 
                 TO @"/Samples/Output/UserName/SearchLog_TestOutput.tsv"
                 USING Outputters.Tsv();
 
-      * Then, use the cmdlet ``Submit-AzureRmDataLakeAnalyticsJob`` with the ``-ScriptPath`` parameter.
+      * Then, use the cmdlet ``Submit-AdlJob`` with the ``-ScriptPath`` parameter.
 			
 3. Retrieve the status of the job that you submitted. 
-      * Use the cmdlet ``Get-AzureRmDataLakeAnalyticsJob``.
+      * Use the cmdlet ``Get-AdlJob``.
       * Pass in the job ID returned by Step 2 to the ``-JobId`` parameter.
 
 # Exercise 3: Exploring and downloading ADLS files
 In this exercise you will explore the files in your ADLS account. You will also download the file created by the job you submitted in Exercise 2.
 
 1. List all files in the **/Samples/Output/UserName/** folder. 
-      * Use the cmdlet ``Get-AzureRmDataLakeStoreChildItem``.
+      * Use the cmdlet ``Get-AdlStoreChildItem``.
 2.  Download the output of the job from Part 2.
-      * Use the cmdlet ``Export-AzureRmDataLakestoreItem``.
+      * Use the cmdlet ``Export-AdlStoreItem``.
       * Use the ADLS file path **"/Samples/Output/UserName/SearchLog_TestOutput.tsv"**.
 
 # PowerShell Quick Start
