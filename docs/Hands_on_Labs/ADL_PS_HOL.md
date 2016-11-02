@@ -61,7 +61,7 @@ In this exercise, you will explore the ADL cmdlets that are available for you to
  
 2. Run the following cmdlet to list all the Data Lake cmdlets that you can use:
  
-        Get-Command *Adl*
+        Get-Command *DataLake*
  
 3. Run the following cmdlet to get help on a specific cmdlet (in this case the ``Get-AzureRmDataLakeAnalyticsAccount`` cmdlet):
  
