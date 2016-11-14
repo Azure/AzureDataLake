@@ -168,12 +168,12 @@ As an example, here is how you could list all the jobs in your Data Lake Analyti
 
 In this exercise you will retrieve a list of all the jobs that have run on your ADLA account. You will then submit a new job and check the job status programmatically.
 
-1.  List all jobs that have run on your ADLA account. Use the method **_dataLakeAnalyticsJobClient.Jobs.List**.
+1.  List all jobs that have run on your ADLA account. Use the method **adlaJobClient.Jobs.List**.
       > Note: You can use the code example presented in the **Guidance** section. 
-2.  Submit a new job to your ADLA account. Use the method **_dataLakeAnalyticsJobClient.Jobs.Create**.
+2.  Submit a new job to your ADLA account. Use the method **adlaJobClient.Jobs.Create**.
       * Save the following script in a new file.
 
-                EXTRACT UserId int, Start DateTime, Region string,
+                @searchlog = EXTRACT UserId int, Start DateTime, Region string,
                 Query string, Duration int, Urls string, ClickedUrls string FROM
                 @"/Samples/Data/SearchLog.tsv" USING Extractors.Tsv(); OUTPUT
                 @searchlog TO @"/Samples/Output/UserName/SearchLog_TestOutput.tsv" USING
@@ -188,11 +188,11 @@ In this exercise you will retrieve a list of all the jobs that have run on your 
                 
                 var jobInfo = adlaJobClient.Job.Create(jobId, parameters, _adlaAccountName);
 			
-3.  Get the status of the job that you submitted, referencing the job ID you gave in Step 2. Use the method **_dataLakeAnalyticsJobClient.Jobs.Get**.
+3.  Get the status of the job that you submitted, referencing the job ID you gave in Step 2. Use the method **adlaJobClient.Jobs.Get**.
 
 # Exercise 2: List files and download a file
 In this exercise you will retrieve a list of all the files in an output folder. You will also download the output of the job you created in Exercise 1.
 
-1.  List all files in the /Samples/Output/ folder. Use the method **_dataLakeStoreFileSystemClient.FileSystem.ListFileStatus**.
-2.  Download the output of the job from Part 2. Use the cmdlet **_dataLakeStoreFileSystemClient.FileSystem.DirectOpen**.
+1.  List all files in the /Samples/Output/ folder. Use the method **adlsFileSystemClient.FileSystem.ListFileStatus**.
+2.  Download the output of the job from Part 2. Use the cmdlet **adlsFileSystemClient.FileSystem.DirectOpen**.
       * Use the ADLS path **/Samples/Output/UserName/SearchLog_TestOutput.tsv**.
