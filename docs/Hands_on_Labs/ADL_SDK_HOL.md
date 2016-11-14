@@ -66,6 +66,7 @@ Reference material (MSDN):
     using Microsoft.Azure.Management.DataLake.Analytics.Models;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure.Authentication;
     
     namespace SdkSample
     {
