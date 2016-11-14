@@ -147,7 +147,7 @@ As an example, here is how you could list all the jobs in your Data Lake Analyti
      var response = adlaJobClient.Job.List(adlaAccountName);
      var jobs = new List<JobInformation>(response);
      
-     foreach (var job in response.Value)
+     foreach (var job in response)
      {
           Console.WriteLine(job.JobId + job.Name);
      }
@@ -158,7 +158,7 @@ As an example, here is how you could list all the jobs in your Data Lake Analyti
           response = adlaJobClient.Job.ListNext(response.NextPageLink);
           jobs.AddRange(response);
           
-          foreach (var job in response.Value)
+          foreach (var job in response)
           {
                Console.WriteLine(job.JobId + job.Name);
           }
