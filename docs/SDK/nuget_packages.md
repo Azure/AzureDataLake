@@ -6,6 +6,7 @@
 * Data Lake Analytics SDK:  https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.Analytics
 * Data Lake Store SDK:  https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.Store
 * Data Lake Uploader package:  https://www.nuget.org/packages/Microsoft.Azure.Management.DataLake.StoreUploader
+* Data Lake U-SQL SDK: https://www.nuget.org/packages/Microsoft.Azure.DataLake.USQL.SDK
 
 ## "Incubator" NuGet packages (Will be deprecated later)
 * HDInsight MapReduce package: https://www.nuget.org/packages/Microsoft.Hadoop.MapReduce/
