@@ -157,3 +157,5 @@ $RECYCLE.BIN/
 
 # NuGet
 packages/
+
+.vs
