@@ -12,6 +12,7 @@ The scripts reuse some values so set the following variables as you need
 
     $subname = Your subscription name
     $subid  = Your subscription id
+    $tenant = Your tenantid. Example: microsoft.onmicrosoft.com
     $adla = the name of your ADL Analytics account (not its full domain name)
     $adls = the name of your ADL Store account (not its full domain name)
 
@@ -24,7 +25,7 @@ Use the Login-AzureRmAccount cmdlet
 
 Specify which Subscription you want to work in
 
-    Set-AzureRmContext -SubscriptionName $subname 
+    Set-AzureRmContext -SubscriptionName $subname -TenantId $tenant
 
 ##  Getting a list of all the jobs
 
