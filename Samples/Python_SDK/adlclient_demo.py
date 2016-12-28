@@ -1,33 +1,35 @@
-# Make sure you've got the latest modules 
-# pip install azure -U 
-# pip install azure-mgmt-resource -U 
-# pip install azure-mgmt-datalake-store -U 
-# pip install azure-datalake-store -U 
+# Make sure you've have the latest pip
+#   python -m pip install --upgrade pip
+
+# To install the modules if you need them
+#   pip install <MODULENAME>
+
+# To update the modules
+#   pip install <MODULENAME> -U
+
+# pip modules needed
+#   azure 
+#   msrestazure 
+#   azure-mgmt-resource 
+#   azure-mgmt-datalake-store 
+#   azure-mgmt-datalake-analytics
+#   azure-datalake-store 
 
 
+# import general Azure modules
+import azure.mgmt.resource
+import azure.mgmt.resource.resources
 import msrestazure.azure_active_directory
+import adal
 
-# ADLS imports
+# import Azure Data Lake modules
 import azure.mgmt.datalake.store
 import azure.datalake.store
-#from azure.datalake.store import core
-#from azure.datalake.store import lib
-#from azure.datalake.store import multithread
-
-
-# ADLA imports
 import azure.mgmt.datalake.analytics 
-#from azure.mgmt.datalake.analytics import account
-#from azure.mgmt.datalake.analytics import job
-#from azure.mgmt.datalake.analytics import catalog
 
-# Common Azure imports
-import azure.mgmt.resource.resources
-
-# All other imports
+# All standard Python modules
 import os
 import sys
-import adal
 import itertools
 
 def get_user_token_interactive(the_tenant, clientid, token_filename) :
