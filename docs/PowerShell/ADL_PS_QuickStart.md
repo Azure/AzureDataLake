@@ -12,7 +12,7 @@ The scripts reuse some values so set the following variables as you need
 
     $subname = Your subscription name
     $subid  = Your subscription id
-    $tenant = Your tenantid. Example: microsoft.onmicrosoft.com
+    $tenant = Your tenantid. Example: contoso.onmicrosoft.com
     $adla = the name of your ADL Analytics account (not its full domain name)
     $adls = the name of your ADL Store account (not its full domain name)
 
@@ -21,16 +21,21 @@ The scripts reuse some values so set the following variables as you need
 
 Use the Login-AzureRmAccount cmdlet
  
-    Login-AzureRmAccount 
+    Login-AzureRmAccount -SubscriptionName $subname -TenantId $tenant
 
-Specify which Subscription you want to work in
+## Getting a list of all the jobs suibmitted in the last day
 
-    Set-AzureRmContext -SubscriptionName $subname -TenantId $tenant
+    $jobs = Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
-##  Getting a list of all the jobs
+##  Getting a list of all the jobs 
 
-    $jobs = Get-AzureRmDataLakeAnalyticsJob -Account $adla
+    $jobs = Get-AdlJob -Account $adla
 
+NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while for this cmdlet to finish'
+
+## Getting a list of all the jobs suibmitted in the last day
+
+    $jobs = Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
 ## How many jobs do we have?
 
@@ -39,28 +44,23 @@ Specify which Subscription you want to work in
 ## Look at the first job
 
     $jobs[0]
-
-That didn't print much let's get all the fields
-
-    $jobs[0] | select *
-
-This prints:
-
-    DegreeOfParallelism : 1
-    EndTime             : 1/14/2016 10:24:26 PM +00:00
-    ErrorMessage        : 
-    JobId               : e2fb6818-2393-44f7-91eb-0002b86724e6
-    Name                : ADF-e2fb6818-2393-44f7-91eb-0002b86724e6
-    Priority            : 100
-    Properties          : 
-    Result              : Succeeded
-    StartTime           : 1/14/2016 10:23:32 PM +00:00
-    State               : Ended
-    StateAuditRecords   : {}
-    Submitter           : saveenr@microsoft.com
-    SubmitTime          : 1/14/2016 10:23:02 PM +00:00
+    
+    JobId               : d0fe8b13-623f-4562-8a98-00890bae4e21
+    Name                : ADF-d0fe8b13-623f-4562-8a98-00890bae4e21
     Type                : USql
-
+    Submitter           : saveenr@microsoft.com
+    ErrorMessage        :
+    DegreeOfParallelism : 3
+    Priority            : 100
+    SubmitTime          : 12/28/2016 2:50:02 AM +00:00
+    StartTime           : 12/28/2016 2:50:44 AM +00:00
+    EndTime             : 12/28/2016 2:52:15 AM +00:00
+    State               : Ended
+    Result              : Succeeded
+    LogFolder           :
+    LogFilePatterns     :
+    StateAuditRecords   :
+    Properties          :
 
 ## Find all the submitters and the numbers of jobs they have submitted
 
@@ -70,6 +70,10 @@ This prints:
 
     $jobs | Group-Object Result | Select -Property Count,Name
 
+
+## Analyze the jobs by Result
+
+    $jobs | Group-Object State | Select -Property Count,Name
 
 ## Filter jobs to once submitted in the last 24 hours
 
