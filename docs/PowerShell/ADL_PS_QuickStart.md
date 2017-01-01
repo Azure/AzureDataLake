@@ -104,4 +104,12 @@ A job might fail at compile time - and so it never starts. Let's look at the fai
 jobs that actually started running and then failed.
 
     $failed_jobs | Where-Object { $_.StartTime -ne $null }
- 
+
+## Check if you are running as an administrator
+
+    function Test-Administrator  
+    {  
+        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
+        $p = New-Object Security.Principal.WindowsPrincipal $user
+        $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
+    }
