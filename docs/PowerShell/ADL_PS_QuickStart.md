@@ -71,7 +71,7 @@ NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while
     $jobs | Group-Object Result | Select -Property Count,Name
 
 
-## Analyze the jobs by Result
+## Analyze the jobs by State
 
     $jobs | Group-Object State | Select -Property Count,Name
 
