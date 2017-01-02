@@ -113,3 +113,16 @@ jobs that actually started running and then failed.
         $p = New-Object Security.Principal.WindowsPrincipal $user
         $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
     }
+
+# More Information
+
+## Tutorials
+
+* [Tutorial: get started with Azure Data Lake Analytics using Azure PowerShell](https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-get-started-powershell)
+* [Tutorial: get started with Azure Data Lake Store using Azure PowerShell](https://docs.microsoft.com/en-us/azure/data-lake-store/data-lake-store-get-started-powershell)
+
+## Reference Materials
+
+* [Azure Data Lake Analytics Cmdlets](https://docs.microsoft.com/en-us/powershell/resourcemanager/azurerm.datalakeanalytics/v3.1.0/azurerm.datalakeanalytics?redirectedfrom=msdn)
+* [Azure Data Lake Store Cmdlets](https://docs.microsoft.com/en-us/powershell/resourcemanager/azurerm.datalakestore/v3.1.0/azurerm.datalakestore)
+
