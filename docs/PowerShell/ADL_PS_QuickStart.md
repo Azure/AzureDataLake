@@ -23,7 +23,7 @@ Use the Login-AzureRmAccount cmdlet
  
     Login-AzureRmAccount -SubscriptionName $subname -TenantId $tenant
 
-## Getting a list of all the jobs suibmitted in the last day
+## Getting a list of all the jobs submitted in the last day
 
     $jobs = Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
