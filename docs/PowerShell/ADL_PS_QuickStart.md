@@ -12,7 +12,6 @@ The scripts reuse some values so set the following variables as you need
 
     $subname = Your subscription name
     $subid  = Your subscription id
-    $tenant = Your tenantid. Example: contoso.onmicrosoft.com
     $adla = the name of your ADL Analytics account (not its full domain name)
     $adls = the name of your ADL Store account (not its full domain name)
 
@@ -21,7 +20,7 @@ The scripts reuse some values so set the following variables as you need
 
 Use the Login-AzureRmAccount cmdlet
  
-    Login-AzureRmAccount -SubscriptionName $subname -TenantId $tenant
+    Login-AzureRmAccount -SubscriptionName $subname 
 
 ## Getting a list of all the jobs submitted in the last day
 
@@ -114,6 +113,15 @@ jobs that actually started running and then failed.
         $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
     }
 
+## Find the TenantID for a subscription
+
+    # Using the Subscription Name
+    (Get-AzureRmSubscription -SubscriptionName "MySUbName").TenantID
+
+    # Using the Subscription ID
+    (Get-AzureRmSubscription -SubscriptionName "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx").TenantID
+
+    
 # More Information
 
 ## Tutorials
