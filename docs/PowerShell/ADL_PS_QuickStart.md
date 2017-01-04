@@ -26,7 +26,7 @@ Use the Login-AzureRmAccount cmdlet
 
 The -SubmittedAfter parameter performs server-side filtering.
 
-    Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
+    Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
 ##  Getting a list of all the jobs 
 
@@ -79,22 +79,24 @@ NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while
     $jobs | Where-Object { $_.EndTime -ge $lowerdate }
     
 ## Filter jobs to once ended in the last 24 hours (Client-side filtering)
+
     $upperdate = Get-Date
     $lowerdate = $upperdate.AddHours(-24)
     
     $jobs | Where-Object { $_.SubmitTime -ge $lowerdate }
 
+## Find all Failed  jobs (Server-side filtering)
 
+    Get-AdlJob -Account $adla -State Ended -Result Succeeded
 
 
 ## Find all Failed  jobs (Server-side filtering)
 
-     Get-AdlJob -Account $adla -State Ended -Result Failed
+    Get-AdlJob -Account $adla -State Ended -Result Failed
 
+# Analyze jobs by the DegreeOfParallelism
 
-## Find all Failed  jobs (Client-side filtering)
-
-    Get-AdlJob -Account $adla | Where-Object { $_.Result -eq "Failed" }
+    $jobs | Group-Object DegreeOfParallelism | Select -Property Count,Name
 
 ## Who had failed jobs
 
@@ -124,8 +126,23 @@ jobs that actually started running and then failed.
 
     # Using the Subscription ID
     (Get-AzureRmSubscription -SubscriptionName "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx").TenantID
-
     
+## List the linked ADLS Stores or Blob Storage Accounts 
+
+    Get-AdlAnalyticsDataSource -Account $adla
+
+## Get the default ADLS Store
+
+    Get-AdlAnalyticsDataSource -Account $adla  | ? { $_.IsDefault } 
+
+## Test if Accounts Exist
+
+    Test-AdlStore -Name $adls
+
+## List databases in an account
+
+    Get-AdlCatalogItem -Account $adla -ItemType Database
+
 # More Information
 
 ## Tutorials
