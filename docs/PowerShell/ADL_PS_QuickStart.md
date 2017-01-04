@@ -24,23 +24,21 @@ Use the Login-AzureRmAccount cmdlet
 
 ## Getting a list of all the jobs submitted in the last day
 
-    $jobs = Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
+The -SubmittedAfter parameter performs server-side filtering.
+
+    Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
 ##  Getting a list of all the jobs 
 
+NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while for this cmdlet to finish'
+    
     $jobs = Get-AdlJob -Account $adla
 
-NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while for this cmdlet to finish'
-
-## Getting a list of all the jobs suibmitted in the last day
-
-    $jobs = Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
-
-## How many jobs do we have?
+## How many jobs were retrieved
 
     $jobs.Count
 
-## Look at the first job
+## Examine details on a single job
 
     $jobs[0]
     
@@ -69,32 +67,38 @@ NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while
 
     $jobs | Group-Object Result | Select -Property Count,Name
 
-
 ## Analyze the jobs by State
 
     $jobs | Group-Object State | Select -Property Count,Name
 
-## Filter jobs to once submitted in the last 24 hours
+## Filter jobs to once submitted in the last 24 hours (Client-side filtering)
 
     $upperdate = Get-Date
     $lowerdate = $upperdate.AddHours(-24)
     
     $jobs | Where-Object { $_.EndTime -ge $lowerdate }
     
-## Filter jobs to once ended in the last 24 hours
-
+## Filter jobs to once ended in the last 24 hours (Client-side filtering)
     $upperdate = Get-Date
     $lowerdate = $upperdate.AddHours(-24)
     
     $jobs | Where-Object { $_.SubmitTime -ge $lowerdate }
-    
-## Find all Failed  jobs
 
-    $jobs | Where-Object { $_.Result -eq "Failed" }
+
+
+
+## Find all Failed  jobs (Server-side filtering)
+
+     Get-AdlJob -Account $adla -State Ended -Result Failed
+
+
+## Find all Failed  jobs (Client-side filtering)
+
+    Get-AdlJob -Account $adla | Where-Object { $_.Result -eq "Failed" }
 
 ## Who had failed jobs
 
-    $failed_jobs = $jobs | Where-Object { $_.Result -eq "Failed" }
+    $failed_jobs = Get-AdlJob -Account $adla -State Ended -Result Failed
     $failed_jobs | Group-Object Submitter | Select -Property Count,Name
 
 ## Find all the failed jobs that actually started 
