@@ -1,6 +1,6 @@
 For the Azure Data Lake homepage go here: 
 
-http://azure.github.io/AzureDataLake/
+http://aka.ms/AzureDataLake
 
 
 ## Code of Conduct
