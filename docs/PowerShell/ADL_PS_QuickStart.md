@@ -22,12 +22,16 @@ Use the Login-AzureRmAccount cmdlet
  
     Login-AzureRmAccount -SubscriptionName $subname 
 
-## Getting a list of all the jobs submitted in the last day
+## Get all the jobs submitted in the last day
 
 The -SubmittedAfter parameter performs server-side filtering.
 
     Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
+## Get all the jobs submitted in the last 5 days and that successfully completed
+
+    Get-AdlJob -Account datainsightsadhoc -SubmittedAfter (Get-Date).AddDays(-5) -State Ended -Result Succeeded
+    
 ##  Getting a list of all the jobs 
 
 NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while for this cmdlet to finish'
