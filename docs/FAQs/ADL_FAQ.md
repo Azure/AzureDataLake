@@ -8,14 +8,6 @@
 * [ADL Store](http://aka.ms/adlsfaq)
 * [U-SQL ](http://aka.ms/usqlfaq)
 
-### Q: What does it mean that  ADL Store and ADL Analytics are currently in "Preview"?
-
-Please see this link for details: https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/
-
-### Q: When will ADL Store and ADL Analytics be "Generally Available"?
-
-In H2 of CY 2016.
-
 ### Q: Is Azure Data Lake (Store, Analytics, or HDInsight) going to offered as an "on-premises" product?
 
 We currently have no plans to offer on-premises versions of these services. 
@@ -40,7 +32,7 @@ Because both ADL Store and ADL Analytics use HTTPS for all communication. The on
 
 No. Azure Data Lake Tools for Visual Studio works with Visual Studio Community Editions which are free.
 
-### !: Which versions of Visual Studio work with Azure Data Lake Tools for Visual Studio?
+### Q: Which versions of Visual Studio work with Azure Data Lake Tools for Visual Studio?
 
 These versions are supported:
 - VS 2012
@@ -63,7 +55,7 @@ We have changed the Data Lake Tools for Visual Studio plugin release cycle and n
 
 ### Q: Does ADL Support Parquet Files?
 
-* **ADL Store**: You can move Parquet files into ADL Store from a source HDFS system. (You don't need to worry about any block size fdifferences)
-* **HDInsifght**: An HDInsight cluster can read Parquet files stored in ADL Store.
-* **ADL Analytics**: ADL Analytics support for Parquet files is currently under investigation and is something on our roadmap
+* **Data Lake Store**: You can move Parquet files into Data Lake Store from a source HDFS system. (You don't need to worry about any block size fdifferences)
+* **HDInsight**: An HDInsight cluster can read Parquet files stored in Data Lake Store.
+* **Data Lake Analytics**: Data Lake Analytics support for Parquet files is currently under investigation and is something on our roadmap
 
