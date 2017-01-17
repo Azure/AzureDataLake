@@ -250,14 +250,19 @@ The header row is taking the options of the outputter into account. Thus, the ab
 
 When declaring a scalar variable in U-SQL, you needed to explicitly mention its type, as in:
 
-    DECLARE @s string = "This is a string";
+    DECLARE @s string = "
+    a string";
 
 If the expression is not producing the stated type, an error is raised.
 
 Starting in this release, U-SQL additionally gives you the option of letting U-SQL infer the variable's type:
 
     DECLARE @s = "This is a string";
-    DECLARE @m = new SqlMap<string, string> {{"This", "is a string in a map"}, {"That", "is also a string in a map"}};
+    DECLARE @m = new SqlMap<string, string> 
+        { 
+            {"This", "is a string in a map"}, 
+            {"That", "is also a string in a map"} 
+        };
 
 ## PLEASE NOTE:
 
