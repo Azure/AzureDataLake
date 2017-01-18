@@ -63,6 +63,30 @@ NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while
     StateAuditRecords   :
     Properties          :
 
+## Add useful calculated properties to job objects
+
+Powershell can dynamically add calculated properties to job objects. The script below adds properties
+you may find very useful
+
+    function annotate_job( $j )
+    {
+        $dic1 = @{
+            Label='AUHours';
+            Expression={ ($_.DegreeOfParallelism * ($_.EndTime-$_.StartTime).TotalHours)}}
+        $dic2 = @{
+            Label='DurationSeconds';
+            Expression={ ($_.EndTime-$_.StartTime).TotalSeconds}}
+        $dic3 = @{
+            Label='DidRun';
+            Expression={ ($_.StartTime -ne $null)}}
+
+        $j2 = $j | select *, $dic1, $dic2, $dic3
+        $j2
+    }
+
+    $jobs_annotated = $jobs | %{ annotate_job( $_ ) }
+
+
 ## Find all the submitters and the numbers of jobs they have submitted
 
     $jobs | Group-Object Submitter | Select -Property Count,Name
