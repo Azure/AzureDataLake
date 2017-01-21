@@ -1,0 +1,5 @@
+CREATE DATABASE MyDatabase;
+
+// OR
+
+CREATE DATABASE IF NOT EXISTS MyDatabase;
