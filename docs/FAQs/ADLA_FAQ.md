@@ -21,7 +21,7 @@ To achieve the same effect:
 
 ### Where can I find the U-SQL FAQ?
 
-(Link to the U-SQL FAQ)[https://github.com/MicrosoftBigData/usql/blob/master/FAQ.md]
+https://github.com/MicrosoftBigData/usql/blob/master/FAQ.md
 
 ### How do a provision a new user into my ADL Analytics account?
 
@@ -38,11 +38,10 @@ This ensures that a user:
 
 ### Can I submit a U-SQL Job from the Command Line?
 
-Yes! We have a couple of options
+Yes, We have a couple of options
 
-**Azure PowerShell** https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-get-started-powershell/
+* **Azure PowerShell** https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-get-started-powershell
+* **Azure CLI**  https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-get-started-cli
+* **Data Lake Analytics .NET SDK** https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-get-started-net-sdk
 
-**Azure CLI**  https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-get-started-cli/
-
-**Data Lake Analytics .NET SDK** https://azure.microsoft.com/en-us/documentation/articles/data-lake-analytics-get-started-net-sdk/
 
