@@ -109,6 +109,8 @@ In this exercise you will list the jobs that have run on your ADLA account. You 
 # Exercise 3: Exploring and downloading ADLS files
 In this exercise you will explore the files in your ADLS account. You will also download the file created by the job you submitted in Exercise 2.
 
+Note: use your DataLakeStore account not the DataLakeAnalytics one for the following commands
+
 1. List all files in the **/Samples/Output/UserName/** folder. 
       * Use the cmdlet ``Get-AdlStoreChildItem``.
 2.  Download the output of the job from Part 2.
