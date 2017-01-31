@@ -113,7 +113,7 @@ In this exercise you will explore the files in your ADLS account. You will also 
       * Use the cmdlet ``Get-AdlStoreChildItem``.
 2.  Download the output of the job from Part 2.
       * Use the cmdlet ``Export-AdlStoreItem``.
-      * Use the ADLS file path **"/Samples/Output/UserName/SearchLog_TestOutput.tsv"**.
+      * Use the ADLS file path **/Samples/Output/UserName/SearchLog_TestOutput.tsv**.
 
 # PowerShell Quick Start
 
