@@ -315,6 +315,8 @@ The result should resemble the following:
 # Exercise 5: Creating and using views
 In this exercise, you will create a view to provide abstraction and promote code reuse.
 
+To make sure that you are not colliding with others that work on the lab on the same account, you will create the view in a database.
+
 If you don't want to limit yourself to reading from or writing to files, you can use U-SQL metadata objects to add additional abstractions. You create them in the context of a database and a schema. Every U-SQL script will always run with a default database (master) and default schema (dbo) as its default context. You can create your own database and/or schema and can change the context by using the USE statement.
 
 Let's start with encapsulating parts of the queries above for future sharing with views and table-valued functions. You can encapsulate a U-SQL expression in a view for future reuse.
@@ -322,7 +324,11 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 
 ## Running the script
 
-1. Replace the content of the Script.usql window with the following U-SQL script, and then submit the script:
+1. Replace the content of the Script.usql window with the following U-SQL script, select a unique database name instead of *&lt;insert your DB name&gt;*, and then submit the script:
+
+	    DROP DATABASE IF EXISTS <insert your DB name>;
+        CREATE DATABASE <insert your DB name>;
+        USE DATABASE <insert your DB name>;
 
 	    DROP VIEW IF EXISTS SearchlogView;
 	    CREATE VIEW SearchlogView AS  
@@ -336,7 +342,7 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 	        FROM "/Samples/Data/SearchLog.tsv"
 	        USING Extractors.Tsv();
 
-	The script you just created defines a view named **SearchlogView** in the default database and schema. Note that the first statement drops any existing definitions of the view and then creates the version that we want to use. 
+	The script you just created creates a new database, set the context to the created database, and defines a view named **SearchlogView**. 
 
 2. The Job View will show an empty job graph, but the Metadata Operations tab will show the operations:
 	![Query 5 Meta Data Ops](/docs/Hands_on_Labs/Images/q5_view_jobview.jpg)
@@ -348,6 +354,8 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 
 4. Replace the contents of the Script.usql window with the following text:
 	
+	    USE DATABASE <insert your DB name>;
+
 	    @res =
     	    SELECT
 	            Region,
@@ -361,7 +369,7 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 	    ORDER BY TotalDuration DESC
 	    USING Outputters.Csv();
     
-5. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique, and then submit the script.
+5. Change the name of the database from *&lt;insert your DB name&gt;* to the one you selected in step 1, change the output file path from *&lt;replace_this_with_your_output_name&gt;* to something unique, and then submit the script.
 	The result should be identical to that of the final step in Exercise 4.
 	
 # Exercise 6: Creating and using table-valued functions
@@ -371,8 +379,10 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 
 ## Running the script
 
-1. Replace the contents of the Script.usql window with the following text, and then submit the script:
+1. Replace the contents of the Script.usql window with the following text, replace *&lt;insert your DB name&gt;* with your previously created database name, and then submit the script:
 	
+	    USE DATABASE <insert your DB name>;
+
     	DROP FUNCTION IF EXISTS RegionalSearchlog;
     	CREATE FUNCTION RegionalSearchlog(@region string = "en-gb") 
     	RETURNS @searchlog
@@ -389,6 +399,8 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 
 3. Replace the contents of your query editor with the following text:
 	
+	    USE DATABASE <insert your DB name>;
+
 	    @rs1 =
     	    SELECT Start, Region, Duration
 	        FROM RegionalSearchlog(DEFAULT) AS S;
@@ -399,7 +411,7 @@ Table-valued functions enable you to create more complex abstractions, by encaps
 	          
     The code you just added retrieves the **Start**, **Region**, and **Duration** fields for the default region.
 	
-4. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
+4. Change the name of the database from *&lt;insert your DB name&gt;* to the one you selected in step 1 and change the output file path from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 5. Submit your script and review the result as explained in Exercise 1. The result should resemble the following: 
 	![Query 6 Result](/docs/Hands_on_Labs/Images/q6_result.jpg)
 	
@@ -410,22 +422,19 @@ Creating a table with U-SQL is similar to creating a table in a relational datab
 
 One of the benefits of creating a table, rather than a view or a table-valued function, is that the data is stored in an optimized format for the query processor to operate on. The data is indexed, partitioned, and stored in its native data type representation.
 
-You will now persist the searchlog data in a schematized format in a table called Searchlog in your own database. The script will:
+You will now persist the searchlog data in a schematized format in a table called SearchLog1 and SearchLog2 in your own database. The script will:
 
-- Create a new database (please use your name or another unique name).
 - Set the query context to the created database.
 - Create tables. To illustrate both ways of creating a table, we create two tables:
     - **SearchLog1** is created with a predefined schema.
 	- **SearchLog2** is created based on the view that encapsulates the extraction expression (essentially a CTAS). Note that for scalability, **U-SQL requires you to define the index** for the table before you can insert.
-- Insert the data into the **SearchLog1** table.
+- Insert the data into the **SearchLog1** and **SearchLog2** tables.
 
 ## Running the script
 
-1. Replace the content of the Script.usql window with the following U-SQL script, and then submit your query:
+1. Replace the content of the Script.usql window with the following U-SQL script:
 
-	    DROP DATABASE IF EXISTS <insert your name>;
-	    CREATE DATABASE <insert your name>;
-	    USE DATABASE <insert your name>;
+	    USE DATABASE <insert your DB name>;
 	
 	    DROP TABLE IF EXISTS SearchLog1;
 	    DROP TABLE IF EXISTS SearchLog2;
@@ -443,14 +452,14 @@ You will now persist the searchlog data in a schematized format in a table calle
 	                      DISTRIBUTED BY HASH (UserId) INTO 4
 	      );
 	
-	    INSERT INTO SearchLog1 SELECT * FROM master.dbo.SearchlogView;
+	    INSERT INTO SearchLog1 SELECT * FROM SearchlogView;
 		
 	    CREATE TABLE SearchLog2(
                    INDEX sl_idx CLUSTERED (UserId ASC) 
                    DISTRIBUTED BY HASH (UserId) INTO 4
 	    ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
-2. Replace the string *&lt;insert your name&gt;* with a unique database name of your choosing.
+2. Replace the string *&lt;insert your DB name&gt;* with with your previously created database name and submit.
 
 3. Review the registration after completion of the job in the Visual Studio Server Explorer (you may need to refresh the Database list):
 	![Query 7 Server Explorer](/docs/Hands_on_Labs/Images/q7_explorer.jpg)
@@ -458,12 +467,11 @@ You will now persist the searchlog data in a schematized format in a table calle
 You can now query the tables in the same way that you queried the unstructured data. Instead of creating a rowset using EXTRACT, you now can simply refer to the table name.
 
 # Exercise 8: Querying tables
-In this exercise, you will query data from the table you created in Exercise 7.
+In this exercise, you will query data from the table you created in Exercise 7 by using a three-part name instead of setting the database context.
 
 ## Running the script
 
-1. Replace the content of the Script.usql window with the following U-SQL script
-(update the database name to the name you used in the preceding exercise):
+1. Replace the content of the Script.usql window with the following U-SQL script and replace *&lt;insert your DB name&gt;* with your previously created database name:
 	
 	    @rs1 =
 	        SELECT
@@ -515,7 +523,7 @@ U-SQL includes many familiar join operators, such as INNER JOIN, LEFT/RIGHT/FULL
     	TO "/output/<replace_this_with_your_output_name>.csv"
     	USING Outputters.Csv();
 
-2. Change *&lt;insert your DB name&gt;* to the name of the database you chose in Exercise 7 and change 
+2. Change *&lt;insert your DB name&gt;* to the name of the database you chose earlier and change 
 the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique. 
 3. Submit your script and review the result as explained in Exercise 1. The resulting file should contain:
 	![Query 9 Result](/docs/Hands_on_Labs/Images/q9_result.jpg)
