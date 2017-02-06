@@ -37,7 +37,7 @@ The main goals of the Lab are to teach you the following:
 1. How to use C# expressions in your U-SQL scripts.
 2. How to use the Visual Studio's U-SQL code behind capabilities.
 3. How to share and re-use C# and .Net Code with others via U-SQL Assemblies.
-4. How to write User-defined functions and a user-defined extractor.
+4. How to write user-defined functions and a user-defined extractor.
 
 In addition, you will use:
 
@@ -109,7 +109,7 @@ In this exercise, you will use the code-behind capabilities of Visual Studio to 
 1. Edit your U-SQL script to resemble the following:
 
         DECLARE @outdir = "<replace_this_with_your_output_name>";
-        DECLARE @output = "/output/"+@outdir+"/result1.csv";
+        DECLARE @output = "/output/"+@outdir+"/result2.csv";
 
         @t =
            EXTRACT date   string,
@@ -198,7 +198,7 @@ Now the assembly can be used in U-SQL Scripts:
         REFERENCE ASSEMBLY <insert your DB name>.TweetAnalysis;
 
         DECLARE @outdir = "<replace_this_with_your_output_name>";
-        DECLARE @output = "/output/"+@outdir+"/result1.csv";
+        DECLARE @output = "/output/"+@outdir+"/result3.csv";
 
         @t =
            EXTRACT date   string,
@@ -242,7 +242,70 @@ First we create the custom extractor:
 1. Add a **C# for U-SQL** class file to the TweetAnalysis C# Code project you created earlier and name it `TweetAnalysisExtractor.cs`.
 2. Replace the content of `TweetAnalysisExtractor.cs` with the following custom extractor code:
 
-        tbd
+        using Microsoft.Analytics.Interfaces;
+        using Microsoft.Analytics.Types.Sql;
+        using System;
+        using System.Collections.Generic;
+        using System.IO;
+        using System.Linq;
+        using System.Text;
+
+        namespace TweetAnalysis
+        {
+            public static class UpdatableRowExtensions
+            {
+                public static void SetColumnIfExists<T>(this IUpdatableRow source, string colName, T value)
+                {
+                    var colIdx = source.Schema.IndexOf(colName);
+                    if (colIdx != -1)
+                    { source.Set<T>(colIdx, value); }
+                }
+            }
+
+            [SqlUserDefinedExtractor(AtomicFileProcessing = false)]
+            public class TweetAnalysisExtractor : IExtractor
+            {
+                private Encoding _encoding;
+                private byte[] _row_delim;
+                private string _col_delim;
+
+                // Class initializer defines parameters for extractor
+                public TweetAnalysisExtractor(Encoding encoding = null, string row_delim = "\r\n", string col_delim = ",")
+                {
+                    this._encoding = ((encoding == null) ? Encoding.UTF8 : encoding);
+                    this._row_delim = this._encoding.GetBytes(row_delim);
+                    this._col_delim = col_delim;
+                }
+
+                // get_topics
+                public static SqlArray<string> get_topics(string tweet)
+                {
+                    return new SqlArray<string>(tweet.Split(' ').Where(x => x.StartsWith("#")));
+                }
+
+                public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow output)
+                {
+                    foreach (Stream currentline in input.Split(this._row_delim))
+                    {
+                        using (StreamReader lineReader = new StreamReader(currentline, this._encoding))
+                        {
+                            string[] columns = lineReader.ReadToEnd().Split( new string[] { this._col_delim }
+                                                                           , StringSplitOptions.None);
+
+                            // row should have 4 columns: date, time, author, tweet
+                            // extractor adds mentions and topics if requested
+                            output.SetColumnIfExists("date", columns[0]);
+                            output.SetColumnIfExists("time", columns[1]);
+                            output.SetColumnIfExists("author", columns[2]);
+                            output.SetColumnIfExists("tweet", columns[3]);
+                            output.SetColumnIfExists("mentions", Udfs.get_mentions(columns[3]));
+                            output.SetColumnIfExists("topics", get_topics(columns[3]));
+                        }
+                        yield return output.AsReadOnly();
+                    }
+                }
+            }
+        }
 
 3. Right-click on the TweetAnalysis project and select **Register Assembly**. Name the assembly `TweetAnalysis`, select the option **Replace the assembly if it already exists**, and submit it.
     
@@ -253,7 +316,7 @@ Now we can change the script to make use of the custom extractor.
         REFERENCE ASSEMBLY <insert your DB name>.TweetAnalysis;
 
         DECLARE @outdir = "<replace_this_with_your_output_name>";
-        DECLARE @output = "/output/"+@outdir+"/result1.csv";
+        DECLARE @output = "/output/"+@outdir+"/result4.csv";
 
         @m =
            EXTRACT author   string,
@@ -292,7 +355,7 @@ In this exercise, you will apply the previous script to all the tweet sample fil
         REFERENCE ASSEMBLY <insert your DB name>.TweetAnalysis;
 
         DECLARE @outdir = "<replace_this_with_your_output_name>";
-        DECLARE @output = "/output/"+@outdir+"/result1.csv";
+        DECLARE @output = "/output/"+@outdir+"/result5.csv";
 
         @m =
            EXTRACT author   string,
