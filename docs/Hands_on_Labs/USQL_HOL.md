@@ -336,7 +336,7 @@ Creating a table with U-SQL is similar to creating a table in a relational datab
 
 One of the benefits of creating a table, rather than a view or a table-valued function, is that the data is stored in an optimized format for the query processor to operate on. The data is indexed, partitioned, and stored in its native data type representation.
 
-You will now persist the searchlog data in a schematized format in a table called SearchLog1 and SearchLog2 in your own database. The script will:
+You will now persist the searchlog data in a schematized format in tables called SearchLog1 and SearchLog2 in your  database. The script will:
 
 - Set the query context to the previously created database.
 - Create tables. To illustrate both ways of creating a table, we create two tables:
@@ -369,7 +369,7 @@ You will now persist the searchlog data in a schematized format in a table calle
         CREATE TABLE SearchLog2(
                INDEX sl_idx CLUSTERED (UserId ASC) 
                DISTRIBUTED BY HASH (UserId) INTO 2
-        ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
+        ) AS SELECT * FROM SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
 You can now query the tables in the same way that you queried the unstructured data. Instead of creating a rowset using EXTRACT, you now can simply refer to the table name.
 

@@ -342,12 +342,12 @@ Since we  used the same EXTRACT clause repeatedly in the previous examples, it m
 	        FROM "/Samples/Data/SearchLog.tsv"
 	        USING Extractors.Tsv();
 
-	The script you just created creates a new database, set the context to the created database, and defines a view named **SearchlogView**. 
+	The script you just created creates a new database, sets the context to the created database, and defines a view named **SearchlogView**. 
 
 2. The Job View will show an empty job graph, but the Metadata Operations tab will show the operations:
 	![Query 5 Meta Data Ops](/docs/Hands_on_Labs/Images/q5_view_jobview.jpg)
 
-3. Review the registration of the view in Visual Studio's Server Explorer as shown here:
+3. Review the registration of the view in Visual Studio's Server Explorer as shown here (you may need to refresh the Database list):
 	![Query 5 Server Explorer](/docs/Hands_on_Labs/Images/q5_view_explorer.jpg)
 
 	We can now use the view without having to worry about how to schematize the data in every query. Instead, we can use our new view in place of the EXTRACT expression in the scripts we created earlier.
@@ -422,7 +422,7 @@ Creating a table with U-SQL is similar to creating a table in a relational datab
 
 One of the benefits of creating a table, rather than a view or a table-valued function, is that the data is stored in an optimized format for the query processor to operate on. The data is indexed, partitioned, and stored in its native data type representation.
 
-You will now persist the searchlog data in a schematized format in a table called SearchLog1 and SearchLog2 in your own database. The script will:
+You will now persist the searchlog data in a schematized format in tables called SearchLog1 and SearchLog2 in your database. The script will:
 
 - Set the query context to the created database.
 - Create tables. To illustrate both ways of creating a table, we create two tables:
@@ -457,9 +457,9 @@ You will now persist the searchlog data in a schematized format in a table calle
 	    CREATE TABLE SearchLog2(
                    INDEX sl_idx CLUSTERED (UserId ASC) 
                    DISTRIBUTED BY HASH (UserId) INTO 4
-	    ) AS SELECT * FROM master.dbo.SearchlogView; // You can use EXTRACT or SELECT in the AS clause
+	    ) AS SELECT * FROM SearchlogView; // You can use EXTRACT or SELECT in the AS clause
 
-2. Replace the string *&lt;insert your DB name&gt;* with with your previously created database name and submit.
+2. Replace the string *&lt;insert your DB name&gt;* with your previously created database name and submit.
 
 3. Review the registration after completion of the job in the Visual Studio Server Explorer (you may need to refresh the Database list):
 	![Query 7 Server Explorer](/docs/Hands_on_Labs/Images/q7_explorer.jpg)
