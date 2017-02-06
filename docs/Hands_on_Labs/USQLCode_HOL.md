@@ -86,7 +86,7 @@ In particular, the script extracts the mentions from the tweet, counts the numbe
 2. Change the name of the output directory from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 3. Submit your script. 
 	
-This script illustrates the following concepts:
+This exercise illustrates the following concepts:
 
 - *Rowset variables*. Each query expression that produces a rowset can be assigned to a variable. Variables in U-SQL follow the T-SQL variable naming pattern of an ampersand (@) followed by a name (for example **@t**). Note that the assignment statement does not execute the query. It merely names the expression and gives you the ability to build-up more complex expressions.
 
@@ -120,7 +120,7 @@ In this exercise, you will use the code-behind capabilities of Visual Studio to 
            USING   Extractors.Csv();
         
         @m = 
-           SELECT TweetsAnalysis.Udfs.get_mentions(tweet) AS mentions 
+           SELECT TweetAnalysis.Udfs.get_mentions(tweet) AS mentions 
            FROM   @t;
 
         @m = 
@@ -162,7 +162,7 @@ In this exercise, you will use the code-behind capabilities of Visual Studio to 
 
 4. Submit your script, and verify that the result is the same as that of Exercise 1.
 
-This script illustrates the following concepts:
+This exercise illustrates the following concepts:
 
 - *VisualStudio's U-SQL Code-behind*. The Azure Data Lake Tools for VisualStudio offers the ability to write C# code in a code-behind file that the tool will automatically build and register in the Azure Data Lake account, add the necessary references to the script, and in the end remove the registered assembly to cleanup.
 
@@ -175,15 +175,15 @@ First let's generate a database that is unique to you:
 
 1. Add a new U-SQL Script file in the open Solution and copy the following U-SQL script:
 
-        DROP DATABASE IF EXIST <insert your name>;
-        CREATE DATABASE <insert your name>;
+        DROP DATABASE IF EXISTS <insert your DB name>;
+        CREATE DATABASE <insert your DB name>;
 
 2. Replace *&lt;insert your DB name&gt;* with a unique database name and then submit your query.
    This should create a new database.
 
 Now let's add and register the assembly in Visual Studio:
 
-3. Add a new Class Library (For U-SQL Application) project to the open solution.
+3. Add a new **Class Library (For U-SQL Application)** project to the open solution (you can name it TweetAnalysis).
 
 4. Move the C# code from Exercise 2 from the code-behind file into the Class Library's `.cs` file.
 
@@ -209,7 +209,7 @@ Now the assembly can be used in U-SQL Scripts:
            USING   Extractors.Csv();
         
         @m = 
-           SELECT TweetsAnalysis.Udfs.get_mentions(tweet) AS mentions 
+           SELECT TweetAnalysis.Udfs.get_mentions(tweet) AS mentions 
            FROM   @t;
 
         @m = 
@@ -229,7 +229,7 @@ Now the assembly can be used in U-SQL Scripts:
 8. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique.
 9. Submit your script, and verify that the result is the same as that of Exercise 1.
 
-This script illustrates the following concepts:
+This exercise illustrates the following concepts:
 
 - *U-SQL Assembly*. You can use U-SQL Assemblies to share your custom code with other users in Azure Data Lake as long as they have permissions to the database that contains the registered assembly. After referencing an assembly in a U-SQL Script, all the public classes and functions become available in U-SQL. 
 
@@ -237,9 +237,49 @@ This script illustrates the following concepts:
 
 In this exercise, you will write a custom extractor for the tweet data set that will extracts the mentions and tweet topics as arrays (if the extract schema requests them).
 
-1. To be done 
+First we create the custom extractor:
+
+1. Add a **C# for U-SQL** class file to the TweetAnalysis C# Code project you created earlier and name it `TweetAnalysisExtractor.cs`.
+2. Replace the content of `TweetAnalysisExtractor.cs` with the following custom extractor code:
+
+        tbd
+
+3. Right-click on the TweetAnalysis project and select **Register Assembly**. Name the assembly `TweetAnalysis`, select the option **Replace the assembly if it already exists**, and submit it.
     
-This script illustrates the following concepts:
+Now we can change the script to make use of the custom extractor.
+
+4. Change Script.usql to the following script:
+
+        REFERENCE ASSEMBLY <insert your DB name>.TweetAnalysis;
+
+        DECLARE @outdir = "<replace_this_with_your_output_name>";
+        DECLARE @output = "/output/"+@outdir+"/result1.csv";
+
+        @m =
+           EXTRACT author   string,
+                   mentions SqlArray<string>,
+                   topics   SqlArray<string>
+            FROM   "/Samples/Data/Tweets/MikeDoesBigDataTweets.csv"
+           USING   new TweetAnalysis.TweetAnalysisExtractor();
+        
+        @m = 
+           SELECT mention
+           FROM   @m CROSS APPLY EXPLODE(mentions) AS M(mention);
+
+        @res =
+           SELECT mention, COUNT(*) AS mentioncount
+           FROM   @m
+           GROUP BY mention; 
+
+        OUTPUT @res
+        TO @output
+        ORDER BY mentioncount DESC
+        USING Outputters.Csv();
+
+8. Change the name of the database from *&lt;insert your DB name&gt;* with the previously created database name and change the output path from *&lt;replace_this_with_your_output_name&gt;* to something unique.
+9. Submit your script, and verify that the result is the same as that of Exercise 1.
+
+This exercise illustrates the following concepts:
 
 - *User-defined Extractor*. U-SQL provides an extensibility framework to add your own custom operators, called User-defined Operators or UDOs for short. This sample shows a custom extractor, but U-SQL also offers such custom operators such as processors, appliers, reducers, combiners and outputters. U-SQL custom extractors can be parallelised by U-SQL over a large file or you can force an extractor to operate on a complete file.
 
@@ -249,11 +289,36 @@ In this exercise, you will apply the previous script to all the tweet sample fil
 
 1. Update the U-SQL script to look like the following:
 
-	    TBD
+        REFERENCE ASSEMBLY <insert your DB name>.TweetAnalysis;
 
-2. Change the name of the output file from *&lt;replace_this_with_your_output_name&gt;* to something unique, and then submit the script.
+        DECLARE @outdir = "<replace_this_with_your_output_name>";
+        DECLARE @output = "/output/"+@outdir+"/result1.csv";
 
-This script illustrates the following concepts:
+        @m =
+           EXTRACT author   string,
+                   mentions SqlArray<string>,
+                   topics   SqlArray<string>,
+                   origin   string
+            FROM   "/Samples/Data/Tweets/{origin}Tweets.csv"
+           USING   new TweetAnalysis.TweetAnalysisExtractor();
+        
+        @m = 
+           SELECT mention
+           FROM   @m CROSS APPLY EXPLODE(mentions) AS M(mention);
+
+        @res =
+           SELECT mention, COUNT(*) AS mentioncount
+           FROM   @m
+           GROUP BY mention; 
+
+        OUTPUT @res
+        TO @output
+        ORDER BY mentioncount DESC
+        USING Outputters.Csv();
+
+2. Change the name of the database from *&lt;insert your DB name&gt;* with the previously created database name and change the output path from *&lt;replace_this_with_your_output_name&gt;* to something unique, and then submit the script.
+
+This exercise illustrates the following concepts:
 
 - *U-SQL File Set*. U-SQL provides a simple file path pattern language that allows you to parameterize the path expressions, lift parts of the path into your rowset data set as columns. Queries that put predicates on these columns can restrict the script to only run on the selected files without having to read all the files matching the patterns.
 
