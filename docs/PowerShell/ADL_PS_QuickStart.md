@@ -163,6 +163,10 @@ jobs that actually started running and then failed.
 
     Get-AdlAnalyticsDataSource -Account $adla  | ? { $_.IsDefault } 
 
+## Download a folder recursively 
+
+    Export-AdlStoreItem -Account $adls -Path /sourcefolder -Destination D:\destinationfolder -Recurse
+
 ## Test if Accounts Exist
 
     Test-AdlStore -Name $adls
