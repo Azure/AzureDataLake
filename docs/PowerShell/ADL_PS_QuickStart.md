@@ -169,6 +169,7 @@ jobs that actually started running and then failed.
 
 ## Test if Accounts Exist
 
+    Test-AdlAnalyticsAccount -Name $adls
     Test-AdlStore -Name $adls
 
 ## List databases in an account
