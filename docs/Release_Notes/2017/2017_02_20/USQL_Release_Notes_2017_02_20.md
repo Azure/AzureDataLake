@@ -24,14 +24,12 @@ In case the migration of a credential object may have run into an issue, we stil
 As part of the [previous `PARTITION` syntax](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_08_01/USQL_Release_Notes_2016_08_01.md#start-of-deprecation-of-old-partitioned-by-syntax), the deprecated `PARTITION BY BUCKET` Syntax has been removed in this refresh. More [details here](https://blogs.msdn.microsoft.com/azuredatalake/2017/01/23/u-sql-deprecation-notice-partition-by-bucket-will-be-removed/).
 
 ## Breaking Changes
-
 #### Previously announced deprecation items are now removed
 
 Attempting to use any of the following items will result in a deprecation error instead of a warning:
 
 1. [`PARTITIONED BY BUCKET` Syntax.](https://blogs.msdn.microsoft.com/azuredatalake/2017/01/23/u-sql-deprecation-notice-partition-by-bucket-will-be-removed/)
 
- 
 2. [`CREATE/ALTER CREDENTIAL` DDL](https://blogs.msdn.microsoft.com/azuredatalake/2017/01/24/u-sql-deprecation-update-migration-of-data-source-credentials-and-removal-of-create-credential-alter-credential-and-drop-credential/)
 
 #### `DISTINCT` Aggregates are no longer allowed in an `OVER` expression
@@ -39,7 +37,6 @@ Attempting to use any of the following items will result in a deprecation error 
 DISTNCT aggregates are no longer allowed in an [`OVER` expression](https://msdn.microsoft.com/en-us/library/azure/mt490608.aspx) (e.g., `SELECT COUNT(DISTINCT x) OVER()`). 
 In most cases this did not work previously anyway and resulted in an optimizer error during preparation phase. 
 If you were using it and it did work, please [contact us](mailto:usql@microsoft.com) for a workaround.
-
 
 ## Major U-SQL Bug Fixes, Performance and Scale Improvements
 
@@ -331,8 +328,6 @@ The U-SQL Syntax looks like:
 
 #### U-SQL's `VALUES` row/rowset constructor supports 1 million constant values
 
-***Not sure we want to release that yet since I feel some of the syntax is not fully backed***
-
 U-SQL's row/rowset constructor `VALUES` increased its limit to support up to 1 million constant values. The limit is based on the total count based on the `number of rows*number of columns`.
 
 #### U-SQL's `CROSS`/`OUTER APPLY` adds support for `VALUES` expression and C# expressions of types `IEnumerable<T>`, `KeyValuePair<K,V>`, `IEnumerable<Tuple>` 
@@ -355,7 +350,6 @@ The new syntax for the `Apply_Expression` is:
     Applier_Expression :=                                                                                    
         ['USING'] applier_type_expression Derived_Table_Alias_With_Types
         [Readonly_Clause] [Required_Clause].
-
 
 Where `expression` is a C# expression returning a value of either type `IEnumerable<T>`, `IEnumerable<KeyValuePair<K,V>>`,  or `IEnumerable<Tuple>`. The expression normally refers to at least one of the columns from the `Rowset_Source`.
 
@@ -427,7 +421,6 @@ Examples:
 
     OUTPUT @ca_ie_kvp TO "/output/documentation/crossapply_ie_kvp.csv" USING Outputters.Csv();
 
-
 ##### U-SQL's `CROSS`/`OUTER APPLY` with C# expressions of type `IEnumerable<Tuple>`
 
 As a further generalization, we now also support `EXPLODE` expressions that return any `IEnumerable<Tuple<T1, T2, ...>`, where `T1`, `T2` etc. are supported U-SQL types (U-SQL built-in type or U-SQL UDT).
@@ -477,7 +470,7 @@ For example, let's assume that the U-SQL assembly `MyAssembly` contains a UDT `M
 
 Using this feature, you can find easily the input and output tables/files for a particular job. Switch to the Data tab in the Job View window to enjoy this feature.
 	
-![Data View](http://TBD) **Image to be added**
+![Data View](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/DataViewTab.png) 
 
 #### Improved failed vertex debug experience for code behind .cs file. 
 
