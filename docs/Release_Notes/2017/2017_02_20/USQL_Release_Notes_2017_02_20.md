@@ -111,7 +111,7 @@ This feature allows to write more generic U-SQL table-valued functions and proce
 
 #### Catalogs can be shared among ADLA accounts even across different primary ADLS accounts  
 
-One important ability of a data lake is to be able to share data across different analytics accounts. [Earlier](), U-SQL started to let you use 4 part-names to access U-SQL catalog objects from a different Azure Data Lake Analytics account if they shared the same primary Azure Data Lake Store account. 
+One important ability of a data lake is to be able to share data across different analytics accounts. [Earlier](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_10_16/USQL_Release_Notes_2016_10_16.md#catalogs-can-be-shared-among-adla-accounts-as-long-as-they-share-their-primary-adls-storage), U-SQL started to let you use 4 part-names to access U-SQL catalog objects from a different Azure Data Lake Analytics account if they shared the same primary Azure Data Lake Store account. 
 
 With this refresh, you are allowed to access U-SQL catalog objects also if the two ADLA accounts have different primary Azure Data Lake Store accounts.
 
