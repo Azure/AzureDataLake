@@ -76,6 +76,16 @@ This fixes an earlier regression in the support of the `USING` statement.
 
 In previous releases, we allowed `checked` in a constant-foldable expression and turned it into an unchecked expression. Starting in this release, if a `checked` expression appears in an expression, that expression is not constant-folded.
 
+#### Two previously mentioned issues with quoted identifiers got fixed.
+
+The following two issues mentioned in the [October 2016 release notes](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_10_16/USQL_Release_Notes_2016_10_16.md#u-sql-quoted-identifiers) have been fixed since:
+
+1. Inserting into a table that contains columns with identifiers that have to be quoted
+   `INSERT INTO Table SELECT *;` does work if the table has a column name that has to be quoted. 
+			
+2. Inserting into column names that contain characters that need to be entitized in XML
+   `INSERT INTO Table ([Column With Ampersand &]) ...` does work now.
+
 ## U-SQL Preview Features
 
 We currently have the following U-SQL features in preview. A feature in preview means that we are still finalizing the implementation of the feature, but are soliciting feedback and want to make it available ahead of a full release due to their value to the scenarios they address and the ability to learn more from our customers.
