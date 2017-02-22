@@ -34,7 +34,7 @@ Attempting to use any of the following items will result in a deprecation error 
 
 #### `DISTINCT` Aggregates are no longer allowed in an `OVER` expression
 
-DISTNCT aggregates are no longer allowed in an [`OVER` expression](https://msdn.microsoft.com/en-us/library/azure/mt490608.aspx) (e.g., `SELECT COUNT(DISTINCT x) OVER()`). 
+DISTINCT aggregates are no longer allowed in an [`OVER` expression](https://msdn.microsoft.com/en-us/library/azure/mt490608.aspx) (e.g., `SELECT COUNT(DISTINCT x) OVER()`). 
 In most cases this did not work previously anyway and resulted in an optimizer error during preparation phase. 
 If you were using it and it did work, please [contact us](mailto:usql@microsoft.com) for a workaround.
 
@@ -111,7 +111,7 @@ This feature allows to write more generic U-SQL table-valued functions and proce
 
 #### Catalogs can be shared among ADLA accounts even across different primary ADLS accounts  
 
-One important ability of a data lake is to be able to share data across different analytics accounts. [Earlier](), U-SQL started to let you use 4 part-names to access U-SQL catalog objects from a different Azure Data Lake Analytics account if they shared the same primary Azure Data Lake Store account. 
+One important ability of a data lake is to be able to share data across different analytics accounts. [Earlier](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2016/2016_10_16/USQL_Release_Notes_2016_10_16.md#catalogs-can-be-shared-among-adla-accounts-as-long-as-they-share-their-primary-adls-storage), U-SQL started to let you use 4 part-names to access U-SQL catalog objects from a different Azure Data Lake Analytics account if they shared the same primary Azure Data Lake Store account. 
 
 With this refresh, you are allowed to access U-SQL catalog objects also if the two ADLA accounts have different primary Azure Data Lake Store accounts.
 
@@ -219,6 +219,8 @@ The U-SQL Syntax looks like:
                 Column_Identifier {',' Column_Identifier }
              ')'
            ')'.
+
+Note that the Aggregate_Function_Call cannot contain `DISTINCT` aggregations. 
 
 ##### U-SQL `PIVOT` Example
 
@@ -456,9 +458,19 @@ Examples:
 
 #### U-SQL added file modification check in the compiler for catalog managed files
 
-U-SQL may have failed a job at runtime if a file has been changed in the account's `/catalog` directory without going through U-SQL statements. In this release, we have added compile-time checks for the file integrity. If a file has been tampered with (e.g., overwritten or removed at the file system level), the following error is raised:
+U-SQL may have failed a job at runtime if a file has been changed in the account's `/catalog` directory without going through U-SQL statements. In this release, we have added compile-time checks for the file integrity. If a file has been tampered with (e.g., overwritten or removed at the file system level), the following error messages are raised:
 
-TBD
+If a table `T` got tampered with, the error message will read
+
+    Message: Table 'T' data files were modified directly.
+    Description: Tables are managed by the Catalog and should not be modified directly.
+    Resolution: DROP the current table and leverage CREATE or INSERT to modify the table in the future.
+
+If any file(s) of the registered assembly `A` got tampered with, the error message will read
+
+    Message: Assembly 'A' files were modified directly.
+    Description: Assemblies are managed by the Catalog and should not be modified directly.
+    Resolution: DROP current assembly and use CREATE ASSEMBLY to create it again.
 
 #### U-SQL Table types from a different database may now be referenced using 3-part naming
 
@@ -466,7 +478,7 @@ Just like any other database schema-level objects, table types can now be refere
 
 #### U-SQL user-defined types (UDTs) can now be used in U-SQL variables 
 
-Starting in this release, any [U-SQL UDT with the UDT annotations](https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-u-sql-programmability-guide) can know be used in as the inferred or explicitly specified data type of a U-SQL variable DECLARE statement.
+Starting in this release, any [U-SQL UDT with the UDT annotations](https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-u-sql-programmability-guide) can now be used in as the inferred or explicitly specified data type of a U-SQL variable DECLARE statement.
 
 For example, let's assume that the U-SQL assembly `MyAssembly` contains a UDT `MyNamespace.MyUDT`. Then the following two statements are now supported:
 
