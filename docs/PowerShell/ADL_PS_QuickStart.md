@@ -176,14 +176,32 @@ jobs that actually started running and then failed.
 
     Get-AdlCatalogItem -Account $adla -ItemType Database
 
-# More Information
 
-## Tutorials
+
+# General PowerShell Tips
+
+# Time a command
+
+    Measure-Command { Get-ChildItem C:\ }
+
+    Days              : 0
+    Hours             : 0
+    Minutes           : 0
+    Seconds           : 0
+    Milliseconds      : 980
+    Ticks             : 9807034
+    TotalDays         : 1.13507337962963E-05
+    TotalHours        : 0.000272417611111111
+    TotalMinutes      : 0.0163450566666667
+    TotalSeconds      : 0.9807034
+    TotalMilliseconds : 980.7034
+
+# Tutorials
 
 * [Tutorial: get started with Azure Data Lake Analytics using Azure PowerShell](https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-get-started-powershell)
 * [Tutorial: get started with Azure Data Lake Store using Azure PowerShell](https://docs.microsoft.com/en-us/azure/data-lake-store/data-lake-store-get-started-powershell)
 
-## Reference Materials
+# Reference Materials
 
 * [Azure Data Lake Analytics Cmdlets](https://docs.microsoft.com/en-us/powershell/resourcemanager/azurerm.datalakeanalytics/v3.1.0/azurerm.datalakeanalytics?redirectedfrom=msdn)
 * [Azure Data Lake Store Cmdlets](https://docs.microsoft.com/en-us/powershell/resourcemanager/azurerm.datalakestore/v3.1.0/azurerm.datalakestore)
