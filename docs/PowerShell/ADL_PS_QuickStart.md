@@ -22,6 +22,14 @@ Use the Login-AzureRmAccount cmdlet
  
     Login-AzureRmAccount -SubscriptionName $subname 
 
+## Saving the login information
+
+    Save-AzureRmProfile -Path D:\profile.json  
+
+## Loading the login information
+
+    Select-AzureRmProfile -Path D:\profile.json 
+
 ## Get all the jobs submitted in the last day
 
 The -SubmittedAfter parameter performs server-side filtering.
