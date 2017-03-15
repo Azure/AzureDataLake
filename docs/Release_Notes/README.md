@@ -8,4 +8,4 @@ You can find all the detailed release notes for Azure Data Lake Store and Azure 
 - [August 2016 Preview Release Notes](https://github.com/Azure/AzureDataLake/tree/master/docs/Release_Notes/2016/2016_08_01)
 - [September 2016 Preview Release Notes](https://github.com/Azure/AzureDataLake/tree/master/docs/Release_Notes/2016/2016_09_12)
 - [October 2016 Preview Release Notes](https://github.com/Azure/AzureDataLake/tree/master/docs/Release_Notes/2016/2016_10_16)
-- [February 2017 Preview Release Notes](https://github.com/Azure/AzureDataLake/tree/master/docs/Release_Notes/2017/2017_02_20)
+- [March 9 2017 Preview Release Notes](https://github.com/Azure/AzureDataLake/tree/master/docs/Release_Notes/2017/2017_03_09)

@@ -1,9 +1,9 @@
-# U-SQL Release Notes 2017-02-20
+# U-SQL Release Notes 2017-03-09
 --------------------------
 ## Pending and Upcoming Deprecations
 
 Please review your code and make sure you are cleaning your existing code to be ready for the following 
-deprecations.
+deprecations of U-SQL preview features.
 
 **Please note: Previously announced deprecation items are now deprecated and raise errors instead of warnings!**
 
