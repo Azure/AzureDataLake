@@ -500,11 +500,22 @@ If a job with a code behind .cs file failed, you can now click the Download butt
 	
 #### The Azure Data Lake U-SQL SDK is now available at [Nuget.org](http://nuget.org)
 	
+We added two nuget packages to help you with local UDO development and local run scenarios:
+
+- `Microsoft.Azure.DataLake.USQL.Interfaces`: Provides the extensibility interfaces only. This only changes when the interface changes
+- `Microsoft.Azure.DataLake.USQL.SDK`: this contains the local run SDK (and also includes the extensibility interfaces). This changes every time the ADL Tools get updated.
+
 You can install the U-SQL SDK with the following nuget command:
+
+    nuget install Microsoft.Azure.DataLake.USQL.Interfaces
+or
 
     nuget install Microsoft.Azure.DataLake.USQL.SDK
 	
-After installing the SDK, you can now compile and run your U-SQL script locally either from the command line or via programming interfaces. 
+After installing the interfaces, you can now develop your user-defined objects (e.g., user-defined extractors) without the need to install VisualStudio. 
+
+After installing the SDK, you can now compile and run your U-SQL script locally either from the command line or via 
+programming interfaces. 
 
 #### Expiration information for files now is exposed in Store Explorer
 
