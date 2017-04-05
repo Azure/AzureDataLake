@@ -175,6 +175,10 @@ jobs that actually started running and then failed.
 
     Export-AdlStoreItem -Account $adls -Path /sourcefolder -Destination D:\destinationfolder -Recurse
 
+## Import a folder recursively 
+
+    Import-AdlStoreItem -Account $adls -Path d:\sourcefolder -Destination /destinationfolder -Recurse
+
 ## Test if Accounts Exist
 
     Test-AdlAnalyticsAccount -Name $adls
