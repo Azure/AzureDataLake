@@ -134,7 +134,7 @@ Note: no DDL is allowed inside a package (e.g. CREATE/ALTER/DROP .. etc).
 
 U-SQL supports the following DDL statements for creating, deleting and using packages.
 
-###### CREATE PACKAGE (U-SQL)
+###### `CREATE PACKAGE` (U-SQL)
 
 The `CREATE PACKAGE` statement creates a package to allow bundling of commonly used together U-SQL assemblies, variables and resources. 
 
@@ -174,14 +174,14 @@ The package object will be created inside the current database and schema contex
         Package_Statement ]
       'END'.
 
-###### DROP PACKAGE (U-SQL)
+###### `DROP PACKAGE` (U-SQL)
 
 The `DROP PACKAGE` statement drops packages. As in the case with other meta data objects, a package gets dropped even if another package, table-valued function or procedure depends on it. 
 
     Drop_Package_Statement :=
     'DROP' 'PACKAGE' ['IF' 'EXISTS'] Identifier.
 
-###### IMPORT PACKAGE (U-SQL)
+###### `IMPORT PACKAGE` (U-SQL)
 
 The `IMPORT PACKAGE` statement will import all the assembly references, variable declarations and resource deployments exported by the specified package. The package identifier will be resolved in the static context of its invocation and
 can refer to a package in the current account or a different Azure Data Lake Analytics account. The optional argument can provide parameters that can be used inside the package.
@@ -199,7 +199,7 @@ If conflicting assemblies or references are being referenced, imported or deploy
 
 The optional package alias must be used when referring to variables imported from the given package.
 
-###### EXPORT ASSEMBLY and EXPORT SYSTEM ASSEMBLY (U-SQL)
+###### `EXPORT ASSEMBLY` and `EXPORT SYSTEM ASSEMBLY` (U-SQL)
 
 The `EXPORT ASSEMBLY` and `EXPORT SYSTEM ASSEMBLY` statements specify inside a package definition which user or system assemblies respectively are being exported by the package. They also implicitly reference the assembly for the package context. 
 
@@ -214,7 +214,7 @@ The identifier will be resolved in the static context of the package definition,
     Assembly_Name := 
       Quoted_or_Unquoted_Identifier.
 
-###### EXPORT VARIABLE (U-SQL)
+###### `EXPORT VARIABLE` (U-SQL)
 
 The `EXPORT` statement specifies inside a package definition which variable is being exported by the package. It also implicitly declares the variable inside the package context. For more details about the semantics of U-SQL variables, see [here](https://msdn.microsoft.com/en-us/library/azure/mt621290.aspx).
 
@@ -302,6 +302,53 @@ _Examples:_
         OUTPUT @res
         TO "/output/packexample.csv"
         USING Outputters.Csv();
+
+###### Comment regarding tools, portal and SDK support for packages
+
+While the VisualStudio tooling provides intellisense for the new package related statements, support for local run, object model browsing in the tools and portal and SDK will become available in the next refresh.
+
+#### U-SQL's `UNPIVOT` allows explicit inclusion and exclusion of `null` values
+
+The recently introduced `UNPIVOT` expression excluded `null` values per default. 
+In this refresh it now allows to explicitly include `null` with `INCLUDE NULLS` or make the default exclusion explicit with `EXCLUDE NULLS`.
+
+The new syntax for `Unpivot_Expression` is:
+
+    Unpivot_Expression :=
+           Aliased_Rowset 'UNPIVOT' [Null_Handling] '('
+             Column_Identifier 'FOR' Column_Identifier 'IN' '(' 
+                Column_Identifier {',' Column_Identifier }
+             ')'
+           ')'.
+
+    Null_Handling :=
+           ('INCLUDE' | 'EXCLUDE') 'NULLS'.
+
+_Example:_
+
+The following script:
+
+    @data = 
+      SELECT * FROM (VALUES
+                     ("Band1", "Musician1", "Instrument1", (int?)1,    (int?)null  ),
+                     ("Band2", "Musician2", "Instrument2", (int?)null, (int?)null  ),
+                     ("Band3", "Musician3", "Instrument3", (int?)null, (int?)3     )
+                    ) AS T(Band, Musician, Instrument, [1940], [1941]);
+
+    @result = 
+      SELECT Band, Musician, YearOfBirth, Instrument, Children 
+      FROM @data
+           UNPIVOT INCLUDE NULLS (Children FOR YearOfBirth IN([1940], [1941])) AS UnpivotedTable;
+
+will yield the following rowset:
+
+    ("Band1", "Musician1", "Instrument1",  "1940",       (int?)1),
+    ("Band2", "Musician2", "Instrument2", (string)null, (int?)null),
+    ("Band3", "Musician3", "Instrument3", "1941",       (int?)3 )
+
+If no null handling was specified or `EXCLUDE NULLS` is used instead, the rowset would be:
+    ("Band1", "Musician1", "Instrument1",  "1940",       (int?)1),
+    ("Band3", "Musician3", "Instrument3", "1941",       (int?)3 )
 
 #### The column alias is no longer required for expressions that end with a property or field access
 
