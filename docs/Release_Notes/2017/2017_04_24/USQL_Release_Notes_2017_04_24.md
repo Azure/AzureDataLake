@@ -199,7 +199,7 @@ If conflicting assemblies or references are being referenced, imported or deploy
 
 The optional package alias must be used when referring to variables imported from the given package.
 
-####### EXPORT ASSEMBLY and EXPORT SYSTEM ASSEMBLY (U-SQL)
+###### EXPORT ASSEMBLY and EXPORT SYSTEM ASSEMBLY (U-SQL)
 
 The `EXPORT ASSEMBLY` and `EXPORT SYSTEM ASSEMBLY` statements specify inside a package definition which user or system assemblies respectively are being exported by the package. They also implicitly reference the assembly for the package context. 
 
