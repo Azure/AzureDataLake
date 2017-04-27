@@ -387,7 +387,7 @@ If you are using ADL Tools for VisualStudio 2012, 2013 and 2015, you can go to *
 
 ![Check for Updates](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/2017-Apr-CheckForUpdates.gif) 
 
-If you are using the ADL Tools in VisualStudio 2017, then **NEEDS TO BE ADDED**.
+If you are using the ADL Tools in VisualStudio 2017, then you currently have to wait for the next VisualStudio 2017 refresh that should occur about every 6 to 8 weeks..
 
 #### Exporting U-SQL database schemas and sample data and importing that information into your local run environment is now supported
 	
