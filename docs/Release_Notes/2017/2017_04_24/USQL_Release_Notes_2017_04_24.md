@@ -126,7 +126,7 @@ Packages can  be parameterized (e.g. for context or versioning).
 
 The identifiers referenced inside a package definition will be resolved in the static context of the package definition, similarly to table-valued functions and procedures.
 
-If conflicting assemblies or references are being referenced, imported or deployed, errors are raised once a package is getting imported in the main U-SQL script.
+If conflicting assemblies or references are being referenced, imported or deployed, errors are raised once a package gets imported in the main U-SQL script.
 
 Since they are a meta data object they are subject to the database-level access control.
 
@@ -138,7 +138,7 @@ U-SQL supports the following DDL statements for creating, deleting and using pac
 
 The `CREATE PACKAGE` statement creates a package to allow bundling of commonly used together U-SQL assemblies, variables and resources. 
 
-A package declaration can consist of the using statement, reference statement and declare statements to set its own internal static name context, import from other packages, declare what gets exported by the package, and what resources the package will deploy to the runtime vertices. It also provides an IF statement that has the same semantics as the general U-SQL IF statement but only allows the statements supported inside a package definition.
+A package declaration can consist of the using statement, and declare statements to set its own internal static name context, import from other packages, declare what gets exported by the package, and what resources the package will deploy to the runtime vertices. It also provides an IF statement that has the same semantics as the general U-SQL IF statement but only allows the statements supported inside a package definition.
 
 The optional parameters can be used inside the package definition to help define variables, and to determine which alternative the `IF` statement will choose.
 
@@ -155,14 +155,13 @@ The package object will be created inside the current database and schema contex
 
     Package_Statement :=
       Using_Statement 
-    | Reference_System_Assembly_Statement 
     | Declare_Variable_Statement 
     | Import_Package_Statement 
-    | Export_Package_Statement 
+    | Export_Statement 
     | Deploy_Resource_Statement 
     | If_Package_Statement.
 
-    Export_Package_Statement :=
+    Export_Statement :=
       Export_User_Assembly_Statement | Export_System_Assembly_Statement | Export_Variable_Statement.
 
     If_Package_Statement := 
@@ -184,9 +183,9 @@ The `DROP PACKAGE` statement drops packages. As in the case with other meta data
 ###### `IMPORT PACKAGE` (U-SQL)
 
 The `IMPORT PACKAGE` statement will import all the assembly references, variable declarations and resource deployments exported by the specified package. The package identifier will be resolved in the static context of its invocation and
-can refer to a package in the current account or a different Azure Data Lake Analytics account. The optional argument can provide parameters that can be used inside the package.
+can refer to a package in the current account or a different Azure Data Lake Analytics account. The optional arguments can be used inside the package.
 
-If conflicting assemblies or references are being referenced, imported or deployed, errors are raised once a package is getting imported in the main U-SQL script.
+If conflicting assemblies or references are being referenced, imported or deployed, errors are raised once a package gets imported in the main U-SQL script.
 
     Import_Package_Statement :=
       'IMPORT' 'PACKAGE' Global_Identifier ['(' [Argument_List] ')'] [Package_Alias].
