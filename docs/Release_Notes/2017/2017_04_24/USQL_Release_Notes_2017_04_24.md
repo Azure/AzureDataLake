@@ -450,12 +450,6 @@ _Examples:_
 
     Note that you will have to make sure that the local machine's IP address is allowed to access the Azure SQL instances.
 
-## PLEASE NOTE:
-
-In order to get access to the new syntactic features and new tool capabilities on your local environment, you will need to refresh your ADL Tools. You can download the latest version for VS 2013 and 2015 from [here](http://aka.ms/adltoolsvs) or use the Check for Updates menu item mentioned above. If you are using VisualStudio 2017, you currently have to wait for the next VisualStudio 2017 refresh that should occur about every 6 to 8 weeks.
-
-Otherwise you will not be able to use the new features during local run and submission to the cluster will give you syntax warnings for the new language features (you can ignore them and still submit the job).
-
 ## Azure Portal Updates
 #### Rotate keys (managed in your Key Vault) used in Azure Data Lake Store encryption
 
@@ -470,3 +464,9 @@ You can find more details [here](https://docs.microsoft.com/en-us/azure/data-lak
 When debugging issues in U-SQL jobs parts of the data processed by the job are downloaded onto your machine to help make debugging easy. If the data is sensitive, this might not be desirable. We've added the ability for people in the Owner and Contributor role to change who has access to the debugging data. You can configure it under the "Properties" section of an Azure Data Lake Analytics account.
 
 ![DebugData](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/2017-Apr-DebugDataAccessLevels.png)
+
+## PLEASE NOTE:
+
+In order to get access to the new syntactic features and new tool capabilities on your local environment, you will need to refresh your ADL Tools. You can download the latest version for VS 2013 and 2015 from [here](http://aka.ms/adltoolsvs) or use the Check for Updates menu item mentioned above. If you are using VisualStudio 2017, you currently have to wait for the next VisualStudio 2017 refresh that should occur about every 6 to 8 weeks.
+
+Otherwise you will not be able to use the new features during local run and submission to the cluster will give you syntax warnings for the new language features (you can ignore them and still submit the job).
