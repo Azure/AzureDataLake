@@ -461,12 +461,12 @@ Otherwise you will not be able to use the new features during local run and subm
 
 Azure Data Lake Store can encrypt data using a key in your Azure Key Vault. Often, there are policies that mandate these keys be rotated periodically. Once the key has been rotated to a new version in Azure Key Vault, sync the key used by Azure Data Lake Store to the latest version in your Key Vault by clicking the "Rotate Key" option under "Encryption" settings.
 
+You can find more details [here](https://docs.microsoft.com/en-us/azure/data-lake-store/data-lake-store-encryption#key-rotation)
+
 ![RotateKey](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/2017-Apr-RotateKey.png)
 
 #### Control who has access to debug data in Azure Data Lake Analytics
 
 When debugging issues in U-SQL jobs parts of the data processed by the job are downloaded onto your machine to help make debugging easy. If the data is sensitive, this might not be desirable. We've added the ability for people in the Owner and Contributor role to change who has access to the debugging data. You can configure it under the "Properties" section of an Azure Data Lake Analytics account.
-
-You can find more details [here](https://docs.microsoft.com/en-us/azure/data-lake-store/data-lake-store-encryption#key-rotation)
 
 ![DebugData](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/2017-Apr-DebugDataAccessLevels.png)
