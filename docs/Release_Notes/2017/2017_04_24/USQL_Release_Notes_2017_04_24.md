@@ -346,6 +346,7 @@ will yield the following rowset:
     ("Band3", "Musician3", "Instrument3", "1941",       (int?)3 )
 
 If no null handling was specified or `EXCLUDE NULLS` is used instead, the rowset would be:
+
     ("Band1", "Musician1", "Instrument1",  "1940",       (int?)1),
     ("Band3", "Musician3", "Instrument3", "1941",       (int?)3 )
 
