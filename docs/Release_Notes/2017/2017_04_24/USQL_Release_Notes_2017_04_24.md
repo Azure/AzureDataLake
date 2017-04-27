@@ -467,4 +467,6 @@ Azure Data Lake Store can encrypt data using a key in your Azure Key Vault. Ofte
 
 When debugging issues in U-SQL jobs parts of the data processed by the job are downloaded onto your machine to help make debugging easy. If the data is sensitive, this might not be desirable. We've added the ability for people in the Owner and Contributor role to change who has access to the debugging data. You can configure it under the "Properties" section of an Azure Data Lake Analytics account.
 
+You can find more details [here](https://docs.microsoft.com/en-us/azure/data-lake-store/data-lake-store-encryption#key-rotation)
+
 ![DebugData](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/2017-Apr-DebugDataAccessLevels.png)
