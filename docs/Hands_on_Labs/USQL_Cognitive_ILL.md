@@ -138,7 +138,7 @@ In this exercise you will submit a U-SQL script that schematizes the small book 
         USING Outputters.Csv(outputHeader : true);
 
 2. Select the number of AUs for the job with the slider. Since the job operates on about 30 files, any of the following numbers make sense: 10, 15, 30.
-3. 
+
 3. To submit your script, click the **Submit Job** button at the top-left of the window.
 
 	![Submit Exercise1](./Images/Portal_Exercise1.jpg)
@@ -311,7 +311,7 @@ In this exercise, we will combine the two previous exercises and find potentiall
         ORDER BY match_count DESC
         USING Outputters.Csv(outputHeader : true);
 
-   2. As before, set the number of Analytics Units (AUs) and submit it. Since we are approximately processing over 900 files, you should use 90 or 100 to get a reasonable scale out.
+2. As before, set the number of Analytics Units (AUs) and submit it. Since we are approximately processing over 900 files, you should use 90 or 100 to get a reasonable scale out.
 
 	![Submit Exercise 3](./Images/Portal_Exercise3.jpg)
 
