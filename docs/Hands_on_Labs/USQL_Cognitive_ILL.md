@@ -141,7 +141,7 @@ In this exercise you will submit a U-SQL script that schematizes the small book 
 3. 
 3. To submit your script, click the **Submit Job** button at the top-left of the window.
 
-	![Submit Exercise1](./Images/Portal_Excercise1.jpg)
+	![Submit Exercise1](./Images/Portal_Exercise1.jpg)
 
 	After a short while, the Job View of the submitted job should appear. 
 
@@ -225,7 +225,7 @@ In this exercise, you will use the cognition library's image OCR capability to e
   
 2. As before, set the number of Analytics Units (AUs) and submit it. Since we are approximately processing over 900 files, you should use 90 or 100 to get a reasonable scale out.
 
-	![Submit Exercise 2](./Images/Portal_Excercise2.jpg)
+	![Submit Exercise 2](./Images/Portal_Exercise2.jpg)
 
 3. As in Exercise 1, wait for the job to complete and verify the results. Note that this job will run for several minutes.
 
@@ -235,7 +235,7 @@ In this exercise, you will use the cognition library's image OCR capability to e
 
     As you notice, the job graph is too large for the portal to show. Here is how the job graph looks like in Visual Studio:
 
-	![Exercise 2 Job Graph in VisualStudio](./Images/VS_Ex2_Job.jpg)
+	![Exercise 2 Job Graph in VisualStudio](./Images/VS_Ex2_Job.JPG)
 
 
     The script produces two result files, one containing the OCR extracted text in `image_ocr.csv` and the other containing the keyphrase extraction on it in `ocr_keyphrases.csv`:
@@ -313,7 +313,7 @@ In this exercise, we will combine the two previous exercises and find potentiall
 
    2. As before, set the number of Analytics Units (AUs) and submit it. Since we are approximately processing over 900 files, you should use 90 or 100 to get a reasonable scale out.
 
-	![Submit Exercise 3](./Images/Portal_Excercise3.jpg)
+	![Submit Exercise 3](./Images/Portal_Exercise3.jpg)
 
 3. Wait for the job to complete and verify the results. Note that this job will run for several minutes.
 
@@ -323,11 +323,11 @@ In this exercise, we will combine the two previous exercises and find potentiall
 
     As you notice, the job graph is too large for the portal to show. Here is how the job graph looks like in Visual Studio:
 
-	![Exercise 2 Job Graph in VisualStudio](./Images/VS_Ex3_Job.jpg)
+	![Exercise 2 Job Graph in VisualStudio](./Images/VS_Ex3_Job.JPG)
 
     The script produces a result file that contains for each matching book and image combination the concatenated list of matching keyphrases as well as the count of matches:
 
-	![Exercise 2 image_ocr.csv](./Images/Portal_Ex3_common_Summary.jpg)
+	![Exercise 2 image_ocr.csv](./Images/Portal_Ex3_common_summary.jpg)
 
 The above query used a `JOIN` expression. When you work with joins in U-SQL, note that:
 
