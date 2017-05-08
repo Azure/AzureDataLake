@@ -343,6 +343,7 @@ This lab has hopefully given you a small taste of U-SQL and its cognitive capabi
 You can find further references and documentation at the following locations:
 
 - [Data Lake homepage (with links to documentation)](http://www.azure.com/datalake)
+- [Azure Data Lake Analytics Documentation Hub](https://docs.microsoft.com/en-us/azure/data-lake-analytics/)
 - [U-SQL Reference documentation](http://aka.ms/usql_reference)
 - [ADL Tools for VS download page](http://aka.ms/adltoolsVS)
 - [Data Lake feedback page](http://aka.ms/adlfeedback)
