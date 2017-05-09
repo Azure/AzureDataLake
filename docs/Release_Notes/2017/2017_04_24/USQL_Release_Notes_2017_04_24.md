@@ -66,7 +66,7 @@ A much higher limit is now supported for a number of UNION or UNION ALL operator
 
 The R Extensions for U-SQL enable developers to perform massively parallel execution of R code for end to end data science scenarios covering: merging various data files, feature engineering (FE), partitioned data model building, and post deployment, massively parallel FE and scoring. You can install the extensions from the Azure ADLA Portal from the Sample Script blade. 
 
-With the current release we added support to return a dataframe back into the U-SQL rowset from the R code instead of returning a string as before. More information can be found [here](https://microsoft.sharepoint.com/teams/adlcustomertraining/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2Fadlcustomertraining%2FShared%20Documents%2FMicrosoftVirtualAcademy%2FADL_MVA_VNEXT%2F06_USQL_Advanced_Programming%2FGet%20started%20with%20extending%20U-SQL%20with%20R%2Edocx&parent=%2Fteams%2Fadlcustomertraining%2FShared%20Documents%2FMicrosoftVirtualAcademy%2FADL_MVA_VNEXT%2F06_USQL_Advanced_Programming).
+With the current release we added support to return a dataframe back into the U-SQL rowset from the R code instead of returning a string as before. More information can be found [here](https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-u-sql-r-extensions).
 
 **NOTE: If you already have installed an earlier version of the extensions, you will have to reinstall the newest version from the Azure Portal.**
 
