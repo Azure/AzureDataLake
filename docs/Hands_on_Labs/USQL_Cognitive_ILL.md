@@ -1,4 +1,4 @@
-# Instructor-Led Lab: Introduction to U-SQL
+# Instructor-Led Lab: Introduction to U-SQL and its cognitive extensions
 
 # Introduction
 
