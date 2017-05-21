@@ -31,26 +31,26 @@ Use the Login-AzureRmAccount cmdlet
 
 ## Job Monitoring
 
-#### Get all the jobs submitted in the last day
+####   Getting a list of recent jobs (that are active or have ended)
 
-The -SubmittedAfter parameter performs server-side filtering.
+    $jobs = Get-AdlJob -Account $adla
 
-    Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
+By default the list of jobs issorted on submit time. So the most recently submitted jobs will come first.
 
-####  Get all the jobs submitted in the last 5 days and that successfully completed
+The ADLA account remember jobs for 180 days, but this cmdlet by default will return only the first 500. You can -Top parameter to have to retrieve any number of jobs.
+
+    $jobs = Get-AdlJob -Account $adla -Top 10
+
+
+#### Get all the jobs submitted in the last day (Server-side filtering)
+
+    $d = [DateTime]::Now.AddDays(-1)
+    Get-AdlJob -Account $adla -SubmittedAfter $d
+
+####  Get all the jobs submitted in the last 5 days and that successfully completed (Server-side filtering)
 
     Get-AdlJob -Account datainsightsadhoc -SubmittedAfter (Get-Date).AddDays(-5) -State Ended -Result Succeeded
     
-####   Getting a list of all the jobs 
-
-NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while for this cmdlet to finish'
-    
-    $jobs = Get-AdlJob -Account $adla
-
-#### How many jobs were retrieved
-
-    $jobs.Count
-
 #### Examine details on a single job
 
     $jobs[0]
@@ -124,12 +124,12 @@ you may find very useful
     
     $jobs | Where-Object { $_.SubmitTime -ge $lowerdate }
 
-#### Find all Failed  jobs (Server-side filtering)
+#### Find all Failed jobs (Server-side filtering)
 
     Get-AdlJob -Account $adla -State Ended -Result Succeeded
 
 
-#### Find all Failed  jobs (Server-side filtering)
+#### Find all Failed jobs (Server-side filtering)
 
     Get-AdlJob -Account $adla -State Ended -Result Failed
 
