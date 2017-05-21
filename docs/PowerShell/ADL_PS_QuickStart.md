@@ -173,11 +173,11 @@ jobs that actually started running and then failed.
 
 ## Getting data into and out of Data Lake Store
 
-### Download a folder recursively 
+#### Download a folder recursively 
 
     Export-AdlStoreItem -Account $adls -Path /sourcefolder -Destination D:\destinationfolder -Recurse
 
-### Import a folder recursively 
+#### Import a folder recursively 
 
     Import-AdlStoreItem -Account $adls -Path d:\sourcefolder -Destination /destinationfolder -Recurse
 
