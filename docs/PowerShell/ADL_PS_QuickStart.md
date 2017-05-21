@@ -169,6 +169,7 @@ jobs that actually started running and then failed.
 
 ## Get the default ADLS Store
 
+
     Get-AdlAnalyticsDataSource -Account $adla  | ? { $_.IsDefault } 
 
 ## Download a folder recursively 
@@ -184,11 +185,19 @@ jobs that actually started running and then failed.
     Test-AdlAnalyticsAccount -Name $adls
     Test-AdlStore -Name $adls
 
-## List databases in an account
+## U-SQL Catalog operations
+
+### List U-SQL Databases in an account
 
     Get-AdlCatalogItem -Account $adla -ItemType Database
 
+### List Assemblies in an U-SQL Database
 
+    Get-AdlCatalogItem -Account $adla -ItemType Assembly -Path "database"
+
+### List Tables in a U-SQL Database and schema
+
+    Get-AdlCatalogItem -Account $adla -ItemType Table -Path "database.schema"
 
 # General PowerShell Tips
 
