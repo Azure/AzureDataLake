@@ -217,6 +217,12 @@ jobs that actually started running and then failed.
 
 ## General PowerShell Tips
 
+### More strict error handling
+
+Put this at the top of any scripts. 
+
+    Set-StrictMode -Version 2
+    $ErrorActionPreference = "Stop"
 
 ### Check if you are running as an administrator
 
