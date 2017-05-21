@@ -30,13 +30,15 @@ Use the Login-AzureRmAccount cmdlet
 
     Select-AzureRmProfile -Path D:\profile.json 
 
-## Get all the jobs submitted in the last day
+## Job Monitoring
+
+### Get all the jobs submitted in the last day
 
 The -SubmittedAfter parameter performs server-side filtering.
 
     Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
-## Get all the jobs submitted in the last 5 days and that successfully completed
+### Get all the jobs submitted in the last 5 days and that successfully completed
 
     Get-AdlJob -Account datainsightsadhoc -SubmittedAfter (Get-Date).AddDays(-5) -State Ended -Result Succeeded
     
@@ -46,11 +48,11 @@ NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while
     
     $jobs = Get-AdlJob -Account $adla
 
-## How many jobs were retrieved
+### How many jobs were retrieved
 
     $jobs.Count
 
-## Examine details on a single job
+### Examine details on a single job
 
     $jobs[0]
     
@@ -71,7 +73,10 @@ NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while
     StateAuditRecords   :
     Properties          :
 
-## Add useful calculated properties to job objects
+
+## Job Analysis
+
+### ProTip: Add useful calculated properties to job objects
 
 Powershell can dynamically add calculated properties to job objects. The script below adds properties
 you may find very useful
@@ -95,95 +100,86 @@ you may find very useful
     $jobs_annotated = $jobs | %{ annotate_job( $_ ) }
 
 
-## Find all the submitters and the numbers of jobs they have submitted
+### Find all the submitters and the numbers of jobs they have submitted
 
     $jobs | Group-Object Submitter | Select -Property Count,Name
 
-## Analyze the jobs by Result
+### Analyze the jobs by Result
 
     $jobs | Group-Object Result | Select -Property Count,Name
 
-## Analyze the jobs by State
+### Analyze the jobs by State
 
     $jobs | Group-Object State | Select -Property Count,Name
 
-## Filter jobs to once submitted in the last 24 hours (Client-side filtering)
+### Filter jobs to once submitted in the last 24 hours (Client-side filtering)
 
     $upperdate = Get-Date
     $lowerdate = $upperdate.AddHours(-24)
     
     $jobs | Where-Object { $_.EndTime -ge $lowerdate }
     
-## Filter jobs to once ended in the last 24 hours (Client-side filtering)
+### Filter jobs to once ended in the last 24 hours (Client-side filtering)
 
     $upperdate = Get-Date
     $lowerdate = $upperdate.AddHours(-24)
     
     $jobs | Where-Object { $_.SubmitTime -ge $lowerdate }
 
-## Find all Failed  jobs (Server-side filtering)
+### Find all Failed  jobs (Server-side filtering)
 
     Get-AdlJob -Account $adla -State Ended -Result Succeeded
 
 
-## Find all Failed  jobs (Server-side filtering)
+### Find all Failed  jobs (Server-side filtering)
 
     Get-AdlJob -Account $adla -State Ended -Result Failed
 
-# Analyze jobs by the DegreeOfParallelism
+### Analyze jobs by the DegreeOfParallelism
 
     $jobs | Group-Object DegreeOfParallelism | Select -Property Count,Name
 
-## Who had failed jobs
+### Who had failed jobs
 
     $failed_jobs = Get-AdlJob -Account $adla -State Ended -Result Failed
     $failed_jobs | Group-Object Submitter | Select -Property Count,Name
 
-## Find all the failed jobs that actually started 
+### Find all the failed jobs that actually started 
 
 A job might fail at compile time - and so it never starts. Let's look at the failed
 jobs that actually started running and then failed.
 
     $failed_jobs | Where-Object { $_.StartTime -ne $null }
 
-## Check if you are running as an administrator
 
-    function Test-Administrator  
-    {  
-        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
-        $p = New-Object Security.Principal.WindowsPrincipal $user
-        $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
-    }
+## Account Management
 
-## Find the TenantID for a subscription
-
-    # Using the Subscription Name
-    (Get-AzureRmSubscription -SubscriptionName "MySUbName").TenantID
-
-    # Using the Subscription ID
-    (Get-AzureRmSubscription -SubscriptionName "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx").TenantID
-    
-## List the linked ADLS Stores or Blob Storage Accounts 
-
-    Get-AdlAnalyticsDataSource -Account $adla
-
-## Get the default ADLS Store
-
-
-    Get-AdlAnalyticsDataSource -Account $adla  | ? { $_.IsDefault } 
-
-## Download a folder recursively 
-
-    Export-AdlStoreItem -Account $adls -Path /sourcefolder -Destination D:\destinationfolder -Recurse
-
-## Import a folder recursively 
-
-    Import-AdlStoreItem -Account $adls -Path d:\sourcefolder -Destination /destinationfolder -Recurse
-
-## Test if Accounts Exist
+### Test if Accounts Exist
 
     Test-AdlAnalyticsAccount -Name $adls
     Test-AdlStore -Name $adls
+
+
+## Account Configuration
+
+### List the linked ADLS Stores or Blob Storage Accounts 
+
+    Get-AdlAnalyticsDataSource -Account $adla
+
+### Get the default ADLS Store for an ADLA account
+
+    Get-AdlAnalyticsDataSource -Account $adla  | ? { $_.IsDefault } 
+
+
+## Getting data into and out of Data Lake Store
+
+### Download a folder recursively 
+
+    Export-AdlStoreItem -Account $adls -Path /sourcefolder -Destination D:\destinationfolder -Recurse
+
+### Import a folder recursively 
+
+    Import-AdlStoreItem -Account $adls -Path d:\sourcefolder -Destination /destinationfolder -Recurse
 
 ## U-SQL Catalog operations
 
@@ -199,9 +195,39 @@ jobs that actually started running and then failed.
 
     Get-AdlCatalogItem -Account $adla -ItemType Table -Path "database.schema"
 
-# General PowerShell Tips
 
-# Time a command
+### Check if you are running as an administrator
+
+    function Test-Administrator  
+    {  
+        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
+        $p = New-Object Security.Principal.WindowsPrincipal $user
+        $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
+    }
+
+## Azure 
+
+### Find the TenantID for a subscription
+
+    # Using the Subscription Name
+    (Get-AzureRmSubscription -SubscriptionName "MySUbName").TenantID
+
+    # Using the Subscription ID
+    (Get-AzureRmSubscription -SubscriptionName "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx").TenantID
+
+## General PowerShell Tips
+
+
+### Check if you are running as an administrator
+
+    function Test-Administrator  
+    {  
+        $user = [Security.Principal.WindowsIdentity]::GetCurrent();
+        $p = New-Object Security.Principal.WindowsPrincipal $user
+        $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
+    }
+
+### Time a command
 
     Measure-Command { Get-ChildItem C:\ }
 
