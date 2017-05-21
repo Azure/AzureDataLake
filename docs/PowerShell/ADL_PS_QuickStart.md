@@ -1,5 +1,5 @@
 
-# ADL PowerShell Quick Start
+# Azure Data Lake PowerShell Quick Start
 
 ## Introduction
 
