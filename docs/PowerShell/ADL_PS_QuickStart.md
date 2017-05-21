@@ -1,12 +1,12 @@
 
 # Azure Data Lake PowerShell Quick Start
 
-## Introduction
+#### Introduction
 
 If you are familiar with very basic PowerShell and Azure Data Lake, this document will
 walk you through some very common and interesting scenarios.
 
-## Information you Need to use this scripts
+#### Information you Need to use this scripts
 
 The scripts reuse some values so set the following variables as you need
 
@@ -15,44 +15,43 @@ The scripts reuse some values so set the following variables as you need
     $adla = the name of your ADL Analytics account (not its full domain name)
     $adls = the name of your ADL Store account (not its full domain name)
 
-
-## Logging in 
+#### Logging in 
 
 Use the Login-AzureRmAccount cmdlet
  
     Login-AzureRmAccount -SubscriptionName $subname 
 
-## Saving the login information
+#### Saving the login information
 
     Save-AzureRmProfile -Path D:\profile.json  
 
-## Loading the login information
+#### Loading the login information
 
     Select-AzureRmProfile -Path D:\profile.json 
 
 ## Job Monitoring
 
-### Get all the jobs submitted in the last day
+#### Get all the jobs submitted in the last day
 
 The -SubmittedAfter parameter performs server-side filtering.
 
     Get-AdlJob -Account $adla -SubmittedAfter ([DateTime]::Now.AddDays(-1))
 
-### Get all the jobs submitted in the last 5 days and that successfully completed
+####  Get all the jobs submitted in the last 5 days and that successfully completed
 
     Get-AdlJob -Account datainsightsadhoc -SubmittedAfter (Get-Date).AddDays(-5) -State Ended -Result Succeeded
     
-##  Getting a list of all the jobs 
+####   Getting a list of all the jobs 
 
 NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while for this cmdlet to finish'
     
     $jobs = Get-AdlJob -Account $adla
 
-### How many jobs were retrieved
+#### How many jobs were retrieved
 
     $jobs.Count
 
-### Examine details on a single job
+#### Examine details on a single job
 
     $jobs[0]
     
@@ -73,10 +72,9 @@ NOTE: If you have a lot of jobs submitted inthe last 30 days it may take a while
     StateAuditRecords   :
     Properties          :
 
-
 ## Job Analysis
 
-### ProTip: Add useful calculated properties to job objects
+#### ProTip: Add useful calculated properties to job objects
 
 Powershell can dynamically add calculated properties to job objects. The script below adds properties
 you may find very useful
@@ -100,51 +98,51 @@ you may find very useful
     $jobs_annotated = $jobs | %{ annotate_job( $_ ) }
 
 
-### Find all the submitters and the numbers of jobs they have submitted
+#### Find all the submitters and the numbers of jobs they have submitted
 
     $jobs | Group-Object Submitter | Select -Property Count,Name
 
-### Analyze the jobs by Result
+#### Analyze the jobs by Result
 
     $jobs | Group-Object Result | Select -Property Count,Name
 
-### Analyze the jobs by State
+#### Analyze the jobs by State
 
     $jobs | Group-Object State | Select -Property Count,Name
 
-### Filter jobs to once submitted in the last 24 hours (Client-side filtering)
+#### Filter jobs to once submitted in the last 24 hours (Client-side filtering)
 
     $upperdate = Get-Date
     $lowerdate = $upperdate.AddHours(-24)
     
     $jobs | Where-Object { $_.EndTime -ge $lowerdate }
     
-### Filter jobs to once ended in the last 24 hours (Client-side filtering)
+#### Filter jobs to once ended in the last 24 hours (Client-side filtering)
 
     $upperdate = Get-Date
     $lowerdate = $upperdate.AddHours(-24)
     
     $jobs | Where-Object { $_.SubmitTime -ge $lowerdate }
 
-### Find all Failed  jobs (Server-side filtering)
+#### Find all Failed  jobs (Server-side filtering)
 
     Get-AdlJob -Account $adla -State Ended -Result Succeeded
 
 
-### Find all Failed  jobs (Server-side filtering)
+#### Find all Failed  jobs (Server-side filtering)
 
     Get-AdlJob -Account $adla -State Ended -Result Failed
 
-### Analyze jobs by the DegreeOfParallelism
+#### Analyze jobs by the DegreeOfParallelism
 
     $jobs | Group-Object DegreeOfParallelism | Select -Property Count,Name
 
-### Who had failed jobs
+#### Who had failed jobs
 
     $failed_jobs = Get-AdlJob -Account $adla -State Ended -Result Failed
     $failed_jobs | Group-Object Submitter | Select -Property Count,Name
 
-### Find all the failed jobs that actually started 
+#### Find all the failed jobs that actually started 
 
 A job might fail at compile time - and so it never starts. Let's look at the failed
 jobs that actually started running and then failed.
@@ -154,7 +152,7 @@ jobs that actually started running and then failed.
 
 ## Account Management
 
-### Test if Accounts Exist
+#### Test if Accounts Exist
 
     Test-AdlAnalyticsAccount -Name $adls
     Test-AdlStore -Name $adls
@@ -162,11 +160,11 @@ jobs that actually started running and then failed.
 
 ## Account Configuration
 
-### List the linked ADLS Stores or Blob Storage Accounts 
+#### List the linked ADLS Stores or Blob Storage Accounts 
 
     Get-AdlAnalyticsDataSource -Account $adla
 
-### Get the default ADLS Store for an ADLA account
+#### Get the default ADLS Store for an ADLA account
 
     Get-AdlAnalyticsDataSource -Account $adla  | ? { $_.IsDefault } 
 
@@ -183,20 +181,20 @@ jobs that actually started running and then failed.
 
 ## U-SQL Catalog operations
 
-### List U-SQL Databases in an account
+#### List U-SQL Databases in an account
 
     Get-AdlCatalogItem -Account $adla -ItemType Database
 
-### List Assemblies in an U-SQL Database
+#### List Assemblies in an U-SQL Database
 
     Get-AdlCatalogItem -Account $adla -ItemType Assembly -Path "database"
 
-### List Tables in a U-SQL Database and schema
+#### List Tables in a U-SQL Database and schema
 
     Get-AdlCatalogItem -Account $adla -ItemType Table -Path "database.schema"
 
 
-### Check if you are running as an administrator
+#### Check if you are running as an administrator
 
     function Test-Administrator  
     {  
@@ -207,7 +205,7 @@ jobs that actually started running and then failed.
 
 ## Azure 
 
-### Find the TenantID for a subscription
+#### Find the TenantID for a subscription
 
     # Using the Subscription Name
     (Get-AzureRmSubscription -SubscriptionName "MySUbName").TenantID
@@ -217,14 +215,14 @@ jobs that actually started running and then failed.
 
 ## General PowerShell Tips
 
-### More strict error handling
+#### More strict error handling
 
 Put this at the top of any scripts. 
 
     Set-StrictMode -Version 2
     $ErrorActionPreference = "Stop"
 
-### Check if you are running as an administrator
+#### Check if you are running as an administrator
 
     function Test-Administrator  
     {  
@@ -233,7 +231,7 @@ Put this at the top of any scripts.
         $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
     }
 
-### Time a command
+#### Time a command
 
     Measure-Command { Get-ChildItem C:\ }
 
@@ -249,12 +247,12 @@ Put this at the top of any scripts.
     TotalSeconds      : 0.9807034
     TotalMilliseconds : 980.7034
 
-# Tutorials
+## Tutorials
 
 * [Tutorial: get started with Azure Data Lake Analytics using Azure PowerShell](https://docs.microsoft.com/en-us/azure/data-lake-analytics/data-lake-analytics-get-started-powershell)
 * [Tutorial: get started with Azure Data Lake Store using Azure PowerShell](https://docs.microsoft.com/en-us/azure/data-lake-store/data-lake-store-get-started-powershell)
 
-# Reference Materials
+## Reference Materials
 
 * [Azure Data Lake Analytics Cmdlets](https://docs.microsoft.com/en-us/powershell/resourcemanager/azurerm.datalakeanalytics/v3.1.0/azurerm.datalakeanalytics?redirectedfrom=msdn)
 * [Azure Data Lake Store Cmdlets](https://docs.microsoft.com/en-us/powershell/resourcemanager/azurerm.datalakestore/v3.1.0/azurerm.datalakestore)
