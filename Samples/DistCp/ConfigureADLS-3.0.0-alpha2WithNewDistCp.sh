@@ -1,5 +1,17 @@
 ﻿#! /bin/bash
 
+########################################
+#### USAGE:
+####
+#### Step 1: Download and place the script on the HeadNode of your cluster.
+#### 
+#### Step 2: Run script to configure ADLS.
+#### source ./ConfigureADLS-3.0.0-alpha2WithNewDistCp.sh <local_usn> <adls_acc_name> <tenant_id> <client_id> <client_secret>
+####
+#### Step 3: Run the new DistCp alias.
+#### adlsHadoopDistCp -blocksperchunk <blocks_per_chunk> -m <number_of_mappers_to_use> -copybuffersize <copy_buffer_size> -bandwidth 10000 /<copy_from_dir>/ adl://<adls_acc_name>.azuredatalakestore.net/<copy_to_dir>/
+########################################
+
 machine_login_usn=$1
 adls_account_name=$2
 tenant_id=$3
@@ -9,7 +21,7 @@ client_credential=$5
 hn=`hostname`
 
 distcp_jar_name='hadoop-distcp-2.9.0-SNAPSHOT-cbs-java1.7compat.jar'
-distcp_jar_url='http://azuresscripts.blob.core.windows.net/distcp'
+distcp_jar_url='https://github.com/omkarksa10/AzureDataLake/releases/download/v2.2.6000.0'
 
 adl_sdk_jar_name='azure-data-lake-store-sdk-2.1.5.jar'
 adl_sdk_jar_url='http://central.maven.org/maven2/com/microsoft/azure/azure-data-lake-store-sdk/2.1.5'
