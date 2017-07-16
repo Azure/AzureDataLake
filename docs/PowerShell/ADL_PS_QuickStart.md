@@ -19,8 +19,6 @@ $adls = the name of your ADL Store account (not its full domain name)
 
 ## Logging in 
 
-Use the Login-AzureRmAccount cmdlet
- 
 ```
 Login-AzureRmAccount -SubscriptionName $subname 
 ```
@@ -39,42 +37,43 @@ Select-AzureRmProfile -Path D:\profile.json
 
 ## Basic Job mnonitoring
 
-####   Getting a list of jobs
+#### List of jobs
 
 ```
 $jobs = Get-AdlJob -Account $adla
 ```
 
-#### Controlling how many jobs to list
+#### List a specific number of jobs
 
-By default the list of jobs issorted on submit time. So the most recently submitted jobs will come first. By default, The ADLA account remembers jobs for 180 days, but the Ge-AdlJob  cmdlet by default will return only the first 500. You can -Top parameter to have to retrieve any number of jobs.
+By default the list of jobs is sorted on submit time. So the most recently submitted jobs will come first. By default, The ADLA account remembers jobs for 180 days, but the Ge-AdlJob  cmdlet by default will return only the first 500. Use -Top parameter to list a specific number of jobs.
 
 ```
 $jobs = Get-AdlJob -Account $adla -Top 10
 ```
 
-#### Listing jobs based on a condition
+#### List jobs based on the value of job property
 
-Get all the jobs submitted in the last day
+List  jobs submitted in the last day
 
 ```
 $d = [DateTime]::Now.AddDays(-1)
 Get-AdlJob -Account $adla -SubmittedAfter $d
 ```
 
-Get all the jobs submitted in the last 5 days and that successfully completed.
+List jobs submitted in the last 5 days and that successfully completed.
 
 ```
-Get-AdlJob -Account datainsightsadhoc -SubmittedAfter (Get-Date).AddDays(-5) -State Ended -Result Succeeded
+$d = (Get-Date).AddDays(-5)
+Get-AdlJob -Account $adla -SubmittedAfter $d -State Ended -Result Succeeded
 ```
 
-Find all Failed jobs
+List Failed jobs
 
 ```
 Get-AdlJob -Account $adla -State Ended -Result Succeeded
 ```
 
-Find all Failed jobs 
+List Failed jobs 
 
 ```
 Get-AdlJob -Account $adla -State Ended -Result Failed
@@ -82,7 +81,9 @@ Get-AdlJob -Account $adla -State Ended -Result Failed
 
 ## Filtering a list of jobs
 
-Filter a list of jobs to those  submitted in the last 24 hours
+Once you have a list of jobs in your current PowerShell session. You can use normal PowerShell cmdlets to filter that last.
+
+Filter a list of jobs to those submitted in the last 24 hours
 
 ```
 $upperdate = Get-Date
@@ -98,9 +99,7 @@ $lowerdate = $upperdate.AddHours(-24)
 $jobs | Where-Object { $_.SubmitTime -ge $lowerdate }
 ```
 
-Filter a list of jobs tho those that actually started 
-
-A job might fail at compile time - and so it never starts. Let's look at the failed
+Filter a list of jobs tho those that actually started. A job might fail at compile time - and so it never starts. Let's look at the failed
 jobs that actually started running and then failed.
 
 ```
@@ -118,34 +117,24 @@ Find all the submitters and the numbers of jobs they have submitted
 ```
 # By Submitter
 $jobs | Group-Object Submitter | Select -Property Count,Name
-```
 
-```
 # By Result
 $jobs | Group-Object Result | Select -Property Count,Name
-```
 
-```
 # By State
 $jobs | Group-Object State | Select -Property Count,Name
-```
 
-```
 # By DegreeOfParallelism
 $jobs | Group-Object DegreeOfParallelism | Select -Property Count,Name
 ```
 
-
 ### Additional Examples
-
 
 ```
 # Analysis of  failed jobs
 $jobs = Get-AdlJob -Account $adla -State Ended -Result Failed -Top 1000
 $jobs | Group-Object Submitter | Select -Property Count,Name
 ```
-
-
 
 ### ProTip: Add useful calculated properties to job objects
 
@@ -169,21 +158,32 @@ function annotate_job( $j )
     $j2
 }
 
-$jobs_annotated = $jobs | %{ annotate_job( $_ ) }
+$jobs = $jobs | %{ annotate_job( $_ ) }
 ```
+
+### Example Scenarios
+
+First get a list of jobs and annotate them with extra properties.
+
+```
+$jobs = Get-AdlJob -Account $adla -Top 10
+$jobs = $jobs | %{ annotate_job( $_ ) }
+```
+
+
 
 ## Account Management
 
-#### Test if Accounts Exist
+#### Test if an account exists
 
 ```
 Test-AdlAnalyticsAccount -Name $adls
 Test-AdlStore -Name $adls
 ```
 
-## Account Configuration
+## Account configuration
 
-#### List the linked ADLS Stores or Blob Storage Accounts 
+#### List the linked ADLS Stores or Blob Storage accounts 
 
 ```
 Get-AdlAnalyticsDataSource -Account $adla
@@ -210,26 +210,69 @@ Export-AdlStoreItem -Account $adls -Path /sourcefolder -Destination D:\destinati
 Import-AdlStoreItem -Account $adls -Path d:\sourcefolder -Destination /destinationfolder -Recurse
 ```
 
+## Scenarios
+
+### get basic information about at ADLA account
+
+Given an acount name, the following code looks up some basic information about the account
+
+```
+$adla_acct = Get-AdlAnalyticsAccount -Name "saveenrdemoadla"
+$adla_name = $adla_acct.Name
+$adla_subid = $adla_acct.Id.Split("/")[2]
+$adla_sub = Get-AzureRmSubscription -SubscriptionId $adla_subid
+$adla_subname = $adla_sub.Name
+$adla_defadls_datasource = Get-AdlAnalyticsDataSource -Account $adla_name  | ? { $_.IsDefault } 
+$adla_defadlsname = $adla_defadls_datasource.Name
+
+Write-Host "ADLA Account Name" $adla_name
+Write-Host "Subscription Id" $adla_subid
+Write-Host "Subscription Name" $adla_subname
+Write-Host "Defautl ADLS Store" $adla_defadlsname
+Write-Host 
+
+Write-Host '$subname' " = ""$adla_subname"" "
+Write-Host '$subid' " = ""$adla_subid"" "
+Write-Host '$adla' " = ""$adla_name"" "
+Write-Host '$adls' " = ""$adla_defadlsname"" "
+```
+
 ## U-SQL Catalog operations
 
-#### List U-SQL Databases in an account
+#### List items in the U-SQL catalog
 
 ```
+# Listing databases
 Get-AdlCatalogItem -Account $adla -ItemType Database
-```
 
-#### List Assemblies in an U-SQL Database
-
-```
+# Listing assemblies
 Get-AdlCatalogItem -Account $adla -ItemType Assembly -Path "database"
-```
 
-#### List Tables in a U-SQL Database and schema
-
-```
+# Listing Tables
 Get-AdlCatalogItem -Account $adla -ItemType Table -Path "database.schema"
 ```
 
+
+#### Scenarios
+
+List all the assemblies in all the databases in an ADLA Account
+
+```
+$dbs = Get-AdlCatalogItem -Account $adla -ItemType Database
+
+foreach ($db in $dbs)
+{
+    $asms = Get-AdlCatalogItem -Account $adla -ItemType Assembly -Path $db.Name
+
+    foreach ($asm in $asms)
+    {
+        $asmname = "[" + $db.Name + "].[" + $asm.Name + "]"
+        Write-Host $asmname
+    }
+}
+```
+
+## Useful snippets
 
 #### Check if you are running as an administrator
 
@@ -241,8 +284,6 @@ function Test-Administrator
     $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
 }
 ```
-
-## Azure 
 
 #### Find the TenantID for a subscription
 
@@ -252,30 +293,6 @@ function Test-Administrator
 
 # Using the Subscription ID
 (Get-AzureRmSubscription -SubscriptionName "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx").TenantID
-```
-
-## General PowerShell Tips
-
-#### More strict error handling
-
-Put this at the top of any scripts. 
-
-```
-Set-StrictMode -Version 2
-$ErrorActionPreference = "Stop"
-```
-
-#### Check if you are running as an administrator
-
-```
-function Test-Administrator  
-{  
-    $user = [Security.Principal.WindowsIdentity]::GetCurrent();
-    $p = New-Object Security.Principal.WindowsPrincipal $user
-    $p.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)  
-}
-
-Test-Administrator
 ```
 
 #### Time a command
