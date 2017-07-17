@@ -133,15 +133,11 @@ function setacerec
             # set the ACL without default
             giveaccess -Account $Account -Path $pathToSet -Id $Id -EntityType $EntityType -Permissions $Permissions | Out-Null
         }
-        elseif ($item.Type -ieq "DIRECTORY")
+        else
         {
             # set permission and recurse on the directory
             giveaccess -Account $Account -Path $pathToSet -Id $Id -EntityType $EntityType -Permissions $Permissions -IsDefault | Out-Null
             setacerec -Account $Account -Path $pathToSet -Permissions $Permissions -Id $Id -EntityType $EntityType | Out-Null
-        }
-        else
-        {
-            throw "Invalid path type of: $($item.Type). Valid types are 'DIRECTORY' and 'FILE'"
         }
     }
 }
