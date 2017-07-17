@@ -170,14 +170,10 @@ function setownerrec
         {
             Set-AzureRmDataLakeStoreItemOwner -Account $Account -Path $Path -Type $EntityType -Id $EntityId | Out-Null
         }
-        elseif ($item.Type -ieq "DIRECTORY")
+        else
         {
             Set-AzureRmDataLakeStoreItemOwner -Account $Account -Path $Path -Type $EntityType -Id $EntityId | Out-Null
             setownerrec -Account $Account -Path $pathToSet -Id $Id -EntityType $EntityType | Out-Null
-        }
-        else
-        {
-            throw "Invalid path type of: $($item.Type). Valid types are 'DIRECTORY' and 'FILE'"
         }
     }
 }
@@ -188,7 +184,7 @@ function setownerrec
 
 switch ($PsCmdlet.ParameterSetName) 
 { 
-    “SetOwner”  {
+    "SetOwner"  {
         try
         {
             if($EntityType -ieq "other")
@@ -196,13 +192,13 @@ switch ($PsCmdlet.ParameterSetName)
 		        throw "SetOwner is not supported when 'Other' EntityType is specified"
 	        }
 	
-	        if($EntityType -ine "other" -and [string]::IsNullOrEmpty($EntityId))
+	        if([string]::IsNullOrEmpty($EntityId))
 	        {
 		        throw "EntityId is required when SetOwner is specified"
 	        }
 	
 	        $ignored = [Guid]::Empty
-	        if($EntityType -ine "other" -and !([Guid]::TryParse($EntityId, [ref]$ignored)))
+	        if(!([Guid]::TryParse($EntityId, [ref]$ignored)))
 	        {
 		        throw "EntityId must be a valid GUID. EntityId value was: $EntityId"
 	        }
@@ -222,7 +218,7 @@ switch ($PsCmdlet.ParameterSetName)
         }
         break
     } 
-    “SetAclEntry”  {
+    "SetAclEntry"  {
         try
         {
             if($EntityType -ieq "other" -and !([string]::IsNullOrEmpty($EntityId)))
