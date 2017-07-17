@@ -1,4 +1,4 @@
-
+﻿
 # Azure Data Lake PowerShell Quick Start
 
 ## Introduction
@@ -285,14 +285,43 @@ function Test-Administrator
 }
 ```
 
-#### Find the TenantID for a subscription
+#### Find the TenantID for a Subscription
+
+From the Subscription Name
 
 ```
-# Using the Subscription Name
-(Get-AzureRmSubscription -SubscriptionName "MySUbName").TenantID
+function Get-TenantIdFromSubcriptionName( [string] $subname )
+{
+    $sub = (Get-AzureRmSubscription -SubscriptionName $subname)
+    $sub.TenantId
+}
 
-# Using the Subscription ID
-(Get-AzureRmSubscription -SubscriptionName "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx").TenantID
+Get-TenantIdFromSubcriptionName "ADLTrainingMS"
+
+```
+
+From the Subscription Id
+
+```
+function Get-TenantIdFromSubcriptionId( [string] $subid )
+{
+    $sub = (Get-AzureRmSubscription -SubscriptionId $subid)
+    $sub.TenantId
+}
+
+$subid = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+Get-TenantIdFromSubcriptionId $subid
+```
+
+#### List all your subscriptoins and tenantids
+
+```
+$subs = Get-AzureRmSubscription
+foreach ($sub in $subs)
+{
+    Write-Host $sub.Name "("  $sub.Id ")"
+    Write-Host "`tTenant Id" $sub.TenantId
+}
 ```
 
 #### Time a command
