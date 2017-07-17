@@ -53,7 +53,7 @@ param
     [switch] $SetOwner,
 
     [Parameter(Mandatory=$false)]
-    [string] $EntityId,
+    [Guid] $EntityId,
 
     [ValidateSet("User", "Group", "Other")]
     [Parameter(Mandatory=$true)]
@@ -73,7 +73,7 @@ function giveaccess
         [Parameter(Mandatory=$true)]
         [string] $Path,
         [Parameter(Mandatory=$false)]
-        [string] $Id,
+        [Guid] $Id,
         [Parameter(Mandatory=$true)]
         [string] $EntityType,
         [Parameter(Mandatory=$true)]
@@ -117,7 +117,7 @@ function setacerec
         [Parameter(Mandatory=$true)]
         [string] $Permissions,
         [Parameter(Mandatory=$false)]
-        [string] $Id,
+        [Guid] $Id,
         [Parameter(Mandatory=$true)]
         [string] $EntityType
     )
@@ -151,24 +151,22 @@ function setownerrec
         [Parameter(Mandatory=$true)]
         [string] $Path,
         [Parameter(Mandatory=$false)]
-        [string] $Id,
+        [Guid] $Id,
         [Parameter(Mandatory=$true)]
         [string] $EntityType
     )
 
     $itemList = Get-AzureRMDataLakeStoreChildItem -Account $Account -Path $Path;
+
     foreach($item in $itemList)
     {
         $pathToSet = Join-Path -Path $Path -ChildPath $item.PathSuffix;
         $pathToSet = $pathToSet.Replace("\", "/");
         
-        if ($item.Type -ieq "FILE")
+        Set-AzureRmDataLakeStoreItemOwner -Account $Account -Path $Path -Type $EntityType -Id $EntityId | Out-Null
+
+        if ($item.Type -ieq "DIRECTORY")
         {
-            Set-AzureRmDataLakeStoreItemOwner -Account $Account -Path $Path -Type $EntityType -Id $EntityId | Out-Null
-        }
-        else
-        {
-            Set-AzureRmDataLakeStoreItemOwner -Account $Account -Path $Path -Type $EntityType -Id $EntityId | Out-Null
             setownerrec -Account $Account -Path $pathToSet -Id $Id -EntityType $EntityType | Out-Null
         }
     }
@@ -191,12 +189,6 @@ switch ($PsCmdlet.ParameterSetName)
 	        if([string]::IsNullOrEmpty($EntityId))
 	        {
 		        throw "EntityId is required when SetOwner is specified"
-	        }
-	
-	        $ignored = [Guid]::Empty
-	        if(!([Guid]::TryParse($EntityId, [ref]$ignored)))
-	        {
-		        throw "EntityId must be a valid GUID. EntityId value was: $EntityId"
 	        }
     
             Write-Host "Request to change owner to entity $EntityId successfully submitted and will propagate over time depending on the size of the folder."
@@ -225,12 +217,6 @@ switch ($PsCmdlet.ParameterSetName)
 	        if($EntityType -ine "other" -and [string]::IsNullOrEmpty($EntityId))
 	        {
 		        throw "EntityId is required when modifying permissions for 'User' and 'Group' entity types"
-	        }
-	
-	        $ignored = [Guid]::Empty
-	        if($EntityType -ine "other" -and !([Guid]::TryParse($EntityId, [ref]$ignored)))
-	        {
-		        throw "EntityId must be a valid GUID. EntityId value was: $EntityId"
 	        }
     
             Write-Host "Request to add entity $EntityId successfully submitted and will propagate over time depending on the size of the folder."
