@@ -274,6 +274,12 @@ foreach ($db in $dbs)
 
 ## Useful snippets
 
+#### Drilling into AzureRM cmdlet errors
+
+```
+Resolve-AzureRmError -Last
+```
+
 #### Check if you are running as an administrator
 
 ```
