@@ -34,7 +34,7 @@ table td {
 }
 
 table td:first-child {
-    padding-left: 0pt;
+    padding-left: 10pt;
     border-left: none;
 }
 
