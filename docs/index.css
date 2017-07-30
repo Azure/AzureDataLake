@@ -18,6 +18,11 @@ h2 {
     font-weight: normal;
 }
 
+h3 {
+    font-family: "Segoe UI Light", "Lucida Grande";
+    font-weight: normal;
+}
+
 a {
     font-family: "Segoe UI Semibold", "Lucida Grande";
     color: #0066cc;
@@ -39,4 +44,9 @@ table td {
 .SubHeading {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     letter-spacing: -2px;
+}
+
+.Gray 
+{
+    background-color: #f7f7f7;
 }
