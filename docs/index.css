@@ -14,14 +14,11 @@ h1 {
 }
 
 h2 {
-    font-family: "Segoe UI Semibold", "Lucida Grande";
-    font-weight: normal;
+    font-family: "Segoe UI Light", "Lucida Grande";
+    font-weight: lighter;
+    font-size: 14pt;
 }
 
-h3 {
-    font-family: "Segoe UI Light", "Lucida Grande";
-    font-weight: normal;
-}
 
 a {
     font-family: "Segoe UI Semibold", "Lucida Grande";
@@ -36,10 +33,10 @@ table td {
     padding-left: 10pt;
 }
 
-    table td:first-child {
-        padding-left: 0pt;
-        border-left: none;
-    }
+table td:first-child {
+    padding-left: 0pt;
+    border-left: none;
+}
 
 .SubHeading {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -50,3 +47,5 @@ table td {
 {
     background-color: #f7f7f7;
 }
+
+body, tbody, p { font-size: 10pt ; }
