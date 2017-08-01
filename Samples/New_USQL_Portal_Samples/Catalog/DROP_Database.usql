@@ -1,5 +1,0 @@
-DROP DATABASE MyDatabase;
-
-// OR
-
-DROP DATABASE IF NOT EXISTS MyDatabase;
