@@ -558,50 +558,22 @@ _Schema_
 |-------------|------|-------------|
 | type_id_guid | Guid | The types's unique identifier |
 | name | string | The type's name alias (unique within the type family) |
-| type_family | string | Name of the type system family, together with the type name's alias, uniquely identifies the type. 
-U-SQL supports the following two values: 
-       `SQL` = SQL Server Type system family 
-       `C#` = C# type system family 
-       `U-SQL` = U-SQL table types |
+| type_family | string | Name of the type system family, together with the type name's alias, uniquely identifies the type. U-SQL supports the following values: `SQL` = SQL Server Type system family, `C#` = C# type system family, `U-SQL` = U-SQL table types |
 | qualified_name | string | Fully qualified name of the underlying C# type library representing the type. This name uniquely identifies the type. | 
 | schema_id_guid | Guid | ID of the database schema the type belongs to |
-| is_explicit_nullable  | bool? | 
-`True` = Type can be marked explicitly as nullable (e.g. `int?`)
-`False` = Type cannot be marked explicitly as nullable (e.g. C#'s `string`)
-`Null` = Is a table type
-| is_user_defined | bool |
-`True` = User-defined type
-`False` = Built-in data type |
-| is_assembly_type | bool |
-`True` = Implementation of the type is defined in a CLR assembly  
-`False` = Type is based on a SQL Server system data type or is a U-SQL table type
+| is_explicit_nullable  | bool? | `True` = Type can be marked explicitly as nullable (e.g. `int?`); `False` = Type cannot be marked explicitly as nullable (e.g. C#'s `string`); `Null` = Is a table type |
+| is_user_defined | bool | `True` = User-defined type; `False` = Built-in data type |
+| is_assembly_type | bool | `True` = Implementation of the type is defined in a CLR assembly; `False` = Type is based on a SQL Server system data type or is a U-SQL table type |
 | is_table_type | bool| Indicates if the type is a table type |
-| is_complex | bool | 
-`True` = Type is considered complex for serialization and query purposes
-`False` = Type is considered scalar for serialization and query purposes |
+| is_complex | bool | `True` = Type is considered complex for serialization and query purposes; `False` = Type is considered scalar for serialization and query purposes |
 | precision | int? | Indicates the max precision of the type if it is a numeric type, 0 otherwise, null if it is not a built-in type |
 | scale | int? | Indicates the max scale of the type if it is a numeric type, 0 otherwise, null if it is not a built-in type |
-| is_nullable | bool |
-`False` = Type implicitly allows null value
-`True` = Type does not implicitly allow null value
+| is_nullable | bool | `False` = Type implicitly allows null value; `True` = Type does not implicitly allow null value
 `Null` = Is a table type |
-| is_precise | int | 
-`0` = Type semantics is imprecise 
-`1` = Type semantics is precise 
-`2` = Type semantics regarding precision is determined based on other aspects (e.g., in complex types, if all referenced types are precise then the complex type is precise) 
-`Null` = Is a table type |
-| is_foldable | bool |
-`False` =   Expressions of this type cannot be constant-folded in query processing
-`True` = Expressions of this type can be constant-folded 
-`Null` = Is a table type |
-| is_comparable | bool? |
-`False` = Values of this type cannot be compared or ordered
-`True` = Values of this type can be compared and ordered
-`Null` = Is a table type |
-| is_real_number | bool? |
-`False` = Value of this type is not a real number
-`True` = Value of this type is a real number
-`Null` = Not a built-in type |
+| is_precise | int | Supported values are: `0` = Type semantics is imprecise; `1` = Type semantics is precise; `2` = Type semantics regarding precision is determined based on other aspects (e.g., in complex types, if all referenced types are precise then the complex type is precise); `Null` = Is a table type |
+| is_foldable | bool | `False` =   Expressions of this type cannot be constant-folded in query processing; `True` = Expressions of this type can be constant-folded; `Null` = Is a table type |
+| is_comparable | bool? | `False` = Values of this type cannot be compared or ordered; `True` = Values of this type can be compared and ordered; `Null` = Is a table type |
+| is_real_number | bool? | `False` = Value of this type is not a real number; `True` = Value of this type is a real number; `Null` = Not a built-in type |
 
 ##### `usql.columns`
 
@@ -614,7 +586,7 @@ _Schema_
 | name | string | The column's name (unique within the object to which the column belongs) |
 | object_id_guid | Guid | The identifier of the object to which the columns belongs |
 | column_id | int | the column's positional id within the object to which the column belongs (unique within the object) |
-| type_id_guid | The column type's identifier |
+| type_id_guid | Guid | The column type's identifier |
 | max_length | int? | The column's maximum length in bytes, or -1 for variable sized columns such as columns of type string or byte[] or of a complex type. The value `null` is reserved for future use. |
 
 ##### `usql.indexes`
