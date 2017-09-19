@@ -602,16 +602,8 @@ _Schema_
 | name | string | The name of the index |
 | object_id_guid | Guid | The identifier of the object on which the index is defined |
 | index_id | int | ordinal position (starting at 1) of the index within the object/table |
-| type | int |
-The index type:
-`1` = Clustered
-`2` = Nonclustered
-`5` = Clustered Columnstore |
-| type_desc | string | 
-Description of the index type: 
-`CLUSTERED`
-`NONCLUSTERED` 
-`CLUSTERED COLUMNSTORE` | 
+| type | int | The index type: `1` = Clustered; `2` = Nonclustered; `5` = Clustered Columnstore |
+| type_desc | string | Description of the index type: `CLUSTERED`; `NONCLUSTERED`; `CLUSTERED COLUMNSTORE` | 
  
 ##### `usql.index_columns`
 
@@ -628,12 +620,8 @@ _Schema_
 | index_column_id  | int | The position of the index column within the index (unique within the index_id) |
 | column_id | int | The position of the column within the object on which the index is specified (unique within object_id_guid)  or 0 if it is the row identifier (RID) in a nonclustered index |
 | key_ordinal | int | Ordinal (1-based) within the set of key-columns, or 0 if it is not a key column, or it is a columnstore index |
-| is_descending_key | bool |
-`True` = Index key column has a descending sort direction 
-`False` = Index key column has an ascending sort direction, or the column is part of a columnstore or hash index |
-| ​is_included_column | bool | 
-​`True` = Column is a non-key column added to the index as an included column 
-`False` = Column is not an included column |
+| is_descending_key | bool | `True` = Index key column has a descending sort direction; `False` = Index key column has an ascending sort direction, or the column is part of a columnstore or hash index |
+| ​is_included_column | bool | ​`True` = Column is a non-key column added to the index as an included column; `False` = Column is not an included column |
  
 ##### `usql.stats`
 
@@ -673,18 +661,8 @@ _Schema_
 |-------------|------|-------------|
 | object_id_guid | Guid | The identifier of the object for which the distribution is specified |
 | index_id | int? | The identifier of the index for which the distribution is specified or `null` if it is specified directly on the table. |
-| distribution_type | int | 
-Distribution type:
-      `2` = Hash 
-      `5` = Range 
-      `6` = Round Robin 
-     `17` = Direct Hash |
-| distribution_type_desc | string |
-Distribution type description:
-      `HASH`
-      `RANGE`
-      `ROUND ROBIN`
-      `DIRECT HASH` | 
+| distribution_type | int | Distribution type: `2` = Hash; `5` = Range; `6` = Round Robin; `17` = Direct Hash |
+| distribution_type_desc | string | Distribution type description: `HASH`; `RANGE`; `ROUND ROBIN`; `DIRECT HASH` | 
 | distribution_count | int | The specified count of distribution buckets if specified, null or 0 otherwise |
  
 ##### `usql.distribution_columns`
@@ -699,9 +677,7 @@ _Schema_
 | index_id | int? | The identifier of the index for which the distribution is specified or `null` if it is specified directly on the table. |
 | distribution_column_id | int | The ordinal position of the column in the distribution definition |
 | column_id | int | The position of the column within the object on which the statistics is specified (unique within object_id_guid) |
-| is_descending_key | bool |
-`True` = The distribution column has a descending sort direction
-`False` = The distribution column has an ascending sort direction |
+| is_descending_key | bool | `True` = The distribution column has a descending sort direction; `False` = The distribution column has an ascending sort direction |
  
 ##### `usql.partitions`
 
