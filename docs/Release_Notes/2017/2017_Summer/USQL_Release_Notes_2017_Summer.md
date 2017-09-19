@@ -568,8 +568,7 @@ _Schema_
 | is_complex | bool | `True` = Type is considered complex for serialization and query purposes; `False` = Type is considered scalar for serialization and query purposes |
 | precision | int? | Indicates the max precision of the type if it is a numeric type, 0 otherwise, null if it is not a built-in type |
 | scale | int? | Indicates the max scale of the type if it is a numeric type, 0 otherwise, null if it is not a built-in type |
-| is_nullable | bool | `False` = Type implicitly allows null value; `True` = Type does not implicitly allow null value
-`Null` = Is a table type |
+| is_nullable | bool | `False` = Type implicitly allows null value; `True` = Type does not implicitly allow null value; `Null` = Is a table type |
 | is_precise | int | Supported values are: `0` = Type semantics is imprecise; `1` = Type semantics is precise; `2` = Type semantics regarding precision is determined based on other aspects (e.g., in complex types, if all referenced types are precise then the complex type is precise); `Null` = Is a table type |
 | is_foldable | bool | `False` =   Expressions of this type cannot be constant-folded in query processing; `True` = Expressions of this type can be constant-folded; `Null` = Is a table type |
 | is_comparable | bool? | `False` = Values of this type cannot be compared or ordered; `True` = Values of this type can be compared and ordered; `Null` = Is a table type |
@@ -720,32 +719,32 @@ _Schema_
 
 1. The following script returns all databases of the submitting account for which the submitting user has enumeration rights:
 
-    OUTPUT (SELECT * FROM usql.databases) TO "/output/databases.csv" USING Outputters.Csv(outputHeader:true);
+        OUTPUT (SELECT * FROM usql.databases) TO "/output/databases.csv" USING Outputters.Csv(outputHeader:true);
 
 2. The following script returns the tables with their fully qualified, quoted names as well as their column information (name and type and maximal possible field size) ordered alphabetically by table and in order of their column positions:
 
-    @res =
-      SELECT "[" + db.name + "].[" + s.name + "].[" + t.name + "]" AS table_name,
-             c.name AS col_name,
-             c.column_id AS col_pos,
-             ct.qualified_name AS col_type,
-             c.max_length == - 1 ? 
-               ct.qualified_name == "System.String" ? 
-                 128 * 1024 
-               : ct.qualified_name == "System.Byte[]" ? 
-                   4 * 1024 * 1024 
-                 : - 1 
-             : c.max_length AS col_max_length
-      FROM usql.databases AS db 
-      JOIN usql.schemas AS s ON db.database_id_guid == s.database_id_guid
-      JOIN usql.tables AS t ON s.schema_id_guid == t.schema_id_guid
-      JOIN usql.columns AS c ON c.object_id_guid == t.object_id_guid
-      JOIN usql.types AS ct ON c.type_id_guid == ct.type_id_guid;
+        @res =
+          SELECT "[" + db.name + "].[" + s.name + "].[" + t.name + "]" AS table_name,
+                 c.name AS col_name,
+                 c.column_id AS col_pos,
+                 ct.qualified_name AS col_type,
+                 c.max_length == - 1 ? 
+                   ct.qualified_name == "System.String" ? 
+                     128 * 1024 
+                   : ct.qualified_name == "System.Byte[]" ? 
+                       4 * 1024 * 1024 
+                     : - 1 
+                 : c.max_length AS col_max_length
+          FROM usql.databases AS db 
+          JOIN usql.schemas AS s ON db.database_id_guid == s.database_id_guid
+          JOIN usql.tables AS t ON s.schema_id_guid == t.schema_id_guid
+          JOIN usql.columns AS c ON c.object_id_guid == t.object_id_guid
+          JOIN usql.types AS ct ON c.type_id_guid == ct.type_id_guid;
 
-    OUTPUT @res
-    TO "/output/tableinfo.csv"
-    ORDER BY table_name, col_pos
-    USING Outputters.Csv(outputHeader : true);
+        OUTPUT @res
+        TO "/output/tableinfo.csv"
+        ORDER BY table_name, col_pos
+        USING Outputters.Csv(outputHeader : true);
 
 #### U-SQL supports paging queries with `OFFSET/FETCH` clause
 
