@@ -1,5 +1,77 @@
 # U-SQL Summer Release Notes 2017-09-19
 --------------------------
+## Table of Content
+1. [Pending and Upcoming Deprecations and Breaking Changes](#pending-and-upcoming-deprecations-and-breaking-changes)
+
+    1.1 [U-SQL jobs will introduce an upper limit for the number of table-backing files being read](#u-sql-jobs-will-introduce-an-upper-limit-for-the-number-of-table-backing-files-being-read)
+
+    1.2 [Table-valued functions will disallow result variable names to conflict with parameter names](#table-valued-functions-will-disallow-result-variable-names-to-conflict-with-parameter-names)
+
+    1.3 [Built-in extractors will change mapping of empty fields from zero-length string to null with quoting enabled](#built-in-extractors-will-change-mapping-of-empty-fields-from-zero-length-string-to-null-with-quoting-enabled)
+
+    1.4 [Disallowing user variables that start with `@@`](#disallowing-user-variables-that-start-with-)
+
+    1.5 [Disallow U-SQL identifiers in C# delegate bodies in scripts](#disallow-u-sql-identifiers-in-c-delegate-bodies-in-scripts)
+
+2. [Breaking Changes](#breaking-changes)
+
+    2.1 [Previously announced deprecation items are now removed.](#previously-announced-deprecation-items-are-now-removed-please-check-previous-release-notes-for-details)
+
+    2.2 [The Built-in extractors' verification of the UTF-8 encoding correctness has been strengthened](#the-built-in-extractors-verification-of-the-utf-8-encoding-correctness-has-been-strengthened)
+
+    2.3 [API changes for the cognitive extension libraries](#api-changes-for-the-cognitive-extension-libraries)
+
+3. [Major U-SQL Bug Fixes, Performance and Scale Improvements](#major-u-sql-bug-fixes-performance-and-scale-improvements)
+
+    3.1 [Job graph build time optimization](#job-graph-build-time-optimization)
+
+    3.2 [U-SQL Python Support bug fixes and performance and scale improvements](#u-sql-python-support-bug-fixes-and-performance-and-scale-improvements)
+
+    3.3 [U-SQL R Extensions bug fixes and performance and scale improvements](#u-sql-r-extensions-bug-fixes-and-performance-and-scale-improvements)
+
+4. [U-SQL Preview Features](#u-sql-preview-features)
+
+    4.1 [Input File Set scales orders of magnitudes better (now with additional improvements!)](#input-file-set-scales-orders-of-magnitudes-better-now-with-additional-improvements-opt-in-statements-are-provided)
+
+    4.2 [Automatic GZip compression on `OUTPUT` statement is now in preview](#automatic-gzip-compression-on-output-statement-is-now-in-preview-opt-in-statement-is-provided)
+
+    4.3 [DiagnosticStream support in .Net User-code](#diagnosticstream-support-in-net-user-code)
+
+    4.4 [A limited flexible-schema feature for U-SQL table-valued function parameters is now available for preview](#a-limited-flexible-schema-feature-for-u-sql-table-valued-function-parameters-is-now-available-for-preview-requires-opt-in)
+
+5. [New U-SQL capabilities](#new-u-sql-capabilities)
+
+    5.1 [U-SQL Packages can now contain `USE` statements](#u-sql-packages-can-now-contain-use-statements)
+
+    5.2 [U-SQL adds Catalog Views](#u-sql-adds-catalog-views)
+
+    5.3 [U-SQL supports paging queries with `OFFSET`/`FETCH` clause](#u-sql-supports-paging-queries-with-offsetfetch-clause)
+
+    5.4 [U-SQL Python Extension additions](#u-sql-python-extension-additions)
+
+    5.5 [U-SQL R Extension additions](#u-sql-r-extension-additions)
+
+    5.6 [U-SQL Cognitive Library additions](#u-sql-cognitive-library-additions)
+
+6. [Azure Data Lake Tools for Visual Studio New Capabilities](#azure-data-lake-tools-for-visual-studio-new-capabilities)
+
+    6.1 [ADL Tools for VisualStudio now helps you generate the U-SQL EXTRACT statement](#adl-tools-for-visualstudio-now-helps-you-generate-the-u-sql-extract-statement)
+
+    6.2 [Python and R code-behind are supported for U-SQL project](#python-and-r-code-behind-are-supported-for-u-sql-project)
+
+    6.3 [Simplifying debugging shared user code in ADL Tools for VisualStudio](#simplifying-debugging-shared-user-code-in-adl-tools-for-visualstudio)
+
+    6.4 [ADL Tools for Visual Studio supports F1 help on U-SQL keywords](#adl-tools-for-visual-studio-supports-f1-help-on-u-sql-keywords)
+
+    6.5 [ADL Tools for Visual Studio allows temporary U-SQL scripts outside of a project](#adl-tools-for-visual-studio-allows-temporary-u-sql-scripts-outside-of-a-project)
+
+    6.6 [ADL Tools in Visual Studio highlights all uses of a highlighted U-SQL variable](#adl-tools-in-visual-studio-highlights-all-uses-of-a-highlighted-u-sql-variable)
+
+7. [Azure Portal Updates](#azure-portal-updates)
+
+    7.1 [The job graph in the Portal now indicates if the stage's vertices contain user-defined operators (UDOs)](#the-job-graph-in-the-portal-now-indicates-if-the-stages-vertices-contain-user-defined-operators-udos)
+
+--------------------------
 ## Pending and Upcoming Deprecations and Breaking Changes
 
 Please review your code and make sure you are cleaning your existing code to be ready for the following 
@@ -11,11 +83,11 @@ Follow our [Azure Data Lake Blog](http://blogs.msdn.microsoft.com/azuredatalake)
 
 #### U-SQL jobs will introduce an upper limit for the number of table-backing files being read
 
-U-SQL tables are backed by files. Each table partition is mapped to its own file, and each `INSERT` statement adds an additional file (unless a table is rebuild with `ALTER TABLE REBUILD`). 
+U-SQL tables are backed by files. Each table partition is mapped to its own file, and each `INSERT` statement adds an additional file (unless a table is rebuilt with `ALTER TABLE REBUILD`). 
 
 If the file count of a table (or set of tables) grows beyond a certain limit and the query predicate cannot eliminate files (e.g., due to too many insertions), there is a large likely-hood that the compilation times out after 25 minutes. 
 
-In previous releases, there was no limit on the number of table files read by a single job. In the current release we raise the following warning, if the number of table-backing files exceeds the limit of 3000 files per job:
+In previous releases, there was no limit on the number of table files read by a single job. In the current release, we raise the following warning if the number of table-backing files exceeds the limit of 3000 files per job:
 
 >Warning: WrnExceededMaxTableFileReadThreshold
 
@@ -141,13 +213,13 @@ The recent refresh introduced the following breaking changes:
 
 The image tagging processor `Cognition.Vision.ImageTagger` changed the resulting `Tags` column's data type from `string` to `SQL.MAP<string, float?>` in order to provide more detailed confidence level information for each returned tag. 
 
-##### The `Cognition.Vision.EmotionaAnalyzer` UDO has been removed
+##### The `Cognition.Vision.EmotionAnalyzer` UDO has been removed
 
-This UDO has been replaced by an equivalent extractor and applier. For more details on the replacements see below (TBD: Add forward link).
+This UDO has been replaced by an equivalent extractor and applier. For more details on the replacements see [below](#human-face-emotion-detection-is-available-as-an-extractor-and-an-applier).
 
 ##### The `Cognition.Vision.FaceDetector` UDO has been removed
 
-This UDO has been replaced by an equivalent extractor and applier. For more details on the replacements see below (TBD: Add forward link).
+This UDO has been replaced by an equivalent extractor and applier. For more details on the replacements see [below](#human-age-and-gender-estimation-is-now-available-as-extractor-and-applier).
 
 ##### The assembly `TextCommon` has been removed for the set of deployed assemblies
 
@@ -159,7 +231,7 @@ This assembly provided a function called `Cognition.Text.Splitter("KeyPhrase")` 
 
 Besides many internal improvements and fixes to reported bugs, we would like to call out the following major bug fixes and improvements to performance and scalability of the language.
 
-#### Job graph build time optimization. 
+#### Job graph build time optimization
 
 This performance optimization improves the job initialization time for large jobs.
 
@@ -262,7 +334,7 @@ The diagnosis has the following limits:
 1.	Each `entitized-user-provided-content` cannot be larger than 100kb of UTF-16 encoded, pre-entitized data (e.g., the user writes `A\rB` which will be entitized to `A&xD;B`. This will be counted as 3 bytes).
 2.	The overall diagnosis file size limit is 5GB. This includes all the XML tags and attribute information.
 
-Since writing diagnosis information should not fail, too much data will be indicated by adding the following information:
+In the case that the diagnostic information exceeds the limits above, writing the diagnosis information should not fail. Therefore, the following information will be added as an indication that the data got truncated:
 
 1.	Each Line that is being written that ends up being too long will be represented by the following element:
 
@@ -466,7 +538,7 @@ U-SQL has added catalog views for some of the most commonly used catalog objects
 
 Catalog views will not contain objects that have been created as part of the same script and will only show the objects that the user submitting the query has the rights to see.
 
-**The U-SQL catalog views are currently _not_ available in the local run environment.**
+**The U-SQL catalog views are currently _not_ available in the local run environment. Please upvote [this request](https://feedback.azure.com/forums/327234-data-lake/suggestions/31545625-add-local-run-support-for-u-sql-catalog-views) if this is blocking you.**
 
 Future releases will add additional catalog views. 
 
@@ -568,9 +640,9 @@ _Schema_
 | is_complex | bool | `True` = Type is considered complex for serialization and query purposes; `False` = Type is considered scalar for serialization and query purposes |
 | precision | int? | Indicates the max precision of the type if it is a numeric type, 0 otherwise, null if it is not a built-in type |
 | scale | int? | Indicates the max scale of the type if it is a numeric type, 0 otherwise, null if it is not a built-in type |
-| is_nullable | bool | `False` = Type implicitly allows null value; `True` = Type does not implicitly allow null value; `Null` = Is a table type |
-| is_precise | int | Supported values are: `0` = Type semantics is imprecise; `1` = Type semantics is precise; `2` = Type semantics regarding precision is determined based on other aspects (e.g., in complex types, if all referenced types are precise then the complex type is precise); `Null` = Is a table type |
-| is_foldable | bool | `False` =   Expressions of this type cannot be constant-folded in query processing; `True` = Expressions of this type can be constant-folded; `Null` = Is a table type |
+| is_nullable | bool? | `False` = Type implicitly allows null value; `True` = Type does not implicitly allow null value; `Null` = Is a table type |
+| is_precise | int? | Supported values are: `0` = Type semantics is imprecise; `1` = Type semantics is precise; `2` = Type semantics regarding precision is determined based on other aspects (e.g., in complex types, if all referenced types are precise then the complex type is precise); `Null` = Is a table type |
+| is_foldable | bool? | `False` =   Expressions of this type cannot be constant-folded in query processing; `True` = Expressions of this type can be constant-folded; `Null` = Is a table type |
 | is_comparable | bool? | `False` = Values of this type cannot be compared or ordered; `True` = Values of this type can be compared and ordered; `Null` = Is a table type |
 | is_real_number | bool? | `False` = Value of this type is not a real number; `True` = Value of this type is a real number; `Null` = Not a built-in type |
 
@@ -635,7 +707,7 @@ _Schema_
 | stats_id_guid | Guid | The identifier of the statistics (unique within the object) |
 | create_date | DateTime? | The date of creation of the statistics. Some older statistics may have a value of null if they were created before the date was being recorded. |
 | update_date | DateTime? | The last update date of the statistics. Some older statistics may have a value of null if they were updated before the date was being recorded. |
-| stat_data_byte | byte[] | The content of the statistics |
+| stat_data_byte | byte[] | The content of the statistics. **CAUTION: This column may be subject to change in a future refresh!** |
 
 ##### `usql.stats_columns`
 
@@ -877,7 +949,7 @@ Then we can deploy it and use it with the following script to predict for exampl
 
 In previous versions of the U-SQL cognitive libraries, image tagging "extraction" was only provided as a U-SQL processor. The processor works well on data that is already in a rowset, e.g., operating on images that are stored in a table. However, it can only operate on data that fits into a row, thus limiting the image to the row size limit of at most 4MB.
 
-In the latest release of the cognitive libraries, the image tagging extraction can also be done with a U-SQL extractor. This allows to perform the tag discovery directly on files, thus avoiding the file size limit. As a trade-off, the scale is limited by the scale of operating on file sets (up to 10000s of files) compared to million of rows with the processor (which is still available).
+In the latest release of the cognitive libraries, the image tagging extraction can also be done with a U-SQL extractor. This allows to perform the tag discovery directly on files, thus avoiding the file size limit. As a trade-off, the scale is limited by the scale of operating on file sets (up to 10000s of files) compared to millions of rows with the processor (which is still available).
 
 The new `Cognition.Vision.ImageTagsExtractor` extractor will operate on a JPEG file and return a rowset with two columns called `NumObjects` of type `int` that provides the number of detected objects in the image and `Tags` that returns a `SQL.MAP<string, float?>` instance which contains the set of object tags as keys with a floating point value indicating the confidence of each of the tags as values.
 
@@ -897,7 +969,7 @@ The following script will extract the file names of all JPEG files with the exte
         EXTRACT FileName string,
                 NumObjects int,
                 Tags SQL.MAP<string, float?>
-        FROM @"/usqlext/samples/cognition/{FileName:*}.jpg"
+        FROM @"/usqlext/samples/cognition/{FileName}.jpg"
         USING new Cognition.Vision.ImageTagsExtractor();
 
     // Merge the Map into a string for outputting
@@ -938,7 +1010,7 @@ The older `Cognition.Vision.EmotionAnalyzer` has been replaced with the followin
                   RectX float, RectY float, Width float, Height float, 
                   Emotion string, 
                   Confidence float
-          FROM @"/usqlext/samples/cognition/{FileName:*}.jpg"
+          FROM @"/usqlext/samples/cognition/{FileName}.jpg"
           USING new Cognition.Vision.EmotionExtractor(numCol:"NumFacesPerImage");
 
 
@@ -986,11 +1058,12 @@ Like the emotion detectors, the age and gender estimation (face detection) cogni
     The `FaceDetectionExtractor` UDO is applied to each image file and it generates one row per face detected in the file. It returns the number of detected faces in the image (column `NumFaces` of type `int`), the current index of the face from all the faces recognized in the image for the returned row (column `FaceIndex` of type `int`) and its face rectangle (columns `RectX`, `RectY`, `Width`, `Height` of type `float`) along with the estimated age (column `FaceAge` of type `int`) and gender (column `FaceGender` of type `string`) for the current face.
 
     It provides the following arguments to specify the relevant output column names with their defaults:
-
-    *TBD*
        
         public FaceDetectionExtractor(
-            )
+            string numCol = "NumFaces", 
+            string indexCol = "FaceIndex", 
+            string ageCol = "FaceAge", 
+            string genderCol = "FaceGender")
 
     _Example_
 
@@ -1005,7 +1078,7 @@ Like the emotion detectors, the age and gender estimation (face detection) cogni
                   RectX float, RectY float, Width float, Height float, 
                   FaceAge int, 
                   FaceGender string
-          FROM @"/usqlext/samples/cognition/{FileName:*}.jpg"
+          FROM @"/usqlext/samples/cognition/{FileName}.jpg"
           USING new Cognition.Vision.FaceDetectionExtractor();
 
 2.	`FaceDetectionApplier` Applier
@@ -1013,14 +1086,13 @@ Like the emotion detectors, the age and gender estimation (face detection) cogni
     The `FaceDetectionApplier` UDO is applied to each image in the byte array column with the default name `ImgData` and it generates one row per face detected in an image. It returns the number of detected faces in the image, current index of the face from all the faces recognized in the image for the returned row, and its face rectangle along with estimated age and gender for the current face index (with the default column names and types as in the `FaceDetectionExtractor` extractor).
 
     It provides the following arguments to specify the relevant input and output column names with their defaults:
-
-    *TBD*
        
         public FaceDetectionApplier(
             string imgCol = "ImgData", 
             string numCol = "NumFaces", 
             string indexCol = "FaceIndex", 
-            ...)
+            string ageCol = "FaceAge", 
+            string genderCol = "FaceGender")
 
     _Example_
 
@@ -1090,7 +1162,7 @@ Sometimes you just want to write a script without creating a U-SQL project. Now 
 	
 ![ADLTools temporary U-SQL Script](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/TempScript.png) 
 
-##### ADL Tools in Visual Studio highlights all uses of a highlighted U-SQL variable
+#### ADL Tools in Visual Studio highlights all uses of a highlighted U-SQL variable
 
 When selecting a specific U-SQL variable in the U-SQL script editor, all uses (declarations and uses) will be highlighted. 
 	
@@ -1100,9 +1172,13 @@ When selecting a specific U-SQL variable in the U-SQL script editor, all uses (d
 
 #### The job graph in the Portal now indicates if the stage's vertices contain user-defined operators (UDOs)
 
-The job graph in the Portal now indicates if the stage's vertices contain user-defined operators (UDOs) as in this picture:
+The job graph in the Portal now indicates if the stage's vertices contain user-defined operators (UDOs). .NET UDOs and the R script invoking UDO are marked as in this picture:
 
 ![ADLPortal UDO marking](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/Portal-UDOMarking.png)
+
+The Python invoking UDO is marked as follows:
+
+![ADLPortal Python UDO marking](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/Portal-PythonUDOMarking.png)
 
 ## PLEASE NOTE:
 
