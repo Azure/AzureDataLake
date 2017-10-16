@@ -1,0 +1,45 @@
+﻿// This is a sample data file from the silva project
+// The original data source can be found here: https://www.arb-silva.de/
+
+// Registering the assemblies to use the Excel Extractor
+DROP ASSEMBLY IF EXISTS openxml;
+CREATE ASSEMBLY openxml FROM @"\Assemblies\DocumentFormat.OpenXml.dll";
+REFERENCE ASSEMBLY openxml;
+
+DROP ASSEMBLY IF EXISTS analytics;
+CREATE ASSEMBLY analytics FROM @"/Assemblies/oh22is.Analytics.Formats.dll";
+REFERENCE ASSEMBLY analytics;
+
+// Define a local variable for the Excel file
+DECLARE @ExcelFile = "/Samples/taxonomy_97.xlsx";
+
+// If no sheet is passed to the constructor, the first Excel sheet is read from the file
+@sheet1 = EXTRACT AccessionNumber string,
+             D_0 string,
+             D_1 string,
+             D_2 string,
+             D_3 string,
+             D_4 string,
+             D_5 string,
+             D_6 string,
+             D_7 string,
+             D_8 string,
+             D_9 string,
+             D_10 string,
+             D_11 string,
+             D_12 string,
+             D_13 string,
+             D_14 string,
+             D_15 string,
+             D_16 string
+        FROM @ExcelFile
+            USING new oh22is.Analytics.Formats.ExcelExtractor();
+
+// Export the sheet into a CSV file
+OUTPUT
+(
+    SELECT *
+    FROM @sheet1
+)
+TO "/Outputs/taxonomy_97.csv"
+USING Outputters.Csv();
