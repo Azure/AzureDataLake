@@ -1,0 +1,58 @@
+﻿// The "sample.xlsx" file is - as the name suggests - a pure example file with fictitious data.
+// The file contains different data types to demonstrate the handling of the ExcelExtractor.
+// In the current version, DateTime values can not be read out yet, they can only be read as string.
+
+
+// Registering the assemblies to use the Excel Extractor
+DROP ASSEMBLY IF EXISTS openxml;
+CREATE ASSEMBLY openxml FROM @"\Assemblies\DocumentFormat.OpenXml.dll";
+REFERENCE ASSEMBLY openxml;
+
+DROP ASSEMBLY IF EXISTS analytics;
+CREATE ASSEMBLY analytics FROM @"\Assemblies\oh22is.Analytics.Formats.dll";
+REFERENCE ASSEMBLY analytics;
+
+// Define a local variable for the Excel file
+DECLARE @ExcelFile = @"/Samples/sample.xlsx";
+
+// Read the Sheet1 from the Excel file by defining the sheet in the constructor
+@sheet1 = EXTRACT A string,
+             B string,
+             C int,
+             D int,
+             E string,  // formulas must be declared as a string
+             F string,
+             G int,
+             H int,
+             I int,
+             J string,  // Date formats must be declared as a string
+             K string   // Date formats must be declared as a string
+        FROM @ExcelFile
+            USING new oh22is.Analytics.Formats.ExcelExtractor("Sheet1");
+
+// Read the Sheet2 from the Excel file by defining the sheet in the constructor
+@sheet2 = EXTRACT A string,
+             B string,
+             C int,
+             D int,
+             E string,  // formulas must be declared as a string
+             F string,
+             G int,
+             H int,
+             I int,
+             J string,  // Date formats must be declared as a string
+             K string   // Date formats must be declared as a string
+        FROM @ExcelFile
+            USING new oh22is.Analytics.Formats.ExcelExtractor("Sheet2");
+
+// Export the two sheets to a CSV file through a union
+OUTPUT
+(
+    SELECT *
+    FROM @sheet1
+    UNION
+    SELECT *
+    FROM @sheet2
+)
+TO "/Outputs/sample01.csv"
+USING Outputters.Csv();
