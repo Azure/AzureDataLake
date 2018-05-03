@@ -13,6 +13,8 @@
 
     1.5 [Disallow U-SQL identifiers in C# delegate bodies in scripts](#disallow-u-sql-identifiers-in-c-delegate-bodies-in-scripts)
 
+    1.6 [Strengthening of Read after DML check](#strengthening-of-read-after-dml-check)
+
 2. [Breaking Changes](#breaking-changes)
 
     2.1 [The following previously announced deprecation items are now removed.](the-following-previously-announced-deprecation-items-are-now-removed)
@@ -179,6 +181,31 @@ A future release will remove these synonyms to enable us to introduce other capa
 #### Disallow U-SQL identifiers in C# delegate bodies in scripts
 
 Since C# delegate bodies (C# blocks enclosed in `{}`) are normal C# from a binding perspective, U-SQL identifiers should be passed in as parameters to the delegate instead. We currently allow U-SQL identifiers in C# delegate bodies, but may remove them in the future.
+
+#### Strengthening of Read after DML check
+
+U-SQL script execution currently does not allow reading from a table that has been inserted into previously or concurrently in the same script (reading before-hand is fine).
+
+The next release will strengthen this check, in particular it will also take table actions across code objects such as table-valued functions into account.
+
+In most cases such reads would have already been failing with a system error `STORE_FILE_NOT_FOUND`.
+
+This system error is now turned into a compile time error calling out that read after insert is not allowed.
+
+In the following few rare cases however, compilation could have passed successfully, although not necessarily in a consistent manner (some invocations in some cases could still produce the error above):
+
+- Read from the table is optimized away: There could be several reasons for this such as partition elimination, file set elimination etc. The outcome of compilation (successful versus failure with above mentioned system error) cannot be guaranteed and is dependent on external factors such as which files were present in the store. 
+
+- Truncate the table/partition between `INSERT` and read operations:
+In this case truncation would have to operate on all table distribution groups on which the `INSERT` was performed. This results in loss of all the inserted data anyways.
+
+Going forward both cases will result in the aforementioned compilation error.
+
+The suggested mitigations are:
+
+- Split the job into two jobs that perform `INSERT` and `SELECT` operations separately
+
+- Write the `SELECT` as a union of the old state of the table and the newly added rows, thus not reading from the table after the DML has occurred.
 
 ## Breaking Changes
 
