@@ -1047,7 +1047,8 @@ will produce the following file in the job folder at `/system/jobservice/jobs/Us
 
 U-SQL's built-in text format extractors and Outputters for CSV-like data added support to both extract from and output to files that are encoded with any of the following additional 8-bit codepages (besides the currently supported Unicode and ASCII encodings):
 
-| Encoding number | Encoding name | Description|
+| Encoding number | Encoding name | Description |
+|-----------------|---------------|-------------|
 | 1250 | Windows-1250 | Central European (Windows) |
 | 1251 | Windows-1251 | Cyrillic (Windows) |
 | 1252 | Windows-1252 | Western European (Windows) |
