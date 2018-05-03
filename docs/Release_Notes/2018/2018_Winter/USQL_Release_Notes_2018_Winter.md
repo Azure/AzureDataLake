@@ -1,75 +1,96 @@
-# U-SQL Winter Release Notes 2018-03-20
+# U-SQL Winter 2017/2018 Release Notes 2018-04-30
 --------------------------
 ## Table of Content
 1. [Pending and Upcoming Deprecations and Breaking Changes](#pending-and-upcoming-deprecations-and-breaking-changes)
 
     1.1 [U-SQL jobs will introduce an upper limit for the number of table-backing files being read](#u-sql-jobs-will-introduce-an-upper-limit-for-the-number-of-table-backing-files-being-read)
 
-    1.2 [Table-valued functions will disallow result variable names to conflict with parameter names](#table-valued-functions-will-disallow-result-variable-names-to-conflict-with-parameter-names)
+    1.2 [Built-in extractors will change mapping of empty fields from zero-length string to null with quoting enabled](#built-in-extractors-will-change-mapping-of-empty-fields-from-zero-length-string-to-null-with-quoting-enabled)
 
-    1.3 [Built-in extractors will change mapping of empty fields from zero-length string to null with quoting enabled](#built-in-extractors-will-change-mapping-of-empty-fields-from-zero-length-string-to-null-with-quoting-enabled)
+    1.3 [Disallow `DECLARE EXTERNAL` inside packages, procedures and functions](#disallow-declare-external-inside-packages-procedures-and-functions)
+
+    1.4 [Removal of undocumented use of `CLUSTER` | `CLUSTERED BY` in `CREATE INDEX` and `CREATE TABLE`](#removal-of-undocumented-use-of-cluster--clustered-by-in-create-index-and-create-table)
 
     1.5 [Disallow U-SQL identifiers in C# delegate bodies in scripts](#disallow-u-sql-identifiers-in-c-delegate-bodies-in-scripts)
 
 2. [Breaking Changes](#breaking-changes)
 
-    2.1 [Previously announced deprecation items are now removed.](#previously-announced-deprecation-items-are-now-removed-please-check-previous-release-notes-for-details)
+    2.1 [The following previously announced deprecation items are now removed.](the-following-previously-announced-deprecation-items-are-now-removed)
 
-    2.3 [API changes for the cognitive extension libraries](#api-changes-for-the-cognitive-extension-libraries)
+    2.2 [API changes for the cognitive extension libraries](#api-changes-for-the-cognitive-extension-libraries)
 
 3. [Major U-SQL Bug Fixes, Performance and Scale Improvements](#major-u-sql-bug-fixes-performance-and-scale-improvements)
 
-    3.1 [Input File Set scales orders of magnitudes better]()
+    3.1 [Input File Set scales orders of magnitudes better](#input-file-set-scales-orders-of-magnitudes-better-finally-released)
 
-    3.2 [U-SQL Python Support bug fixes and performance and scale improvements](#u-sql-python-support-bug-fixes-and-performance-and-scale-improvements)
-
-    3.3 [U-SQL R Extensions bug fixes and performance and scale improvements](#u-sql-r-extensions-bug-fixes-and-performance-and-scale-improvements)
+    3.2 [U-SQL Python, R and Cognitive Extensions bug fixes and performance and scale improvements](#u-sql-python-r-and-cognitive-extensions-bug-fixes-and-performance-and-scale-improvements)
 
 4. [U-SQL Preview Features](#u-sql-preview-features)
 
-    4.1 [Input File Set uses less resources when operating on many small files is in Public Preview]()
+    4.1 [Input File Set uses less resources when operating on many small files (Public Preview)](#input-file-set-uses-less-resources-when-operating-on-many-small-files-is-in-public-preview)
 
-    4.2 [Automatic GZip compression on `OUTPUT` statement is in Public Preview](#automatic-gzip-compression-on-output-statement-is-now-in-preview-opt-in-statement-is-provided)
+    4.2 [Built-in Parquet Extractor and Outputter (Public Preview)](#built-in-parquet-extractor-and-outputter-is-in-public-preview)
 
-    4.3 [DiagnosticStream support in .Net User-code is in Public Preview](#diagnosticstream-support-in-net-user-code)
+    4.3 [Automatic GZip compression on `OUTPUT` statement  (Public Preview)](#automatic-gzip-compression-on-output-statement-is-in-public-preview)
 
-    4.4 [Built-in Parquet Extractor and Outputter is in Public Preview]()
+    4.4 [Built-in ORC Extractor and Outputter (Private Preview)](#built-in-orc-extractor-and-outputter-is-in-private-preview)
 
-    4.5 [Data-driven Output Partitioning with `OUTPUT` fileset is in Private Preview]() 
+    4.5 [Data-driven Output Partitioning with `OUTPUT` fileset is in Private Preview](#data-driven-output-partitioning-with-output-fileset-is-in-private-preview) 
 
     4.6 [A limited flexible-schema feature for U-SQL table-valued function parameters is now available for private preview](#a-limited-flexible-schema-feature-for-u-sql-table-valued-function-parameters-is-now-available-for-preview-requires-opt-in)
 
 5. [New U-SQL capabilities](#new-u-sql-capabilities)
 
-    5.1 [U-SQL adds job information system variable `@@JOBINFO`]()
+    5.1 [U-SQL adds job information system variable `@@JOBINFO`](#u-sql-adds-job-information-system-variable-jobinfo)
 
-    5.2 [U-SQL adds support for file property columns on `EXTRACT`]()
+    5.2 [U-SQL adds support for computed file property columns on `EXTRACT`](#u-sql-adds-support-for-computed-file-property-columns-on-extract)
 
-    5.3 [Built-in Text/Csv/Tsv Extractors and Outputters support ANSI/ISO codepage encodings]()
+    5.3 [DiagnosticStream support in .Net User-code](#diagnosticstream-support-in-net-user-code)
 
-    5.4 [U-SQL Python Extension additions](#u-sql-python-extension-additions)
+    5.4 [Built-in Text/Csv/Tsv Extractors and Outputters support ANSI/Windows 8-bit codepage encodings](#built-in-textcsvtsv-extractors-and-outputters-support-ansiwindows-8-bit-codepage-encodings)
 
-    5.5 [U-SQL R Extension additions](#u-sql-r-extension-additions)
+    5.5 [U-SQL supports ANSI SQL `CASE` expression](#u-sql-supports-ansi-sql-case-expression)
 
-    5.6 [U-SQL Cognitive Library additions](#u-sql-cognitive-library-additions)
+    5.6 [U-SQL adds C# `Func<>`-typed variables in `DECLARE` statements (named lambdas)](#u-sql-adds-c-func-typed-variables-in-declare-statements-named-lambdas)
+
+    5.7 [U-SQL adds temporary, script-bound meta data objects with `DECLARE` statements](#u-sql-adds-temporary-script-bound-meta-data-objects-with-declare-statements)
+
+    5.8 [The `ORDER BY FETCH` clause can be used with all query expressions](#the-order-by-fetch-clause-can-be-used-with-all-query-expressions)
+
+    5.9 [The `EXTRACT`, `REDUCE` and `COMBINE` expressions now support a `SORTED BY` assertion](#the-extract-reduce-and-combine-expressions-now-support-a-sorted-by-assertion)
+
+    5.10 [The `REQUIRED` clause for UDO invocations now allows `NONE`](#the-required-clause-for-udo-invocations-now-allows-none)
+
+    5.11 [The `EXTRACT` expressions now support the `REQUIRED` clause to support column pruning in user-defined extractors](#the-extract-expressions-now-support-the-required-clause-to-support-column-pruning-in-user-defined-extractors)
+
+    5.12 [U-SQL adds compile-time user errors and warnings](#u-sql-adds-compile-time-user-errors-and-warnings)
+
+    5.13 [U-SQL User-defined Operators can now request more memory and CPUs with annotations](#u-sql-user-defined-operators-can-now-request-more-memory-and-cpus-with-annotations)
+
+    5.14 [U-SQL Cognitive Library additions](#u-sql-cognitive-library-additions)
 
 6. [Azure Data Lake Tools for Visual Studio New Capabilities](#azure-data-lake-tools-for-visual-studio-new-capabilities)
 
-    6.1 [ADL Tools for VisualStudio now helps you generate the U-SQL EXTRACT statement](#adl-tools-for-visualstudio-now-helps-you-generate-the-u-sql-extract-statement)
+    6.1 [ADL Tools for VisualStudio provides an improved Analytics Unit modeler to help improve a job's performance and cost](#adl-tools-for-visualstudio-provides-an-improved-analytics-unit-modeler-to-help-improve-a-jobs-performance-and-cost)
 
-    6.2 [Python and R code-behind are supported for U-SQL project](#python-and-r-code-behind-are-supported-for-u-sql-project)
+    6.2 [Job Submission's simple interface now makes it easier to change the allocated AUs](#job-submissions-simple-interface-now-makes-it-easier-to-change-the-allocated-aus)
 
-    6.3 [Simplifying debugging shared user code in ADL Tools for VisualStudio](#simplifying-debugging-shared-user-code-in-adl-tools-for-visualstudio)
+    6.3 [Improved visualization of the job execution graph inside a vertex](#improved-visualization-of-the-job-execution-graph-inside-a-vertex)
 
-    6.4 [ADL Tools for Visual Studio supports F1 help on U-SQL keywords](#adl-tools-for-visual-studio-supports-f1-help-on-u-sql-keywords)
+    6.4 [The job stage graph and job execution graph now indicates if the stage contains user-defined operators and what language they have been authored in](#the-job-stage-graph-and-job-execution-graph-now-indicates-if-the-stage-contains-user-defined-operators-and-what-language-they-have-been-authored-in)
 
-    6.5 [ADL Tools for Visual Studio allows temporary U-SQL scripts outside of a project](#adl-tools-for-visual-studio-allows-temporary-u-sql-scripts-outside-of-a-project)
+    6.5 [Separate tab for enumerating all input and output data](#separate-tab-for-enumerating-all-input-and-output-data)
 
-    6.6 [ADL Tools in Visual Studio highlights all uses of a highlighted U-SQL variable](#adl-tools-in-visual-studio-highlights-all-uses-of-a-highlighted-u-sql-variable)
+    6.6 [Job View includes a link to the diagnostic file's folder](#job-view-includes-a-link-to-the-diagnostic-files-folder)
 
 7. [Azure Portal Updates](#azure-portal-updates)
 
-    7.1 [The job graph in the Portal now indicates if the stage's vertices contain user-defined operators (UDOs)](#the-job-graph-in-the-portal-now-indicates-if-the-stages-vertices-contain-user-defined-operators-udos)
+    7.1 [The portal provides an improved Analytics Unit modeler to help improve a job's performance and cost](#the-portal-provides-an-improved-analytics-unit-modeler-to-help-improve-a-jobs-performance-and-cost)
+
+
+----------
+
+Most of the examples below are available in a sample Visual Studio solution on the [U-SQL GitHub site](https://github.com/Azure/usql/tree/master/Examples/Winter-2017-2018-ReleaseNotes).
 
 --------------------------
 ## Pending and Upcoming Deprecations and Breaking Changes
@@ -149,7 +170,7 @@ Currently `DECLARE EXTERNAL` and `EXPORT EXTERNAL` (in packages only) are syntac
 
 In a future release this warning will be turned into an error.
 
-#### Removal of undocumented `CLUSTER` | `CLUSTERED BY` in `CREATE INDEX` and `CREATE TABLE`
+#### Removal of undocumented use of `CLUSTER` | `CLUSTERED BY` in `CREATE INDEX` and `CREATE TABLE`
 
 The implementation allows the undocumented use of `CLUSTER BY` and `CLUSTERED BY` as synonyms for `DISTRIBUTE BY` and `DISTRIBUTED BY` in the `CREATE INDEX` and `CREATE TABLE` statements. 
 
@@ -167,7 +188,7 @@ Please check previous release notes for previously deprecated items and follow t
 
 The recent refresh raises errors for the following deprecated items:
 
-  1. [Disallowing user variables that start with `@@`](#disallowing-user-variables-that-start-with-)
+  1. [Disallowing user variables that start with `@@`](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2017/2017_Summer/USQL_Release_Notes_2017_Summer.md#disallowing-user-variables-that-start-with-)
  
     U-SQL reserves variables starting with `@@` for system variables, and and raises the following error if a user tries to define a variable starting with `@@`: 
 
@@ -179,7 +200,7 @@ The recent refresh raises errors for the following deprecated items:
 
     Use a single `@` for your custom variables, e.g., `@valid_var`.
 
- 2. [Table-valued functions disallow result variable names that conflict with parameter names]()
+ 2. [Table-valued functions disallow result variable names that conflict with parameter names](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2017/2017_Summer/USQL_Release_Notes_2017_Summer.md#table-valued-functions-will-disallow-result-variable-names-to-conflict-with-parameter-names)
 
     Table-valued functions disallow a result variable from having the same name as any of the function's parameters. The following error is raised:
 
@@ -202,11 +223,11 @@ The recent refresh introduced the following breaking changes:
 
 ##### The `Cognition.Vision.OcrExtractor` Processor has been replaced with an Extractor and Applier
 
-This UDO has been replaced by an equivalent extractor and applier. For more details on the replacements see [below]().
+This UDO has been replaced by an equivalent extractor and applier. For more details on the replacements see [below](#ocr-extraction-is-now-available-as-an-extractor-and-an-applier).
 
 ##### The `Cognition.Text.KeyPhraseExtractor` Processor has been renamed to `Cognition.Text.KeyPhraseProcessor` and its signature has changed
 
-This UDO has been renamed to `Cognition.Text.KeyPhraseProcessor` and instead of returning the key phrases as a ; separated string, the `keyphrases` column is now a `SqlArray<string>`. For more details on the changed UDO and the additional extractor see [below]().
+This UDO has been renamed to `Cognition.Text.KeyPhraseProcessor` and instead of returning the key phrases as a ; separated string, the `keyphrases` column is now a `SqlArray<string>`. For more details on the changed UDO and the additional extractor see [below](#ocr-extraction-is-now-available-as-an-extractor-and-an-applier).
 
 **NOTE: If you already have installed an earlier version of the extensions, you will have to reinstall the newest version from the Azure Portal.**
 
@@ -234,11 +255,20 @@ If you want to turn these improvements off, for example to test the impact of th
 
 	SET @@FeaturePreviews = "FileSetV2Dot5:off";
 
-#### U-SQL R Extensions bug fixes and performance and scale improvements
+#### U-SQL Python, R and Cognitive Extensions bug fixes and performance and scale improvements
 
-##### R, Python and Cognitive Extension UDOs can use more memory
+##### The extension UDOs can use up to 5GB of memory
 
-The R, Python and Cognitive Extension UDOs have been updated to provide access to up tomemory 5GB of  (up from 500MB) starting in version 1.0.6. If you are using an older version of the extensions, please visit the Azure Portal to update to the latest version.
+The R, Python and Cognitive Extension UDOs have been updated to provide access to up to 5GB of memory (up from 500MB) starting in version 1.0.6. If you are using an older version of the extensions, please visit the Azure Portal to update to the latest version.
+
+##### U-SQL Python Extension provides data frame indexing by column name
+
+The Python extension now allows access to data frame columns by name regardless of the width of the data frame. Before this, indexing by column name only worked for data frames with 10 columns and access to wider data frames was restricted to indices.
+
+##### U-SQL R Extension handles nullable types
+
+The U-SQL R extension now supports nullable types.
+
 
 ## U-SQL Preview Features
 
@@ -317,38 +347,39 @@ If the column type specified in the `EXTRACT` expression is not nullable and the
 The following table provides the type mapping between the Parquet storage type and their equivalent U-SQL types:
 
 | Parquet Types on read | Compatible U-SQL Types | Parquet Types on output |
+|-----------------------|------------------------|-------------------------|
 | `BOOLEAN` | `bool(?)` |	`BOOLEAN` |
 | `INT32/(U)INT_32`| `(u)int(?)` | `INT32/(U)INT_32` |
 | `INT32/(U)INT_8` | `(s)byte(?)`	| `INT32/(U)INT_8` |
-`INT32/(U)INT_16` | `(u)short(?)` | `INT32/(U)INT_16` |
-`INT64/(U)INT_64` | `(u)long(?)` | `INT64/(U)INT_64` |
-`FLOAT` | `float(?)` |	`FLOAT` |
-`DOUBLE` | `double(?)` |	`DOUBLE` |
-`INT32/DATE` | `DateTime(?)` |	`INT32/DATE` [4] |
-`INT64/TIMESTAMP_MILLIS` | `DateTime(?)` | `INT64/TIMESTAMP_MILLIS` [4] |
-`INT64/TIMESTAMP_MICROS` | `DateTime(?)` | `INT64/TIMESTAMP_MICROS` [4] |
-`INT96` [3] | `DateTime(?)` | - |
-`INT32/DECIMAL` | `decimal(?)` | `INT32/DECIMAL` [6] |
-`INT64/DECIMAL`| `decimal(?)` | `INT64/DECIMAL` [6] |
-`FIXED_LEN_BYTE_ARRAY/DECIMAL`| `decimal(?)` | `FIXED_LEN_BYTE_ARRAY/DECIMAL` [6] |
-`BYTE_ARRAY/UTF8` | `string` [5] | `BYTE_ARRAY/UTF8` |
-`BYTE_ARRAY/UTF8` | `byte[]` | `BYTE_ARRAY` |
-`BYTE_ARRAY` | `string` | `BYTE_ARRAY/UTF8` |
-`BYTE_ARRAY` | `byte[]` | `BYTE_ARRAY` |
-`FIXED_LEN_BYTE_ARRAY`| `byte[]`, `string` | - |
-`INT32/TIME_MILLIS` [2] | `integer(?)` | - | 
-`INT64/TIME_MICROS` [2] | `long(?)` | - |
-`JSON` [2] | `string`, `byte[]` | - |
-`BSON` [2] | `byte[]`  | - |
-`MAP` [1] | - | - |
-`MAP_KEY_VALUE` [1] | - | - | 
-`LIST` [1] | - | - |
-`ENUM` [1] | - | - |
-`INTERVAL` [1] | - | - |
-- | `char(?)` [1] | - |	 
-- |	`Guid(?)` [1] | - |
-- | `SQL.MAP<K,V>` [1] | - |
-- | `SQL.ARRAY<T>` [1] | - |
+| `INT32/(U)INT_16` | `(u)short(?)` | `INT32/(U)INT_16` |
+| `INT64/(U)INT_64` | `(u)long(?)` | `INT64/(U)INT_64` |
+| `FLOAT` | `float(?)` |	`FLOAT` |
+| `DOUBLE` | `double(?)` |	`DOUBLE` |
+| `INT32/DATE` | `DateTime(?)` |	`INT32/DATE` [4] |
+| `INT64/TIMESTAMP_MILLIS` | `DateTime(?)` | `INT64/TIMESTAMP_MILLIS` [4] |
+| `INT64/TIMESTAMP_MICROS` | `DateTime(?)` | `INT64/TIMESTAMP_MICROS` [4] |
+| `INT96` [3] | `DateTime(?)` | - |
+| `INT32/DECIMAL` | `decimal(?)` | `INT32/DECIMAL` [6] |
+| `INT64/DECIMAL`| `decimal(?)` | `INT64/DECIMAL` [6] |
+| `FIXED_LEN_BYTE_ARRAY/DECIMAL`| `decimal(?)` | `FIXED_LEN_BYTE_ARRAY/DECIMAL` [6] |
+| `BYTE_ARRAY/UTF8` | `string` [5] | `BYTE_ARRAY/UTF8` |
+| `BYTE_ARRAY/UTF8` | `byte[]` | `BYTE_ARRAY` |
+| `BYTE_ARRAY` | `string` | `BYTE_ARRAY/UTF8` |
+| `BYTE_ARRAY` | `byte[]` | `BYTE_ARRAY` |
+| `FIXED_LEN_BYTE_ARRAY`| `byte[]`, `string` | - |
+| `INT32/TIME_MILLIS` [2] | `integer(?)` | - | 
+| `INT64/TIME_MICROS` [2] | `long(?)` | - |
+| `JSON` [2] | `string`, `byte[]` | - |
+| `BSON` [2] | `byte[]`  | - |
+| `MAP` [1] | - | - |
+| `MAP_KEY_VALUE` [1] | - | - | 
+| `LIST` [1] | - | - |
+| `ENUM` [1] | - | - |
+| `INTERVAL` [1] | - | - |
+| - | `char(?)` [1] | - |	 
+| - |	`Guid(?)` [1] | - |
+| - | `SQL.MAP<K,V>` [1] | - |
+| - | `SQL.ARRAY<T>` [1] | - |
 
 Notes:
 
@@ -389,7 +420,7 @@ Currently, a Parquet file is not read in parallel by the Parquet extractor. That
 
 _Examples_
 
-1. This script reads all the numeric columns from the Parquet file that is generated by the script in [`Outputters.Parquet()`]() Example 1 and writes it into a CSV file.
+1. This script reads all the numeric columns from the Parquet file that is generated by the script in [`Outputters.Parquet()`](#outputtersparquet) Example 1 and writes it into a CSV file.
 
         SET @@FeaturePreviews = "EnableParquetUdos:on";
 
@@ -410,7 +441,7 @@ _Examples_
         TO "/output/releasenotes/winter2017-18/parquet/typed_numeric_values.csv"
         USING Outputters.Csv(outputHeader:true);
 
-2. This script reads all the columns from the Parquet files that were generated by the script in [`Outputters.Parquet()`]() Example 2 and writes its distinct rows into a CSV file.
+2. This script reads all the columns from the Parquet files that were generated by the script in [`Outputters.Parquet()`](#outputtersparquet) Example 2 and writes its distinct rows into a CSV file.
 
         SET @@FeaturePreviews = "EnableParquetUdos:on";
 
@@ -443,16 +474,19 @@ The `Parquet()` outputter converts a rowset into a Parquet file. It provides a s
 _Parameters_
 
 |Parameter Name | Parameter Type | Default |
+|---------------|----------------|---------|
 | `rowGroupSize` | `int` | `250` | 
 
 The parameter `rowGroupSize` specifies the maximum size of the Parquet file's row group in Mb. The valid range is [1..1024], 256 by default. If an invalid value is specified, an error is raised.
 
 |Parameter Name | Parameter Type | Default |
+|---------------|----------------|---------|
 | `rowGroupRows` | `int` | `10485760` | 
 
 The parameter `rowGroupRows` specifies the maximum size of the Parquet file's row group in Rows. The valid range is [1..100M], 10M (10485760) by default. If an invalid value is specified, an error is raised.
 
 |Parameter Name | Parameter Type | Default |
+|---------------|----------------|---------|
 | `columnOptions` | `string` | null | 
 
 The parameter `columnOptions` specifies a precision, scale and compression for the specific columns. 
@@ -492,11 +526,11 @@ _Limitations_
 
 _Best Practice Guidance_
 
-Currently, a Parquet file is not written in parallel by the Parquet outputter. That means that large Parquet files may take a long time to write. Thus, we recommend that the `OUTPUT` statement generates a set of files using the `OUTPUT` file set feature. See Example 3 for the current limited support for generating multiple files. The [OUTPUT file set feature]() in private preview can partition the rowset into many Parquet files based on column values in the rowset.
+Currently, a Parquet file is not written in parallel by the Parquet outputter. That means that large Parquet files may take a long time to write. Thus, we recommend that the `OUTPUT` statement generates a set of files using the `OUTPUT` file set feature. See Example 3 for the current limited support for generating multiple files. The [OUTPUT file set feature](#data-driven-output-partitioning-with-output-fileset-is-in-private-preview) in private preview can partition the rowset into many Parquet files based on column values in the rowset.
 
 _Examples_
 
-1. This script generates a Parquet file with default parameters of a rowset containing values of the different built-in scalar types. See [`Extractors.Parquet()`]() Example 1 for reading the file.
+1. This script generates a Parquet file with default parameters of a rowset containing values of the different built-in scalar types. See [`Extractors.Parquet()`](#extractorsparquet) Example 1 for reading the file.
 
         SET @@FeaturePreviews = "EnableParquetUdos:on";
 
@@ -682,7 +716,7 @@ _Examples:_
         TO @output
         USING Outputters.Csv();
 
-#### U-SQL adds support for file property columns on `EXTRACT`
+#### U-SQL adds support for computed file property columns on `EXTRACT`
 
 At times you would like to get information about the files that you process, such as their full URI path or information about their size, creation or modification dates. And sometimes you want to use that information to filter the set of files that you want to process.
 
@@ -1236,7 +1270,7 @@ _Examples_
         TO "/output/releasenotes/winter2017-18/tryparse.csv"
         USING Outputters.Csv(outputHeader : true);
 
-#### U-SQL add temporary, script-bound meta data objects with `DECLARE` statements
+#### U-SQL adds temporary, script-bound meta data objects with `DECLARE` statements
 
 U-SQL provides an extensive meta data catalog that allows you to create, manage and share database objects such as tables, functions, views, code assemblies etc. The objects that are created in the meta data catalog have a life span beyond the script where they have been created and need to be explicitly dropped.
 
@@ -1508,7 +1542,7 @@ _Syntax_
       [Required_Clause]
       USING_Clause.
 
-See [above]() for the semantics of the `Required_Clause`.
+See [above](#the-required-clause-for-udo-invocations-now-allows-none) for the semantics of the `Required_Clause`.
 
 _Example_
 
@@ -1766,9 +1800,9 @@ The following script applies this extractor each of the files in the specified f
 The resulting file may look something like:
 
 | filename | GC_TotalMem_Start | MaxUDOMemory | GC_TotalMem_End | alloc_sz | failed | error |
+|----------|-------------------|--------------|-----------------|----------|--------|-------|
 | AdsLog.tsv | 86008 | 2147483648 | 2451713256 | 2451570688 | True | Exception of type 'System.OutOfMemoryException' was thrown. |
 | SearchLog.tsv | 86008 | 2147483648 | 2451713352 | 2451570688 | True | Exception of type 'System.OutOfMemoryException' was thrown. |
-
 
 #### U-SQL Cognitive Library additions
 
