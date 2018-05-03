@@ -17,7 +17,7 @@
 
 2. [Breaking Changes](#breaking-changes)
 
-    2.1 [The following previously announced deprecation items are now removed.](the-following-previously-announced-deprecation-items-are-now-removed)
+    2.1 [The following previously announced deprecation items are now removed.](#the-following-previously-announced-deprecation-items-are-now-removed)
 
     2.2 [API changes for the cognitive extension libraries](#api-changes-for-the-cognitive-extension-libraries)
 
