@@ -241,10 +241,9 @@ The recent refresh raises errors for the following deprecated items:
 
 #### API changes for the cognitive extension libraries
 
-Azure Data Lake Analytics provides a set of libraries for running Python and R code and use some of the cognitive processing capabilities on images and text that can be installed as U-SQL extensions via the Azure Data Lake Analytics Portal. 
+Azure Data Lake Analytics provides a set of libraries for running Python and R code and use some of the cognitive processing capabilities for images and text that can be installed as U-SQL extensions via the Azure Data Lake Analytics Portal. 
 
 These assemblies are currently considered to be in a preview release stage. Therefore, more changes may occur in future refreshes, such as moving the text assemblies to use the same extractor/applier model as the image assemblies.
-
 
 The recent refresh introduced the following breaking changes:
 
@@ -260,11 +259,11 @@ This UDO has been renamed to `Cognition.Text.KeyPhraseProcessor` and instead of 
 
 ## Major U-SQL Bug Fixes, Performance and Scale Improvements
 
-Besides many internal improvements and fixes to reported bugs, we would like to call out the following major bug fixes and improvements to performance and scalability of the language.
+In addition to many internal improvements and fixes to reported bugs, we would like to call out the following major bug fixes and improvements to performance and scalability of the language.
 
 #### Input File Set scales orders of magnitudes better (Finally released!)
 
-Previously, U-SQL's file set pattern on `EXTRACT` expressions ran into compile time time-outs around 800 to 5000 files. 
+Previously, U-SQL's file set pattern on `EXTRACT` expressions ran into compile-time time-outs around 800 to 5000 files. 
 
 U-SQL's file set pattern now scales to many more files and generates more efficient plans.
 
@@ -290,7 +289,7 @@ The R, Python and Cognitive Extension UDOs have been updated to provide access t
 
 ##### U-SQL Python Extension provides data frame indexing by column name
 
-The Python extension now allows access to data frame columns by name regardless of the width of the data frame. Before this, indexing by column name only worked for data frames with 10 columns and access to wider data frames was restricted to indices.
+The Python extension now allows access to data frame columns by name, regardless of the width of the data frame. Before this, indexing by column name only worked for data frames with 10 columns and access to wider data frames was restricted to indices.
 
 ##### U-SQL R Extension handles nullable types
 
@@ -299,13 +298,13 @@ The U-SQL R extension now supports nullable types.
 
 ## U-SQL Preview Features
 
-We currently have the following U-SQL features in public or private preview. A feature in preview means that we are still finalizing the implementation of the feature, but are soliciting feedback and want to make it available ahead of a full release due to their value to the scenarios they address and the ability to learn more from our customers.
+We currently have the following U-SQL features in public or private preview. A feature in preview means that we are still finalizing the implementation of the feature. Due to its value in customer scenarios, we are making it available ahead of a full release to solicit feedback and learn more from our customers.
 
-A _private preview_ feature means that you have to contact us for access since it often involves extra steps (like specifying a special runtime), is only working in a limited context (e.g., it does not work with all other capabilities), or may be removed/not shipped due to customer feedback.
+A _private preview_ feature means that customers must contact us for access since it may involve extra steps (like specifying a special runtime), only work in a limited context (e.g., it does not work with all other capabilities), or may be removed/not shipped due to customer feedback.
 
 **Since we are still testing these features, you are required to opt in. Please [contact us](mailto:usql@microsoft.com) if you want to explore any of the private preview capabilities.**
 
-A _public preview_ feature means that we provide you with the opt-in setting in the release notes and the feature is normally accessible in the default experience after you opt-in. Compared to a released feature, it may still change its APIs or details in behavior, but we plan on releasing the feature and will provide normal support if you encounter any issues.
+A _public preview_ feature means that we provide you with the opt-in setting in the release notes and the feature is normally accessible in the default experience after you opt-in. Compared to a released feature, there may still be changes in its APIs or details in behavior, These are features we are planning to release and will provide normal support if you encounter any issues.
 
 #### Input File Set uses less resources when operating on many small files (is in Public Preview)
 
@@ -334,7 +333,7 @@ For example, if you process image files, you may want to operate on a large set 
       FROM @image_features
       WHERE format IN ("JPEG", "jpeg", "jpg", "JPG");
 
-If I run the script without the new improvement, I will get one vertex per file:
+If you run the script without the new improvement, you will get one vertex per file:
 
 ![Job Graph - No File Grouping](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/2018-winter-filesets-nogrouping-jobgraph.jpg) 
 
@@ -342,7 +341,7 @@ and each vertex will spend more time in creating the vertex than actually doing 
 
 ![Vertex Execution View - No File Grouping](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/2018-winter-filesets-nogrouping-vertexexecution.jpg) 
 
-However, if I turn the feature preview on, the job will pack several files into a vertex, thus reducing the complexity of the stage to two vertices:
+However, if you turn the feature preview on, the job will pack several files into a vertex, thus reducing the complexity of the stage to two vertices:
 
 ![Job Graph - With File Grouping](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/2018-winter-filesets-withgrouping-jobgraph.jpg) 
 
@@ -350,14 +349,14 @@ and improving the cost of each vertex execution by doing more work in a vertex:
 
 ![Vertex Execution View - With File Grouping](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/2018-winter-filesets-withgrouping-vertexexecution.jpg) 
 
-This also reduces the cost of the job. In the first case, the job cost about 50 seconds of execution time when submitting it with 5 AUs (or 26 seconds execution time with 15 AUs), while the improvement reduces the cost to about 35 seconds of execution time with 2 AUs.
+This also reduces the cost of the job. In the first case, the job cost is about 50 seconds of execution time when submitting it with 5 AUs (or 26 seconds execution time with 15 AUs), while the improvement reduces the cost to about 35 seconds of execution time with 2 AUs.
 
 
 #### Built-in Parquet Extractor and Outputter is in Public Preview
 
 Parquet is one of the major open source structured data formats used when processing data at scale. It provides a columnar storage layout, designed for efficient reads and aggregations. 
 
-It enables more efficient data exchange between different analytics engines (that know how query Parquet files) than CSV. 
+It enables more efficient data exchange between different analytics engines (that know how to query Parquet files) than CSV. 
 
 U-SQL offers the ability to read from and write to Parquet files with a built-in extractor and outputter. Currently version 2.3.1 of Parquet is supported.
 
@@ -367,7 +366,7 @@ In order to enable the preview feature, add the following statement to your scri
 
 ##### `Extractors.Parquet()`
 
-The `Parquet()` extractor converts Parquet files into rowsets. It will read the Parquet files meta data to identify the column compression schemes, and produces a rowset based on the `EXTRACT` expression’s schema. 
+The `Parquet()` extractor converts Parquet files into rowsets. It will read the Parquet file's meta data to identify the column compression schemes, and produces a rowset based on the `EXTRACT` expression’s schema. 
 
 If the column type specified in the `EXTRACT` expression is not nullable and the Parquet file contains a `nullable` type, an error is raised during Execution.
 
@@ -542,18 +541,18 @@ The default is `micro`.
 
 The default is `'uncompressed'`.
 
-If an option is specified on a column that is not of an applicable type or is specified with an invalid value, an error is raised.
+If an option is specified on a column that is not an applicable type or is specified with an invalid value, an error is raised.
 
 **Note:** A future version will provide additional parameters, some of which may replace the `columnOptions` parameter.
 
 _Limitations_
 
-- The Parquet outputter does not support user-defined types nor the built-in complex types. Please convert them to `byte[]` or string if possible before outputting.
+- The Parquet outputter does not support user-defined types nor built-in complex types. Please convert them to `byte[]` or string if possible before outputting.
 - The Parquet outputter does not support `guid` nor `char` data types. Please convert them to `string` before outputting.
 
 _Best Practice Guidance_
 
-Currently, a Parquet file is not written in parallel by the Parquet outputter. That means that large Parquet files may take a long time to write. Thus, we recommend that the `OUTPUT` statement generates a set of files using the `OUTPUT` file set feature. See Example 3 for the current limited support for generating multiple files. The [OUTPUT file set feature](#data-driven-output-partitioning-with-output-fileset-is-in-private-preview) in private preview can partition the rowset into many Parquet files based on column values in the rowset.
+Currently, a Parquet file is not written in parallel by the Parquet outputter. That means large Parquet files may take a long time to write. Thus, we recommend that the `OUTPUT` statement generates a set of files using the `OUTPUT` file set feature. See Example 3 for the current limited support for generating multiple files. The [OUTPUT file set feature](#data-driven-output-partitioning-with-output-fileset-is-in-private-preview) in private preview can partition the rowset into many Parquet files based on column values in the rowset.
 
 _Examples_
 
@@ -616,7 +615,7 @@ _Examples_
         TO "/output/releasenotes/winter2017-18/parquet/vehicles_{*}.parquet"
         USING Outputters.Parquet();
 
-3. This script writes some sample data into an uncompressed Parquet file, one Parquet file where only the `c_string` column is compressed with the `snappy` compression and one Parquet file where additionally the `c_bigint` column is compressed with the `brotli` compression. All three files set the scale at 8 for the `c_decimal` column.
+3. This script writes some sample data into three files: an uncompressed Parquet file, another Parquet file where only the `c_string` column is compressed with the `snappy` compression and,lastly, a Parquet file where additionally the `c_bigint` column is compressed with the `brotli` compression. All three files set the scale at 8 for the `c_decimal` column.
 
         SET @@FeaturePreviews = "EnableParquetUdos:on";
 
@@ -650,13 +649,13 @@ This feature addresses the following user-voice feedback: [Support Parquet in Az
 
 #### Automatic GZip compression on `OUTPUT` statement is in Public Preview
 
-U-SQL automatically decompresses GZip files with the `.gz` file extension in the `EXTRACT` expression. We now added support for automatic compression of files with GZip if the `OUTPUT` statement targets files with a `.gz` file extension. 
+U-SQL automatically decompresses GZip files with the `.gz` file extension in the `EXTRACT` expression. We added support now for automatic compression of files with GZip if the `OUTPUT` statement targets files with a `.gz` file extension. 
 
 This feature is currently in preview and can be turned on with the following statement in your script:
 
 	SET @@FeaturePreviews = " GZipOutput:on";
 
-If the preview is not turned on, you still will receive the error message `E_CSC_USER_FILEFORMATNOTSUPPORTED`.
+If the preview is not turned on, you will still receive the error message `E_CSC_USER_FILEFORMATNOTSUPPORTED`.
 
 _Example:_
 
@@ -672,13 +671,13 @@ _Example:_
 
 #### Built-in ORC Extractor and Outputter is in Private Preview
 
-We have started a private preview of a built-in ORC extractor and outputter. Please [contact us](mailto:usql@microsoft.com) if you want to try it out and provide us with your feedback.
+We have started a private preview of a built-in ORC extractor and outputter. Please [contact us](mailto:usql@microsoft.com) if you want to try it and provide us with your feedback.
 
 This feature addresses the following user-voice feedback: [Read from and write to Optimized Row Columnar (ORC) format](https://feedback.azure.com/forums/327234-data-lake/suggestions/10701201-read-from-and-write-to-optimized-row-columnar-orc)
 
 #### Data-driven Output Partitioning with `OUTPUT` fileset is in Private Preview
 
-We have started a private preview of the data-driven output partitioning with filesets. It will give you the ability to use column values to create parts of a file path and partition the remaining data into different files based on these values. 
+We have started a private preview of the data-driven output partitioning with filesets. It enables you to use column values to create parts of a file path and partition the remaining data into different files based on these values. 
 
 This feature addresses the following user-voice feedback: [Support 'dynamic' output file names in ADLA](https://feedback.azure.com/forums/327234-data-lake/suggestions/10550388-support-dynamic-output-file-names-in-adla)
 
@@ -686,15 +685,14 @@ Please [contact us](mailto:usql@microsoft.com) if you want to try it out and pro
 
 #### A limited flexible-schema feature for U-SQL table-valued function parameters is now available for preview (requires opt-in)
 
-This feature allows to write more generic U-SQL table-valued functions and procedures, where only part of the schema of a table parameter needs to be present.
+This feature allows writing more generic U-SQL table-valued functions and procedures, where only part of the schema of a table parameter needs to be present.
 
 Please [contact us](mailto:usql@microsoft.com) if you want to try it out and provide us with your feedback.
 
 ## New U-SQL capabilities
 
 #### U-SQL adds job information system variable `@@JOBINFO`
-
-Often you want to use job related information such as who submitted the job inside your U-SQL script. In the current refresh U-SQL adds a structured system variable `@@JOBINFO` that provides a variety of job related information. The following parts are supported:
+MAny customers want to use information related to a job such as who submitted the job inside your U-SQL script. In the current refresh U-SQL adds a structured system variable `@@JOBINFO` that provides a variety of job related information. The following parts are supported:
 
 | Job Info Property | Return Type | Description |
 |-------------------|-------------|------------------|
@@ -708,13 +706,13 @@ Often you want to use job related information such as who submitted the job insi
 
 _Limitations and Notes:_ 
 
-1. As of time of publishing this release note, `@@JobInfo.Submit.Date` only returns `null`.
+1. At time of publishing this release note, `@@JobInfo.Submit.Date` only returns `null`.
 2. In a future release, we may rename some of the property names to align with the Azure SDK naming. The current properties will continue to be available.
 3. The `@@JobInfo` properties are currently _not_ available in the local run environment. They will be added in a future release.
 
 _Examples:_
 
-1. The following script collects the job information when the script gets executed and outputs the result into a CSV file with header information. Note that since both `@@JobInfo.Name` and `@@JobInfo.Account.Name` result in the same column name `Name`, we have to disambiguate the columns with an explicit alias.
+1. The following script collects job information as the script gets executed and outputs the result into a CSV file with header information. Note that since both `@@JobInfo.Name` and `@@JobInfo.Account.Name` result in the same column name `Name`, we have to disambiguate the columns with an explicit alias.
 
         @data =
           SELECT @@JobInfo.Id, 
@@ -745,7 +743,7 @@ _Examples:_
 
 #### U-SQL adds support for computed file property columns on `EXTRACT`
 
-At times you would like to get information about the files that you process, such as their full URI path or information about their size, creation or modification dates. And sometimes you want to use that information to filter the set of files that you want to process.
+Sometimes customers would like to get information about the files that they process, such as the full URI path or information about  size, creation or modification dates. Likewise customers would like to use that information to filter the set of files that being processed.
 
 Starting with this refresh, U-SQL adds support for computed file property columns on `EXTRACT` expressions. It provides the following capabilities:
 
@@ -825,7 +823,7 @@ _Examples:_
 
 #### DiagnosticStream support in .Net User-code
 
-The U-SQL .NET extension model added a new object called `Microsoft.Analytics.Diagnostics.DiagnosticStream` that allows to record (limited) diagnostic information into a file in the job folder. 
+The U-SQL .NET extension model added a new object called `Microsoft.Analytics.Diagnostics.DiagnosticStream` that enables (limited)  recording of diagnostic information into a file in the job folder. 
 
 The .NET user code can be written using the `DiagnosticStream` object and the actual generation of the diagnostic file can be controlled by setting the system variable `@@Diagnostics" in the U-SQL script using the user code. Its default setting is turned off. The following script statement will turn it on:
 
@@ -864,7 +862,7 @@ In the case that the diagnostic information exceeds the limits above, writing th
 
 Defaulted information:
 
-We may extend this format in the future. Therefore, there is an implied version attribute on each of the Vertex elements that is implied to be version="1.0".  Future versions will update the minor version, if backwards-compatible changes are done to the XML format; and they will update the major version, if the changes are not backwards-compatible.
+We may extend this format  ***CJC*** IS IT THE FORMAT OR THE LIMITS THAT WILL BE EXTENDED? ***CJC*** in the future. Therefore, there is an implied version attribute on each of the Vertex elements that is implied to be version="1.0".  Future versions will update the minor version, if backwards-compatible changes are done to the XML format; and they will update the major version, if the changes are not backwards-compatible.
 
 Timing of writing information to the file:
 
@@ -874,10 +872,10 @@ Each time the content of the file becomes visible, the file is considered to be 
 
 Handling multiple vertex executions and failed vertices:
 
-ADLA executes a vertex possibly more than once for reasons such as
+ADLA executes a vertex possibly more than once for reasons such as:
 
 1.	A vertex failed and the system decides that a retry may succeed.
-2.	The system may decide to duplicate an execution of a vertex and pick the fasted to succeed.
+2.	The system may decide to duplicate an execution of a vertex and pick the fastest to succeed.
 
 Regardless of the reason, each vertex execution gets its own version number. 
 
@@ -885,8 +883,8 @@ A vertex may also fail due to system error or user error.
 
 The following list indicates which vertex version’s data is being written into the diagnostic file:
 
-1.	A vertex succeeds once: The vertex data is written with the vertex’ version number.
-2.	A vertex succeeds several times (e.g., they were submitted concurrently and both succeeded): The information for both vertices is written. The vertices have different version numbers. The highest version number is the one that is the one taken as the input for the next stage.
+1.	A vertex succeeds once: The vertex data is written with the vertex’s version number.
+2.	A vertex succeeds several times (e.g., they were submitted concurrently and both succeeded): The information for both vertices is written. The vertices have different version numbers. The highest version number is the one that is taken as the input for the next stage.
 3.	A retried vertex after a failed vertex: Both the retried and the failed vertex information is written. The highest version information is the one considered as the input for the next stage. The element representing the failed vertex gets an additional attribute `failed="true"`.
 4.	A vertex fails due to user-error: The last failed vertex is written with the content. The element representing the failed vertex gets an additional attribute `failed="true"`.
 5.	A vertex fails due to system-error: The last failed vertex is written with the content, as long as the error is catch-able (e.g., a store read error). The element representing the failed vertex gets an additional attribute `failed="true"`.
@@ -909,7 +907,7 @@ Example:
 
     DiagnosticStream.WriteLine("This is an example with an &");
 
-Adds the following line to the vertex’ element content:
+Adds the following line to the vertex’s element content:
 
     <l>This is an example with an &amp;</l>
 
@@ -1045,7 +1043,7 @@ will produce the following file in the job folder at `/system/jobservice/jobs/Us
 
 #### Built-in Text/Csv/Tsv Extractors and Outputters support ANSI/Windows 8-bit codepage encodings
 
-U-SQL's built-in text format extractors and Outputters for CSV-like data added support to both extract from and output to files that are encoded with any of the following additional 8-bit codepages (besides the currently supported Unicode and ASCII encodings):
+U-SQL's built-in text format extractors and Outputters for CSV-like data now includes added support to both extract from and output to files that are encoded with any of the following additional 8-bit codepages (besides the currently supported Unicode and ASCII encodings):
 
 | Encoding number | Encoding name | Description |
 |-----------------|---------------|-------------|
@@ -1076,7 +1074,7 @@ _Examples_
         TO @output
         USING Outputters.Csv(encoding:@encoding);
 
-2. The following script reads the above file in Windows-1253 encoding and will write it out in Windows-1252
+2. The following script reads the above file in Windows-1253 encoding and writes it out in Windows-1252
 
         @data = 
           EXTRACT text string 
@@ -1117,7 +1115,7 @@ The `CASE` expression evaluates a list of conditions and returns one of multiple
 It has two formats: 
 
 1. The simple `CASE` expression compares an expression to a set of at least one simple expression to determine the result. 
-2. The searched `CASE` expression evaluates a set of at least one Boolean expressions to determine the result. 
+2. The searched `CASE` expression evaluates a set of at least one Boolean expression to determine the result. 
 
 Both formats support an `ELSE` clause that is optional if the result type is nullable and required if the result type is not nullable. 
 
@@ -1131,7 +1129,7 @@ The `CASE` expression can be used in any U-SQL expression or clause that allows 
 
 * `when_expression`
 
-    The `when_expression` in the `Simple_CASE_Expression` specifies the U-SQL scalar expression that will be compared against the value specified by the `input_expression`. The first `when_expression` in lexical order that evaluates to true will trigger the execution of the `result_expression` in the associated `THEN` clause. All `when_expression`s in a `CASE` expression at the same nesting level have to be of the same result type and be of the same type as the `input_expression` or a compilation error is raised.
+    The `when_expression` in the `Simple_CASE_Expression` specifies the U-SQL scalar expression that will be compared against the value specified by the `input_expression`. The first `when_expression` in lexical order that evaluates to true will trigger the execution of the `result_expression` in the associated `THEN` clause. All `when_expression`s in a `CASE` expression at the same nesting level must be of the same result type and be of the same type as the `input_expression` or a compilation error is raised.
 
 * `boolean_expression`
 
@@ -1139,7 +1137,7 @@ The `CASE` expression can be used in any U-SQL expression or clause that allows 
 
 * `result_expression`
 
-    The `result_expression` specifies the expression that will be the result of the `CASE` expression if the associated condition evaluates to true. All `result_expression`s in a `CASE` expression at the same nesting level have to be of the same result type or a compilation error is raised.
+    The `result_expression` specifies the expression that will be the result of the `CASE` expression if the associated condition evaluates to true. All `result_expression`s in a `CASE` expression at the same nesting level must be of the same result type or a compilation error is raised.
 
 _Examples_
 
@@ -1191,7 +1189,7 @@ _Examples_
 
 #### U-SQL adds C# `Func<>`-typed variables in `DECLARE` statements (named lambdas)
 
-U-SQL variables are not variables in the traditional sense but in the sense of assigning names to expressions like in functional languages. However, the U-SQL variables for scalar expressions did not allow parameterization of the expressions until now. Instead it was necessary to create an assembly to provide simple functional abstractions. 
+U-SQL variables are not variables in the traditional sense they assign names to expressions like in functional languages. However, the U-SQL variables for scalar expressions did not allow parameterization of the expressions until now. Instead, it was necessary to create an assembly to provide simple functional abstractions. 
 
 U-SQL has now added C# function variables that provide parameterization of C# expressions and a more light-weight approach of adding functional abstractions to your U-SQL script. Also note that these function variables (or "named lambdas") can be shared with others via the use of U-SQL packages.
 
@@ -1219,7 +1217,7 @@ _Examples_
 1. The following script uses the function variable to solve the Tweet Analysis sample:
 
         DECLARE @get_mentions Func<string,SqlArray<string>> = 
-                (tweet) => new SqlArray<string>(
+     hay assign           (tweet) => new SqlArray<string>(
                                tweet.Split(new char[]{' ', ',', '.', ':', '!', ';', '"', '“'}).Where(x => x.StartsWith("@"))
                            );
         @t = 
@@ -1251,7 +1249,7 @@ _Examples_
         ORDER BY mentioncount DESC
         USING Outputters.Csv(outputHeader:true);
 
-2. The following scripts show how the function variable can consist of more complex C# expressions, can invoke each other and can be part of U-SQL packages. In particular, the example shows how to package the TryParse expression into a single function.
+2. The following scripts show how the function variable can consist of more complex C# expressions, how they can invoke each other and  be part of U-SQL packages. In particular, the example shows how to package the TryParse expression into a single function.
 
     The first script defines the package with the function variables `@EnumerateToFloor` and `@TryParseDateTime`:
 
@@ -1339,9 +1337,9 @@ _Syntax_
 
 _Semantics_
 
-The `DECLARE_Script_Bound_Object` statements will create the specified object type in the local context of the script. The objects are syntactically visible from their point of specification and will live for the duration of the script only. The provided name has to be non-conflicting with any other script-bound object names or variable names or an error is raised.
+The `DECLARE_Script_Bound_Object` statements will create the specified object type in the local context of the script. The objects are syntactically visible from their point of specification and will live for the duration of the script only. The provided name must be non-conflicting with any other script-bound object names or variable names or an error is raised.
 
-For the object specific semantics, please refer to the documentation of the equivalent `CREATE` statements.
+For object specific semantics, please refer to the documentation of the equivalent `CREATE` statements.
 
 The objects cannot be dropped nor altered, nor do they appear in the catalog views.
 
@@ -1371,7 +1369,7 @@ The following statement uses a locally declared TVF to wrap the EXTRACT expressi
 
 #### The `ORDER BY FETCH` clause can be used with all query expressions 
 
-The `ORDER BY FETCH` clause can now be used on any query expression and not just `SELECT`. For the detailed syntax [see the documentation](https://msdn.microsoft.com/en-us/azure/data-lake-analytics/u-sql/query-statements-and-expressions-u-sql#qry_exp_fetch).
+The `ORDER BY FETCH` clause can now be used with any query expression and not just `SELECT`. For the detailed syntax [see the documentation](https://msdn.microsoft.com/en-us/azure/data-lake-analytics/u-sql/query-statements-and-expressions-u-sql#qry_exp_fetch).
 
 _Examples_
 
@@ -1417,7 +1415,7 @@ _Examples_
 
 #### The `EXTRACT`, `REDUCE` and `COMBINE` expressions now support a `SORTED BY` assertion
 
-U-SQL's query optimizer can take advantage of the knowledge if the output of a user-defined extractor, reducer, or combiner is sorted. In order to assert that the result of such a UDO is sorted, the `EXTRACT`, `REDUCE` and `COMBINE` expressions now support an optional `SORTED BY` assertion for user-defined operators. 
+U-SQL's query optimizer can take advantage of additional knowledge if the output of a user-defined extractor, reducer, or combiner is sorted. In order to assert that the result of such a UDO is sorted, the `EXTRACT`, `REDUCE` and `COMBINE` expressions now support an optional `SORTED BY` assertion for user-defined operators. 
 
 _Syntax_
 
@@ -1450,7 +1448,7 @@ _Syntax_
 
 _Semantics_
 
-* `SortedBy_Clause` The optional `SORTED BY` clause asserts that the rows are ordered by the specified columns. This information allows the optimizer to potentially improve the performance of your script since it knows that the data is ordered. However, if the expression returns data that is not ordered according to the assertion, a runtime error is raised. If it is specified on a built-in Extractor, it will raise a compile time error.
+* `SortedBy_Clause` The optional `SORTED BY` clause asserts that the rows are ordered by the specified columns. This information allows the optimizer to potentially improve the performance of your script since it knows that the data is ordered. However, if the expression returns data that is not ordered according to the assertion, a runtime error is raised. If it is specified on a built-in Extractor, it will raise a compile-time error.
 
 See the U-SQL documentation for the semantics of the previously available clauses.
 
@@ -1545,7 +1543,7 @@ _Examples_
 
 The `REQUIRED` clause specifies which columns are required and cannot be pruned by the optimizer. It specifies that either all columns are required on input for the UDO (if specified with `*`), no columns are required (if specified with `NONE`) or the specified columns are required. If a specified column is followed by a list of columns in parenthesis, then the input column is only required if the columns in that list are referenced from the output. The default is that all columns are required. 
 
-It is recommended that if you want to allow the optimizer to pass column pruning up through the UDO invocation, to specify the minimal set of columns that are required. Passing the column pruning up higher in the script will provide faster script execution since less data needs to be passed, or - if the column pruning reaches the extractor - read.
+If you want to allow the optimizer to pass column pruning up through the UDO invocation, we recommend specifying the minimal set of columns that are required. Passing the column pruning up higher in the script will provide faster script execution since less data needs to be passed, or - if the column pruning reaches the extractor - read.
 
 _Syntax_
 
@@ -1557,7 +1555,7 @@ _Syntax_
 
 #### The `EXTRACT` expressions now support the `REQUIRED` clause to support column pruning in user-defined extractors
 
-U-SQL supports column pruning in built-in extractors such as `Extractors.Csv` and `Extractors.Parquet`. Example of column pruning are the case where the `EXTRACT`'s expressions schema may specify more than the columns needed in the script, e.g., because the extractor needs them for identifying the position in the data such as the CSV extractor, but the final script only uses a few of the specified columns. In that case the query compilation will only generate code that will extract the required columns and skip the other columns.
+U-SQL supports column pruning in built-in extractors such as `Extractors.Csv` and `Extractors.Parquet`. Examples of column pruning arise where the `EXTRACT`'s expressions schema may specify more than the columns needed in the script, e.g., because the extractor needs them for identifying the position in the data such as the CSV extractor but the final script only uses a few of the specified columns. In that case the query compilation will only generate code that will extract the required columns and skip the other columns.
 
 In the case of user-defined extractors, U-SQL does not know the internal implementation of the extractor. Thus per default, it assumes that all the columns need to be extracted. However, column pruning may be interesting for user-defined extractors as well. If a user-defined extractor is written in a way that it does not need all columns to be extracted, then the `REQUIRED` clause can be used to specify which columns cannot be pruned and the optimizer can then provide column pruning.
 
@@ -1574,7 +1572,7 @@ See [above](#the-required-clause-for-udo-invocations-now-allows-none) for the se
 
 _Example_
 
-The following sample extractor will only process the columns `Start`,`Region`,`Query`,`Duration`,`Urls`,`ClickedUrls` of the search log file if they are specified in the `EXTRACT` schema and are not pruned by the query optimizer, while the column `UserId` is always processed and raises an error if it is missing. It writes information about whether the column is used into the diagnostic stream info for better observing the behavior.
+The following sample extractor will only process the columns `Start`,`Region`,`Query`,`Duration`,`Urls`,`ClickedUrls` of the search log file if they are specified in the `EXTRACT` schema and are not pruned by the query optimizer. The column `UserId` is always processed and raises an error if it is missing. It writes information about whether the column is used into the diagnostic stream info for better observing the behavior.
 
     using Microsoft.Analytics.Interfaces;
     using Microsoft.Analytics.Types.Sql;
@@ -1725,7 +1723,7 @@ Azure Data Lake Analytics (ADLA) executes U-SQL scripts by partitioning the scri
 
 Today, the container is limited to 6GB of memory overall and 2 virtual CPU cores. Since the system tries to have several operations executed in a vertex, U-SQL in ADLA limits the amount of memory for each user-defined operator (e.g., an extractor) to 500MB. 
 
-While this limit works for many cases, sometimes you want to use a different amount of memory for the following reasons:
+While this limit works for many cases, sometimes you want to use a different amount of memory. This can be for the following reasons:
 
 1. You may want more memory because your processing needs to allocate more complex data structures (think of a machine learning model or an XML or JSON document model).
 2. You want to allocate more operators into a vertex since they don't need 500MB each which will improve the performance of the job. This can be achieved by requesting less memory. 
@@ -1734,7 +1732,7 @@ In order to help with these scenarios, U-SQL's UDO model is adding an annotation
 
     [SqlUserDefinedMemory(Max=n)]
 
-where `n` is a value of type `long` that indicates the maximal amount of memory that the UDO requests in bytes. It's default is 500MB. If the requested memory exceeds the container's 6GB limit, a larger container will be requested, or an error is raised if such a container cannot be provided. Note that a larger container will incur additional costs. 
+where `n` is a value of type `long` that indicates the maximal amount of memory that the UDO requests in bytes. Its default is 500MB. If the requested memory exceeds the container's 6GB limit, a larger container will be requested, or an error is raised if such a container cannot be provided. Note that a larger container will incur additional costs. 
 
 If you request more memory, operations that previously were inside the same vertex may be split across several vertices, thus increasing the job's execution time. If you request less memory, operations that previously were in different vertices may be combined into the same vertex, thus improving the job's overall execution time.
 
@@ -2000,11 +1998,11 @@ In the latest release of the cognitive libraries, the older `Cognition.Text.KeyP
 
 ###### Comment regarding Python, R, and Cognitive Libraries
 
-In order to get access to the updates to the Python, R and Cognitive libraries, you have to install or refresh the U-SQL Extension libraries through the Azure Data Lake Analytics portal (currently under the Sample Scripts section). 
+To access the updates to the Python, R and Cognitive libraries, you have to install or refresh the U-SQL Extension libraries through the Azure Data Lake Analytics portal (currently under the Sample Scripts section). 
 
 ## Azure Data Lake Tools for Visual Studio New Capabilities
 
-The Azure Data Lake Tools have done a lot of improvements in laying out the information. The following are some of the most important additions and changes that are available in versions 2.3.3000.4 and later.
+The Azure Data Lake Tools have provided a lot of improvements in laying out the information. The following are some of the most important additions and changes that are available in versions 2.3.3000.4 and later.
 
 #### ADL Tools for VisualStudio provides an improved Analytics Unit modeler to help improve a job's performance and cost
 
@@ -2029,6 +2027,6 @@ The job graph now indicates if the stage's vertices contain user-defined operato
 
 ## PLEASE NOTE:
 
-In order to get access to the new syntactic features and new tool capabilities on your local environment, you will need to refresh your ADL Tools. You can download the latest version for VS 2013 and 2015 from [here](http://aka.ms/adltoolsvs) or use the Check for Updates menu item in VS. If you are using VisualStudio 2017, you currently have to wait for the next VisualStudio 2017 refresh that should occur about every 6 to 8 weeks.
+To access the new syntactic features and new tool capabilities on your local environment, you will need to refresh your ADL Tools. You can download the latest version for VS 2013 and 2015 from [here](http://aka.ms/adltoolsvs) or use the Check for Updates menu item in VS. If you are using VisualStudio 2017, you currently have to wait for the next VisualStudio 2017 refresh that should occur about every 6 to 8 weeks.
 
 Otherwise you will not be able to use the new features during local run and submission to the cluster will give you syntax warnings for the new language features (you can ignore them and still submit the job).
