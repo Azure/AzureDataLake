@@ -1,6 +1,6 @@
-# U-SQL Winter Release Notes 2018-03-20
+# U-SQL Spring Release Notes 2018-03-20
 --------------------------
-## Table of Content
+## Table of Contents
 1. [Pending and Upcoming Deprecations and Breaking Changes](#pending-and-upcoming-deprecations-and-breaking-changes)
 
     1.1 [U-SQL jobs will introduce an upper limit for the number of table-backing files being read](#u-sql-jobs-will-introduce-an-upper-limit-for-the-number-of-table-backing-files-being-read)
@@ -74,8 +74,8 @@
 --------------------------
 ## Pending and Upcoming Deprecations and Breaking Changes
 
-Please review your code and make sure you are cleaning your existing code to be ready for the following 
-deprecations of U-SQL preview features.
+Please review your code and make sure clean your existing code to be ready for the 
+deprecations of U-SQL preview features listed below.
 
 **Please note: Previously announced deprecation items are now deprecated and raise errors instead of warnings!**
 
@@ -85,7 +85,7 @@ Follow our [Azure Data Lake Blog](http://blogs.msdn.microsoft.com/azuredatalake)
 
 U-SQL tables are backed by files. Each table partition is mapped to its own file, and each `INSERT` statement adds an additional file (unless a table is rebuilt with `ALTER TABLE REBUILD`). 
 
-If the file count of a table (or set of tables) grows beyond a certain limit and the query predicate cannot eliminate files (e.g., due to too many insertions), there is a large likely-hood that the compilation times out after 25 minutes. 
+If the file count of a table (or set of tables) grows beyond a certain limit and the query predicate cannot eliminate files (e.g., due to too many insertions), there is a significant likelihood that the compilation will time out after 25 minutes. 
 
 In previous releases, there was no limit on the number of table files read by a single job. In the current release, we raise the following warning if the number of table-backing files exceeds the limit of 3000 files per job:
 
@@ -97,40 +97,42 @@ This message will be upgraded to an error message in a future refresh. You can t
 
     SET @@InternalDebug = "EnforceMaxTableFileReadThreshold:on";
 
-If your current job compiles but receives the warning today, you will continue to be able to run your job in the future, after we will turn this into an error, with the following setting:
+If your current job compiles but receives the warning today, you will continue to be able to run your job in the future, after we will turn this into an error, with the following setting: 
+
+***CJC*** Not sure of the meaning above. Consider:"...you will continue to be able to run your job. In the future, we will turn this into an error, with the following setting:"
 
     SET @@InternalDebug = "EnforceMaxTableFileReadThreshold:off";
 
-Please note: This limit only applies to reading from table-backing files. Normal files don't have an explicit limit and have a much higher limit in practice since they use a different execution plan. The limit also only applies to files that are actually read and ignores the files in table partitions which are not used by the query.
+Please note: This limit only applies when reading from table-backing files. Normal files don't have an explicit limit and have a much higher limit in practice since they use a different execution plan. The limit also only applies to files that are actually read and ignores the files in table partitions which are not used by the query.
 
 In a future release, we will work on addressing this limit (no timeline yet). If you feel this is important to your scenario, please add your vote to the [feature request](https://feedback.azure.com/forums/327234-data-lake/suggestions/19050232-increase-number-of-u-sql-table-files-partitions-th).
 
 
 #### Built-in extractors will change mapping of empty fields from zero-length string to null with quoting enabled
 
-In a future refresh, we will change the handling of empty cells in CSV-like files by the built-in extractors and align them with the documentation.
+In a future refresh, we will change the way built-in extractors handle empty cells in CSV-like files and align them with the documentation.
 
-Currently, a CSV file `a.csv` with the content
+Currently, a CSV file `a.csv` with the content:
 
     1,,"b"
 
-and the following statement
+and the following statement:
 
     @a = EXTRACT c1 int, c2 string, c3 string FROM "a.csv" USING Extractors.Csv();
 
-would produce a rowset with the values
+would produce a rowset with the values:
 
 	| c1 | c2 |  c3 |
     |----|----|-----|
     |  1 | "" | "b" |
 
-instead of the rowset with the values
+instead of the rowset with the values:
 
     | c1 |   c2 |  c3 |
     |----|------|-----|
     |  1 | null | "b" |
 
-We now give you an option to enable this change so you can test your existing scripts and see if you are going to be impacted. 
+We now give you an option to enable this change so you can test your existing scripts and assess if you will be impacted. 
 
 If you want to test your script with the new behavior, please add the following statement to your script to turn on the correct `null` value extraction:
 
@@ -149,7 +151,7 @@ Currently `DECLARE EXTERNAL` and `EXPORT EXTERNAL` (in packages only) are syntac
 
 In a future release this warning will be turned into an error.
 
-#### Removal of undocumented `CLUSTER` | `CLUSTERED BY` in `CREATE INDEX` and `CREATE TABLE`
+#### Removal of undocumented `CLUSTER` | `CLUSTERED BY` in `CREATE INDEX` and `CREATE TABLE`.
 
 The implementation allows the undocumented use of `CLUSTER BY` and `CLUSTERED BY` as synonyms for `DISTRIBUTE BY` and `DISTRIBUTED BY` in the `CREATE INDEX` and `CREATE TABLE` statements. 
 
@@ -193,10 +195,9 @@ The recent refresh raises errors for the following deprecated items:
 
 #### API changes for the cognitive extension libraries
 
-Azure Data Lake Analytics provides a set of libraries for running Python and R code and use some of the cognitive processing capabilities on images and text that can be installed as U-SQL extensions via the Azure Data Lake Analytics Portal. 
+Azure Data Lake Analytics provides a set of libraries for running Python and R code and uses some of the cognitive processing capabilities on images and text that can be installed as U-SQL extensions via the Azure Data Lake Analytics Portal. 
 
 These assemblies are currently considered to be in a preview release stage. Therefore, more changes may occur in future refreshes, such as moving the text assemblies to use the same extractor/applier model as the image assemblies.
-
 
 The recent refresh introduced the following breaking changes:
 
@@ -212,11 +213,11 @@ This UDO has been renamed to `Cognition.Text.KeyPhraseProcessor` and instead of 
 
 ## Major U-SQL Bug Fixes, Performance and Scale Improvements
 
-Besides many internal improvements and fixes to reported bugs, we would like to call out the following major bug fixes and improvements to performance and scalability of the language.
+In addition to many internal improvements and fixes to reported bugs, we would like to call out the following major bug fixes and improvements to performance and scalability of the language.
 
 #### Input File Set scales orders of magnitudes better (Finally released!)
 
-Previously, U-SQL's file set pattern on `EXTRACT` expressions ran into compile time time-outs around 800 to 5000 files. 
+Previously, U-SQL's file set pattern on `EXTRACT` expressions ran into compile-time time-outs around 800 to 5000 files. 
 
 U-SQL's file set pattern now scales to many more files and generates more efficient plans.
 
@@ -238,11 +239,11 @@ If you want to turn these improvements off, for example to test the impact of th
 
 ##### R, Python and Cognitive Extension UDOs can use more memory
 
-The R, Python and Cognitive Extension UDOs have been updated to provide access to up tomemory 5GB of  (up from 500MB) starting in version 1.0.6. If you are using an older version of the extensions, please visit the Azure Portal to update to the latest version.
+The R, Python and Cognitive Extension UDOs have been updated to provide access to up to 5GB memory (up from 500MB) starting in version 1.0.6. If you are using an older version of the extensions, please visit the Azure Portal to update to the latest version.
 
 ## U-SQL Preview Features
 
-We currently have the following U-SQL features in public or private preview. A feature in preview means that we are still finalizing the implementation of the feature, but are soliciting feedback and want to make it available ahead of a full release due to their value to the scenarios they address and the ability to learn more from our customers.
+The following U-SQL features are currently in public or private preview. A feature in preview means that we are still finalizing the implementation of the feature, but are soliciting feedback and want to make it available ahead of a full release due to their value to the scenarios they address and the ability to learn more from our customers.
 
 A _private preview_ feature means that you have to contact us for access since it often involves extra steps (like specifying a special runtime), is only working in a limited context (e.g., it does not work with all other capabilities), or may be removed/not shipped due to customer feedback.
 
