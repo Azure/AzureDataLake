@@ -11,9 +11,11 @@
 
     1.4 [Removal of undocumented use of `CLUSTER` | `CLUSTERED BY` in `CREATE INDEX` and `CREATE TABLE`](#removal-of-undocumented-use-of-cluster--clustered-by-in-create-index-and-create-table)
 
-    1.5 [Disallow U-SQL identifiers in C# delegate bodies in scripts](#disallow-u-sql-identifiers-in-c-delegate-bodies-in-scripts)
+    1.5 [Calling static members of types in a `SELECT` expression that also references a column having the same name as the type will need to fully qualify the type name or rename the column](#calling-static-members-of-types-in-a-SELECT-expression-that-also-references-a-column-having-the-same-name-as-the-type-will-need-to-fully-qualify-the-type-name-or-rename-the-column)
 
-    1.6 [Strengthening of Read after DML check](#strengthening-of-read-after-dml-check)
+    1.6 [Disallow U-SQL identifiers in C# delegate bodies in scripts](#disallow-u-sql-identifiers-in-c-delegate-bodies-in-scripts)
+
+    1.7 [Strengthening of Read after DML check](#strengthening-of-read-after-dml-check)
 
 2. [Breaking Changes](#breaking-changes)
 
@@ -177,6 +179,26 @@ In a future release this warning will be turned into an error.
 The implementation allows the undocumented use of `CLUSTER BY` and `CLUSTERED BY` as synonyms for `DISTRIBUTE BY` and `DISTRIBUTED BY` in the `CREATE INDEX` and `CREATE TABLE` statements. 
 
 A future release will remove these synonyms to enable us to introduce other capabilities in this space. If you use this undocumented syntax, please replace it with the documented keywords. A future refresh will produce a warning and then an error.
+
+#### Calling static members of types in a `SELECT` expression that also references a column having the same name as the type will need to fully qualify the type name or rename the column
+
+Calling static members of types in a `SELECT` expression that also references a column having the same name as the type will need to fully qualify the type name or rename the column. 
+
+For example, the following expressions currently work but will fail in the next refresh
+
+    @Q = SELECT DateTime.Parse("…") AS DateTime FROM @input; // Create a column with the same name as the type
+    @Q = SELECT DateTime.Parse("…") AS dt, DateTime FROM @Q; // use the column and the type in same query
+
+To avoid the future error message, either the column needs to be renamed and/or the type name needs to be fully qualified:
+
+    @Q = SELECT DateTime.Parse("…") AS DateTime FROM @input; 
+    @Q = SELECT System.DateTime.Parse("…") AS dt, DateTime FROM @Q; // Showing the full qualification
+
+If there is a column named `System` then the type needs to be prefixed with `global::` to disambiguate:
+
+    @Q = SELECT DateTime.Parse("…") AS DateTime, String.Empty AS System FROM @input; 
+    @Q = SELECT global::System.DateTime.Parse("…") AS dt, DateTime, System FROM @Q; // Showing the full qualification with global::
+
 
 #### Disallow U-SQL identifiers in C# delegate bodies in scripts
 
