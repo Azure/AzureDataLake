@@ -43,6 +43,8 @@
 
     4.6 [A limited flexible-schema feature for U-SQL table-valued function parameters is now available for private preview](#a-limited-flexible-schema-feature-for-u-sql-table-valued-function-parameters-is-now-available-for-preview-requires-opt-in)
 
+    4.7 [Native Python UDO Support (Private Preview)](#native-python-udo-support-private-preview)
+
 5. [New U-SQL capabilities](#new-u-sql-capabilities)
 
     5.1 [U-SQL adds job information system variable `@@JOBINFO`](#u-sql-adds-job-information-system-variable-jobinfo)
@@ -69,9 +71,7 @@
 
     5.12 [U-SQL adds compile-time user errors and warnings](#u-sql-adds-compile-time-user-errors-and-warnings)
 
-    5.13 [U-SQL User-defined Operators can now request more memory and CPUs with annotations](#u-sql-user-defined-operators-can-now-request-more-memory-and-cpus-with-annotations)
-
-    5.14 [U-SQL Cognitive Library additions](#u-sql-cognitive-library-additions)
+    5.13 [U-SQL Cognitive Library additions](#u-sql-cognitive-library-additions)
 
 6. [Azure Data Lake Tools for Visual Studio New Capabilities](#azure-data-lake-tools-for-visual-studio-new-capabilities)
 
@@ -79,13 +79,19 @@
 
     6.2 [Job Submission's simple interface now makes it easier to change the allocated AUs](#job-submissions-simple-interface-now-makes-it-easier-to-change-the-allocated-aus)
 
-    6.3 [Improved visualization of the job execution graph inside a vertex](#improved-visualization-of-the-job-execution-graph-inside-a-vertex)
+    6.3 [The stage tool tip is simplified and makes it easier to find the Vertex Operator View](#the-stage-tool-tip-is-simplified-and-makes-it-easier-to-find-the-vertex-operator-view)
 
-    6.4 [The job stage graph and job execution graph now indicates if the stage contains user-defined operators and what language they have been authored in](#the-job-stage-graph-and-job-execution-graph-now-indicates-if-the-stage-contains-user-defined-operators-and-what-language-they-have-been-authored-in)
+    6.4 [Improved visualization of the job execution graph inside a vertex](#improved-visualization-of-the-vertex-operator-view-inside-a-vertex)
 
-    6.5 [Separate tab for enumerating all input and output data](#separate-tab-for-enumerating-all-input-and-output-data)
+    6.5 [The job stage graph and job execution graph now indicates if the stage contains user-defined operators and what language they have been authored in](#the-job-stage-graph-and-job-execution-graph-now-indicates-if-the-stage-contains-user-defined-operators-and-what-language-they-have-been-authored-in)
 
-    6.6 [Job View includes a link to the diagnostic file's folder](#job-view-includes-a-link-to-the-diagnostic-files-folder)
+    6.6 [New "Data" tab for enumerating all input and output data](#new-data-tab-for-enumerating-all-input-and-output-data)
+
+    6.7 [Job View includes a link to the diagnostic folder](#job-view-includes-a-link-to-the-diagnostic-folder)
+
+    6.8 [U-SQL compilation errors are now shown in the "Error List" window](#u-sql-compilation-errors-are-now-shown-in-the-error-list-window)
+
+    6.9 [U-SQL Project supports MSBuild](#u-sql-project-supports-msbuild)
 
 7. [Azure Portal Updates](#azure-portal-updates)
 
@@ -326,7 +332,7 @@ A _private preview_ feature means that customers must contact us for access sinc
 
 **Since we are still testing these features, you are required to opt in. Please [contact us](mailto:usql@microsoft.com) if you want to explore any of the private preview capabilities.**
 
-A _public preview_ feature means that we provide you with the opt-in setting in the release notes and the feature is normally accessible in the default experience after you opt-in. Compared to a released feature, there may still be changes in its APIs or details in behavior, These are features we are planning to release and will provide normal support if you encounter any issues.
+A _public preview_ feature means that we provide you with the opt-in setting in the release notes and the feature is normally accessible in the default experience after you opt-in. Compared to a released feature, there may still be changes in its APIs or details in behavior. These are features we are planning to release and will provide normal support if you encounter any issues.
 
 #### Input File Set uses less resources when operating on many small files (is in Public Preview)
 
@@ -709,7 +715,11 @@ Please [contact us](mailto:usql@microsoft.com) if you want to try it out and pro
 
 This feature allows writing more generic U-SQL table-valued functions and procedures, where only part of the schema of a table parameter needs to be present.
 
-Please [contact us](mailto:usql@microsoft.com) if you want to try it out and provide us with your feedback.
+#### Native Python UDO Support (Private Preview)
+
+Based on the feedback on our Python extension, we have added a native Python UDO model to U-SQL that allows you to write your own custom extractors, outputters, processors, reducers in Python. This capability is now available in private preview and will be extended over time to include also appliers and combiners!
+
+Please [contact us](mailto:usql@microsoft.com) if you want to try it out any of the private preview features and provide us with your feedback.
 
 ## New U-SQL capabilities
 
@@ -884,7 +894,7 @@ In the case that the diagnostic information exceeds the limits above, writing th
 
 Defaulted information:
 
-We may extend this format  ***CJC*** IS IT THE FORMAT OR THE LIMITS THAT WILL BE EXTENDED? ***CJC*** in the future. Therefore, there is an implied version attribute on each of the Vertex elements that is implied to be version="1.0".  Future versions will update the minor version, if backwards-compatible changes are done to the XML format; and they will update the major version, if the changes are not backwards-compatible.
+We may extend this format in the future. Therefore, there is an implied version attribute on each of the Vertex elements that is implied to be version="1.0".  Future versions will update the minor version, if backwards-compatible changes are done to the XML format; and they will update the major version, if the changes are not backwards-compatible.
 
 Timing of writing information to the file:
 
@@ -1239,7 +1249,7 @@ _Examples_
 1. The following script uses the function variable to solve the Tweet Analysis sample:
 
         DECLARE @get_mentions Func<string,SqlArray<string>> = 
-     hay assign           (tweet) => new SqlArray<string>(
+                (tweet) => new SqlArray<string>(
                                tweet.Split(new char[]{' ', ',', '.', ':', '!', ';', '"', '“'}).Where(x => x.StartsWith("@"))
                            );
         @t = 
@@ -1739,118 +1749,6 @@ The following script will raise an error if a file does not exists or if it cont
     TO @semfile
     USING Outputters.Csv();
 
-#### U-SQL User-defined Operators can now request more memory and CPUs with annotations
-
-Azure Data Lake Analytics (ADLA) executes U-SQL scripts by partitioning the script into stages where each stage executes a certain amount of processing. Each stage can be scaled out based on input data partitioning into vertices that all execute the same processing over a different partition of the data. Each of these vertices gets a container to run the code that does the processing. 
-
-Today, the container is limited to 6GB of memory overall and 2 virtual CPU cores. Since the system tries to have several operations executed in a vertex, U-SQL in ADLA limits the amount of memory for each user-defined operator (e.g., an extractor) to 500MB. 
-
-While this limit works for many cases, sometimes you want to use a different amount of memory. This can be for the following reasons:
-
-1. You may want more memory because your processing needs to allocate more complex data structures (think of a machine learning model or an XML or JSON document model).
-2. You want to allocate more operators into a vertex since they don't need 500MB each which will improve the performance of the job. This can be achieved by requesting less memory. 
-
-In order to help with these scenarios, U-SQL's UDO model is adding an annotation that allow you to request a different amount of memory with the following .NET annotation:
-
-    [SqlUserDefinedMemory(Max=n)]
-
-where `n` is a value of type `long` that indicates the maximal amount of memory that the UDO requests in bytes. Its default is 500MB. If the requested memory exceeds the container's 6GB limit, a larger container will be requested, or an error is raised if such a container cannot be provided. Note that a larger container will incur additional costs. 
-
-If you request more memory, operations that previously were inside the same vertex may be split across several vertices, thus increasing the job's execution time. If you request less memory, operations that previously were in different vertices may be combined into the same vertex, thus improving the job's overall execution time.
-
-The UDO will be allowed to allocate at least `n` bytes, although the system may allow around 300MB more than specified, since it keeps 300MB of memory as allocation buffer for a variety of memory needs in the vertex. 
-
-_Examples:_
-
-The following user-defined extractor is requesting 2GB of memory in its annotation and will attempt to allocate bytes memory in increments of `incr` bytes. If it catches an error while it tries to allocate the memory, it will stop and report the error message in the rowset.
-
-    using Microsoft.Analytics.Interfaces;
-    using Microsoft.Analytics.Types.Sql;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Text;
-
-    namespace UDO_Annotations
-    {
-
-        internal static class MyLimits
-        {
-            public const long MaxUdoMemory = 2L * 1024 * 1024 * 1024;
-        }
-
-        [SqlUserDefinedExtractor]
-        [SqlUserDefinedMemory(Max=MyLimits.MaxUdoMemory)]
-        public class MyExtractor : IExtractor
-        {
-            private long max_allocation_size;
-            private long increment;
-            private int no_buff;
-            private byte[][] alloc_mem;
-
-            public MyExtractor(long max_alloc_sz = 10*1024*1024, long incr = 1024*1024){
-                max_allocation_size = max_alloc_sz;
-                increment = incr;
-                no_buff = (int)Math.Ceiling((decimal) max_alloc_sz/(decimal)incr);
-                alloc_mem = new byte[no_buff][];
-            }
-
-            public override IEnumerable<IRow> Extract(IUnstructuredReader input, IUpdatableRow outputrow)
-            {
-                outputrow.Set<long>("GC_TotalMem_Start", GC.GetTotalMemory(true));
-                outputrow.Set<long>("MaxUDOMemory", MyLimits.MaxUdoMemory);
-    
-                var buff_idx = 0;
-                var failed = false;
-                var gc_mem = GC.GetTotalMemory(true);
-                try
-                {
-                    while (buff_idx < no_buff) {
-                        alloc_mem[buff_idx] = new byte[increment];
-                        alloc_mem[buff_idx][0] = 1; // to avoid it being optimized away
-                        buff_idx++;
-                        gc_mem = GC.GetTotalMemory(true);
-                    }
-                }
-                catch (Exception e)
-                {
-                    failed = true;
-                    outputrow.Set<string>("error", e.Message);
-                }
-                outputrow.Set<long>("GC_TotalMem_End", gc_mem);
-                outputrow.Set<bool>("failed", failed);
-                outputrow.Set<long>("alloc_sz", buff_idx*increment);
-
-                yield return outputrow.AsReadOnly();
-            }
-        }
-    }
-
-The following script applies this extractor each of the files in the specified file set and tries to allocate 3GB each, thus causing an out of memory exception after allocating the 2GB plus some of the above mentioned buffer on every invocation:
-
-    @data =
-    EXTRACT
-        filename string,
-        GC_TotalMem_Start long,
-        MaxUDOMemory long,
-        GC_TotalMem_End long,
-        alloc_sz long,
-        failed bool,
-        error string
-    FROM "/Samples/Data/{filename}"
-    USING new UDO_Annotations.MyExtractor(max_alloc_sz : 3L * 1024 * 1024 * 1024, incr: 1024*1024);
-
-    OUTPUT @data
-    TO "/output/releasenotes/winter2017-18/udo_annotation_maxmem.csv"
-    USING Outputters.Csv(outputHeader : true);
-
-The resulting file may look something like:
-
-| filename | GC_TotalMem_Start | MaxUDOMemory | GC_TotalMem_End | alloc_sz | failed | error |
-|----------|-------------------|--------------|-----------------|----------|--------|-------|
-| AdsLog.tsv | 86008 | 2147483648 | 2451713256 | 2451570688 | True | Exception of type 'System.OutOfMemoryException' was thrown. |
-| SearchLog.tsv | 86008 | 2147483648 | 2451713352 | 2451570688 | True | Exception of type 'System.OutOfMemoryException' was thrown. |
 
 #### U-SQL Cognitive Library additions
 
@@ -2028,23 +1926,83 @@ The Azure Data Lake Tools have provided a lot of improvements in laying out the 
 
 #### ADL Tools for VisualStudio provides an improved Analytics Unit modeler to help improve a job's performance and cost
 
-#### Job Submission's simple interface now makes it easier to change the allocated AUs
+The tooling has greatly improved the AU modeler to help customers find the best job for their cost/execution time targets:
 
-#### Improved visualization of the job execution graph inside a vertex
+![VS Tool - AU modeler](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-AUModeler.jpg)
+
+It shows the actual AU consumption over the duration of the job and provides options for estimated best cost/execution time trade-off and fastest job, and allows users to explore other options.
+
+More details can be found in [this blog post](https://blogs.msdn.microsoft.com/azuredatalake/2018/03/30/using-the-first-job-run-to-optimize-subsequent-runs-with-azure-data-lake-job-au-analyzer/).
+
+#### Job Submission's submit bar interface now makes it easier to change the allocated AUs
+
+The script editor's submit bar interface now makes it easier to change the allocated AUs:
+ 
+![VS Tool - Refined Submit Bar](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-RefinedSubmitBar.jpg)
+
+#### The stage tool tip is simplified and makes it easier to find the Vertex Operator View
+
+Here is the simplified view: 
+
+![VS Tool - Stage's Tool Tip](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-StageToolTip.jpg)
+
+The more detailed information got [moved into the Vertex Operator View](#Improved-visualization-of-the-vertex-operator-view-inside-a-vertex).
+
+#### Improved visualization of the vertex operator view inside a vertex
+
+The vertex operator view that shows the operations executed in that vertex now shows more detailed information including which operator was executing a user-defined operator:
+
+![VS Tool - Vertex Operator View](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-VertexOpsView.jpg)
 
 #### The job stage graph and job execution graph now indicates if the stage contains user-defined operators and what language they have been authored in
 
 The job graph now indicates if the stage's vertices contain user-defined operators (UDOs). .NET UDOs and the R script invoking UDO are marked as in this picture:
 
-....
+![VS Tool - Stage's UDO Annotation](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-UDOStageAnnotation.jpg)
 
-#### Separate tab for enumerating all input and output data
+#### New "Data" tab for enumerating all input and output data
 
-#### Job View includes a link to the diagnostic file's folder
+The new data tab shows both all inputs and outputs, including tables, files and file sets. Right-clicking on the names will give you additional options such as copying the name or downloading a file.
+
+![VS Tool - Job Data Tab](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-DataTab.jpg)
+
+#### Runtime error messages provide important info more prominently and information can be copied
+
+Previously, the important aspects of runtime error messages were often buried inside a wrapper error message called `VertexFailedFast`. The new error message reporting now moves the important information to the top and provides a way to copy the error message to share it more easily with others.
+
+![VS Tool - Runtime Error Message](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-RuntimeErrorMessage.jpg)
+
+#### Job View includes a link to the diagnostic folder
+
+Users can now open the diagnostics folder through a link in Job Details in Job View:
+
+![VS Tool - Diagnostics Link](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-DiagnosticsLink.jpg)
+
+The link is only active if there is a diagnostic folder generated for the job.
+
+#### U-SQL compilation errors are now shown in the "Error List" window
+
+U-SQL compilation errors are now shown in the "Error List" window and - if double-clicked - will take you directly to the line in the script with the chosen compilation error.
+
+Note that as a consequence, the job window will now only appear after the preparation phase has been completed. The progress of the preparation phase will be shown in the "Output" window until then.
+
+#### U-SQL Project supports MSBuild
+
+Newly created U-SQL project templates support MSBuild. Older U-SQL projects will be updated to the new project template when they are being opened after the user acknowledges the dialog box. 
+
+More information about MSBuild support can be found in this [blog post](https://blogs.msdn.microsoft.com/azuredatalake/2017/10/24/continuous-integration-made-easy-with-msbuild-support-for-u-sql-preview/).
 
 ## Azure Portal Updates
 
 #### The portal provides an improved Analytics Unit modeler to help improve a job's performance and cost
+
+The portal has added the AU modeler to help customers find the best job for their cost/execution time targets:
+
+![Portal - AU Modeler](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/Portal-AUModeler.jpg)
+
+It shows the actual AU consumption over the duration of the job and provides options for estimated best cost/execution time trade-off and fastest job, and allows users to explore other options.
+
+More details can be found in [this blog post](https://blogs.msdn.microsoft.com/azuredatalake/2018/03/30/using-the-first-job-run-to-optimize-subsequent-runs-with-azure-data-lake-job-au-analyzer/).
 
 
 ## PLEASE NOTE:
