@@ -1,6 +1,6 @@
-# U-SQL Winter 2017/2018 Release Notes 2018-04-30
+# U-SQL Spring 2018 Release Notes 2018-04-30
 --------------------------
-## Table of Content
+## Table of Contents
 1. [Pending and Upcoming Deprecations and Breaking Changes](#pending-and-upcoming-deprecations-and-breaking-changes)
 
     1.1 [U-SQL jobs will introduce an upper limit for the number of table-backing files being read](#u-sql-jobs-will-introduce-an-upper-limit-for-the-number-of-table-backing-files-being-read)
@@ -105,8 +105,8 @@ Most of the examples below are available in a sample Visual Studio solution on t
 --------------------------
 ## Pending and Upcoming Deprecations and Breaking Changes
 
-Please review your code and make sure you are cleaning your existing code to be ready for the following 
-deprecations of U-SQL preview features.
+Please review your code and make sure you clean up your existing code to be ready for the announced  
+deprecations of U-SQL features.
 
 **Please note: Previously announced deprecation items are now deprecated and raise errors instead of warnings!**
 
@@ -116,7 +116,7 @@ Follow our [Azure Data Lake Blog](http://blogs.msdn.microsoft.com/azuredatalake)
 
 U-SQL tables are backed by files. Each table partition is mapped to its own file, and each `INSERT` statement adds an additional file (unless a table is rebuilt with `ALTER TABLE REBUILD`). 
 
-If the file count of a table (or set of tables) grows beyond a certain limit and the query predicate cannot eliminate files (e.g., due to too many insertions), there is a large likely-hood that the compilation times out after 25 minutes. 
+If the file count of a table (or set of tables) grows beyond a certain limit and the query predicate cannot eliminate files (e.g., due to too many insertions), there is a significant likely-hood that the compilation will time out after 25 minutes. 
 
 In previous releases, there was no limit on the number of table files read by a single job. In the current release, we raise the following warning if the number of table-backing files exceeds the limit of 3000 files per job:
 
@@ -128,7 +128,9 @@ This message will be upgraded to an error message in a future refresh. You can t
 
     SET @@InternalDebug = "EnforceMaxTableFileReadThreshold:on";
 
-If your current job compiles but receives the warning today, you will continue to be able to run your job in the future, after we will turn this into an error, with the following setting:
+If your current job compiles but receives the warning today, you should consider reducing the number of table files with rebuilding your table or reducing the number of read partitions.
+
+If you cannot lower the number of table files and need to run your job in the future, you can turn off the error with the following setting even after we turn the warning into an error:
 
     SET @@InternalDebug = "EnforceMaxTableFileReadThreshold:off";
 
@@ -139,7 +141,7 @@ In a future release, we will work on addressing this limit (no timeline yet). If
 
 #### Built-in extractors will change mapping of empty fields from zero-length string to null with quoting enabled
 
-In a future refresh, we will change the handling of empty cells in CSV-like files by the built-in extractors and align them with the documentation.
+In a future refresh, we will change the way built-in text extractors handle empty cells in CSV-like files and align them with the documentation.
 
 Currently, a CSV file `a.csv` with the content
 
@@ -161,7 +163,7 @@ instead of the rowset with the values
     |----|------|-----|
     |  1 | null | "b" |
 
-We now give you an option to enable this change so you can test your existing scripts and see if you are going to be impacted. 
+We now give you an option to enable this change so you can test your existing scripts and assess if you will be impacted. 
 
 If you want to test your script with the new behavior, please add the following statement to your script to turn on the correct `null` value extraction:
 
@@ -269,7 +271,7 @@ The recent refresh raises errors for the following deprecated items:
 
 #### API changes for the cognitive extension libraries
 
-Azure Data Lake Analytics provides a set of libraries for running Python and R code and use some of the cognitive processing capabilities for images and text that can be installed as U-SQL extensions via the Azure Data Lake Analytics Portal. 
+Azure Data Lake Analytics provides a set of libraries for running Python and R code and uses some of the cognitive processing capabilities for images and text that can be installed as U-SQL extensions via the Azure Data Lake Analytics Portal. 
 
 These assemblies are currently considered to be in a preview release stage. Therefore, more changes may occur in future refreshes, such as moving the text assemblies to use the same extractor/applier model as the image assemblies.
 
@@ -326,7 +328,9 @@ The U-SQL R extension now supports nullable types.
 
 ## U-SQL Preview Features
 
-We currently have the following U-SQL features in public or private preview. A feature in preview means that we are still finalizing the implementation of the feature. Due to its value in customer scenarios, we are making it available ahead of a full release to solicit feedback and learn more from our customers.
+The following U-SQL features are currently in public or private preview. 
+
+A feature in preview means that we are still finalizing the implementation of the feature. Due to its value in customer scenarios, we are making it available ahead of a full release to solicit feedback and learn more from our customers.
 
 A _private preview_ feature means that customers must contact us for access since it may involve extra steps (like specifying a special runtime), only work in a limited context (e.g., it does not work with all other capabilities), or may be removed/not shipped due to customer feedback.
 
@@ -1952,7 +1956,7 @@ The more detailed information got [moved into the Vertex Operator View](#Improve
 
 The vertex operator view that shows the operations executed in that vertex now shows more detailed information including which operator was executing a user-defined operator:
 
-![VS Tool - Vertex Operator View](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-VertexOpsView.jpg)
+![VS Tool - Vertex Operator View](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-VertexOpsView.JPG)
 
 #### The job stage graph and job execution graph now indicates if the stage contains user-defined operators and what language they have been authored in
 
@@ -1964,7 +1968,7 @@ The job graph now indicates if the stage's vertices contain user-defined operato
 
 The new data tab shows both all inputs and outputs, including tables, files and file sets. Right-clicking on the names will give you additional options such as copying the name or downloading a file.
 
-![VS Tool - Job Data Tab](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-DataTab.jpg)
+![VS Tool - Job Data Tab](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-DataTab.JPG)
 
 #### Runtime error messages provide important info more prominently and information can be copied
 
@@ -1998,7 +2002,7 @@ More information about MSBuild support can be found in this [blog post](https://
 
 The portal has added the AU modeler to help customers find the best job for their cost/execution time targets:
 
-![Portal - AU Modeler](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/Portal-AUModeler.jpg)
+![Portal - AU Modeler](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/Portal-AUModeler.JPG)
 
 It shows the actual AU consumption over the duration of the job and provides options for estimated best cost/execution time trade-off and fastest job, and allows users to explore other options.
 
