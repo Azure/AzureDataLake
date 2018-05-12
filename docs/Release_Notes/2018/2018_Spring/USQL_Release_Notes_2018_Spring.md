@@ -1932,7 +1932,7 @@ The Azure Data Lake Tools have provided a lot of improvements in laying out the 
 
 The tooling has greatly improved the AU modeler to help customers find the best job for their cost/execution time targets:
 
-![VS Tool - AU modeler](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-AUModeler.jpg)
+![VS Tool - AU modeler](https://github.com/Azure/AzureDataLake/blob/master/docs/img/ReleaseNotes/winter2018/VS-AUModeler.JPG)
 
 It shows the actual AU consumption over the duration of the job and provides options for estimated best cost/execution time trade-off and fastest job, and allows users to explore other options.
 
