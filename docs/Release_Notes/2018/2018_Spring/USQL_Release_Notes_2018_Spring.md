@@ -43,8 +43,6 @@
 
     4.6 [A limited flexible-schema feature for U-SQL table-valued function parameters is now available for private preview](#a-limited-flexible-schema-feature-for-u-sql-table-valued-function-parameters-is-now-available-for-preview-requires-opt-in)
 
-    4.7 [Native Python UDO Support (Private Preview)](#native-python-udo-support-private-preview)
-
 5. [New U-SQL capabilities](#new-u-sql-capabilities)
 
     5.1 [U-SQL adds job information system variable `@@JOBINFO`](#u-sql-adds-job-information-system-variable-jobinfo)
@@ -63,15 +61,17 @@
 
     5.8 [The `ORDER BY FETCH` clause can be used with all query expressions](#the-order-by-fetch-clause-can-be-used-with-all-query-expressions)
 
-    5.9 [The `EXTRACT`, `REDUCE` and `COMBINE` expressions now support a `SORTED BY` assertion](#the-extract-reduce-and-combine-expressions-now-support-a-sorted-by-assertion)
+    5.9 [The `EXTRACT` expression's schema can be specified with a table-type](#the-extract-expressions-schema-can-be-specified-with-a-table-type)
 
-    5.10 [The `REQUIRED` clause for UDO invocations now allows `NONE`](#the-required-clause-for-udo-invocations-now-allows-none)
+    5.10 [The `EXTRACT`, `REDUCE` and `COMBINE` expressions now support a `SORTED BY` assertion](#the-extract-reduce-and-combine-expressions-now-support-a-sorted-by-assertion)
 
-    5.11 [The `EXTRACT` expressions now support the `REQUIRED` clause to support column pruning in user-defined extractors](#the-extract-expressions-now-support-the-required-clause-to-support-column-pruning-in-user-defined-extractors)
+    5.11 [The `REQUIRED` clause for UDO invocations now allows `NONE`](#the-required-clause-for-udo-invocations-now-allows-none)
 
-    5.12 [U-SQL adds compile-time user errors and warnings](#u-sql-adds-compile-time-user-errors-and-warnings)
+    5.12 [The `EXTRACT` expressions now support the `REQUIRED` clause to support column pruning in user-defined extractors](#the-extract-expressions-now-support-the-required-clause-to-support-column-pruning-in-user-defined-extractors)
 
-    5.13 [U-SQL Cognitive Library additions](#u-sql-cognitive-library-additions)
+    5.13 [U-SQL adds compile-time user errors and warnings](#u-sql-adds-compile-time-user-errors-and-warnings)
+
+    5.14 [U-SQL Cognitive Library additions](#u-sql-cognitive-library-additions)
 
 6. [Azure Data Lake Tools for Visual Studio New Capabilities](#azure-data-lake-tools-for-visual-studio-new-capabilities)
 
@@ -719,12 +719,6 @@ Please [contact us](mailto:usql@microsoft.com) if you want to try it out and pro
 
 This feature allows writing more generic U-SQL table-valued functions and procedures, where only part of the schema of a table parameter needs to be present.
 
-#### Native Python UDO Support (Private Preview)
-
-Based on the feedback on our Python extension, we have added a native Python UDO model to U-SQL that allows you to write your own custom extractors, outputters, processors, reducers in Python. This capability is now available in private preview and will be extended over time to include also appliers and combiners!
-
-Please [contact us](mailto:usql@microsoft.com) if you want to try it out any of the private preview features and provide us with your feedback.
-
 ## New U-SQL capabilities
 
 #### U-SQL adds job information system variable `@@JOBINFO`
@@ -787,7 +781,26 @@ Starting with this refresh, U-SQL adds support for computed file property column
 2. Provide a way to assign the properties to "virtual" columns in the `EXTRACT`'s schema. This is done using a "calculated column" syntax.
 3. Allow constant-foldable comparisons on these "virtual" columns in subsequent query predicates to limit the files being processed by the `EXTRACT` expression.
 
-U-SQL provides the following file property functions in the `EXTRACT` expression's schema:
+_Updated Syntax_
+
+    Extract_Expression :=                                                                                    
+      'EXTRACT' Column_Definition_List
+      Extract_From_Clause
+      USING_Clause.
+
+    Column_Definition_List :=
+      Column_Definition { ',' Column_Definition}.
+
+    Column_Definition :=
+      Quoted_or_Unquoted_Identifier 
+      ( Built_in_Type | '=' File_Property_Function).
+
+    File_Property_Function :=
+      'FILE.URI()' | 'FILE.MODIFIED()' | 'FILE.CREATED()' | 'FILE.LENGTH()'.
+
+_Semantics_
+
+U-SQL provides the following file property functions in the `EXTRACT` expression's computed column definition:
 
 | File Property Function | Return type | Description |
 |------------------------|-------------|-------------|
@@ -796,7 +809,7 @@ U-SQL provides the following file property functions in the `EXTRACT` expression
 | `FILE.CREATED()` | `DateTime?` | Returns the file's creation time stamp in UTC-0 timezone. |
 | `FILE.LENGTH()` | `long?` | Returns the file's size in bytes. | 
 
-The `EXTRACT` expression's schema definition needs to contain at least one non virtual column. 
+The `EXTRACT` expression's schema definition needs to contain at least one non-virtual, non-computed column. 
 
 _Note:_ These functions are modeled after the file intrinsic functions, but are taking implicit context from the `EXTRACT` expression's file set.
 
@@ -1448,6 +1461,55 @@ _Examples_
         OUTPUT @searchlog
         TO "/output/releasenotes/winter2017-18/extract-order-by.csv"
         USING Outputters.Csv(outputHeader:true);
+
+#### The `EXTRACT` expression's schema can be specified with a table-type
+
+You can now specify the `EXTRACT` expression's schema by referencing table-types. This allows you to reuse common schema definitions without having to type them repeatedly. You can also compose your extract schema from different types.
+
+_Updated Syntax_
+
+    Extract_Expression :=                                                                                    
+      'EXTRACT' Column_Definition_List
+      Extract_From_Clause
+      [SortedBy_Clause]
+      USING_Clause.
+
+    Column_Definition_List :=
+      Column_Definitions { ',' Column_Definitions}.
+
+    Column_Definitions :=
+      Identifier '.*' | Column_Definition. 
+
+_Semantics_
+
+* `Column_Definitions` is either a fully or partially specified identifier that resolves into a table type followed by a `.*` to indicate that the columns of the type are being used to define the columns of the extract schema, or a `Column_Definition`. If the identifier is not referring to a table type, does not exist or the query has no permission to access it, an appropriate compile time error is raised.
+
+_Example_
+
+Assume that the following two types have been specified in the catalog in the `master` database and `dbo` schema:
+
+    DROP TYPE IF EXISTS type1;
+    DROP TYPE IF EXISTS type2;
+
+    CREATE TYPE type1 AS TABLE(UserId int, Start DateTime, Region string, Query string);
+    CREATE TYPE type2 AS TABLE(Urls string, ClickedUrls string);
+
+Then you can reference them in the `EXTRACT` expression as follows:
+
+    @searchlog =
+      EXTRACT type1.*
+            , Duration int?
+            , master.dbo.type2.*
+      FROM "/Samples/Data/SearchLog.tsv"
+      USING Extractors.Tsv();
+ 
+    OUTPUT @searchlog
+    TO "/output/test.csv"
+    USING Outputters.Csv();
+
+_Known Limitations_
+
+- In the current release, script-bound table types are not yet supported. This will be supported in a future refresh.
 
 #### The `EXTRACT`, `REDUCE` and `COMBINE` expressions now support a `SORTED BY` assertion
 
