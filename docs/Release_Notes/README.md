@@ -2,6 +2,12 @@
 
 You can find all the detailed release notes for Azure Data Lake Store and Azure Data Lake Analytics in this folder.
 
+### 2020
+- [July 28 2020 Update Notes for Azure Data Lake Analytics](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2020/2020_07_28/ADL_Release_Notes_2020_07_28.md)
+
+### 2018
+- [Spring 2018 Release Notes for U-SQL and ADL VS Tooling](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2018/2018_Spring/USQL_Release_Notes_2018_Spring.md)
+
 ### 2017
 - [Summer 2017 Release Notes for U-SQL and ADL VS Tooling](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2017/2017_Summer/USQL_Release_Notes_2017_Summer.md)
 - [April 25 2017 Release Notes for U-SQL and ADL VS Tooling](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2017/2017_04_24/USQL_Release_Notes_2017_04_24.md)
