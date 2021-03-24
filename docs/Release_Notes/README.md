@@ -2,6 +2,9 @@
 
 You can find all the detailed release notes for Azure Data Lake Store and Azure Data Lake Analytics in this folder.
 
+### 2021
+- [March 15 2021 Update Notes for Azure Data Lake Analytics](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2021/2021_03_15/ADL_Release_Notes_2021_03_15.md)
+
 ### 2020
 - [July 28 2020 Update Notes for Azure Data Lake Analytics](https://github.com/Azure/AzureDataLake/blob/master/docs/Release_Notes/2020/2020_07_28/ADL_Release_Notes_2020_07_28.md)
 
