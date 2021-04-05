@@ -35,7 +35,7 @@ To work with Azure, you will need to use PowerShell 5.0.
 -   Windows 10 already comes with PowerShell 5.0
 -   For Windows 8 and Windows 7, you will need to get PowerShell 5.0 by
     installing Windows Management Framework 5.0 from here:
-    http://aka.ms/wmf5download
+    https://aka.ms/wmf5download
 
 Azure PowerShell
 ----------------
